@@ -7,14 +7,19 @@ namespace ZeliardAuthentic.Core
 {
     /// <summary>
     /// Decoder for Zeliard .grp image format from SAR archive chunks.
-    /// The format is being reverse-engineered from gmmcga driver analysis.
+    /// Fully reverse-engineered from DOSBox memory dumps and assembly analysis.
     ///
-    /// Known so far:
-    ///   - 4-byte header: uint16 data_size (LE), uint16 flags/zeros
-    ///   - Bytes 4-5: possibly format indicator (0x0000 or 0x0007 etc.)
-    ///   - Image data follows, possibly bit-plane encoded for the 27-color MCGA palette
-    ///   - The gmmcga driver processes image data through bit-rotation routines
-    ///   - NOT using 0xFC RLE (that's for map tiles)
+    /// Two-stage decompression pipeline:
+    ///   Stage 1 (SAR chunk loader at CS:0xDAD): Format-specific RLE decompression
+    ///     - Format 0 (byte 5 = 0x00): Raw copy (no compression)
+    ///     - Format 6 (byte 5 = 0x06): Table-based RLE with substitution dictionary
+    ///     - Format 7 (byte 5 = 0x07): Escape-byte RLE
+    ///   Stage 2 (opening scene code at CS:0x6D62):
+    ///     - Bitmap-controlled zero-fill (0x6D67): control bits select zero vs literal
+    ///     - XOR differential decode (0x6D91): running XOR on 2-bit pairs
+    ///
+    /// After decompression, data is bitplane format fed to the 4-plane decoder (CS:0x4469).
+    /// Chunk header: bytes 0-1 = data size (LE), bytes 2-3 = flags, byte 5 = format.
     /// </summary>
     public static class GrpDecoder
     {
@@ -497,6 +502,342 @@ namespace ZeliardAuthentic.Core
             _openingPalette[0x98] = new Color(0x59, 0x59, 0x59);
             _openingPalette[0x99] = new Color(0x79, 0x79, 0x79);
             _openingPalette[0xFF] = new Color(0x00, 0x00, 0x00);
+        }
+
+        // =====================================================
+        // TWO-STAGE .GRP CHUNK DECOMPRESSION
+        // =====================================================
+
+        /// <summary>
+        /// Stage 1, Format 7: Escape-byte RLE (CS:0x0EF5).
+        /// First data byte = escape marker. When marker appears in stream:
+        ///   [marker] [byte_to_repeat] [count_byte] → output byte_to_repeat (count_byte + 3) times.
+        /// Other bytes are output as literals.
+        /// </summary>
+        public static byte[] DecompressFormat7(byte[] data, int start = 6)
+        {
+            if (start >= data.Length) return Array.Empty<byte>();
+            byte marker = data[start];
+            int pos = start + 1;
+            var output = new System.Collections.Generic.List<byte>();
+
+            while (pos < data.Length)
+            {
+                byte b = data[pos++];
+                if (b == marker && pos + 1 < data.Length)
+                {
+                    byte value = data[pos++];
+                    byte countByte = data[pos++];
+                    int count = countByte + 3;
+                    for (int i = 0; i < count; i++)
+                        output.Add(value);
+                }
+                else
+                {
+                    output.Add(b);
+                }
+            }
+            return output.ToArray();
+        }
+
+        /// <summary>
+        /// Stage 1, Format 6: Table-based RLE (CS:0x0EBA).
+        /// Starts with a substitution table: pairs of [match_byte, replacement_value],
+        /// terminated by 0xFFFF. Then data follows:
+        ///   If byte matches table entry: read next byte as count, output replacement (count + 2) times.
+        ///   Otherwise: output byte as literal.
+        /// </summary>
+        public static byte[] DecompressFormat6(byte[] data, int start = 6)
+        {
+            var table = new System.Collections.Generic.Dictionary<byte, byte>();
+            int pos = start;
+
+            // Read table entries until 0xFFFF terminator
+            while (pos + 1 < data.Length)
+            {
+                ushort word = (ushort)(data[pos] | (data[pos + 1] << 8));
+                if (word == 0xFFFF) { pos += 2; break; }
+                table[data[pos]] = data[pos + 1];
+                pos += 2;
+            }
+
+            // Decompress data using table
+            var output = new System.Collections.Generic.List<byte>();
+            while (pos < data.Length)
+            {
+                byte b = data[pos++];
+                if (table.ContainsKey(b) && pos < data.Length)
+                {
+                    int count = data[pos++] + 2;
+                    byte replacement = table[b];
+                    for (int i = 0; i < count; i++)
+                        output.Add(replacement);
+                }
+                else
+                {
+                    output.Add(b);
+                }
+            }
+            return output.ToArray();
+        }
+
+        /// <summary>
+        /// Stage 2a: Bitmap-controlled zero-fill decompressor (CS:0x6D67).
+        /// First 16-bit word = control byte count. Then control bytes, then literal bytes.
+        /// For each control byte, each bit (MSB first):
+        ///   bit=0: output 0x00
+        ///   bit=1: copy next literal byte
+        /// Output size = control_count × 8 bytes.
+        /// </summary>
+        public static byte[] BitmapDecompress(byte[] data, int offset = 0)
+        {
+            if (offset + 2 > data.Length) return null;
+            int ctrlCount = data[offset] | (data[offset + 1] << 8);
+            if (ctrlCount <= 0 || ctrlCount > 20000) return null;
+            offset += 2;
+            if (offset + ctrlCount > data.Length) return null;
+
+            int litPos = offset + ctrlCount;
+            var output = new byte[ctrlCount * 8];
+            int outIdx = 0;
+
+            for (int ci = 0; ci < ctrlCount; ci++)
+            {
+                byte ctrl = data[offset + ci];
+                for (int bit = 7; bit >= 0; bit--)
+                {
+                    if (((ctrl >> bit) & 1) != 0)
+                    {
+                        output[outIdx++] = litPos < data.Length ? data[litPos++] : (byte)0;
+                    }
+                    else
+                    {
+                        output[outIdx++] = 0;
+                    }
+                }
+            }
+            return output;
+        }
+
+        /// <summary>
+        /// Stage 2b: XOR differential decode (CS:0x6D91).
+        /// Processes each byte in-place: extracts 4 pairs of 2 bits,
+        /// XOR-differential decodes each pair with a running state (DH register),
+        /// and packs the result back into an 8-bit value.
+        /// </summary>
+        public static byte[] XorDifferentialDecode(byte[] data)
+        {
+            var output = new byte[data.Length];
+            int dh = 0;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                int b = data[i];
+                int result = 0;
+                for (int p = 0; p < 4; p++)
+                {
+                    int pair = (b >> 6) & 3;
+                    b = (b << 2) & 0xFF;
+                    dh ^= pair;
+                    result = (result << 2) | dh;
+                }
+                output[i] = (byte)result;
+            }
+            return output;
+        }
+
+        /// <summary>
+        /// Full two-stage decompression of a .grp chunk from a SAR archive.
+        /// Stage 1: Format-specific RLE (determined by byte 5 of the chunk).
+        /// Stage 2: Bitmap zero-fill + XOR differential decode.
+        /// Returns the final decompressed bitplane data.
+        /// </summary>
+        public static byte[] DecompressGrpChunk(byte[] chunkData)
+        {
+            if (chunkData.Length < 6) return null;
+
+            byte format = chunkData[5];
+
+            // Stage 1: Format-specific decompression
+            byte[] stage1;
+            switch (format & 0x07)
+            {
+                case 7:
+                    stage1 = DecompressFormat7(chunkData, 6);
+                    break;
+                case 6:
+                    stage1 = DecompressFormat6(chunkData, 6);
+                    break;
+                case 5:
+                    stage1 = DecompressFormat7(chunkData, 6); // Format 5 uses same as 7
+                    break;
+                case 0:
+                    stage1 = new byte[chunkData.Length - 6];
+                    Array.Copy(chunkData, 6, stage1, 0, stage1.Length);
+                    break;
+                default:
+                    return null;
+            }
+
+            if (stage1 == null || stage1.Length < 2) return null;
+
+            // Stage 2: Bitmap decompress + XOR decode
+            var stage2 = BitmapDecompress(stage1, 0);
+            if (stage2 != null)
+            {
+                return XorDifferentialDecode(stage2);
+            }
+
+            // If bitmap decompress fails, return stage1 directly
+            return stage1;
+        }
+
+        /// <summary>
+        /// Run the 4-plane decoder (CS:0x4469) on decompressed bitplane data.
+        /// Reads 2-plane data: plane0 at [offset], plane1 at [offset+planeOffset].
+        /// Each 16-bit word from each plane produces 8 pixels via ROL+ADC interleaving.
+        /// Pixel format: [0 0 P1h P0h 0 0 P1l P0l] for 2-plane mode.
+        /// </summary>
+        public static byte[] Decode4Plane(byte[] data, int offset, int planeOffset, int iterations,
+            bool swapPlanes = false)
+        {
+            var pixels = new System.Collections.Generic.List<byte>();
+            int si = offset;
+
+            for (int loop = 0; loop < iterations; loop++)
+            {
+                if (si + 1 >= data.Length || si + planeOffset + 1 >= data.Length) break;
+
+                // Read 16-bit words (big-endian byte swap as in assembly)
+                ushort wordA = (ushort)((data[si + planeOffset] << 8) | data[si + planeOffset + 1]);
+                ushort wordB = (ushort)((data[si] << 8) | data[si + 1]);
+                // For large images: wordA→0x44FB(P0), wordB→0x44FD(P1)
+                // For small images: wordA→0x44FD(P1), wordB→0x44FB(P0) (swapped)
+                ushort pl0 = swapPlanes ? wordB : wordA;
+                ushort pl1 = swapPlanes ? wordA : wordB;
+                ushort pl2 = 0, pl3 = 0;
+                si += 2;
+
+                // 4 decoder calls × 2 pixels each = 8 pixels
+                for (int call = 0; call < 4; call++)
+                {
+                    int ax = 0;
+                    for (int iter = 0; iter < 2; iter++)
+                    {
+                        for (int round = 0; round < 2; round++)
+                        {
+                            int bit;
+                            bit = (pl3 >> 15) & 1; pl3 = (ushort)((pl3 << 1) | bit); ax = (ax << 1) | bit;
+                            bit = (pl2 >> 15) & 1; pl2 = (ushort)((pl2 << 1) | bit); ax = (ax << 1) | bit;
+                            bit = (pl1 >> 15) & 1; pl1 = (ushort)((pl1 << 1) | bit); ax = (ax << 1) | bit;
+                            bit = (pl0 >> 15) & 1; pl0 = (ushort)((pl0 << 1) | bit); ax = (ax << 1) | bit;
+                        }
+                    }
+                    // xchg ah,al
+                    pixels.Add((byte)(ax & 0xFF));
+                    pixels.Add((byte)((ax >> 8) & 0xFF));
+                }
+            }
+            return pixels.ToArray();
+        }
+
+        /// <summary>
+        /// Decode a .grp chunk using the full pipeline and render as a texture.
+        /// Pipeline: Stage1 RLE → Stage2 Bitmap+XOR → 4-plane decode → palette render.
+        /// Renders individual image slots from the decompressed buffer.
+        /// displayWidth selects: 48 = large image slots (0xCC0 each, planeOff=0x660),
+        ///                       32 = small image slots (0x480 each, planeOff=0x240).
+        /// </summary>
+        public static Texture2D DecodeGrpFull(GraphicsDevice gd, byte[] chunkData, int displayWidth = 160)
+        {
+            if (_gameplayPalette == null) BuildPalettes();
+
+            var decompressed = DecompressGrpChunk(chunkData);
+            if (decompressed == null || decompressed.Length < 100) return null;
+
+            // Determine image slot parameters based on data size
+            int slotSize, planeOffset, imgWidth, imgHeight, iterations;
+            bool swapPlanes;
+
+            if (displayWidth == 320)
+            {
+                // Raw view: render decompressed bytes as direct palette indices
+                int h = decompressed.Length / 320;
+                if (h <= 0) return null;
+                h = Math.Min(h, 400);
+                var tex = new Texture2D(gd, 320, h);
+                var px = new Color[320 * h];
+                for (int i = 0; i < px.Length && i < decompressed.Length; i++)
+                    px[i] = _openingPalette[decompressed[i]];
+                tex.SetData(px);
+                return tex;
+            }
+
+            // Try to decode as image grid (multiple slots)
+            // Large slots: 0xCC0 bytes, 48×34, planeOff=0x660, 0x330 iterations
+            // Small slots: 0x480 bytes, 32×18, planeOff=0x240, 0x120 iterations
+            int numLargeSlots = decompressed.Length / 0xCC0;
+            int numSmallSlots = decompressed.Length / 0x480;
+
+            // Pick the slot type that fits best
+            if (numLargeSlots >= 1 && numLargeSlots <= 10)
+            {
+                slotSize = 0xCC0; planeOffset = 0x660; imgWidth = 48; imgHeight = 34;
+                iterations = 0x330; swapPlanes = false;
+            }
+            else if (numSmallSlots >= 1)
+            {
+                slotSize = 0x480; planeOffset = 0x240; imgWidth = 32; imgHeight = 18;
+                iterations = 0x120; swapPlanes = true;
+            }
+            else
+            {
+                // Fallback: render as raw
+                int h = decompressed.Length / 160;
+                if (h <= 0) return null;
+                h = Math.Min(h, 400);
+                var tex = new Texture2D(gd, 160, h);
+                var px = new Color[160 * h];
+                for (int i = 0; i < px.Length && i < decompressed.Length; i++)
+                    px[i] = _openingPalette[decompressed[i]];
+                tex.SetData(px);
+                return tex;
+            }
+
+            int numSlots = decompressed.Length / slotSize;
+            // Render all slots in a vertical strip
+            int totalHeight = numSlots * (imgHeight + 2); // 2px gap between slots
+            var texture = new Texture2D(gd, imgWidth, Math.Min(totalHeight, 400));
+            var pixels = new Color[imgWidth * Math.Min(totalHeight, 400)];
+
+            int destY = 0;
+            for (int slot = 0; slot < numSlots && destY + imgHeight <= 400; slot++)
+            {
+                int baseOffset = slot * slotSize;
+                var slotPixels = Decode4Plane(decompressed, baseOffset, planeOffset,
+                    iterations, swapPlanes);
+
+                // Copy to output
+                for (int y = 0; y < imgHeight && y * imgWidth < slotPixels.Length; y++)
+                {
+                    for (int x = 0; x < imgWidth; x++)
+                    {
+                        int srcIdx = y * imgWidth + x;
+                        int dstIdx = (destY + y) * imgWidth + x;
+                        if (srcIdx < slotPixels.Length && dstIdx < pixels.Length)
+                        {
+                            byte palIdx = slotPixels[srcIdx];
+                            // 4-plane decoded indices use bits 5,4,1,0 (P1+P0)
+                            // giving values 0x00-0x33, which map to the gameplay palette
+                            pixels[dstIdx] = _gameplayPalette[palIdx];
+                        }
+                    }
+                }
+                destY += imgHeight + 2;
+            }
+
+            texture.SetData(pixels);
+            return texture;
         }
 
         /// <summary>
