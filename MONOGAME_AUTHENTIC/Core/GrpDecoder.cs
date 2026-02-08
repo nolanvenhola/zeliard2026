@@ -843,11 +843,11 @@ namespace ZeliardAuthentic.Core
         /// <summary>
         /// Decode gameplay sprites from zelres2 chunks 18-35.
         /// Format: Stage 1 RLE only (no bitmap/XOR). Decompressed data organized as:
-        ///   48-byte rows: [6B header (2B+4B 0xFF)] + [7 sprites × 6B]
-        ///   Each sprite scanline: 3 planes × 2 bytes = 6 bytes
-        ///   Using 0x748 palette encoder format: 3 planes × 2 bits/pixel = 6 bits → 64 colors
-        ///   Each 2-byte plane word covers 8 pixels (2 bits per pixel).
-        ///   Bit extraction: ROL p2→bit5, ROL p1→bit4, ROL p0→bit3, repeat→bits 2,1,0
+        ///   48-byte rows: [6B header] + [7 sprites × 6B]
+        ///   Packed 6-bit pixel format (reverse-engineered from gmmcga CS:0x32FC):
+        ///     3 bytes → 4 pixels, each a 6-bit palette index (0x00-0x3F)
+        ///     6 bytes per sprite = 2 groups × 4 pixels = 8 pixels wide per frame
+        ///   7 animation frames packed horizontally, multiple sets stacked vertically.
         /// </summary>
         public static Texture2D DecodeGameplaySprites(GraphicsDevice gd, byte[] chunkData)
         {
@@ -897,33 +897,34 @@ namespace ZeliardAuthentic.Core
                     int sprOff = rowOff + frame * SPRITE_BYTES;
                     if (sprOff + SPRITE_BYTES > s1.Length) break;
 
-                    // Read 3 planes (2 bytes each, big-endian)
-                    int p0 = (s1[sprOff] << 8) | s1[sprOff + 1];
-                    int p1 = (s1[sprOff + 2] << 8) | s1[sprOff + 3];
-                    int p2 = (s1[sprOff + 4] << 8) | s1[sprOff + 5];
-
-                    // 0x748 format: 2 bits per pixel per plane, 8 pixels per word
-                    // For each pixel: ROL p2→bit5, ROL p1→bit4, ROL p0→bit3,
-                    //                 ROL p2→bit2, ROL p1→bit1, ROL p0→bit0
-                    for (int px = 0; px < SPRITE_WIDTH; px++)
+                    // Packed 6-bit pixel format (from gmmcga CS:0x32FC):
+                    // 3 bytes = 4 pixels, each 6-bit palette index (0x00-0x3F)
+                    // byte0: [p0_5..p0_0 p1_5 p1_4]
+                    // byte1: [p1_3..p1_0 p2_5..p2_2]
+                    // byte2: [p2_1 p2_0 p3_5..p3_0]
+                    for (int group = 0; group < 2; group++) // 2 groups of 3 bytes = 8 pixels
                     {
-                        // Extract 2 bits from each plane for this pixel
-                        int shift = 14 - px * 2; // 2 bits per pixel, MSB first
-                        int b0 = (p0 >> shift) & 3;
-                        int b1 = (p1 >> shift) & 3;
-                        int b2 = (p2 >> shift) & 3;
+                        int gOff = sprOff + group * 3;
+                        if (gOff + 3 > s1.Length) break;
+                        byte b0 = s1[gOff], b1 = s1[gOff + 1], b2 = s1[gOff + 2];
 
-                        // Build 6-bit palette index: [p2h p1h p0h p2l p1l p0l]
-                        int colorIdx = ((b2 >> 1) << 5) | ((b1 >> 1) << 4) | ((b0 >> 1) << 3)
-                                     | ((b2 & 1) << 2) | ((b1 & 1) << 1) | (b0 & 1);
+                        int[] pix = {
+                            b0 >> 2,
+                            ((b0 & 3) << 4) | (b1 >> 4),
+                            ((b1 & 0xF) << 2) | (b2 >> 6),
+                            b2 & 0x3F
+                        };
 
-                        int destX = frame * (SPRITE_WIDTH + 1) + px;
-                        int destIdx = row * texWidth + destX;
-                        if (destIdx < pixels.Length)
+                        for (int p = 0; p < 4; p++)
                         {
-                            pixels[destIdx] = colorIdx == 0
-                                ? Color.Transparent
-                                : _gameplayPalette[colorIdx];
+                            int destX = frame * (SPRITE_WIDTH + 1) + group * 4 + p;
+                            int destIdx = row * texWidth + destX;
+                            if (destIdx < pixels.Length)
+                            {
+                                pixels[destIdx] = pix[p] == 0
+                                    ? Color.Transparent
+                                    : _gameplayPalette[pix[p]];
+                            }
                         }
                     }
                 }
