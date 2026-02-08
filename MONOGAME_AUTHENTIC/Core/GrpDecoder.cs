@@ -841,6 +841,91 @@ namespace ZeliardAuthentic.Core
         }
 
         /// <summary>
+        /// Decode gameplay sprites from zelres2 chunks 18-35.
+        /// Format: Stage 1 RLE only (no bitmap/XOR). Decompressed data organized as:
+        ///   48-byte rows: [6B header (2B+4B 0xFF)] + [7 sprites × 6B]
+        ///   Each sprite scanline: 3 bitplanes × 2 bytes = 16 pixels wide, 8 colors
+        /// Renders all 7 animation frames side-by-side with all scanlines stacked.
+        /// </summary>
+        public static Texture2D DecodeGameplaySprites(GraphicsDevice gd, byte[] chunkData)
+        {
+            if (_gameplayPalette == null) BuildPalettes();
+            if (chunkData.Length < 6) return null;
+
+            byte format = chunkData[5];
+
+            // Stage 1 only: Format-specific RLE
+            byte[] s1;
+            switch (format & 0x07)
+            {
+                case 6: s1 = DecompressFormat6(chunkData, 6); break;
+                case 7: s1 = DecompressFormat7(chunkData, 6); break;
+                case 5: s1 = DecompressFormat7(chunkData, 6); break;
+                case 0:
+                    s1 = new byte[chunkData.Length - 6];
+                    Array.Copy(chunkData, 6, s1, 0, s1.Length);
+                    break;
+                default: return null;
+            }
+
+            if (s1 == null || s1.Length < 48) return null;
+
+            const int ROW_STRIDE = 48;
+            const int HEADER_SIZE = 6;
+            const int SPRITE_BYTES = 6; // 3 planes × 2 bytes
+            const int SPRITE_WIDTH = 16;
+            const int FRAMES_PER_ROW = 7;
+
+            int numRows = s1.Length / ROW_STRIDE;
+            if (numRows <= 0) return null;
+
+            // Render: 7 frames side by side, all rows stacked vertically
+            int texWidth = FRAMES_PER_ROW * (SPRITE_WIDTH + 1); // +1 for gap
+            int texHeight = Math.Min(numRows, 400);
+
+            var texture = new Texture2D(gd, texWidth, texHeight);
+            var pixels = new Color[texWidth * texHeight];
+
+            for (int row = 0; row < texHeight; row++)
+            {
+                int rowOff = row * ROW_STRIDE + HEADER_SIZE;
+                if (rowOff + FRAMES_PER_ROW * SPRITE_BYTES > s1.Length) break;
+
+                for (int frame = 0; frame < FRAMES_PER_ROW; frame++)
+                {
+                    int sprOff = rowOff + frame * SPRITE_BYTES;
+                    if (sprOff + SPRITE_BYTES > s1.Length) break;
+
+                    // Read 3 planes (2 bytes each, big-endian)
+                    int p0 = (s1[sprOff] << 8) | s1[sprOff + 1];
+                    int p1 = (s1[sprOff + 2] << 8) | s1[sprOff + 3];
+                    int p2 = (s1[sprOff + 4] << 8) | s1[sprOff + 5];
+
+                    for (int px = 0; px < SPRITE_WIDTH; px++)
+                    {
+                        int bit = 15 - px;
+                        int colorIdx = ((p0 >> bit) & 1)
+                                     | (((p1 >> bit) & 1) << 1)
+                                     | (((p2 >> bit) & 1) << 2);
+
+                        int destX = frame * (SPRITE_WIDTH + 1) + px;
+                        int destIdx = row * texWidth + destX;
+                        if (destIdx < pixels.Length)
+                        {
+                            // Color 0 = transparent (black), colors 1-7 map to gameplay palette
+                            pixels[destIdx] = colorIdx == 0
+                                ? Color.Transparent
+                                : _gameplayPalette[colorIdx];
+                        }
+                    }
+                }
+            }
+
+            texture.SetData(pixels);
+            return texture;
+        }
+
+        /// <summary>
         /// Print diagnostic info about a chunk's data patterns.
         /// </summary>
         public static string AnalyzeChunk(byte[] data)

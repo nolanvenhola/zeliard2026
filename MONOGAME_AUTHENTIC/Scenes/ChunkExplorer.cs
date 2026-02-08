@@ -55,6 +55,7 @@ namespace ZeliardAuthentic.Scenes
             "GRP 3-Plane",
             "GRP Full 160",
             "GRP Full 320",
+            "Sprites 3pl",
         };
 
         public ChunkExplorer(InputManager input, GraphicsDevice gd, string[] chunkPaths)
@@ -176,6 +177,7 @@ namespace ZeliardAuthentic.Scenes
                     case 17: _currentTexture = GrpDecoder.DecodeGrp(_gd, data, 6); break;
                     case 18: _currentTexture = GrpDecoder.DecodeGrpFull(_gd, data, 160); break;
                     case 19: _currentTexture = GrpDecoder.DecodeGrpFull(_gd, data, 320); break;
+                    case 20: _currentTexture = GrpDecoder.DecodeGameplaySprites(_gd, data); break;
                 }
 
                 _info = $"[{_chunkIndex + 1}/{_chunkPaths.Length}] {name} ({data.Length}B) Mode: {ModeNames[_decodeMode]}";
