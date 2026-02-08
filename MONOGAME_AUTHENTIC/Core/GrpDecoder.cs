@@ -231,18 +231,20 @@ namespace ZeliardAuthentic.Core
             int dataLen = data.Length - headerSkip;
             if (dataLen < 4) return null;
 
-            // Each image: plane0 [0..planeSize-1], plane1 [planeSize..2*planeSize-1]
-            // Image types: 48×34 (planeSize=1632, total=3264) or 32×18 (planeSize=576, total=1152)
-            // Decode FIRST image in the chunk. planeOffset from assembly: 0x660=1632 or 0x240=576
+            // Data = 2 planes stored sequentially. planeSize = half the data.
+            // Each 16-bit source word from each plane → 8 decoded pixels.
+            // Total pixels = (planeSize / 2) * 8 = planeSize * 4
+            // The assembly decodes to a buffer, then blits a sub-rectangle to screen.
+            // We decode ALL pixels and display them.
 
-            int imageSize, planeSize, imgWidth, imgHeight;
-            if (dataLen >= 3264) {
-                imageSize = 3264; planeSize = 1632; imgWidth = 48; imgHeight = 34;
-            } else if (dataLen >= 1152) {
-                imageSize = 1152; planeSize = 576; imgWidth = 32; imgHeight = 18;
-            } else return null;
+            int planeSize = dataLen / 2;
+            int totalPixels = (planeSize / 2) * 8;
 
-            int totalPixels = imgWidth * imgHeight;
+            // Display at width 48 (assembly uses 48-wide images)
+            int imgWidth = 48;
+            int imgHeight = totalPixels / imgWidth;
+            if (imgHeight <= 0 || imgHeight > 400) { imgWidth = 32; imgHeight = totalPixels / imgWidth; }
+            if (imgHeight <= 0 || imgHeight > 400) return null;
             var pixelIndices = new byte[totalPixels];
 
             // Plane 0 starts at headerSkip, plane 1 starts at headerSkip + planeSize
