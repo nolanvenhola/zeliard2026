@@ -844,8 +844,10 @@ namespace ZeliardAuthentic.Core
         /// Decode gameplay sprites from zelres2 chunks 18-35.
         /// Format: Stage 1 RLE only (no bitmap/XOR). Decompressed data organized as:
         ///   48-byte rows: [6B header (2B+4B 0xFF)] + [7 sprites × 6B]
-        ///   Each sprite scanline: 3 bitplanes × 2 bytes = 16 pixels wide, 8 colors
-        /// Renders all 7 animation frames side-by-side with all scanlines stacked.
+        ///   Each sprite scanline: 3 planes × 2 bytes = 6 bytes
+        ///   Using 0x748 palette encoder format: 3 planes × 2 bits/pixel = 6 bits → 64 colors
+        ///   Each 2-byte plane word covers 8 pixels (2 bits per pixel).
+        ///   Bit extraction: ROL p2→bit5, ROL p1→bit4, ROL p0→bit3, repeat→bits 2,1,0
         /// </summary>
         public static Texture2D DecodeGameplaySprites(GraphicsDevice gd, byte[] chunkData)
         {
@@ -873,14 +875,13 @@ namespace ZeliardAuthentic.Core
             const int ROW_STRIDE = 48;
             const int HEADER_SIZE = 6;
             const int SPRITE_BYTES = 6; // 3 planes × 2 bytes
-            const int SPRITE_WIDTH = 16;
+            const int SPRITE_WIDTH = 8; // 2 bits/pixel × 8 pixels = 16 bits = 2 bytes/plane
             const int FRAMES_PER_ROW = 7;
 
             int numRows = s1.Length / ROW_STRIDE;
             if (numRows <= 0) return null;
 
-            // Render: 7 frames side by side, all rows stacked vertically
-            int texWidth = FRAMES_PER_ROW * (SPRITE_WIDTH + 1); // +1 for gap
+            int texWidth = FRAMES_PER_ROW * (SPRITE_WIDTH + 1);
             int texHeight = Math.Min(numRows, 400);
 
             var texture = new Texture2D(gd, texWidth, texHeight);
@@ -901,18 +902,25 @@ namespace ZeliardAuthentic.Core
                     int p1 = (s1[sprOff + 2] << 8) | s1[sprOff + 3];
                     int p2 = (s1[sprOff + 4] << 8) | s1[sprOff + 5];
 
+                    // 0x748 format: 2 bits per pixel per plane, 8 pixels per word
+                    // For each pixel: ROL p2→bit5, ROL p1→bit4, ROL p0→bit3,
+                    //                 ROL p2→bit2, ROL p1→bit1, ROL p0→bit0
                     for (int px = 0; px < SPRITE_WIDTH; px++)
                     {
-                        int bit = 15 - px;
-                        int colorIdx = ((p0 >> bit) & 1)
-                                     | (((p1 >> bit) & 1) << 1)
-                                     | (((p2 >> bit) & 1) << 2);
+                        // Extract 2 bits from each plane for this pixel
+                        int shift = 14 - px * 2; // 2 bits per pixel, MSB first
+                        int b0 = (p0 >> shift) & 3;
+                        int b1 = (p1 >> shift) & 3;
+                        int b2 = (p2 >> shift) & 3;
+
+                        // Build 6-bit palette index: [p2h p1h p0h p2l p1l p0l]
+                        int colorIdx = ((b2 >> 1) << 5) | ((b1 >> 1) << 4) | ((b0 >> 1) << 3)
+                                     | ((b2 & 1) << 2) | ((b1 & 1) << 1) | (b0 & 1);
 
                         int destX = frame * (SPRITE_WIDTH + 1) + px;
                         int destIdx = row * texWidth + destX;
                         if (destIdx < pixels.Length)
                         {
-                            // Color 0 = transparent (black), colors 1-7 map to gameplay palette
                             pixels[destIdx] = colorIdx == 0
                                 ? Color.Transparent
                                 : _gameplayPalette[colorIdx];
