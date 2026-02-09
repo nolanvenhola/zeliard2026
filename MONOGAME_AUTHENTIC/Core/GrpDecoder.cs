@@ -873,10 +873,10 @@ namespace ZeliardAuthentic.Core
             if (s1 == null || s1.Length < 48) return null;
 
             const int ROW_STRIDE = 48;
-            const int HEADER_SIZE = 6;
-            const int SPRITE_BYTES = 6; // 3 planes × 2 bytes
-            const int SPRITE_WIDTH = 8; // 2 bits/pixel × 8 pixels = 16 bits = 2 bytes/plane
-            const int FRAMES_PER_ROW = 7;
+            const int HEADER_SIZE = 0; // No header - all 48 bytes are pixel data
+            const int SPRITE_BYTES = 6; // 6 bytes per sprite = 8 pixels (packed 6-bit)
+            const int SPRITE_WIDTH = 8;
+            const int FRAMES_PER_ROW = 8; // 8 sprites × 6 bytes = 48 bytes per row
 
             int numRows = s1.Length / ROW_STRIDE;
             if (numRows <= 0) return null;
