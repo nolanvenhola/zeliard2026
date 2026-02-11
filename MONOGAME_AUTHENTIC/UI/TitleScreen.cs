@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.IO;
 using ZeliardAuthentic.Core;
 using ZeliardAuthentic.Input;
 
@@ -13,7 +15,9 @@ namespace ZeliardAuthentic.UI
     public class TitleScreen : IGameStateHandler
     {
         private InputManager _input;
+        private GraphicsDevice _graphicsDevice;
         private Texture2D _pixel;
+        private Texture2D _logoTexture;
         private SpriteFont _font;
         private int _selectedOption;
         private float _blinkTimer;
@@ -24,6 +28,7 @@ namespace ZeliardAuthentic.UI
         public TitleScreen(InputManager input, GraphicsDevice graphicsDevice)
         {
             _input = input;
+            _graphicsDevice = graphicsDevice;
             _pixel = new Texture2D(graphicsDevice, 1, 1);
             _pixel.SetData(new[] { Color.White });
         }
@@ -38,10 +43,15 @@ namespace ZeliardAuthentic.UI
             _selectedOption = 0;
             _blinkTimer = 0f;
             _blinkOn = true;
+
+            // Load Zeliard logo from title screen chunks (ttl1-3.grp = chunks 30-32)
+            LoadTitleLogo();
         }
 
         public void Exit(GameStateManager manager)
         {
+            _logoTexture?.Dispose();
+            _logoTexture = null;
         }
 
         public void Update(GameTime gameTime, GameStateManager manager)
@@ -88,6 +98,17 @@ namespace ZeliardAuthentic.UI
             spriteBatch.Draw(_pixel,
                 new Rectangle(0, 0, DOSScreen.WIDTH, DOSScreen.HEIGHT),
                 Color.Black);
+
+            // Draw Zeliard logo if loaded
+            if (_logoTexture != null)
+            {
+                // Center logo at top of screen
+                int logoX = (DOSScreen.WIDTH - _logoTexture.Width) / 2;
+                int logoY = 40;
+                spriteBatch.Draw(_logoTexture,
+                    new Rectangle(logoX, logoY, _logoTexture.Width, _logoTexture.Height),
+                    Color.White);
+            }
 
             // Title text area (centered)
             int centerX = DOSScreen.WIDTH / 2;
@@ -146,6 +167,58 @@ namespace ZeliardAuthentic.UI
             spriteBatch.Draw(_pixel,
                 new Rectangle(centerX - 60, arrowY + 2, 8, 6),
                 DOSPalette.MCGA[18]); // Red arrow
+        }
+
+        /// <summary>
+        /// Load the Zeliard logo from zelres1 chunks 30-32 (ttl1-3.grp).
+        /// These chunks use the two-stage decompression pipeline (bitmap + XOR differential)
+        /// then need to be composited together at specific positions.
+        /// </summary>
+        private void LoadTitleLogo()
+        {
+            string baseDir = FindChunksDirectory();
+            if (baseDir == null)
+            {
+                Console.WriteLine("Could not locate 2_EXTRACTED_CHUNKS directory");
+                return;
+            }
+
+            Console.WriteLine("=== Loading Zeliard Title Logo ===");
+
+            try
+            {
+                // Use the new RenderTitleLogo function that handles all 3 chunks
+                _logoTexture = GrpDecoder.RenderTitleLogo(_graphicsDevice, baseDir);
+
+                if (_logoTexture != null)
+                {
+                    Console.WriteLine($"Successfully loaded title logo: {_logoTexture.Width}x{_logoTexture.Height}");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to render title logo");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading title logo: {ex.Message}");
+                Console.WriteLine($"Stack trace: {ex.StackTrace}");
+            }
+        }
+
+        private static string FindChunksDirectory()
+        {
+            string dir = AppDomain.CurrentDomain.BaseDirectory;
+            for (int i = 0; i < 8; i++)
+            {
+                string candidate = Path.Combine(dir, "2_EXTRACTED_CHUNKS");
+                if (Directory.Exists(candidate)) return candidate;
+                string parent = Path.GetDirectoryName(dir);
+                if (parent == null || parent == dir) break;
+                dir = parent;
+            }
+            string abs = @"c:\Projects\Zeliard\2_EXTRACTED_CHUNKS";
+            return Directory.Exists(abs) ? abs : null;
         }
     }
 }

@@ -10,6 +10,8 @@
     <ImplicitUsings>false</ImplicitUsings>
     <LangVersion>latest</LangVersion>
     <StartupObject>ZeliardAuthentic.Program</StartupObject>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
   <ItemGroup>

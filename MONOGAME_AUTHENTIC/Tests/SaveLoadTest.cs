@@ -10,6 +10,9 @@ namespace ZeliardAuthentic.Tests
     /// </summary>
     public class SaveLoadTest
     {
+        /// <summary>
+        /// Run save/load tests. Called from Program.cs when --test flag is used.
+        /// </summary>
         public static void Main(string[] args)
         {
             Console.WriteLine("=================================================");
@@ -18,26 +21,24 @@ namespace ZeliardAuthentic.Tests
             Console.WriteLine("=================================================");
             Console.WriteLine();
 
-            // Path to example DOS save files
-            string dosSavesPath = Path.Combine(
-                Directory.GetCurrentDirectory(),
-                "..", "..", "..", // Go up from MONOGAME_AUTHENTIC/Tests
-                "Resources", "Saved Games"
-            );
-            dosSavesPath = Path.GetFullPath(dosSavesPath);
+            // Use the "Saved" folder in the execution directory
+            // DOS save files are auto-copied here during build
+            string savedFolder = Path.Combine(Directory.GetCurrentDirectory(), "Saved");
+            savedFolder = Path.GetFullPath(savedFolder);
 
-            Console.WriteLine($"DOS Save Files Directory: {dosSavesPath}");
+            Console.WriteLine($"Save Files Directory: {savedFolder}");
             Console.WriteLine();
 
-            if (!Directory.Exists(dosSavesPath))
+            if (!Directory.Exists(savedFolder))
             {
-                Console.WriteLine("ERROR: DOS save files directory not found!");
-                Console.WriteLine("Expected path: " + dosSavesPath);
+                Console.WriteLine("ERROR: Saved folder not found!");
+                Console.WriteLine("Expected path: " + savedFolder);
+                Console.WriteLine("Make sure to build the project first: dotnet build");
                 return;
             }
 
-            // Create SaveManager pointing to DOS saves
-            SaveManager manager = new SaveManager(dosSavesPath);
+            // Create SaveManager pointing to Saved folder
+            SaveManager manager = new SaveManager(savedFolder);
 
             // Test 1: List all saves
             Console.WriteLine("--- Test 1: List All Saves ---");
@@ -72,7 +73,7 @@ namespace ZeliardAuthentic.Tests
 
             // Test 5: Load, modify, save
             Console.WriteLine("--- Test 5: Load, Modify, Save ---");
-            TestModifySave(manager);
+            TestModifySave(manager, manager);
             Console.WriteLine();
 
             Console.WriteLine("=================================================");
@@ -145,13 +146,13 @@ namespace ZeliardAuthentic.Tests
             }
         }
 
-        static void TestModifySave(SaveManager manager)
+        static void TestModifySave(SaveManager loadManager, SaveManager saveManager)
         {
             string originalName = "Muralla";
             string modifiedName = "MODIFIED";
 
-            Console.WriteLine($"Loading {originalName}.usr...");
-            SaveFile? save = manager.LoadGame(originalName);
+            Console.WriteLine($"Loading {originalName}.usr from DOS saves...");
+            SaveFile? save = loadManager.LoadGame(originalName);
 
             if (save == null)
             {
@@ -169,12 +170,12 @@ namespace ZeliardAuthentic.Tests
 
             Console.WriteLine($"  Modified progression: {s.GetProgressionPercentage():F1}%");
 
-            // Save as new file
-            bool success = manager.SaveGame(modifiedName, s);
-            Console.WriteLine($"  Save as {modifiedName}.usr: {(success ? "✅ Success" : "❌ Failed")}");
+            // Save to Saved folder
+            bool success = saveManager.SaveGame(modifiedName, s);
+            Console.WriteLine($"  Save to Saved/{modifiedName}.usr: {(success ? "✅ Success" : "❌ Failed")}");
 
             // Verify
-            SaveFile? loaded = manager.LoadGame(modifiedName);
+            SaveFile? loaded = saveManager.LoadGame(modifiedName);
             if (loaded != null)
             {
                 Console.WriteLine($"  ✅ Verified: Changes persisted");

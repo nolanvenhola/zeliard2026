@@ -1,5 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using ZeliardAuthentic.Core;
 using ZeliardAuthentic.Input;
 
@@ -29,6 +32,9 @@ namespace ZeliardAuthentic.Scenes
     /// </summary>
     public class OpeningScene : IGameStateHandler
     {
+        // Note: The opening story scenes use simple solid color backgrounds.
+        // Complex .grp images are for the title screen (chunks 30-32) which comes after.
+
         // Story text extracted from zelres1/chunk_00.bin at file offset 0x0FF3
         // Original uses 0x0D for newline, 0xFF as page separator
         private static readonly string[] StoryPages = new string[]
@@ -143,9 +149,7 @@ namespace ZeliardAuthentic.Scenes
 
         public void Draw(SpriteBatch spriteBatch, GameStateManager manager)
         {
-            // Background: dark blue (matching DOS opening scene palette)
-            // TODO: Replace with actual background images from SAR chunks
-            // (nec.grp, dmaou.grp, hime.grp, etc.)
+            // Simple solid color backgrounds for story text
             Color bgColor = (_currentPage == 3)
                 ? DOSPalette.MCGA[9]   // Dark red for Jashiin's speech
                 : DOSPalette.MCGA[1];  // Dark blue for story pages

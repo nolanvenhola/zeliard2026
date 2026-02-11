@@ -978,5 +978,124 @@ namespace ZeliardAuthentic.Core
 
             return sb.ToString();
         }
+
+        /// <summary>
+        /// Render the Zeliard title logo by loading and compositing chunks 30-32 (ttl1-3.grp).
+        /// Based on assembly analysis at CS:0xE71 showing image positioning with 34-byte stride.
+        /// Each chunk is decompressed through stage 1 + stage 2 pipeline, then positioned on screen.
+        /// </summary>
+        public static Texture2D RenderTitleLogo(GraphicsDevice gd, string chunksDirectory)
+        {
+            if (_gameplayPalette == null) BuildPalettes();
+
+            string zelres1Dir = Path.Combine(chunksDirectory, "zelres1_extracted");
+            if (!Directory.Exists(zelres1Dir))
+            {
+                Console.WriteLine($"zelres1_extracted directory not found at: {zelres1Dir}");
+                return null;
+            }
+
+            // Load and decompress all 3 chunks
+            var chunks = new System.Collections.Generic.List<(int id, byte[] data)>();
+            for (int chunkId = 30; chunkId <= 32; chunkId++)
+            {
+                string chunkPath = Path.Combine(zelres1Dir, $"chunk_{chunkId:D2}.bin");
+                if (!File.Exists(chunkPath))
+                {
+                    Console.WriteLine($"Chunk {chunkId} not found at: {chunkPath}");
+                    continue;
+                }
+
+                byte[] chunkData = File.ReadAllBytes(chunkPath);
+                Console.WriteLine($"Chunk {chunkId}: {chunkData.Length} bytes, format=0x{chunkData[5]:X2}");
+
+                // Decompress through full pipeline
+                byte[] decompressed = DecompressGrpChunk(chunkData);
+                if (decompressed != null && decompressed.Length > 0)
+                {
+                    Console.WriteLine($"  → Decompressed to {decompressed.Length} bytes");
+
+                    // Show first 32 bytes as hex for diagnostic
+                    Console.Write("  → First 32 bytes: ");
+                    for (int i = 0; i < Math.Min(32, decompressed.Length); i++)
+                        Console.Write($"{decompressed[i]:X2} ");
+                    Console.WriteLine();
+
+                    // Possible dimensions based on assembly stride of 34 bytes
+                    Console.Write("  → Possible dimensions: ");
+                    foreach (int w in new[] { 34, 48, 96, 160, 192, 320 })
+                    {
+                        if (decompressed.Length % w == 0)
+                        {
+                            int h = decompressed.Length / w;
+                            if (h <= 200) Console.Write($"{w}x{h} ");
+                        }
+                    }
+                    Console.WriteLine();
+
+                    chunks.Add((chunkId, decompressed));
+
+                    // Save for hex editor inspection
+                    try
+                    {
+                        string dumpPath = $"chunk_{chunkId}_decompressed.bin";
+                        File.WriteAllBytes(dumpPath, decompressed);
+                        Console.WriteLine($"  → Saved to {dumpPath}");
+                    }
+                    catch { /* Ignore write errors */ }
+                }
+                else
+                {
+                    Console.WriteLine($"  → Decompression failed");
+                }
+            }
+
+            if (chunks.Count == 0)
+            {
+                Console.WriteLine("No chunks could be decompressed");
+                return null;
+            }
+
+            // Create output texture (full logo area)
+            // Based on MEMDUMP_logo.BIN being 320x200, logo is centered in that area
+            int logoWidth = 200;  // Estimate - will adjust based on chunk data
+            int logoHeight = 100; // Estimate
+            var texture = new Texture2D(gd, logoWidth, logoHeight);
+            var pixels = new Color[logoWidth * logoHeight];
+
+            // Fill with transparent/black
+            for (int i = 0; i < pixels.Length; i++)
+                pixels[i] = Color.Black;
+
+            // Composite each chunk
+            // For now, render them vertically stacked to see what we have
+            int currentY = 0;
+            foreach (var (id, data) in chunks)
+            {
+                // Try to interpret the decompressed data
+                // If stage 2 worked, data should be in a specific format
+                // Try rendering as direct palette indices first
+                int chunkHeight = Math.Min(data.Length / logoWidth, logoHeight - currentY);
+                for (int y = 0; y < chunkHeight; y++)
+                {
+                    for (int x = 0; x < logoWidth && x < data.Length / chunkHeight; x++)
+                    {
+                        int srcIdx = y * logoWidth + x;
+                        int dstIdx = (currentY + y) * logoWidth + x;
+                        if (srcIdx < data.Length && dstIdx < pixels.Length)
+                        {
+                            byte palIdx = data[srcIdx];
+                            // Try both palettes to see which looks right
+                            pixels[dstIdx] = palIdx < 64 ? _gameplayPalette[palIdx] : _openingPalette[palIdx];
+                        }
+                    }
+                }
+                currentY += chunkHeight + 2; // 2px gap
+            }
+
+            texture.SetData(pixels);
+            Console.WriteLine($"Created logo texture: {logoWidth}x{logoHeight}");
+            return texture;
+        }
     }
 }
