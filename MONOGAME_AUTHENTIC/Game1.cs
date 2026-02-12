@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ZeliardAuthentic.Entities;
 using ZeliardAuthentic.Input;
+using ZeliardAuthentic.Physics;
 using ZeliardAuthentic.Rendering;
 
 namespace ZeliardAuthentic
@@ -17,6 +18,10 @@ namespace ZeliardAuthentic
         private PlayerController? _playerController;
         private InputManager? _input;
         private Camera? _camera;
+
+        // Phase 2: Physics
+        private PhysicsEngine? _physics;
+        private CollisionMap? _collisionMap;
 
         public Game1()
         {
@@ -35,8 +40,10 @@ namespace ZeliardAuthentic
             _playerController = new PlayerController();
             _input = new InputManager();
             _camera = new Camera();
+            _physics = new PhysicsEngine();
+            _collisionMap = CollisionMap.CreateTestLevel();
 
-            System.Console.WriteLine("=== Phase 1: Player Entity ===");
+            System.Console.WriteLine("=== Phase 1-2: Player Entity + Physics ===");
             System.Console.WriteLine($"Player spawn: {_player.Position}");
             System.Console.WriteLine($"Level size: 640×400");
             System.Console.WriteLine($"Screen size: 320×200");
@@ -68,6 +75,10 @@ namespace ZeliardAuthentic
 
             // Process input → player movement
             _playerController?.ProcessInput(_input, _player!);
+
+            // Apply physics (gravity, collisions)
+            _physics?.Update(_player!, _collisionMap!);
+
             _player?.Update(gameTime);
 
             // Camera follows player (temp level size: 640×400 - bigger than screen)
