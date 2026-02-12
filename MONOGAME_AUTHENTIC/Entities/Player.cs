@@ -19,7 +19,7 @@ namespace ZeliardAuthentic.Entities
 
         public Player()
         {
-            Position = new Vector2(320, 100);        // Spawn in center of larger level
+            Position = new Vector2(160, 100);        // Spawn at center of 320×200 screen
             Velocity = Vector2.Zero;
             OnGround = true;                         // Start on ground
         }

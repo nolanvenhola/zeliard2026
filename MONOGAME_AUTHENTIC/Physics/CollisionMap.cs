@@ -40,43 +40,31 @@ namespace ZeliardAuthentic.Physics
         }
 
         /// <summary>
-        /// Creates a test level for Phase 2 testing.
+        /// Creates a test level at DOS resolution (320×200).
         /// </summary>
         public static CollisionMap CreateTestLevel()
         {
-            // 40 tiles wide × 25 tiles tall = 640×400 at 16px tiles
-            var map = new CollisionMap(40, 25);
+            // 20 tiles wide × 13 tiles tall = 320×208 at 16px tiles (slightly taller than 200)
+            var map = new CollisionMap(20, 13);
 
-            // Floor at bottom (2 rows thick)
-            for (int x = 0; x < 40; x++)
+            // Floor at bottom (rows 11-12)
+            for (int x = 0; x < 20; x++)
             {
-                map.SetTile(x, 23, 1);
-                map.SetTile(x, 24, 1);
+                map.SetTile(x, 11, 1);
+                map.SetTile(x, 12, 1);
             }
 
-            // Platform in middle-left (5 tiles wide)
-            for (int x = 5; x < 10; x++)
+            // Platform in middle (tiles 7-12, row 8)
+            for (int x = 7; x < 13; x++)
             {
-                map.SetTile(x, 18, 1);
-            }
-
-            // Platform in middle-right (5 tiles wide)
-            for (int x = 25; x < 30; x++)
-            {
-                map.SetTile(x, 16, 1);
+                map.SetTile(x, 8, 1);
             }
 
             // Walls on left and right sides
-            for (int y = 0; y < 25; y++)
+            for (int y = 0; y < 13; y++)
             {
                 map.SetTile(0, y, 1);
-                map.SetTile(39, y, 1);
-            }
-
-            // Ceiling at top
-            for (int x = 0; x < 40; x++)
-            {
-                map.SetTile(x, 0, 1);
+                map.SetTile(19, y, 1);
             }
 
             return map;

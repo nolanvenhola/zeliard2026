@@ -45,9 +45,8 @@ namespace ZeliardAuthentic
 
             System.Console.WriteLine("=== Phase 1-2: Player Entity + Physics ===");
             System.Console.WriteLine($"Player spawn: {_player.Position}");
-            System.Console.WriteLine($"Level size: 640×400");
-            System.Console.WriteLine($"Screen size: 320×200");
-            System.Console.WriteLine($"Player at screen center: (160, 100) with origin at sprite center");
+            System.Console.WriteLine($"DOS resolution: 320×200 (scaled 3× to 960×600 window)");
+            System.Console.WriteLine($"Level size: 320×208 (20×13 tiles)");
             System.Console.WriteLine();
             System.Console.WriteLine("Controls:");
             System.Console.WriteLine("  Arrow Keys - Move");
@@ -81,8 +80,8 @@ namespace ZeliardAuthentic
 
             _player?.Update(gameTime);
 
-            // Camera follows player (temp level size: 640×400 - bigger than screen)
-            _camera?.Follow(_player!, 640, 400);
+            // Camera follows player (level is 320×208 - same as screen size, so camera stays at origin)
+            _camera?.Follow(_player!, 320, 208);
 
             // Debug output (first frame only)
             if (gameTime.TotalGameTime.TotalSeconds < 0.1)
