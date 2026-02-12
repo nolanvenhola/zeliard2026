@@ -17,9 +17,12 @@ namespace ZeliardAuthentic.Rendering
             float targetX = player.Position.X - ScreenWidth / 2;
             float targetY = player.Position.Y - ScreenHeight / 2;
 
-            // Clamp to level bounds
-            targetX = Math.Clamp(targetX, 0, levelWidth - ScreenWidth);
-            targetY = Math.Clamp(targetY, 0, levelHeight - ScreenHeight);
+            // Clamp to level bounds (handle small levels)
+            float maxX = Math.Max(0, levelWidth - ScreenWidth);
+            float maxY = Math.Max(0, levelHeight - ScreenHeight);
+
+            targetX = Math.Clamp(targetX, 0, maxX);
+            targetY = Math.Clamp(targetY, 0, maxY);
 
             Position = new Vector2(targetX, targetY);
         }

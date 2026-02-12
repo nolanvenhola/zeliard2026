@@ -55,8 +55,8 @@ namespace ZeliardAuthentic
             _playerController?.ProcessInput(_input, _player!);
             _player?.Update(gameTime);
 
-            // Camera follows player (temp level size: 320×200)
-            _camera?.Follow(_player!, 320, 200);
+            // Camera follows player (temp level size: 640×400 - bigger than screen)
+            _camera?.Follow(_player!, 640, 400);
 
             base.Update(gameTime);
         }

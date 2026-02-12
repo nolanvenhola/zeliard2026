@@ -19,17 +19,31 @@ namespace ZeliardAuthentic.Entities
 
         public Player()
         {
-            Position = new Vector2(50, 150);         // Default spawn
+            Position = new Vector2(320, 100);        // Spawn in center of larger level
             Velocity = Vector2.Zero;
+            OnGround = true;                         // Start on ground
         }
 
         public void LoadContent(GraphicsDevice device)
         {
-            // Create 16×24 colored rectangle (temporary until sprites implemented)
+            // Create 16×24 asymmetric sprite to show direction (temporary until sprites implemented)
             _debugTexture = new Texture2D(device, 16, 24);
             Color[] colors = new Color[16 * 24];
+
+            // Fill with blue
             for (int i = 0; i < colors.Length; i++)
                 colors[i] = Color.Blue;
+
+            // Draw directional indicator (white arrow on right side)
+            // This makes flipping visible
+            for (int y = 10; y < 14; y++)
+            {
+                for (int x = 12; x < 16; x++)
+                {
+                    colors[y * 16 + x] = Color.White;
+                }
+            }
+
             _debugTexture.SetData(colors);
         }
 
