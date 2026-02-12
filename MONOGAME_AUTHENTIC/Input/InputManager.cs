@@ -40,18 +40,19 @@ namespace ZeliardAuthentic.Input
 
         private Keys MapActionToKey(GameAction action)
         {
+            // From GAME_DATA_REFERENCE.md lines 77-91 (DOS controls)
             return action switch
             {
                 GameAction.Left => Keys.Left,
                 GameAction.Right => Keys.Right,
                 GameAction.Up => Keys.Up,
                 GameAction.Down => Keys.Down,
-                GameAction.Jump => Keys.Space,
-                GameAction.Attack => Keys.Z,
-                GameAction.Magic => Keys.X,
-                GameAction.Pause => Keys.Escape,
-                GameAction.Inventory => Keys.I,
-                GameAction.Confirm => Keys.Enter,
+                GameAction.Jump => Keys.Up,          // "Up: Jump" (line 79)
+                GameAction.Attack => Keys.Space,     // "Spacebar: Use weapon" (line 84)
+                GameAction.Magic => Keys.LeftAlt,    // "[ALT]: Cast selected spell" (line 90)
+                GameAction.Pause => Keys.Escape,     // "[ESC]: Pause game" (line 91)
+                GameAction.Inventory => Keys.Enter,  // "[ENTER]: Access Inventory Screen" (line 89)
+                GameAction.Confirm => Keys.Space,    // Spacebar for confirm in menus
                 GameAction.Cancel => Keys.Escape,
                 _ => Keys.None
             };
