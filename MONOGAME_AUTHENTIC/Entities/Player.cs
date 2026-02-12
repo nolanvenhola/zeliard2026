@@ -54,14 +54,15 @@ namespace ZeliardAuthentic.Entities
 
         public void Update(GameTime gameTime)
         {
-            // Apply velocity to position (integers only)
-            X += VelocityX;
-            Y += VelocityY;
+            // NOTE: Physics engine already applies velocity to position!
+            // This method is for player-specific state updates only
 
-            // Apply friction when grounded
+            // Apply friction when grounded (reduce horizontal velocity)
             if (OnGround && VelocityX != 0)
             {
                 VelocityX = (int)(VelocityX * 0.8f);
+                if (System.Math.Abs(VelocityX) < 1)
+                    VelocityX = 0; // Stop completely if too slow
             }
         }
 
