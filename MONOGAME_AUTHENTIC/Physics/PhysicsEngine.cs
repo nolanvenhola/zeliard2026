@@ -16,9 +16,10 @@ namespace ZeliardAuthentic.Physics
             {
                 player.VelocityY++; // Gravity = 1 pixel/frame²
 
-                // Terminal velocity (reduced to prevent tunneling through tiles)
-                if (player.VelocityY > 6)
-                    player.VelocityY = 6; // Max 6 px/frame
+                // Terminal velocity (limit to prevent tunneling through 16px tiles)
+                // With -24 jump and gravity +1, need higher terminal velocity
+                if (player.VelocityY > 10)
+                    player.VelocityY = 10; // Max 10 px/frame (safe for 16px tiles)
             }
 
             // Move and resolve collisions on each axis separately
