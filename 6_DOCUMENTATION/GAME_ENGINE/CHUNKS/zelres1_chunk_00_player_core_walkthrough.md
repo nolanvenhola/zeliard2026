@@ -449,15 +449,15 @@
 
 **Purpose**: Initializes all player variables to default values
 
-**Likely Variables** (based on typical game structure):
+**Player Variables** (confirmed from chunks 04 and 06):
 ```
-Player Position:
-  [cs:0x????] - Player X position (16-bit, fixed-point 8.8)
-  [cs:0x????] - Player Y position (16-bit, fixed-point 8.8)
+Player Position (from chunk_06):
+  [cs:0x0080] - Player X position (2 bytes)
+  [cs:0x0083] - Player Y position (1 byte)
 
-Player Velocity:
-  [cs:0x????] - X velocity (signed 16-bit)
-  [cs:0x????] - Y velocity (signed 16-bit)
+Player Velocity (from chunk_06):
+  [cs:0x008C] - Y velocity (1 byte, signed)
+  [cs:0x????] - X velocity (location TBD)
 
 Player State:
   [cs:0x????] - Current animation state (0=idle, 1=walk, 2=jump, etc.)
@@ -465,15 +465,15 @@ Player State:
   [cs:0x????] - Facing direction (0=right, 1=left)
   [cs:0x????] - On ground flag
 
-Player Stats:
-  [cs:0x????] - Current HP
-  [cs:0x????] - Max HP
-  [cs:0x????] - Current Mana
-  [cs:0x????] - Max Mana
-  [cs:0x????] - Attack power
-  [cs:0x????] - Defense
-  [cs:0x????] - Level
-  [cs:0x????] - Experience points
+Player Stats (from chunk_04):
+  [cs:0x6000] - Level (1 byte)
+  [cs:0x6002] - Experience points (4 bytes)
+  [cs:0x600A] - Current HP (2 bytes)
+  [cs:0x600C] - Max HP (2 bytes)
+  [cs:0x600E] - Current Mana (2 bytes)
+  [cs:0x6010] - Max Mana (2 bytes)
+  [cs:0x6012] - Base Attack (2 bytes)
+  [cs:0x6014] - Base Defense (2 bytes)
 ```
 
 ---
@@ -841,25 +841,32 @@ Copyright (C)1990 Sierra On-Line
 
 ---
 
-### Player Variables (CS:0x????xx - Locations TBD)
+### Player Variables (Confirmed from chunks 04 and 06)
 
-*Note: Exact memory locations require deeper analysis of chunks 02, 04, and 06*
+*Note: Memory locations discovered from cross-referencing zelres1_chunk_04 (stats) and zelres1_chunk_06 (advanced player)*
 
-| Variable | Size | Purpose |
-|----------|------|---------|
-| Player X | 2 bytes | Horizontal position (fixed-point 8.8) |
-| Player Y | 2 bytes | Vertical position (fixed-point 8.8) |
-| Velocity X | 2 bytes | Horizontal velocity (signed) |
-| Velocity Y | 2 bytes | Vertical velocity (signed) |
-| Anim State | 1 byte | Current animation (0-9) |
-| Anim Frame | 1 byte | Current frame in animation |
-| Anim Timer | 1 byte | Frame timer |
-| Direction | 1 byte | Facing direction (0=right, 1=left) |
-| On Ground | 1 byte | Grounded flag |
-| HP Current | 2 bytes | Current hit points |
-| HP Max | 2 bytes | Maximum hit points |
-| Mana Current | 2 bytes | Current mana |
-| Mana Max | 2 bytes | Maximum mana |
+| Variable | Address | Size | Purpose |
+|----------|---------|------|---------|
+| **Position & Velocity** (chunk_06) ||||
+| Player X | `0x0080` | 2 bytes | Horizontal position |
+| Player Y | `0x0083` | 1 byte | Vertical position |
+| Velocity Y | `0x008C` | 1 byte | Vertical velocity (signed) |
+| Velocity X | TBD | 2 bytes | Horizontal velocity (signed) |
+| **Player State** (locations TBD) ||||
+| Anim State | TBD | 1 byte | Current animation (0-9) |
+| Anim Frame | TBD | 1 byte | Current frame in animation |
+| Anim Timer | TBD | 1 byte | Frame timer |
+| Direction | TBD | 1 byte | Facing direction (0=right, 1=left) |
+| On Ground | TBD | 1 byte | Grounded flag |
+| **Player Stats** (chunk_04) ||||
+| Level | `0x6000` | 1 byte | Current level (1-99) |
+| Experience | `0x6002` | 4 bytes | Total experience points |
+| HP Current | `0x600A` | 2 bytes | Current hit points |
+| HP Max | `0x600C` | 2 bytes | Maximum hit points |
+| Mana Current | `0x600E` | 2 bytes | Current mana |
+| Mana Max | `0x6010` | 2 bytes | Maximum mana |
+| Base Attack | `0x6012` | 2 bytes | Attack before equipment |
+| Base Defense | `0x6014` | 2 bytes | Defense before equipment |
 
 ---
 
@@ -913,6 +920,9 @@ call [cs:0x????]  // Initialize empty inventory
 // Initialize player stats:
 call [cs:0x????]  // Set starting HP, mana, level
 // Returns: Player stats initialized for level 1
+//   [0x6000] = 1 (starting level)
+//   [0x600A] = [0x600C] (current HP = max HP)
+//   [0x600E] = [0x6010] (current mana = max mana)
 ```
 
 ### Calls to Chunk_06 (Advanced Player)
@@ -921,6 +931,9 @@ call [cs:0x????]  // Set starting HP, mana, level
 // Initialize combat systems:
 call [cs:0x????]  // Setup sword collision, magic system
 // Returns: Combat systems ready
+//   [0x0080] = starting X position
+//   [0x0083] = starting Y position
+//   [0x008C] = 0 (no vertical velocity)
 ```
 
 ---

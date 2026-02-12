@@ -1157,10 +1157,18 @@ public void Update(GameTime gameTime) {
 
 ## Related Documentation
 
+### Sprite & Graphics
 - `zelres2_sprite_format.md` - Bitplane sprite encoding
-- `zelres3_boss_chunks.md` - Individual boss behaviors (TODO)
-- `enemy_stats_table.md` - Complete stat reference (TODO)
-- `ai_pathfinding.md` - Movement AI deep dive (TODO)
+
+### Boss Behaviors
+- [zelres2_chunk_06_ai_behaviors_walkthrough.md](zelres2_chunk_06_ai_behaviors_walkthrough.md) - Boss AI state machine (Section 4: 3-phase system)
+- [zelres3_chunk_34_walkthrough.md](zelres3_chunk_34_walkthrough.md) - Boss AI and phase system (Sections 2 & 5)
+- [zelres3_chunk_35_walkthrough.md](zelres3_chunk_35_walkthrough.md) - Boss introduction sequences (Section 7)
+
+### Enemy Stats & AI
+- [zelres3_chunk_22_walkthrough.md](zelres3_chunk_22_walkthrough.md) - Enemy type definitions (Section 2)
+- [zelres2_chunk_06_ai_behaviors_walkthrough.md](zelres2_chunk_06_ai_behaviors_walkthrough.md) - Ground AI, flying AI, homing AI (Sections 1-3)
+- [zelres2_chunk_03_physics_subsystems_walkthrough.md](zelres2_chunk_03_physics_subsystems_walkthrough.md) - Movement physics and pathfinding
 
 ---
 
