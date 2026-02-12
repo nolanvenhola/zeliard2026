@@ -9,117 +9,114 @@ namespace ZeliardAuthentic.Physics
     /// </summary>
     public class PhysicsEngine
     {
-        // From zelres2_chunk_04: Gravity = 9.8 pixels/sec² ÷ 18.2 FPS = 0.538
-        private const float Gravity = 0.5f;
-        private const float MaxFallSpeed = 10.0f;
-
         public void Update(Player player, CollisionMap collisionMap)
         {
             // Apply gravity (integer-based)
             if (!player.OnGround)
             {
-                player.VelocityY++; // Gravity = 1 pixel/frame² (simplified from 0.5)
+                player.VelocityY++; // Gravity = 1 pixel/frame²
 
-                // Terminal velocity
-                if (player.VelocityY > (int)MaxFallSpeed)
-                    player.VelocityY = (int)MaxFallSpeed;
+                // Terminal velocity (reduced to prevent tunneling through tiles)
+                if (player.VelocityY > 6)
+                    player.VelocityY = 6; // Max 6 px/frame
             }
 
-            // Apply velocity to position
+            // Move and resolve collisions on each axis separately
+            // This prevents tunneling through tiles
+
+            // Horizontal movement
             player.X += player.VelocityX;
+            ResolveHorizontalCollisions(player, collisionMap);
+
+            // Vertical movement
             player.Y += player.VelocityY;
+            ResolveVerticalCollisions(player, collisionMap);
 
-            // Detect & resolve collisions
-            player.OnGround = false;
-            ResolveCollisions(player, collisionMap);
-
-            // Check if standing on ground (even if no collision occurred this frame)
-            CheckGroundBelow(player, collisionMap);
+            // Check if standing on ground
+            player.OnGround = CheckGroundBelow(player, collisionMap);
         }
 
-        private void CheckGroundBelow(Player player, CollisionMap map)
-        {
-            // Check for solid tile directly below player's feet
-            Rectangle playerBounds = player.GetBounds();
-            int playerBottom = playerBounds.Bottom;
-
-            // Check tiles below player
-            int leftTileX = playerBounds.Left / 16;
-            int rightTileX = (playerBounds.Right - 1) / 16;
-            int belowTileY = (playerBottom + 1) / 16;
-
-            // If standing on solid ground, set OnGround
-            if (map.IsSolid(leftTileX, belowTileY) || map.IsSolid(rightTileX, belowTileY))
-            {
-                player.OnGround = true;
-            }
-        }
-
-        private void ResolveCollisions(Player player, CollisionMap map)
+        private void ResolveHorizontalCollisions(Player player, CollisionMap map)
         {
             Rectangle playerBounds = player.GetBounds();
 
-            // Check tiles in 3×3 grid around player
             int tileSize = 16;
-            int startTileX = playerBounds.Left / tileSize - 1;
-            int endTileX = playerBounds.Right / tileSize + 1;
-            int startTileY = playerBounds.Top / tileSize - 1;
-            int endTileY = playerBounds.Bottom / tileSize + 1;
+            int startTileY = playerBounds.Top / tileSize;
+            int endTileY = (playerBounds.Bottom - 1) / tileSize;
 
             for (int tileY = startTileY; tileY <= endTileY; tileY++)
             {
-                for (int tileX = startTileX; tileX <= endTileX; tileX++)
+                int checkTileX = player.VelocityX > 0 ?
+                    (playerBounds.Right - 1) / tileSize :  // Moving right - check right edge
+                    playerBounds.Left / tileSize;          // Moving left - check left edge
+
+                if (map.IsSolid(checkTileX, tileY))
                 {
-                    if (map.IsSolid(tileX, tileY))
+                    // Push player out of wall
+                    if (player.VelocityX > 0)
                     {
-                        Rectangle tileBounds = map.GetTileBounds(tileX, tileY);
-
-                        if (playerBounds.Intersects(tileBounds))
-                        {
-                            ResolveIntersection(player, playerBounds, tileBounds);
-
-                            // Recalculate bounds after position change
-                            playerBounds = player.GetBounds();
-                        }
+                        // Hit right wall - snap to left of tile
+                        player.X = checkTileX * tileSize - 8; // Account for origin
                     }
+                    else
+                    {
+                        // Hit left wall - snap to right of tile
+                        player.X = (checkTileX + 1) * tileSize + 8; // Account for origin
+                    }
+
+                    player.VelocityX = 0;
+                    break;
                 }
             }
         }
 
-        private void ResolveIntersection(Player player, Rectangle playerBounds, Rectangle tileBounds)
+        private void ResolveVerticalCollisions(Player player, CollisionMap map)
         {
-            // Calculate overlap on each axis
-            int overlapX = System.Math.Min(playerBounds.Right - tileBounds.Left,
-                                     tileBounds.Right - playerBounds.Left);
-            int overlapY = System.Math.Min(playerBounds.Bottom - tileBounds.Top,
-                                     tileBounds.Bottom - playerBounds.Top);
+            Rectangle playerBounds = player.GetBounds();
 
-            // Resolve on axis with least overlap (most likely collision direction)
-            if (overlapX < overlapY)
-            {
-                // Horizontal collision
-                if (player.VelocityX > 0) // Moving right
-                    player.X -= overlapX;
-                else // Moving left
-                    player.X += overlapX;
+            int tileSize = 16;
+            int startTileX = playerBounds.Left / tileSize;
+            int endTileX = (playerBounds.Right - 1) / tileSize;
 
-                player.VelocityX = 0;
-            }
-            else
+            for (int tileX = startTileX; tileX <= endTileX; tileX++)
             {
-                // Vertical collision
-                if (player.VelocityY > 0) // Falling
+                int checkTileY = player.VelocityY > 0 ?
+                    (playerBounds.Bottom - 1) / tileSize : // Moving down - check bottom edge
+                    playerBounds.Top / tileSize;           // Moving up - check top edge
+
+                if (map.IsSolid(tileX, checkTileY))
                 {
-                    player.Y -= overlapY;
+                    // Push player out of tile
+                    if (player.VelocityY > 0)
+                    {
+                        // Hit floor - snap to top of tile
+                        player.Y = checkTileY * tileSize - 12; // Account for origin
+                        player.OnGround = true;
+                    }
+                    else
+                    {
+                        // Hit ceiling - snap to bottom of tile
+                        player.Y = (checkTileY + 1) * tileSize + 12; // Account for origin
+                    }
+
                     player.VelocityY = 0;
-                    player.OnGround = true; // Landed on ground
-                }
-                else // Rising (hit ceiling)
-                {
-                    player.Y += overlapY;
-                    player.VelocityY = 0;
+                    break;
                 }
             }
+        }
+
+        private bool CheckGroundBelow(Player player, CollisionMap map)
+        {
+            // Check for solid tile directly below player's feet
+            Rectangle playerBounds = player.GetBounds();
+
+            // Check tiles 1 pixel below player
+            int leftTileX = playerBounds.Left / 16;
+            int rightTileX = (playerBounds.Right - 1) / 16;
+            int belowTileY = (playerBounds.Bottom + 1) / 16;
+
+            // Return true if standing on solid ground
+            return map.IsSolid(leftTileX, belowTileY) || map.IsSolid(rightTileX, belowTileY);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace ZeliardAuthentic.Entities
         public Player()
         {
             X = 160;                                 // Spawn at center of 320×200 screen
-            Y = 170;                                 // Just above floor (floor at y=176)
+            Y = 100;                                 // Spawn in air, will fall to floor
             VelocityX = 0;
             VelocityY = 0;
             OnGround = false;                        // Will be set by physics on first frame

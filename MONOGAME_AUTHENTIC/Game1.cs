@@ -44,18 +44,6 @@ namespace ZeliardAuthentic
             _physics = new PhysicsEngine();
             _collisionMap = CollisionMap.CreateTestLevel();
 
-            System.Console.WriteLine("=== Phase 1-2: Player Entity + Physics ===");
-            System.Console.WriteLine($"Player spawn: ({_player.X}, {_player.Y})");
-            System.Console.WriteLine($"DOS resolution: 320×200 (scaled 3× to 960×600 window)");
-            System.Console.WriteLine($"Level size: 320×208 (20×13 tiles)");
-            System.Console.WriteLine();
-            System.Console.WriteLine("Controls:");
-            System.Console.WriteLine("  Arrow Keys - Move");
-            System.Console.WriteLine("  SPACE - Jump (no gravity yet)");
-            System.Console.WriteLine("  ESC - Exit");
-            System.Console.WriteLine();
-            System.Console.WriteLine("Look for: Blue rectangle with white marker showing direction");
-
             base.Initialize();
         }
 
