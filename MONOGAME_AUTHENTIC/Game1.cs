@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using ZeliardAuthentic.Animation;
+using ZeliardAuthentic.Combat;
 using ZeliardAuthentic.Entities;
 using ZeliardAuthentic.Input;
 using ZeliardAuthentic.Physics;
@@ -28,6 +30,10 @@ namespace ZeliardAuthentic
         // Phase 3: Animation
         private PlayerAnimator? _animator;
 
+        // Phase 4: Combat
+        private CombatSystem? _combatSystem;
+        private List<Enemy> _enemies = new List<Enemy>();
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -48,6 +54,9 @@ namespace ZeliardAuthentic
             _physics = new PhysicsEngine();
             _collisionMap = CollisionMap.CreateTestLevel();
             _animator = new PlayerAnimator();
+            _combatSystem = new CombatSystem();
+
+            // TODO Phase 5: Spawn test enemies here
 
             base.Initialize();
         }
@@ -82,6 +91,9 @@ namespace ZeliardAuthentic
             // Update animation state based on player movement
             _animator?.Update(gameTime, _player!);
 
+            // Update combat (player attacks enemies, enemies attack player)
+            _combatSystem?.Update(_player!, _enemies);
+
             // Camera follows player (level is 320×208 - same as screen size, so camera stays at origin)
             _camera?.Follow(_player!, 320, 208);
 
@@ -93,6 +105,8 @@ namespace ZeliardAuthentic
                 System.Console.WriteLine($"Player velocity: ({_player?.VelocityX}, {_player?.VelocityY})");
                 System.Console.WriteLine($"Player OnGround: {_player?.OnGround}");
                 System.Console.WriteLine($"Animation: {_animator?.CurrentState} (frame {_animator?.CurrentFrame})");
+                System.Console.WriteLine($"Player HP: {_player?.Stats.CurrentHP}/{_player?.Stats.MaxHP}");
+                System.Console.WriteLine($"Player Attack: {_player?.Stats.TotalAttack} (base {_player?.Stats.BaseAttack} + level bonus {_player?.Stats.Level / 2})");
             }
 
             base.Update(gameTime);
