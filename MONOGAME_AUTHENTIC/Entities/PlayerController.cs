@@ -23,10 +23,10 @@ namespace ZeliardAuthentic.Entities
                 player.VelocityX = 0; // Stop immediately when no input
             }
 
-            // Jump (from zelres1_chunk_06 offset 0x844: mov byte [0x8c],-0x18)
+            // Normal jump (double jump in assembly is -24, normal likely half that)
             if (input.IsPressed(GameAction.Jump) && player.CanJump)
             {
-                player.VelocityY = -24; // DOS uses -0x18 = -24 px/frame
+                player.VelocityY = -12; // Estimated (double jump = -24 from assembly)
                 player.OnGround = false;
             }
         }
