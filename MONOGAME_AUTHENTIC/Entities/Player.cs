@@ -69,7 +69,12 @@ namespace ZeliardAuthentic.Entities
             if (_debugTexture == null) return;
 
             SpriteEffects flip = FacingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            spriteBatch.Draw(_debugTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, flip, 0f);
+
+            // Use sprite center as origin (8, 12) for 16×24 sprite
+            // This makes the Position represent the sprite's center point
+            Vector2 origin = new Vector2(8, 12);
+
+            spriteBatch.Draw(_debugTexture, Position, null, Color.White, 0f, origin, 1f, flip, 0f);
         }
     }
 }

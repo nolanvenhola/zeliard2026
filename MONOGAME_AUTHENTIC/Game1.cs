@@ -35,6 +35,19 @@ namespace ZeliardAuthentic
             _input = new InputManager();
             _camera = new Camera();
 
+            System.Console.WriteLine("=== Phase 1: Player Entity ===");
+            System.Console.WriteLine($"Player spawn: {_player.Position}");
+            System.Console.WriteLine($"Level size: 640×400");
+            System.Console.WriteLine($"Screen size: 320×200");
+            System.Console.WriteLine($"Player at screen center: (160, 100) with origin at sprite center");
+            System.Console.WriteLine();
+            System.Console.WriteLine("Controls:");
+            System.Console.WriteLine("  Arrow Keys - Move");
+            System.Console.WriteLine("  SPACE - Jump (no gravity yet)");
+            System.Console.WriteLine("  ESC - Exit");
+            System.Console.WriteLine();
+            System.Console.WriteLine("Look for: Blue rectangle with white marker showing direction");
+
             base.Initialize();
         }
 
@@ -57,6 +70,14 @@ namespace ZeliardAuthentic
 
             // Camera follows player (temp level size: 640×400 - bigger than screen)
             _camera?.Follow(_player!, 640, 400);
+
+            // Debug output (first frame only)
+            if (gameTime.TotalGameTime.TotalSeconds < 0.1)
+            {
+                System.Console.WriteLine($"Camera pos: {_camera?.Position}");
+                System.Console.WriteLine($"Player pos: {_player?.Position}");
+                System.Console.WriteLine($"Player screen pos: ({_player?.Position.X - _camera?.Position.X}, {_player?.Position.Y - _camera?.Position.Y})");
+            }
 
             base.Update(gameTime);
         }
