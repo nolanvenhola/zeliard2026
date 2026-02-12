@@ -947,12 +947,12 @@ uint16_t music_table[9] = {
 
 | Address | Size | Purpose |
 |---------|------|---------|
-| `0x0033` | 2 bytes | Unknown system value |
-| `0x0049` | 1 byte | Unknown flag |
+| `0x0033` (0x33FF) | 1 byte | Delay counter (animation timing, ×4 multiplier) |
+| `0x0049` | 1 byte | Event flag (0x00=none, 0xFF=active) |
 | `0x0080-0x0083` | 4 bytes | System parameters |
 | `0x00A0` | 1 byte | Current level (0-9) |
 | `0x00C2` | 1 byte | System flags |
-| `0x00E6` | 1 byte | Unknown state |
+| `0x00E6` | 1 byte | Game state flag (0x00=normal, 0xFF=pause/special) |
 | `0x00E7` | 1 byte | System counter (0-8) |
 | `0xA59A` | 1 byte | Level ID |
 | `0xA59B` | 1 byte | Level type (0x02 = cavern) |

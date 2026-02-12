@@ -851,13 +851,16 @@ Copyright (C)1990 Sierra On-Line
 | Player X | `0x0080` | 2 bytes | Horizontal position |
 | Player Y | `0x0083` | 1 byte | Vertical position |
 | Velocity Y | `0x008C` | 1 byte | Vertical velocity (signed) |
-| Velocity X | TBD | 2 bytes | Horizontal velocity (signed) |
-| **Player State** (locations TBD) ||||
-| Anim State | TBD | 1 byte | Current animation (0-9) |
-| Anim Frame | TBD | 1 byte | Current frame in animation |
-| Anim Timer | TBD | 1 byte | Frame timer |
-| Direction | TBD | 1 byte | Facing direction (0=right, 1=left) |
-| On Ground | TBD | 1 byte | Grounded flag |
+| Velocity X High | `0x0085` | 1 byte | Horizontal velocity (high byte) |
+| Velocity X Low | `0x0086` | 2 bytes | Horizontal velocity (low word) |
+| **Player State** (chunk_06) ||||
+| Direction State | `0x0082` | 1 byte | Horizontal direction/state (masked 0x3F) |
+| Anim Frame | `0x0083` | 1 byte | Animation frame counter (0-27) |
+| Boundary Distance | `0x008B` | 2 bytes | Horizontal boundary tracking |
+| Animation Flag 1 | `0x009D` | 1 byte | Primary animation control |
+| Animation Flag 2 | `0x0093` | 1 byte | Secondary animation control |
+| Animation State | `0x009A` | 1 byte | Special animation state flag |
+| Init/Reset Flag | `0x009F` | 1 byte | State initialization flag |
 | **Player Stats** (chunk_04) ||||
 | Level | `0x6000` | 1 byte | Current level (1-99) |
 | Experience | `0x6002` | 4 bytes | Total experience points |
@@ -878,14 +881,14 @@ Copyright (C)1990 Sierra On-Line
 |--------|---------|
 | `0x010C` | Load chunk (AL=archive, SI=ref, DI=dest) |
 | `0x2000` | Draw filled rectangle |
-| `0x2002` | Unknown system function |
+| `0x2002` | System status handler (carry flag check, sets 0xE7) |
 | `0x2004` | Draw text character |
 | `0x2006` | System init 1 |
 | `0x2008` | System init 2 |
 | `0x2012` | System init 3 |
 | `0x2014` | System init 4 |
 | `0x2016` | System init 5 |
-| `0x202A` | Unknown function |
+| `0x202A` | Data processing handler (entity/combat state, SI+=0x23) |
 | `0x2042` | Primary system init |
 
 ### Graphics Driver Functions (gmmcga, CS:0x30xx)
