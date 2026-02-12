@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ZeliardAuthentic.Physics
 {
@@ -68,6 +69,24 @@ namespace ZeliardAuthentic.Physics
             }
 
             return map;
+        }
+
+        /// <summary>
+        /// Debug draw - renders collision tiles as colored rectangles.
+        /// </summary>
+        public void DebugDraw(SpriteBatch spriteBatch, Texture2D pixel)
+        {
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                {
+                    if (_tiles[y, x] == 1)
+                    {
+                        Rectangle tileBounds = GetTileBounds(x, y);
+                        spriteBatch.Draw(pixel, tileBounds, Color.Gray * 0.5f); // Semi-transparent gray
+                    }
+                }
+            }
         }
     }
 }

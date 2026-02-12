@@ -12,6 +12,7 @@ namespace ZeliardAuthentic
         private GraphicsDeviceManager _graphics;
         private SpriteBatch? _spriteBatch;
         private DOSScreen? _dosScreen;
+        private Texture2D? _pixel; // 1×1 white pixel for debug rendering
 
         // Phase 1: Core systems
         private Player? _player;
@@ -62,6 +63,11 @@ namespace ZeliardAuthentic
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _dosScreen = new DOSScreen(GraphicsDevice);
+
+            // Create 1×1 white pixel for debug rendering
+            _pixel = new Texture2D(GraphicsDevice, 1, 1);
+            _pixel.SetData(new[] { Color.White });
+
             _player?.LoadContent(GraphicsDevice);
         }
 
@@ -104,6 +110,10 @@ namespace ZeliardAuthentic
                 samplerState: SamplerState.PointClamp
             );
 
+            // Draw collision map (debug)
+            _collisionMap?.DebugDraw(_spriteBatch!, _pixel!);
+
+            // Draw player
             _player?.Draw(_spriteBatch!);
 
             _spriteBatch?.End();
