@@ -90,23 +90,26 @@ def extract_jump_velocity():
 
     emu = ZeliardEmulator()
 
-    # Load player chunk (zelres1_chunk_06 or chunk_00)
+    # Load player advanced chunk (zelres1_chunk_06)
     chunk_path = r"c:\Projects\Zeliard\2_EXTRACTED_CHUNKS\zelres1_extracted\chunk_06.bin"
     emu.load_chunk(chunk_path)
 
-    # Set up player state
+    # Set up player state for double jump
     emu.write_word(0x0080, 160)  # Player X = 160
     emu.write_byte(0x0083, 100)  # Player Y = 100
     emu.write_byte(0x008C, 0)    # VelocityY = 0
-    emu.write_byte(0x008A, 0)    # On ground flag = 0 (in air)
+    emu.write_byte(0x008A, 0)    # On ground flag = 0 (in air, for double jump)
+    emu.write_byte(0x008B, 0)    # Double-jump used flag = 0 (not used yet)
 
     print("Initial state:")
+    print(f"  Player Y (0x83) = {emu.read_byte(0x0083)}")
     print(f"  VelocityY (0x8C) = {emu.read_byte_signed(0x008C)}")
+    print(f"  On ground (0x8A) = {emu.read_byte(0x008A)}")
 
-    # Execute double jump function at offset 0x0851 (from walkthrough)
-    # Note: Adjust offset based on actual function location
+    # Execute double jump function at offset 0x0851
+    # From zelres1_chunk_06_player_advanced_walkthrough.md line 828
     try:
-        print("\nExecuting double jump function...")
+        print("\nExecuting double jump function at 0x0851...")
         emu.execute_function(0x0851, max_instructions=50)
 
         velocity = emu.read_byte_signed(0x008C)
@@ -114,10 +117,15 @@ def extract_jump_velocity():
         print(f"  VelocityY (0x8C) = {velocity}")
         print(f"  Double Jump Velocity = {velocity} px/frame")
 
+        if velocity == -24:
+            print(f"  ✅ VERIFIED: Matches documented value -0x18 = -24")
+        else:
+            print(f"  ⚠️ Different from documented -24")
+
         return velocity
     except Exception as e:
-        print(f"Error: {e}")
-        print("Note: Function offset may need adjustment based on chunk structure")
+        print(f"❌ Error: {e}")
+        print("Note: May need to set up function pointers or call stack")
         return None
 
 
@@ -164,7 +172,7 @@ def extract_walk_speed():
 
     emu = ZeliardEmulator()
 
-    # Load player input chunk
+    # Load player advanced chunk (zelres1_chunk_06)
     chunk_path = r"c:\Projects\Zeliard\2_EXTRACTED_CHUNKS\zelres1_extracted\chunk_06.bin"
     emu.load_chunk(chunk_path)
 
@@ -174,25 +182,29 @@ def extract_walk_speed():
     emu.write_word(0x0086, 0)    # VelocityX low = 0
 
     print("Initial state:")
+    print(f"  Player X (0x80) = {emu.read_word(0x0080)}")
     print(f"  VelocityX (0x85/86) = {emu.read_word(0x0085)}")
 
-    # Simulate "press right arrow" input
-    # Note: Need to find input processing function offset
+    # Input processing at 0x0243
+    # From zelres1_chunk_06_player_advanced_walkthrough.md line 502
     try:
-        print("\nSimulating right arrow press...")
-        # Set input flag for "right" button
-        # emu.write_byte(INPUT_FLAGS, RIGHT_KEY_BIT)
-        # emu.execute_function(input_process_offset)
+        print("\nExecuting input handler at 0x0243...")
+        print("Note: This may require setting input flags first")
 
-        velocity = emu.read_word(0x0085)
+        # TODO: Set input flags (need to find correct address)
+        # emu.write_byte(INPUT_RIGHT, 0xFF)
+
+        emu.execute_function(0x0243, max_instructions=100)
+
+        velocity_x = emu.read_byte_signed(0x0085)
         print(f"\nResult:")
-        print(f"  VelocityX = {velocity}")
-        print(f"  Walk Speed = {velocity} px/frame")
+        print(f"  VelocityX high (0x85) = {velocity_x}")
+        print(f"  Walk Speed ≈ {abs(velocity_x)} px/frame")
 
-        return velocity
+        return abs(velocity_x) if velocity_x != 0 else None
     except Exception as e:
-        print(f"Error: {e}")
-        print("Note: Need input processing function details")
+        print(f"❌ Error: {e}")
+        print("Note: Input handler may need keyboard flags set first")
         return None
 
 
