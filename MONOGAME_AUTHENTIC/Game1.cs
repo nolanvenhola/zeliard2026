@@ -45,7 +45,7 @@ namespace ZeliardAuthentic
             _collisionMap = CollisionMap.CreateTestLevel();
 
             System.Console.WriteLine("=== Phase 1-2: Player Entity + Physics ===");
-            System.Console.WriteLine($"Player spawn: {_player.Position}");
+            System.Console.WriteLine($"Player spawn: ({_player.X}, {_player.Y})");
             System.Console.WriteLine($"DOS resolution: 320×200 (scaled 3× to 960×600 window)");
             System.Console.WriteLine($"Level size: 320×208 (20×13 tiles)");
             System.Console.WriteLine();
@@ -93,8 +93,9 @@ namespace ZeliardAuthentic
             if (gameTime.TotalGameTime.TotalSeconds < 0.1)
             {
                 System.Console.WriteLine($"Camera pos: {_camera?.Position}");
-                System.Console.WriteLine($"Player pos: {_player?.Position}");
-                System.Console.WriteLine($"Player screen pos: ({_player?.Position.X - _camera?.Position.X}, {_player?.Position.Y - _camera?.Position.Y})");
+                System.Console.WriteLine($"Player pos: ({_player?.X}, {_player?.Y})");
+                System.Console.WriteLine($"Player velocity: ({_player?.VelocityX}, {_player?.VelocityY})");
+                System.Console.WriteLine($"Player OnGround: {_player?.OnGround}");
             }
 
             base.Update(gameTime);

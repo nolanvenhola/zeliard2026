@@ -6,9 +6,11 @@ namespace ZeliardAuthentic.Entities
     public class Player
     {
         // Position & Velocity (from zelres1_chunk_00, offsets 0x0080-0x009F)
-        // Using float for smooth sub-pixel movement, but rounding for rendering
-        public Vector2 Position { get; set; }        // 0x0080 (X), 0x0083 (Y)
-        public Vector2 Velocity { get; set; }        // 0x0085/86 (VX), 0x008C (VY)
+        // DOS used integers - matching that exactly
+        public int X { get; set; }                   // 0x0080 (word)
+        public int Y { get; set; }                   // 0x0083 (byte)
+        public int VelocityX { get; set; }           // 0x0085/86 (word)
+        public int VelocityY { get; set; }           // 0x008C (byte, signed)
 
         // State
         public bool FacingRight { get; set; } = true;
@@ -20,9 +22,11 @@ namespace ZeliardAuthentic.Entities
 
         public Player()
         {
-            Position = new Vector2(160, 100);        // Spawn at center of 320×200 screen
-            Velocity = Vector2.Zero;
-            OnGround = true;                         // Start on ground
+            X = 160;                                 // Spawn at center of 320×200 screen
+            Y = 170;                                 // Just above floor (floor at y=176)
+            VelocityX = 0;
+            VelocityY = 0;
+            OnGround = false;                        // Will be set by physics on first frame
         }
 
         public void LoadContent(GraphicsDevice device)
@@ -50,22 +54,21 @@ namespace ZeliardAuthentic.Entities
 
         public void Update(GameTime gameTime)
         {
-            // Apply velocity to position
-            Position += Velocity;
+            // Apply velocity to position (integers only)
+            X += VelocityX;
+            Y += VelocityY;
 
             // Apply friction when grounded
-            if (OnGround)
+            if (OnGround && VelocityX != 0)
             {
-                Velocity = new Vector2(Velocity.X * 0.8f, Velocity.Y);
+                VelocityX = (int)(VelocityX * 0.8f);
             }
         }
 
         public Rectangle GetBounds()
         {
-            // Round position to prevent sub-pixel collision jitter
-            int x = (int)System.Math.Round(Position.X);
-            int y = (int)System.Math.Round(Position.Y);
-            return new Rectangle(x - 8, y - 12, 16, 24); // Account for sprite origin
+            // Collision box centered on sprite (account for origin)
+            return new Rectangle(X - 8, Y - 12, 16, 24);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -78,7 +81,8 @@ namespace ZeliardAuthentic.Entities
             // This makes the Position represent the sprite's center point
             Vector2 origin = new Vector2(8, 12);
 
-            spriteBatch.Draw(_debugTexture, Position, null, Color.White, 0f, origin, 1f, flip, 0f);
+            Vector2 position = new Vector2(X, Y);
+            spriteBatch.Draw(_debugTexture, position, null, Color.White, 0f, origin, 1f, flip, 0f);
         }
     }
 }

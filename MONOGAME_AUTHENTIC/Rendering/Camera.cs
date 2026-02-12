@@ -13,13 +13,13 @@ namespace ZeliardAuthentic.Rendering
 
         public void Follow(Player player, int levelWidth, int levelHeight)
         {
-            // Center camera on player
-            float targetX = player.Position.X - ScreenWidth / 2;
-            float targetY = player.Position.Y - ScreenHeight / 2;
+            // Center camera on player (integer math)
+            int targetX = player.X - ScreenWidth / 2;
+            int targetY = player.Y - ScreenHeight / 2;
 
             // Clamp to level bounds (handle small levels)
-            float maxX = Math.Max(0, levelWidth - ScreenWidth);
-            float maxY = Math.Max(0, levelHeight - ScreenHeight);
+            int maxX = Math.Max(0, levelWidth - ScreenWidth);
+            int maxY = Math.Max(0, levelHeight - ScreenHeight);
 
             targetX = Math.Clamp(targetX, 0, maxX);
             targetY = Math.Clamp(targetY, 0, maxY);

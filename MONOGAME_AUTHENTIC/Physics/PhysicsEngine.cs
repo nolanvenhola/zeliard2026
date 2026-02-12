@@ -15,18 +15,19 @@ namespace ZeliardAuthentic.Physics
 
         public void Update(Player player, CollisionMap collisionMap)
         {
-            // Apply gravity
+            // Apply gravity (integer-based)
             if (!player.OnGround)
             {
-                player.Velocity += new Vector2(0, Gravity);
+                player.VelocityY++; // Gravity = 1 pixel/frame² (simplified from 0.5)
 
                 // Terminal velocity
-                if (player.Velocity.Y > MaxFallSpeed)
-                    player.Velocity = new Vector2(player.Velocity.X, MaxFallSpeed);
+                if (player.VelocityY > (int)MaxFallSpeed)
+                    player.VelocityY = (int)MaxFallSpeed;
             }
 
-            // Apply velocity
-            player.Position += player.Velocity;
+            // Apply velocity to position
+            player.X += player.VelocityX;
+            player.Y += player.VelocityY;
 
             // Detect & resolve collisions
             player.OnGround = false;
@@ -76,34 +77,28 @@ namespace ZeliardAuthentic.Physics
             if (overlapX < overlapY)
             {
                 // Horizontal collision
-                if (player.Velocity.X > 0) // Moving right
-                    player.Position = new Vector2(player.Position.X - overlapX, player.Position.Y);
+                if (player.VelocityX > 0) // Moving right
+                    player.X -= overlapX;
                 else // Moving left
-                    player.Position = new Vector2(player.Position.X + overlapX, player.Position.Y);
+                    player.X += overlapX;
 
-                player.Velocity = new Vector2(0, player.Velocity.Y);
+                player.VelocityX = 0;
             }
             else
             {
                 // Vertical collision
-                if (player.Velocity.Y > 0) // Falling
+                if (player.VelocityY > 0) // Falling
                 {
-                    player.Position = new Vector2(player.Position.X, player.Position.Y - overlapY);
-                    player.Velocity = new Vector2(player.Velocity.X, 0);
+                    player.Y -= overlapY;
+                    player.VelocityY = 0;
                     player.OnGround = true; // Landed on ground
                 }
                 else // Rising (hit ceiling)
                 {
-                    player.Position = new Vector2(player.Position.X, player.Position.Y + overlapY);
-                    player.Velocity = new Vector2(player.Velocity.X, 0);
+                    player.Y += overlapY;
+                    player.VelocityY = 0;
                 }
             }
-
-            // Round position to whole pixels to prevent jitter
-            player.Position = new Vector2(
-                System.MathF.Round(player.Position.X),
-                System.MathF.Round(player.Position.Y)
-            );
         }
     }
 }

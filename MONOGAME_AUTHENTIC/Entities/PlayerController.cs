@@ -7,26 +7,26 @@ namespace ZeliardAuthentic.Entities
     {
         public void ProcessInput(InputManager input, Player player)
         {
-            // Horizontal movement
-            float moveX = 0f;
-
+            // Horizontal movement (integers only)
             if (input.IsHeld(GameAction.Left))
             {
-                moveX = -2.0f;
+                player.VelocityX = -2;
                 player.FacingRight = false;
             }
             else if (input.IsHeld(GameAction.Right))
             {
-                moveX = 2.0f;
+                player.VelocityX = 2;
                 player.FacingRight = true;
             }
+            else
+            {
+                player.VelocityX = 0; // Stop immediately when no input
+            }
 
-            player.Velocity = new Vector2(moveX, player.Velocity.Y);
-
-            // Jump (no gravity yet, so this is just upward movement)
+            // Jump
             if (input.IsPressed(GameAction.Jump) && player.CanJump)
             {
-                player.Velocity = new Vector2(player.Velocity.X, -8.0f);
+                player.VelocityY = -8;
                 player.OnGround = false;
             }
         }
