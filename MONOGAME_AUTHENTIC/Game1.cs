@@ -10,6 +10,7 @@ namespace ZeliardAuthentic
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch? _spriteBatch;
+        private DOSScreen? _dosScreen;
 
         // Phase 1: Core systems
         private Player? _player;
@@ -54,6 +55,7 @@ namespace ZeliardAuthentic
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _dosScreen = new DOSScreen(GraphicsDevice);
             _player?.LoadContent(GraphicsDevice);
         }
 
@@ -84,9 +86,9 @@ namespace ZeliardAuthentic
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            // Step 1: Render to 320×200 DOS buffer
+            _dosScreen?.BeginFrame();
 
-            // Draw game world with camera transform
             _spriteBatch?.Begin(
                 transformMatrix: _camera?.GetTransformMatrix(),
                 samplerState: SamplerState.PointClamp
@@ -96,7 +98,19 @@ namespace ZeliardAuthentic
 
             _spriteBatch?.End();
 
+            // Step 2: Scale DOS buffer up to fill 960×600 window
+            _dosScreen?.EndFrame(_spriteBatch!);
+
             base.Draw(gameTime);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _dosScreen?.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
