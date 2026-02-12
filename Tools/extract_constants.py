@@ -118,13 +118,13 @@ def extract_jump_velocity():
         print(f"  Double Jump Velocity = {velocity} px/frame")
 
         if velocity == -24:
-            print(f"  ✅ VERIFIED: Matches documented value -0x18 = -24")
+            print(f"  [OK] VERIFIED: Matches documented value -0x18 = -24")
         else:
-            print(f"  ⚠️ Different from documented -24")
+            print(f"  [WARN] Different from documented -24 (got {velocity})")
 
         return velocity
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"[ERROR] {e}")
         print("Note: May need to set up function pointers or call stack")
         return None
 
