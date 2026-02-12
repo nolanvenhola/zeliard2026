@@ -77,9 +77,9 @@ namespace ZeliardAuthentic.Physics
             {
                 // Horizontal collision
                 if (player.Velocity.X > 0) // Moving right
-                    player.Position -= new Vector2(overlapX, 0);
+                    player.Position = new Vector2(player.Position.X - overlapX, player.Position.Y);
                 else // Moving left
-                    player.Position += new Vector2(overlapX, 0);
+                    player.Position = new Vector2(player.Position.X + overlapX, player.Position.Y);
 
                 player.Velocity = new Vector2(0, player.Velocity.Y);
             }
@@ -88,16 +88,22 @@ namespace ZeliardAuthentic.Physics
                 // Vertical collision
                 if (player.Velocity.Y > 0) // Falling
                 {
-                    player.Position -= new Vector2(0, overlapY);
+                    player.Position = new Vector2(player.Position.X, player.Position.Y - overlapY);
                     player.Velocity = new Vector2(player.Velocity.X, 0);
                     player.OnGround = true; // Landed on ground
                 }
                 else // Rising (hit ceiling)
                 {
-                    player.Position += new Vector2(0, overlapY);
+                    player.Position = new Vector2(player.Position.X, player.Position.Y + overlapY);
                     player.Velocity = new Vector2(player.Velocity.X, 0);
                 }
             }
+
+            // Round position to whole pixels to prevent jitter
+            player.Position = new Vector2(
+                System.MathF.Round(player.Position.X),
+                System.MathF.Round(player.Position.Y)
+            );
         }
     }
 }

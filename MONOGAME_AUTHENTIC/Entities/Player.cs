@@ -6,6 +6,7 @@ namespace ZeliardAuthentic.Entities
     public class Player
     {
         // Position & Velocity (from zelres1_chunk_00, offsets 0x0080-0x009F)
+        // Using float for smooth sub-pixel movement, but rounding for rendering
         public Vector2 Position { get; set; }        // 0x0080 (X), 0x0083 (Y)
         public Vector2 Velocity { get; set; }        // 0x0085/86 (VX), 0x008C (VY)
 
@@ -61,7 +62,10 @@ namespace ZeliardAuthentic.Entities
 
         public Rectangle GetBounds()
         {
-            return new Rectangle((int)Position.X, (int)Position.Y, 16, 24);
+            // Round position to prevent sub-pixel collision jitter
+            int x = (int)System.Math.Round(Position.X);
+            int y = (int)System.Math.Round(Position.Y);
+            return new Rectangle(x - 8, y - 12, 16, 24); // Account for sprite origin
         }
 
         public void Draw(SpriteBatch spriteBatch)
