@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ZeliardAuthentic.Stats;
 
 namespace ZeliardAuthentic.Entities
 {
@@ -16,6 +17,11 @@ namespace ZeliardAuthentic.Entities
         public bool FacingRight { get; set; } = true;
         public bool OnGround { get; set; } = false;
         public bool CanJump => OnGround;
+
+        // Phase 4: Combat
+        public PlayerStats Stats { get; set; } = new PlayerStats();
+        public bool IsAttacking { get; set; } = false;
+        public int AttackFrameCounter { get; set; } = 0;
 
         // Debug rendering
         private Texture2D? _debugTexture;
@@ -63,6 +69,21 @@ namespace ZeliardAuthentic.Entities
                 VelocityX = (int)(VelocityX * 0.8f);
                 if (System.Math.Abs(VelocityX) < 1)
                     VelocityX = 0; // Stop completely if too slow
+            }
+
+            // Update stats (status effects, timers)
+            Stats.Update(gameTime);
+
+            // Update attack state
+            // Attack animation is 6 frames (from zelres1_chunk_00 animation table)
+            if (IsAttacking)
+            {
+                AttackFrameCounter++;
+                if (AttackFrameCounter >= 6)
+                {
+                    IsAttacking = false;
+                    AttackFrameCounter = 0;
+                }
             }
         }
 

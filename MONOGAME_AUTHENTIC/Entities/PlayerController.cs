@@ -29,6 +29,14 @@ namespace ZeliardAuthentic.Entities
                 player.VelocityY = -12; // Estimated (double jump = -24 from assembly)
                 player.OnGround = false;
             }
+
+            // Attack (Z key mapped to GameAction.Attack)
+            // From zelres2_chunk_01 - Combat input handling
+            if (input.IsPressed(GameAction.Attack) && !player.IsAttacking)
+            {
+                player.IsAttacking = true;
+                player.AttackFrameCounter = 0;
+            }
         }
     }
 }
