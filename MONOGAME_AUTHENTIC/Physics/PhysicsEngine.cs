@@ -32,6 +32,27 @@ namespace ZeliardAuthentic.Physics
             // Detect & resolve collisions
             player.OnGround = false;
             ResolveCollisions(player, collisionMap);
+
+            // Check if standing on ground (even if no collision occurred this frame)
+            CheckGroundBelow(player, collisionMap);
+        }
+
+        private void CheckGroundBelow(Player player, CollisionMap map)
+        {
+            // Check for solid tile directly below player's feet
+            Rectangle playerBounds = player.GetBounds();
+            int playerBottom = playerBounds.Bottom;
+
+            // Check tiles below player
+            int leftTileX = playerBounds.Left / 16;
+            int rightTileX = (playerBounds.Right - 1) / 16;
+            int belowTileY = (playerBottom + 1) / 16;
+
+            // If standing on solid ground, set OnGround
+            if (map.IsSolid(leftTileX, belowTileY) || map.IsSolid(rightTileX, belowTileY))
+            {
+                player.OnGround = true;
+            }
         }
 
         private void ResolveCollisions(Player player, CollisionMap map)
