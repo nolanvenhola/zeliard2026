@@ -1,13 +1,21 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using ZeliardAuthentic.Entities;
+using ZeliardAuthentic.Input;
+using ZeliardAuthentic.Rendering;
 
 namespace ZeliardAuthentic
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        private SpriteBatch? _spriteBatch;
+
+        // Phase 1: Core systems
+        private Player? _player;
+        private PlayerController? _playerController;
+        private InputManager? _input;
+        private Camera? _camera;
 
         public Game1()
         {
@@ -15,26 +23,40 @@ namespace ZeliardAuthentic
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            // 320x200 DOS resolution scaled 3x = 960x600 window
+            // 320×200 DOS resolution scaled 3× = 960×600 window
             _graphics.PreferredBackBufferWidth = 960;
             _graphics.PreferredBackBufferHeight = 600;
         }
 
         protected override void Initialize()
         {
+            _player = new Player();
+            _playerController = new PlayerController();
+            _input = new InputManager();
+            _camera = new Camera();
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _player?.LoadContent(GraphicsDevice);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-                Keyboard.GetState().IsKeyDown(Keys.Escape))
+            _input?.Update();
+
+            if (_input?.IsPressed(GameAction.Cancel) == true)
                 Exit();
+
+            // Process input → player movement
+            _playerController?.ProcessInput(_input, _player!);
+            _player?.Update(gameTime);
+
+            // Camera follows player (temp level size: 320×200)
+            _camera?.Follow(_player!, 320, 200);
 
             base.Update(gameTime);
         }
@@ -43,9 +65,15 @@ namespace ZeliardAuthentic
         {
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin();
-            // TODO: Implement game rendering
-            _spriteBatch.End();
+            // Draw game world with camera transform
+            _spriteBatch?.Begin(
+                transformMatrix: _camera?.GetTransformMatrix(),
+                samplerState: SamplerState.PointClamp
+            );
+
+            _player?.Draw(_spriteBatch!);
+
+            _spriteBatch?.End();
 
             base.Draw(gameTime);
         }
