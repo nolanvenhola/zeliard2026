@@ -25,13 +25,13 @@
 | Constant | DOS Assembly | C# Implementation | Match? |
 |----------|--------------|-------------------|--------|
 | **Gravity** | Unknown (need to trace) | `1 px/frame²` | ⚠️ Approximation |
-| **Terminal Velocity** | Unknown (need to trace) | `6 px/frame` | ⚠️ Tuned for 16px tiles |
-| **Jump Velocity** | `-0x18` = `-24 px/frame` (double jump) | `-8 px/frame` | ❌ Too weak! |
+| **Terminal Velocity** | Unknown (need to trace) | `10 px/frame` | ⚠️ Tuned for 16px tiles |
+| **Jump Velocity** | `-0x18` = `-24 px/frame` | `-24 px/frame` | ✅ FIXED! |
 | **Walk Speed** | Unknown (need to trace) | `2 px/frame` | ⚠️ Estimated |
 | **Tile Size** | `16×16 pixels` (verified) | `16×16 pixels` | ✅ |
 
 **Issues Found**:
-1. ❌ **Jump velocity too weak**: Assembly uses -24, we use -8
+1. ✅ **Jump velocity FIXED**: Now using -24 to match assembly
 2. ⚠️ **Gravity not verified**: Using 1 px/frame² (simplified approximation)
 3. ⚠️ **Walk speed not verified**: Using 2 px/frame (estimated)
 
