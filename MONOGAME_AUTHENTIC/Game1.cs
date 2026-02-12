@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ZeliardAuthentic.Animation;
 using ZeliardAuthentic.Entities;
 using ZeliardAuthentic.Input;
 using ZeliardAuthentic.Physics;
@@ -24,6 +25,9 @@ namespace ZeliardAuthentic
         private PhysicsEngine? _physics;
         private CollisionMap? _collisionMap;
 
+        // Phase 3: Animation
+        private PlayerAnimator? _animator;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -43,6 +47,7 @@ namespace ZeliardAuthentic
             _camera = new Camera();
             _physics = new PhysicsEngine();
             _collisionMap = CollisionMap.CreateTestLevel();
+            _animator = new PlayerAnimator();
 
             base.Initialize();
         }
@@ -74,6 +79,9 @@ namespace ZeliardAuthentic
 
             _player?.Update(gameTime);
 
+            // Update animation state based on player movement
+            _animator?.Update(gameTime, _player!);
+
             // Camera follows player (level is 320×208 - same as screen size, so camera stays at origin)
             _camera?.Follow(_player!, 320, 208);
 
@@ -84,6 +92,7 @@ namespace ZeliardAuthentic
                 System.Console.WriteLine($"Player pos: ({_player?.X}, {_player?.Y})");
                 System.Console.WriteLine($"Player velocity: ({_player?.VelocityX}, {_player?.VelocityY})");
                 System.Console.WriteLine($"Player OnGround: {_player?.OnGround}");
+                System.Console.WriteLine($"Animation: {_animator?.CurrentState} (frame {_animator?.CurrentFrame})");
             }
 
             base.Update(gameTime);
