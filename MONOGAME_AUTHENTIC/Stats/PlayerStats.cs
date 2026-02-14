@@ -11,27 +11,29 @@ namespace ZeliardAuthentic.Stats
     public class PlayerStats
     {
         // Core Stats (0x6000-0x6011)
-        public byte Level { get; set; } = 1;                    // 0x6000 - Current level (1-99)
+        // From GAME_DATA_REFERENCE.md line 312: "Starting Level: 0 (80 HP)"
+        public byte Level { get; set; } = 0;                    // 0x6000 - Starting level = 0
         // 0x6001 - Reserved byte
 
         public uint Experience { get; set; } = 0;               // 0x6002 - Current XP (32-bit dword)
-        public uint Gold { get; set; } = 0;                     // 0x6006 - Current gold (32-bit dword)
+        public uint Gold { get; set; } = 1000;                  // 0x6006 - "Starting gold: 1000 (from King)" line 1963
 
-        public ushort CurrentHP { get; set; } = 50;             // 0x600A - Current hit points (word)
-        public ushort MaxHP { get; set; } = 50;                 // 0x600C - Maximum hit points (word)
-        public ushort CurrentMP { get; set; } = 10;             // 0x600E - Current mana points (word)
-        public ushort MaxMP { get; set; } = 10;                 // 0x6010 - Maximum mana points (word)
+        public ushort CurrentHP { get; set; } = 80;             // 0x600A - "80 HP" at level 0 (line 320)
+        public ushort MaxHP { get; set; } = 80;                 // 0x600C - Max HP at level 0
+        public ushort CurrentMP { get; set; } = 10;             // 0x600E - Current mana points
+        public ushort MaxMP { get; set; } = 10;                 // 0x6010 - Maximum mana points
 
         // Base Stats (0x6012-0x6021)
-        public ushort BaseAttack { get; set; } = 5;             // 0x6012 - Attack before equipment
-        public ushort BaseDefense { get; set; } = 3;            // 0x6014 - Defense before equipment
+        // From GAME_DATA_REFERENCE line 383: "Training Sword base damage = 1"
+        public ushort BaseAttack { get; set; } = 1;             // 0x6012 - Training Sword
+        public ushort BaseDefense { get; set; } = 0;            // 0x6014 - No armor at start
         public ushort BaseSpeed { get; set; } = 5;              // 0x6016 - Speed before equipment
-        public ushort BaseMagic { get; set; } = 2;              // 0x6018 - Magic power before equipment
+        public ushort BaseMagic { get; set; } = 0;              // 0x6018 - No magic at start
 
-        public ushort TotalAttack { get; set; } = 5;            // 0x601A - Attack with equipment
-        public ushort TotalDefense { get; set; } = 3;           // 0x601C - Defense with equipment
+        public ushort TotalAttack { get; set; } = 1;            // 0x601A - Attack with equipment = 1
+        public ushort TotalDefense { get; set; } = 0;           // 0x601C - Defense with equipment = 0
         public ushort TotalSpeed { get; set; } = 5;             // 0x601E - Speed with equipment
-        public ushort TotalMagic { get; set; } = 2;             // 0x6020 - Magic with equipment
+        public ushort TotalMagic { get; set; } = 0;             // 0x6020 - Magic with equipment = 0
 
         // Raw Attributes (0x6022-0x6025)
         public byte Strength { get; set; } = 10;                // 0x6022 - Raw strength attribute

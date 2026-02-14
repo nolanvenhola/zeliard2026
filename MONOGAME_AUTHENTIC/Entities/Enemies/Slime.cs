@@ -18,8 +18,9 @@ namespace ZeliardAuthentic.Entities.Enemies
         public Slime(int x, int y, GraphicsDevice device)
         {
             // Position (from zelres2_chunk_06 offset +0x00, +0x02)
+            // Slime is 16×16 with origin at center, so Y should be 8px above floor
             X = x;
-            Y = y;
+            Y = y - 8; // Raise up so bottom sits on floor
 
             // Stats from GAME_DATA_REFERENCE.md line 652-659
             HP = 3;              // Blue Slime (estimate, not documented)
