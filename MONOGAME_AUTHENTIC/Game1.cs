@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ZeliardAuthentic.Animation;
 using ZeliardAuthentic.Combat;
 using ZeliardAuthentic.Entities;
+using ZeliardAuthentic.Entities.Enemies;
 using ZeliardAuthentic.Input;
 using ZeliardAuthentic.Physics;
 using ZeliardAuthentic.Rendering;
@@ -32,7 +33,9 @@ namespace ZeliardAuthentic
 
         // Phase 4: Combat
         private CombatSystem? _combatSystem;
-        private List<Enemy> _enemies = new List<Enemy>();
+
+        // Phase 5: Enemies
+        private EnemyManager? _enemyManager;
 
         public Game1()
         {
@@ -55,8 +58,7 @@ namespace ZeliardAuthentic
             _collisionMap = CollisionMap.CreateTestLevel();
             _animator = new PlayerAnimator();
             _combatSystem = new CombatSystem();
-
-            // TODO Phase 5: Spawn test enemies here
+            _enemyManager = new EnemyManager();
 
             base.Initialize();
         }
@@ -71,6 +73,11 @@ namespace ZeliardAuthentic
             _pixel.SetData(new[] { Color.White });
 
             _player?.LoadContent(GraphicsDevice);
+
+            // Spawn test enemies (Phase 5)
+            _enemyManager?.AddEnemy(new Slime(100, 170, GraphicsDevice)); // On floor, left side
+            _enemyManager?.AddEnemy(new Slime(220, 170, GraphicsDevice)); // On floor, right side
+            _enemyManager?.AddEnemy(new Bat(150, 80, GraphicsDevice));    // Flying in air
         }
 
         protected override void Update(GameTime gameTime)
@@ -91,8 +98,11 @@ namespace ZeliardAuthentic
             // Update animation state based on player movement
             _animator?.Update(gameTime, _player!);
 
+            // Update enemies
+            _enemyManager?.Update(_player!, gameTime);
+
             // Update combat (player attacks enemies, enemies attack player)
-            _combatSystem?.Update(_player!, _enemies);
+            _combatSystem?.Update(_player!, _enemyManager?.GetActiveEnemies()!);
 
             // Camera follows player (level is 320×208 - same as screen size, so camera stays at origin)
             _camera?.Follow(_player!, 320, 208);
@@ -124,6 +134,9 @@ namespace ZeliardAuthentic
 
             // Draw collision map (debug)
             _collisionMap?.DebugDraw(_spriteBatch!, _pixel!);
+
+            // Draw enemies
+            _enemyManager?.Draw(_spriteBatch!);
 
             // Draw player
             _player?.Draw(_spriteBatch!);
