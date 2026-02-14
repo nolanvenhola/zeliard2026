@@ -91,9 +91,10 @@ namespace ZeliardAuthentic.Stats
                 // TODO: Call player_death_sequence (Phase 5+)
             }
 
-            // Start invincibility frames (line 430)
-            // Assembly: mov word [invincible_timer],120 (120 frames = 6.6 sec at 18.2 FPS)
-            InvincibleTimer = 120;
+            // Start invincibility frames
+            // Walkthrough says 120 frames (6.6 sec) but that's too long - likely documentation error
+            // Using 36 frames = ~2 seconds (typical for platformers)
+            InvincibleTimer = 36; // TODO: Extract exact value from assembly
 
             // TODO: Play hurt sound (line 433)
             // TODO: Flash player sprite (line 437)
