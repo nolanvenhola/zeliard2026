@@ -34,11 +34,11 @@ namespace ZeliardAuthentic.Entities.Enemies
             // AI State - starts in air
             CurrentState = AIState.Patrol;
 
-            // Create debug texture
-            _debugTexture = new Texture2D(device, 12, 8);
-            Color[] colors = new Color[12 * 8];
+            // Create debug texture (make it more visible)
+            _debugTexture = new Texture2D(device, 16, 16); // Larger for visibility
+            Color[] colors = new Color[16 * 16];
             for (int i = 0; i < colors.Length; i++)
-                colors[i] = Color.Purple; // Purple for bat
+                colors[i] = Color.Magenta; // Bright magenta for visibility
             _debugTexture.SetData(colors);
         }
 
@@ -87,11 +87,17 @@ namespace ZeliardAuthentic.Entities.Enemies
 
             // Update direction
             FacingRight = VelocityX > 0;
+
+            // Debug output (first 10 frames only)
+            if (gameTime.TotalGameTime.TotalSeconds < 0.5)
+            {
+                System.Console.WriteLine($"[Bat] Pos:({X},{Y}) Vel:({VelocityX},{VelocityY}) State:{CurrentState} Dist:{distanceToPlayer:F1}");
+            }
         }
 
         public override Rectangle GetBounds()
         {
-            return new Rectangle(X - 6, Y - 4, 12, 8); // 12×8 bat sprite
+            return new Rectangle(X - 8, Y - 8, 16, 16); // 16×16 for visibility
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -99,7 +105,7 @@ namespace ZeliardAuthentic.Entities.Enemies
             if (_debugTexture != null)
             {
                 Vector2 position = new Vector2(X, Y);
-                Vector2 origin = new Vector2(6, 4); // Center for 12×8
+                Vector2 origin = new Vector2(8, 8); // Center for 16×16
                 SpriteEffects flip = FacingRight ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                 spriteBatch.Draw(_debugTexture, position, null, Color.White, 0f, origin, 1f, flip, 0f);
             }
