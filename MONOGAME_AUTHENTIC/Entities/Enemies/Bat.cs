@@ -66,12 +66,13 @@ namespace ZeliardAuthentic.Entities.Enemies
                     break;
 
                 case AIState.Aggro:
-                    // Dive toward player
+                    // Dive toward player (faster than player to catch up)
                     int deltaX = player.X - X;
                     int deltaY = player.Y - Y;
 
-                    VelocityX = Math.Clamp(deltaX / 8, -3, 3); // Move toward player
-                    VelocityY = Math.Clamp(deltaY / 8, -3, 3);
+                    // Divide by 4 (not 8) for faster pursuit - bat speed = 3px/frame max
+                    VelocityX = Math.Clamp(deltaX / 4, -3, 3);
+                    VelocityY = Math.Clamp(deltaY / 4, -3, 3);
 
                     // Return to patrol if player too far
                     if (distanceToPlayer > 150f)
@@ -88,10 +89,10 @@ namespace ZeliardAuthentic.Entities.Enemies
             // Update direction
             FacingRight = VelocityX > 0;
 
-            // Debug output (first 10 frames only)
-            if (gameTime.TotalGameTime.TotalSeconds < 0.5)
+            // Debug output (extended for testing)
+            if (gameTime.TotalGameTime.TotalSeconds < 5.0 && gameTime.TotalGameTime.TotalSeconds % 0.2 < 0.055)
             {
-                System.Console.WriteLine($"[Bat] Pos:({X},{Y}) Vel:({VelocityX},{VelocityY}) State:{CurrentState} Dist:{distanceToPlayer:F1}");
+                System.Console.WriteLine($"[Bat] Pos:({X},{Y}) Vel:({VelocityX},{VelocityY}) State:{CurrentState} PlayerDist:{distanceToPlayer:F0}px");
             }
         }
 
