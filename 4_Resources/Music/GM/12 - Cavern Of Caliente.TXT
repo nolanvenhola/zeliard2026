@@ -1,0 +1,40 @@
+                            SIERRA ON-LINE, INC.
+                3-D Animated Adventure Game Soundtrack Series
+               ===============================================
+                             " Z E L I A R D "
+
+
+                            CAVERN OF CALIENTE
+                    Fumihito Kasatani & Nobuyuki Aoshima
+               ===============================================
+                   Copyright (c)1990 Sierra On-Line, Inc.  
+               ===============================================
+
+                            GENERAL MIDI VERSION
+
+ System Requirements:
+
+  - MIDI playback software capable of reading Type 1 Standard
+      MIDI File format and embedded SysEx data
+  - General MIDI Sound Device (Roland Sound Canvas recommended)
+
+
+This Standard MIDI File was recorded directly from Sierra's "Zeliard"
+arcade game.  It has been converted from the MT-32 version for playback
+on General MIDI sound cards.  A Roland Sound Canvas is highly recommended
+for optimal playback.
+
+Converted for General MIDI by Tom Lewandowski.  Address
+questions or comments to:
+
+    Tom Lewandowski
+    tom@queststudios.com
+
+
+       QUEST STUDIOS/THE SIERRA SOUNDTRACK SERIES
+                   www.QuestStudios.com
+
+
+    
+
+     

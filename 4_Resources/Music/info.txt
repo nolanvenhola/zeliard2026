@@ -1,0 +1,31 @@
+Archive created by -=MIRSOFT=-
+Look for game MIDs at http://go.to/gamemids
+
+*** Archive info ***
+Archiver: Quest Studios - www.QuestStudios.com
+Type: Game rip
+Format: MID (MT, GM)
+Original Composer: Nobuyuki Aoshima, Fumihito Kasatani
+Sequencer: Nobuyuki Aoshima, Fumihito Kasatani, Tom Lewandowski
+Num of tunes: 14
+Complete:
+
+*** Game info ***
+Name: Zeliard
+Platform: PC Dos
+Year: 1990
+Genre: Action/Adventure
+Publisher: Sierra
+Developer: Game Arts
+
+*** Additional Info ***
+These Midi tunes are ripped from PC version of this game released
+by Sierra in 1990 (original game was developed by Game Arts for NEC
+PC8x01 computers in Japan three years before).
+
+MT - Original tunes recorded directly from the game
+GM - General Midi versions converted from the Roland MT-32 versions
+for playback on General MIDI sound cards
+
+Recorded/Converted to Standard MIDI File format by Tom Lewandowski
+(Quest Studios, www.QuestStudios.com)

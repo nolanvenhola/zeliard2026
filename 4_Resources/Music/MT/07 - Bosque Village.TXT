@@ -1,0 +1,45 @@
+                            SIERRA ON-LINE, INC.
+                3-D Animated Adventure Game Soundtrack Series
+               ===============================================
+                             " Z E L I A R D "
+
+
+                              "BOSQUE VILLAGE"
+                    Fumihito Kasatani & Nobuyuki Aoshima
+               ===============================================
+                   Copyright (c)1990 Sierra On-Line, Inc.  
+               ===============================================
+
+
+ System Requirements:
+
+  - MIDI playback software capable of reading Type 1 Standard
+      MIDI File format and embedded SysEx data
+  - Roland MT-32, MT-100, CM-32L, CM-64, or LAPC-1
+  - MPU-401 compatible MIDI interface
+      (Not required for LAPC-1 users.)
+
+
+
+This Standard MIDI File was recorded directly from Sierra's "Zeliard"
+arcade game.  It contains embedded System Exclusive patch data which will
+write new sounds to your MT-32.  Note that MIDI files which contain embedded
+SysEx data are not compatible with all MIDI file playback software.  If you
+experience problems with Win95's Media Player, use a DOS command line player
+(such as PlayMid) instead.  Compatible with all versions of Cakewalk Pro for
+Windows.
+
+Converted to Standard MIDI File format by Tom Lewandowski.  Address
+questions or comments to:
+
+    Tom Lewandowski
+    tom@queststudios.com
+
+
+       QUEST STUDIOS/THE SIERRA SOUNDTRACK SERIES
+                   www.QuestStudios.com
+
+
+    
+
+     
