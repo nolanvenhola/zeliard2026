@@ -4,3 +4,8 @@ DOSBOX DUMPS
 nul
 archive
 .claude/settings.local.json
+3_Assembly/tasm/SourcerRunner/bin
+3_Assembly/tasm/TasmRunner/.idea
+3_Assembly/tasm/TasmRunner/obj
+3_Assembly/tasm/TasmRunner/bin
+3_Assembly/tasm/SourcerRunner/obj
