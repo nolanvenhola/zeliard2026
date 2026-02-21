@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_06	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ENEMY_AI - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -128,11 +124,11 @@ data_9		db	0FEh
 loc_1:
 		mov	si,ds:data_102e
 		sub	si,21h
-		call	sub_45
+		call	ai_func_45
 		xor	bx,bx			; Zero register
 		test	byte ptr [si],80h
 		jz	loc_2			; Jump if zero
-		call	sub_3
+		call	ai_func_3
 loc_2:
 		inc	si
 		mov	cx,6
@@ -141,25 +137,25 @@ locloop_3:
 		push	cx
 		test	byte ptr [si],80h
 		jz	loc_4			; Jump if zero
-		call	sub_4
+		call	ai_func_4
 loc_4:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_5			; Jump if zero
-		call	sub_4
+		call	ai_func_4
 loc_5:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_6			; Jump if zero
-		call	sub_4
+		call	ai_func_4
 loc_6:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_7			; Jump if zero
-		call	sub_4
+		call	ai_func_4
 loc_7:
 		inc	si
 		inc	bx
@@ -168,36 +164,36 @@ loc_7:
 
 		test	byte ptr [si],80h
 		jz	loc_8			; Jump if zero
-		call	sub_4
+		call	ai_func_4
 loc_8:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_9			; Jump if zero
-		call	sub_4
+		call	ai_func_4
 loc_9:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_10			; Jump if zero
-		call	sub_4
+		call	ai_func_4
 loc_10:
 		inc	si
 		test	byte ptr [si],80h
 		jz	loc_11			; Jump if zero
-		call	sub_5
+		call	ai_func_5
 loc_11:
 		mov	si,ds:data_102e
 		mov	di,0E900h
 		mov	byte ptr ds:data_71e,12h
 loc_12:
-		call	sub_25
+		call	vga_operation5
 		xor	bx,bx			; Zero register
 		add	si,3
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jns	loc_13			; Jump if not sign
-		call	sub_6
+		call	ai_func_6
 loc_13:
 		mov	cx,6
 
@@ -205,22 +201,22 @@ locloop_14:
 		push	cx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_15			; Jump if zero
-		call	sub_1
+		call	ai_func_1
 loc_15:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_16			; Jump if zero
-		call	sub_1
+		call	ai_func_1
 loc_16:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_17			; Jump if zero
-		call	sub_1
+		call	ai_func_1
 loc_17:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_18			; Jump if zero
-		call	sub_1
+		call	ai_func_1
 loc_18:
 		inc	bx
 		pop	cx
@@ -228,17 +224,17 @@ loc_18:
 
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_19			; Jump if zero
-		call	sub_1
+		call	ai_func_1
 loc_19:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_20			; Jump if zero
-		call	sub_1
+		call	ai_func_1
 loc_20:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_21			; Jump if zero
-		call	sub_1
+		call	ai_func_1
 loc_21:
 		inc	bx
 		lodsb				; String [si] to al
@@ -249,10 +245,10 @@ loc_21:
 loc_22:
 		cmp	al,es:[di-1]
 		je	loc_23			; Jump if equal
-		call	sub_1
+		call	ai_func_1
 loc_23:
 		add	si,4
-		call	sub_44
+		call	ai_func_44
 		add	word ptr ds:data_68e,0A00h
 		dec	byte ptr ds:data_71e
 		jnz	loc_12			; Jump if not zero
@@ -264,7 +260,7 @@ zr2_06		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+ai_func_1		proc	near
 		mov	al,[si-1]
 		or	al,al			; Zero ?
 		jns	loc_24			; Jump if not sign
@@ -285,7 +281,7 @@ loc_25:
 		add	dx,dx
 		add	dx,ds:data_68e
 		shr	dx,1			; Shift w/zeros fill
-		call	sub_2
+		call	vga_operation
 loc_26:
 		mov	al,ds:data_92e
 		sub	al,5
@@ -303,7 +299,7 @@ loc_28:
 		call	word ptr ds:data_56e[bx]	;*
 		pop	bx
 		retn
-sub_1		endp
+ai_func_1		endp
 
 			                        ;* No entry point to code
 ;*		jle	loc_32			;*Jump if < or =
@@ -446,7 +442,7 @@ loc_42:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+vga_operation		proc	near
 		push	es
 		push	ds
 		push	di
@@ -551,14 +547,14 @@ locloop_49:
 		pop	ds
 		pop	es
 		retn
-sub_2		endp
+vga_operation		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+ai_func_3		proc	near
 		cmp	byte ptr ds:data_94e,0FFh
 		jne	loc_50			; Jump if not equal
 		retn
@@ -572,31 +568,31 @@ loc_51:
 		mov	byte ptr ds:data_94e,0FFh
 		mov	cl,[si]
 		add	si,25h
-		call	sub_44
+		call	ai_func_44
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_52			; Jump if not sign
-		call	sub_19
+		call	ai_get_value
 loc_52:
 		push	ax
 		mov	al,cl
-		call	sub_20
+		call	vga_operation0
 		add	si,3
 		pop	ax
 		mov	ah,[si]
 		mov	dx,11B0h
-		call	sub_9
+		call	ai_func_9
 		pop	bx
 		pop	si
 		retn
-sub_3		endp
+ai_func_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+ai_func_4		proc	near
 		push	si
 		push	bx
 		mov	cx,bx
@@ -615,28 +611,28 @@ sub_4		proc	near
 		add	dx,11B0h
 		mov	cl,[si]
 		add	si,24h
-		call	sub_44
+		call	ai_func_44
 		mov	bx,data_86e
 		lodsw				; String [si] to ax
 		mov	[bx],ax
 		mov	al,cl
-		call	sub_20
+		call	vga_operation0
 		inc	si
 		inc	si
 		mov	di,data_86e
 		mov	bp,data_84e
-		call	sub_7
+		call	ai_func_7
 		pop	bx
 		pop	si
 		retn
-sub_4		endp
+ai_func_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+ai_func_5		proc	near
 		cmp	byte ptr ds:data_95e,0FFh
 		jne	loc_53			; Jump if not equal
 		retn
@@ -648,15 +644,15 @@ loc_54:
 		mov	byte ptr ds:data_95e,0FFh
 		mov	cl,[si]
 		add	si,24h
-		call	sub_44
+		call	ai_func_44
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_55			; Jump if not sign
-		call	sub_19
+		call	ai_get_value
 loc_55:
 		push	ax
 		mov	al,cl
-		call	sub_20
+		call	vga_operation0
 		add	si,2
 		pop	ax
 		mov	ah,[si]
@@ -665,7 +661,7 @@ loc_55:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_6:
+ai_func_6:
 		push	si
 		push	di
 		push	bx
@@ -680,10 +676,10 @@ sub_6:
 		mov	cl,[si-1]
 		mov	dl,[si]
 		add	si,24h
-		call	sub_44
+		call	ai_func_44
 		mov	dh,[si]
 		mov	al,cl
-		call	sub_20
+		call	vga_operation0
 		inc	si
 		mov	bx,dx
 		pop	dx
@@ -702,9 +698,9 @@ sub_6:
 		push	dx
 		or	al,al			; Zero ?
 		jns	loc_56			; Jump if not sign
-		call	sub_19
+		call	ai_get_value
 loc_56:
-		call	sub_9
+		call	ai_func_9
 		pop	dx
 		pop	si
 		pop	bx
@@ -723,9 +719,9 @@ loc_57:
 		mov	al,bh
 		or	al,al			; Zero ?
 		jns	loc_58			; Jump if not sign
-		call	sub_19
+		call	ai_get_value
 loc_58:
-		call	sub_9
+		call	ai_func_9
 loc_59:
 		pop	bx
 		pop	di
@@ -748,7 +744,7 @@ loc_60:
 		mov	al,[si]
 		mov	[bx+1],al
 		add	si,24h
-		call	sub_44
+		call	ai_func_44
 		mov	ax,[si-1]
 		mov	[bx+2],ax
 		pop	dx
@@ -762,20 +758,20 @@ loc_60:
 		add	dx,dx
 		add	dx,ds:data_68e
 		mov	al,cl
-		call	sub_20
+		call	vga_operation0
 		mov	di,data_86e
 		mov	[di],al
 		mov	bp,data_84e
-		call	sub_7
+		call	ai_func_7
 		cmp	byte ptr ds:data_71e,1
 		je	loc_61			; Jump if equal
 		add	dx,9F0h
-		call	sub_7
+		call	ai_func_7
 		test	byte ptr ds:data_104e,0FFh
 		jz	loc_61			; Jump if zero
 		test	byte ptr ds:data_101e,0FFh
 		jz	loc_61			; Jump if zero
-		call	sub_21
+		call	vga_operation1
 loc_61:
 		pop	bx
 		pop	di
@@ -795,10 +791,10 @@ loc_62:
 		mov	[bx+1],al
 		mov	cl,[si-1]
 		add	si,24h
-		call	sub_44
+		call	ai_func_44
 		mov	dl,[si-1]
 		mov	al,cl
-		call	sub_20
+		call	vga_operation0
 		mov	bl,al
 		mov	bh,dl
 		pop	dx
@@ -817,9 +813,9 @@ loc_62:
 		push	dx
 		or	al,al			; Zero ?
 		jns	loc_63			; Jump if not sign
-		call	sub_19
+		call	ai_get_value
 loc_63:
-		call	sub_9
+		call	ai_func_9
 		pop	dx
 		pop	si
 		pop	bx
@@ -838,9 +834,9 @@ loc_64:
 		mov	al,bh
 		or	al,al			; Zero ?
 		jns	loc_65			; Jump if not sign
-		call	sub_19
+		call	ai_get_value
 loc_65:
-		call	sub_9
+		call	ai_func_9
 loc_66:
 		pop	bx
 		pop	di
@@ -849,12 +845,12 @@ loc_66:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_7:
-		call	sub_8
+ai_func_7:
+		call	ai_func_8
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_8:
+ai_func_8:
 		cmp	byte ptr ds:[bp],0FFh
 		je	loc_68			; Jump if equal
 		cmp	byte ptr ds:[bp],0FCh
@@ -863,13 +859,13 @@ sub_8:
 		mov	al,[di]
 		or	al,al			; Zero ?
 		jns	loc_67			; Jump if not sign
-		call	sub_19
+		call	ai_get_value
 loc_67:
 		push	bp
 		push	si
 		push	di
 		push	dx
-		call	sub_9
+		call	ai_func_9
 		pop	dx
 		pop	di
 		pop	si
@@ -883,7 +879,7 @@ loc_68:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_9:
+ai_func_9:
 loc_69:
 		push	es
 		push	ds
@@ -918,35 +914,35 @@ loc_70:
 		js	loc_71			; Jump if sign=1
 		push	di
 		mov	di,0FA00h
-		call	sub_13
+		call	ai_process_loop_2
 		pop	di
 		mov	si,data_123e
 		mov	ax,0A000h
 		mov	ds,ax
-		call	sub_16
+		call	ai_process_loop_4
 		pop	ds
 		pop	es
 		retn
 loc_71:
 		push	di
 		mov	di,data_98e
-		call	sub_10
+		call	ai_multiply
 		pop	di
 		mov	si,data_123e
 		mov	ax,0A000h
 		mov	ds,ax
-		call	sub_16
+		call	ai_process_loop_4
 		pop	ds
 		pop	es
 		retn
-sub_5		endp
+ai_func_5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_10		proc	near
+ai_multiply		proc	near
 		push	bp
 		push	si
 		push	di
@@ -955,7 +951,7 @@ sub_10		proc	near
 		mul	cl			; ax = reg * al
 		add	ax,8030h
 		mov	si,ax
-		call	sub_17
+		call	extract_bits
 		pop	di
 		pop	si
 		pop	bp
@@ -963,87 +959,87 @@ sub_10		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_11:
+ai_func_11:
 		mov	cx,8
 
 locloop_72:
 		push	cx
 		mov	dl,ds:[bp]
 		lodsw				; String [si] to ax
-		call	sub_12
+		call	ai_process_loop
 		lodsw				; String [si] to ax
-		call	sub_12
+		call	ai_process_loop
 		inc	bp
 		pop	cx
 		loop	locloop_72		; Loop if cx > 0
 
 		retn
-sub_10		endp
+ai_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+ai_process_loop		proc	near
 		mov	cx,4
 
 locloop_73:
 		add	dl,dl
 		sbb	dh,dh
 		and	dh,es:[di]
-		call	sub_15
+		call	ai_func_15
 		or	bl,dh
 		mov	es:[di],bl
 		inc	di
 		loop	locloop_73		; Loop if cx > 0
 
 		retn
-sub_12		endp
+ai_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+ai_process_loop_2		proc	near
 		mov	cx,8
 
 locloop_74:
 		push	cx
 		lodsw				; String [si] to ax
-		call	sub_14
+		call	ai_process_loop_3
 		lodsw				; String [si] to ax
-		call	sub_14
+		call	ai_process_loop_3
 		pop	cx
 		loop	locloop_74		; Loop if cx > 0
 
 		retn
-sub_13		endp
+ai_process_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+ai_process_loop_3		proc	near
 		mov	cx,4
 
 locloop_75:
-		call	sub_15
+		call	ai_func_15
 		mov	es:[di],bl
 		inc	di
 		loop	locloop_75		; Loop if cx > 0
 
 		retn
-sub_14		endp
+ai_process_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+ai_func_15		proc	near
 		add	ax,ax
 		adc	bx,bx
 		add	ax,ax
@@ -1056,14 +1052,14 @@ sub_15		proc	near
 		add	bx,cs:data_66e
 		mov	bl,cs:[bx]
 		retn
-sub_15		endp
+ai_func_15		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+ai_process_loop_4		proc	near
 		mov	cx,8
 
 locloop_76:
@@ -1075,14 +1071,14 @@ locloop_76:
 		loop	locloop_76		; Loop if cx > 0
 
 		retn
-sub_16		endp
+ai_process_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+extract_bits		proc	near
 		mov	cx,10h
 
 locloop_77:
@@ -1107,38 +1103,38 @@ locloop_77:
 		loop	locloop_77		; Loop if cx > 0
 
 		retn
-sub_17		endp
+extract_bits		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+fill_buffer		proc	near
 		xor	ax,ax			; Zero register
 		mov	cx,20h
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_18		endp
+fill_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+ai_get_value		proc	near
 		and	al,7Fh
 		mov	bx,data_96e
 		xlat				; al=[al+[bx]] table
 		retn
-sub_19		endp
+ai_get_value		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+vga_operation0		proc	near
 		and	al,7Fh
 		mov	bl,al
 		xor	bh,bh			; Zero register
@@ -1172,14 +1168,14 @@ loc_79:
 		mov	ds:data_74e,al
 		mov	al,cl
 		retn
-sub_20		endp
+vga_operation0		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_21		proc	near
+vga_operation1		proc	near
 		cmp	byte ptr ds:data_73e,10h
 		jb	loc_80			; Jump if below
 		retn
@@ -1240,7 +1236,7 @@ loc_88:
 		mov	al,0FFh
 		stosb				; Store al to es:[di]
 		retn
-sub_21		endp
+vga_operation1		endp
 
 			                        ;* No entry point to code
 		push	cs
@@ -1302,37 +1298,37 @@ loc_90:
 locloop_91:
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di],bp
 		or	es:[di],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+2],bp
 		or	es:[di+2],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+4],bp
 		or	es:[di+4],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+6],bp
 		or	es:[di+6],dx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+8],bp
 		or	es:[di+8],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+0Ah],bp
 		or	es:[di+0Ah],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+0Ch],bp
 		or	es:[di+0Ch],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+0Eh],bp
 		or	es:[di+0Eh],dx
@@ -1433,7 +1429,7 @@ loc_95:
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		jmp	short loc_100
 			                        ;* No entry point to code
-		call	sub_24
+		call	vga_operation4
 		mov	di,data_83e
 		mov	dl,ds:data_105e
 		dec	dl
@@ -1504,7 +1500,7 @@ loc_103:
 		jz	loc_104			; Jump if zero
 		mov	al,[di]
 		push	si
-		call	sub_20
+		call	vga_operation0
 		inc	si
 		inc	si
 		inc	si
@@ -1516,7 +1512,7 @@ loc_104:
 		jz	loc_105			; Jump if zero
 		mov	al,[di+1]
 		push	si
-		call	sub_20
+		call	vga_operation0
 		inc	si
 		inc	si
 		mov	al,[si]
@@ -1527,7 +1523,7 @@ loc_105:
 		jz	loc_106			; Jump if zero
 		mov	al,[di+4]
 		push	si
-		call	sub_20
+		call	vga_operation0
 		inc	si
 		mov	al,[si]
 		pop	si
@@ -1535,7 +1531,7 @@ loc_105:
 loc_106:
 		mov	al,[di+5]
 		push	si
-		call	sub_20
+		call	vga_operation0
 		mov	cl,[si]
 		pop	si
 		mov	[si],al
@@ -1581,7 +1577,7 @@ loc_108:
 		mov	cl,9
 		mul	cl			; ax = reg * al
 		push	ax
-		call	sub_23
+		call	vga_operation3
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
 		pop	si
@@ -1607,7 +1603,7 @@ loc_111:
 		add	si,ax
 		jmp	short loc_115
 loc_112:
-		call	sub_23
+		call	vga_operation3
 		or	al,al			; Zero ?
 		jz	loc_114			; Jump if zero
 		dec	al
@@ -1644,12 +1640,12 @@ loc_115:
 		jz	loc_116			; Jump if zero
 		mov	cx,6
 		mov	byte ptr ds:data_72e,3
-		call	sub_22
+		call	vga_operation2
 		jmp	short loc_117
 loc_116:
 		mov	cx,9
 		mov	byte ptr ds:data_72e,0
-		call	sub_22
+		call	vga_operation2
 loc_117:
 		mov	si,610Eh
 		test	byte ptr ds:data_110e,0FFh
@@ -1696,7 +1692,7 @@ loc_121:
 loc_122:
 		mov	cx,9
 		mov	byte ptr ds:data_72e,0
-		call	sub_22
+		call	vga_operation2
 		test	byte ptr ds:[0E8h],0FFh
 		jz	loc_123			; Jump if zero
 		retn
@@ -1711,7 +1707,7 @@ loc_124:
 		mov	al,ds:data_109e
 		or	al,ds:data_110e
 		jz	loc_126			; Jump if zero
-		call	sub_23
+		call	vga_operation3
 		or	al,al			; Zero ?
 		jnz	loc_125			; Jump if not zero
 		retn
@@ -1733,7 +1729,7 @@ loc_126:
 		mov	cl,9
 		mul	cl			; ax = reg * al
 		push	ax
-		call	sub_23
+		call	vga_operation3
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
 		pop	si
@@ -1761,7 +1757,7 @@ loc_129:
 loc_130:
 		test	byte ptr ds:[0C2h],1
 		jz	loc_132			; Jump if zero
-		call	sub_23
+		call	vga_operation3
 		or	al,al			; Zero ?
 		jz	loc_132			; Jump if zero
 		dec	al
@@ -1803,7 +1799,7 @@ loc_135:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_22		proc	near
+vga_operation2		proc	near
 
 locloop_136:
 		push	cx
@@ -1831,7 +1827,7 @@ locloop_136:
 		mul	cl			; ax = reg * al
 		add	ax,511Dh
 		mov	di,ax
-		call	sub_11
+		call	ai_func_11
 		pop	di
 		pop	si
 		pop	ds
@@ -1843,14 +1839,14 @@ loc_137:
 		loop	locloop_136		; Loop if cx > 0
 
 		retn
-sub_22		endp
+vga_operation2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_23		proc	near
+vga_operation3		proc	near
 		mov	al,byte ptr ds:[93h]
 		or	al,al			; Zero ?
 		jnz	loc_138			; Jump if not zero
@@ -1863,7 +1859,7 @@ loc_138:
 loc_139:
 		mov	al,2
 		retn
-sub_23		endp
+vga_operation3		endp
 
 loc_140:
 		mov	al,[si]
@@ -1887,13 +1883,13 @@ loc_140:
 		mul	cl			; ax = reg * al
 		add	ax,8030h
 		mov	si,ax
-		call	sub_17
+		call	extract_bits
 		pop	di
 		pop	si
 		pop	ds
 		retn
 loc_141:
-		call	sub_18
+		call	fill_buffer
 		pop	di
 		pop	si
 		pop	ds
@@ -1906,7 +1902,7 @@ loc_142:
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_143			; Jump if not sign
-		call	sub_19
+		call	ai_get_value
 loc_143:
 		push	ax
 		mov	bl,ds:data_74e
@@ -1935,13 +1931,13 @@ loc_143:
 		or	al,al			; Zero ?
 		jz	loc_144			; Jump if zero
 		mov	cl,al
-		call	sub_10
+		call	ai_multiply
 		pop	di
 		pop	si
 		pop	ds
 		retn
 loc_144:
-		call	sub_13
+		call	ai_process_loop_2
 		pop	di
 		pop	si
 		pop	ds
@@ -1951,7 +1947,7 @@ loc_144:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_24		proc	near
+vga_operation4		proc	near
 		mov	cl,byte ptr ds:[84h]
 		mov	al,24h			; '$'
 		mul	cl			; ax = reg * al
@@ -1961,7 +1957,7 @@ sub_24		proc	near
 		add	ax,cx
 		add	ax,ds:data_102e
 		mov	si,ax
-		call	sub_44
+		call	ai_func_44
 		mov	di,data_86e
 		push	cs
 		pop	es
@@ -1971,18 +1967,18 @@ locloop_145:
 		movsw				; Mov [si] to es:[di]
 		movsb				; Mov [si] to es:[di]
 		add	si,21h
-		call	sub_44
+		call	ai_func_44
 		loop	locloop_145		; Loop if cx > 0
 
 		retn
-sub_24		endp
+vga_operation4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_25		proc	near
+vga_operation5		proc	near
 		mov	al,ds:data_71e
 		neg	al
 		add	al,12h
@@ -1993,7 +1989,7 @@ sub_25		proc	near
 		sub	al,2
 		cmp	al,cl
 		jne	loc_ret_146		; Jump if not equal
-		call	sub_31
+		call	ai_func_31
 
 loc_ret_146:
 		retn
@@ -2005,7 +2001,7 @@ loc_147:
 		retn
 loc_148:
 		jnz	loc_149			; Jump if not zero
-		call	sub_26
+		call	vga_operation6
 		jmp	loc_175
 loc_149:
 		add	al,0Ah
@@ -2120,7 +2116,7 @@ loc_159:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_26:
+vga_operation6:
 		test	byte ptr ds:data_117e,0FFh
 		jnz	loc_160			; Jump if not zero
 		retn
@@ -2129,7 +2125,7 @@ loc_160:
 		push	di
 		push	si
 		push	bx
-		call	sub_28
+		call	vga_operation8
 		pop	bx
 		pop	si
 		pop	di
@@ -2139,7 +2135,7 @@ loc_160:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_27:
+vga_operation7:
 		push	ds
 		mov	si,cs:data_77e
 		mov	ax,0A000h
@@ -2161,7 +2157,7 @@ locloop_161:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_28:
+vga_operation8:
 		push	ds
 		mov	di,cs:data_77e
 		mov	ax,0A000h
@@ -2183,7 +2179,7 @@ locloop_162:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_29:
+vga_operation9:
 		mov	al,byte ptr ds:[84h]
 		add	al,ds:data_79e
 		and	al,3Fh			; '?'
@@ -2196,7 +2192,7 @@ sub_29:
 		add	ax,cx
 		mov	si,ax
 		add	si,ds:data_102e
-		call	sub_44
+		call	ai_func_44
 		mov	cx,4
 
 locloop_163:
@@ -2215,7 +2211,7 @@ locloop_164:
 		loop	locloop_164		; Loop if cx > 0
 
 		add	si,20h
-		call	sub_44
+		call	ai_func_44
 		pop	cx
 		loop	locloop_163		; Loop if cx > 0
 
@@ -2231,8 +2227,8 @@ loc_166:
 		push	di
 		push	si
 		push	bx
-		call	sub_29
-		call	sub_27
+		call	vga_operation9
+		call	vga_operation7
 		xor	bx,bx			; Zero register
 		mov	bl,byte ptr cs:[92h]
 		dec	bl
@@ -2273,19 +2269,19 @@ locloop_170:
 		push	cx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di],bp
 		or	es:[di],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+2],bp
 		or	es:[di+2],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+4],bp
 		or	es:[di+4],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+6],bp
 		or	es:[di+6],dx
@@ -2319,7 +2315,7 @@ loc_171:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_30:
+ai_func_30:
 		xor	bp,bp			; Zero register
 		xor	dx,dx			; Zero register
 		xor	bl,bl			; Zero register
@@ -2366,7 +2362,7 @@ loc_174:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_31:
+ai_func_31:
 loc_175:
 		test	byte ptr ds:data_107e,0FFh
 		jz	loc_176			; Jump if zero
@@ -2392,7 +2388,7 @@ locloop_178:
 locloop_179:
 		push	cx
 		push	di
-		call	sub_16
+		call	ai_process_loop_4
 		pop	di
 		add	di,8
 		pop	cx
@@ -2408,7 +2404,7 @@ locloop_179:
 		pop	ds
 		pop	es
 		retn
-sub_25		endp
+vga_operation5		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2487,14 +2483,14 @@ locloop_187:
 locloop_188:
 		push	cx
 		lodsb				; String [si] to al
-		call	sub_32
+		call	ai_multiply_2
 		inc	di
 		inc	bl
 		pop	cx
 		loop	locloop_188		; Loop if cx > 0
 
 		add	si,4
-		call	sub_44
+		call	ai_func_44
 		add	word ptr ds:data_68e,0A00h
 		pop	cx
 		loop	locloop_187		; Loop if cx > 0
@@ -2510,7 +2506,7 @@ loc_189:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_32		proc	near
+ai_multiply_2		proc	near
 		cmp	byte ptr [di],0FFh
 		jne	loc_190			; Jump if not equal
 		retn
@@ -2554,15 +2550,15 @@ loc_192:
 		and	al,3
 		neg	al
 		add	al,3
-		call	sub_35
-		call	sub_33
+		call	ai_multiply_3
+		call	ai_func_33
 		pop	di
 		pop	si
 		mov	al,cs:data_82e
-		call	sub_35
+		call	ai_multiply_3
 		add	di,4
 		add	si,3
-		call	sub_33
+		call	ai_func_33
 		pop	bx
 		pop	si
 		pop	di
@@ -2571,7 +2567,7 @@ loc_192:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_33:
+ai_func_33:
 		mov	cx,2
 
 locloop_193:
@@ -2614,26 +2610,26 @@ loc_194:
 		and	al,3
 		neg	al
 		add	al,3
-		call	sub_35
-		call	sub_34
+		call	ai_multiply_3
+		call	ai_func_34
 		pop	di
 		mov	al,cs:data_82e
-		call	sub_35
+		call	ai_multiply_3
 		add	di,4
-		call	sub_34
+		call	ai_func_34
 		pop	bx
 		pop	si
 		pop	di
 		pop	ds
 		retn
-sub_32		endp
+ai_multiply_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_34		proc	near
+ai_func_34		proc	near
 		mov	ax,cs:data_81e
 		not	ax
 		and	es:[di],ax
@@ -2642,14 +2638,14 @@ sub_34		proc	near
 		and	es:[di],ax
 		and	es:[di+2],ax
 		retn
-sub_34		endp
+ai_func_34		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_35		proc	near
+ai_multiply_3		proc	near
 		and	al,3
 		xor	ah,ah			; Zero register
 		push	ax
@@ -2661,7 +2657,7 @@ sub_35		proc	near
 		mul	bx			; dx:ax = reg * ax
 		add	di,ax
 		retn
-sub_35		endp
+ai_multiply_3		endp
 
 			                        ;* No entry point to code
 		mov	al,byte ptr ds:[83h]
@@ -2674,18 +2670,18 @@ sub_35		endp
 		add	ah,ah
 		mov	ds:data_66e,al
 		mov	byte ptr ds:data_66e+1,ah
-		call	sub_43
+		call	vga_operation_3
 		mov	byte ptr ds:data_82e,36h	; '6'
-		call	sub_36
+		call	ai_func_36
 		mov	byte ptr ds:data_82e,0
-		call	sub_36
+		call	ai_func_36
 		jmp	loc_212
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_36		proc	near
+ai_func_36		proc	near
 		mov	al,ds:data_66e
 		dec	al
 		mov	bl,al
@@ -2696,7 +2692,7 @@ sub_36		proc	near
 		mov	bh,al
 		add	al,19h
 		mov	dh,al
-		call	sub_37
+		call	ai_func_37
 		mov	al,ds:data_66e
 		sub	al,5
 		mov	bl,al
@@ -2707,7 +2703,7 @@ sub_36		proc	near
 		mov	bh,al
 		add	al,21h			; '!'
 		mov	dh,al
-		call	sub_37
+		call	ai_func_37
 		mov	al,ds:data_66e
 		sub	al,9
 		mov	bl,al
@@ -2721,14 +2717,14 @@ sub_36		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_37:
+ai_func_37:
 		mov	cx,9
 
 locloop_195:
 		push	cx
 		push	dx
 		push	bx
-		call	sub_38
+		call	vga_operation_2
 		pop	bx
 		pop	dx
 		sub	bl,0Ch
@@ -2749,46 +2745,46 @@ loc_198:
 loc_199:
 		push	dx
 		push	bx
-		call	sub_42
+		call	ai_multiply_5
 		pop	bx
 		pop	dx
 		pop	cx
 		loop	locloop_195		; Loop if cx > 0
 
 		retn
-sub_36		endp
+ai_func_36		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_38		proc	near
+vga_operation_2		proc	near
 		mov	ax,0A000h
 		mov	es,ax
 		push	dx
 		push	bx
 		mov	dh,bh
-		call	sub_40
+		call	ai_fill_buf
 		pop	bx
 		pop	dx
 		push	dx
 		push	bx
 		mov	bh,dh
-		call	sub_40
+		call	ai_fill_buf
 		pop	bx
 		pop	dx
 		push	dx
 		push	bx
 		mov	dl,bl
-		call	sub_39
+		call	ai_func_39
 		pop	bx
 		pop	dx
 		mov	bl,dl
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_39:
+ai_func_39:
 		cmp	dh,bh
 		jae	loc_200			; Jump if above or =
 		xchg	dx,bx
@@ -2814,7 +2810,7 @@ loc_204:
 		inc	al
 		push	ax
 		mov	al,bh
-		call	sub_41
+		call	ai_multiply_4
 		mov	al,bl
 		xor	ah,ah			; Zero register
 		add	di,ax
@@ -2828,14 +2824,14 @@ locloop_205:
 		loop	locloop_205		; Loop if cx > 0
 
 		retn
-sub_38		endp
+vga_operation_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_40		proc	near
+ai_fill_buf		proc	near
 		cmp	dl,bl
 		jae	loc_206			; Jump if above or =
 		xchg	dx,bx
@@ -2857,7 +2853,7 @@ loc_209:
 		mov	dl,0DEh
 loc_210:
 		mov	al,bh
-		call	sub_41
+		call	ai_multiply_4
 		mov	al,bl
 		xor	ah,ah			; Zero register
 		add	di,ax
@@ -2868,14 +2864,14 @@ loc_210:
 		mov	al,ds:data_82e
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		retn
-sub_40		endp
+ai_fill_buf		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_41		proc	near
+ai_multiply_4		proc	near
 		push	dx
 		xor	ah,ah			; Zero register
 		mov	di,140h
@@ -2884,14 +2880,14 @@ sub_41		proc	near
 		mov	di,ax
 		pop	dx
 		retn
-sub_41		endp
+ai_multiply_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_42		proc	near
+ai_multiply_5		proc	near
 		mov	cl,ds:data_103e
 		shr	cl,1			; Shift w/zeros fill
 		inc	cl
@@ -2909,14 +2905,14 @@ loc_211:
 		jb	loc_211			; Jump if below
 		mov	byte ptr ds:data_99e,0
 		retn
-sub_42		endp
+ai_multiply_5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_43		proc	near
+vga_operation_3		proc	near
 loc_212:
 		mov	ax,0A000h
 		mov	es,ax
@@ -2951,7 +2947,7 @@ locloop_215:
 		loop	locloop_213		; Loop if cx > 0
 
 		retn
-sub_43		endp
+vga_operation_3		endp
 
 			                        ;* No entry point to code
 		and	al,3Fh			; '?'
@@ -2995,28 +2991,28 @@ loc_216:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_44		proc	near
+ai_func_44		proc	near
 		cmp	si,0E900h
 		jae	loc_217			; Jump if above or =
 		retn
 loc_217:
 		sub	si,900h
 		retn
-sub_44		endp
+ai_func_44		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_45		proc	near
+ai_func_45		proc	near
 		cmp	si,0E000h
 		jb	loc_218			; Jump if below
 		retn
 loc_218:
 		add	si,900h
 		retn
-sub_45		endp
+ai_func_45		endp
 
 			                        ;* No entry point to code
 		push	si
@@ -3052,13 +3048,13 @@ locloop_221:
 		push	cx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_30
+		call	ai_func_30
 		mov	es:[di],dx
-		call	sub_30
+		call	ai_func_30
 		mov	es:[di+2],dx
-		call	sub_30
+		call	ai_func_30
 		mov	es:[di+4],dx
-		call	sub_30
+		call	ai_func_30
 		mov	es:[di+6],dx
 		add	di,140h
 		pop	cx
@@ -3116,7 +3112,7 @@ locloop_223:
 		push	cx
 		lodsb				; String [si] to al
 		push	si
-		call	sub_46
+		call	vga_operation_4
 		pop	si
 		add	word ptr ds:data_68e,8
 		pop	cx
@@ -3132,7 +3128,7 @@ locloop_223:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_46		proc	near
+vga_operation_4		proc	near
 		push	ds
 		mov	cl,30h			; '0'
 		mul	cl			; ax = reg * al
@@ -3146,21 +3142,21 @@ sub_46		proc	near
 
 locloop_224:
 		push	cx
-		call	sub_47
+		call	extract_bits_2
 		add	di,138h
 		pop	cx
 		loop	locloop_224		; Loop if cx > 0
 
 		pop	ds
 		retn
-sub_46		endp
+vga_operation_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_47		proc	near
+extract_bits_2		proc	near
 		mov	cx,2
 
 locloop_225:
@@ -3214,7 +3210,7 @@ loc_227:
 		loop	locloop_225		; Loop if cx > 0
 
 		retn
-sub_47		endp
+extract_bits_2		endp
 
 		db	0DEh, 46h,0EFh, 46h,0F8h, 46h
 		db	 09h, 47h, 22h, 47h, 80h,0FCh
@@ -3384,10 +3380,10 @@ locloop_238:
 		push	cx
 		lodsw				; String [si] to ax
 		mov	dx,ax
-		call	sub_48
+		call	ai_process_loop_5
 		lodsw				; String [si] to ax
 		mov	dx,ax
-		call	sub_48
+		call	ai_process_loop_5
 		add	di,138h
 		pop	cx
 		loop	locloop_238		; Loop if cx > 0
@@ -3399,7 +3395,7 @@ locloop_238:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_48		proc	near
+ai_process_loop_5		proc	near
 		mov	cx,4
 
 locloop_239:
@@ -3417,7 +3413,7 @@ locloop_239:
 		loop	locloop_239		; Loop if cx > 0
 
 		retn
-sub_48		endp
+ai_process_loop_5		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -3435,37 +3431,37 @@ sub_48		endp
 locloop_240:
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di],bp
 		or	es:[di],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+2],bp
 		or	es:[di+2],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+4],bp
 		or	es:[di+4],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+6],bp
 		or	es:[di+6],dx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+8],bp
 		or	es:[di+8],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+0Ah],bp
 		or	es:[di+0Ah],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+0Ch],bp
 		or	es:[di+0Ch],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+0Eh],bp
 		or	es:[di+0Eh],dx
@@ -3548,19 +3544,19 @@ locloop_243:
 		push	cx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di],bp
 		or	es:[di],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+2],bp
 		or	es:[di+2],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+4],bp
 		or	es:[di+4],dx
-		call	sub_30
+		call	ai_func_30
 		not	bp
 		and	es:[di+6],bp
 		or	es:[di+6],dx
@@ -3696,13 +3692,13 @@ locloop_245:
 		or	ax,bx
 		not	ax
 		mov	cs:data_75e,ax
-		call	sub_49
+		call	ai_process_loop_6
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
-		call	sub_49
+		call	ai_process_loop_6
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
-		call	sub_50
+		call	ai_scan_loop
 		mov	es:[bp],dl
 		inc	bp
 		pop	cx
@@ -3717,7 +3713,7 @@ locloop_245:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_49		proc	near
+ai_process_loop_6		proc	near
 		mov	cx,4
 
 locloop_246:
@@ -3732,14 +3728,14 @@ locloop_246:
 		loop	locloop_246		; Loop if cx > 0
 
 		retn
-sub_49		endp
+ai_process_loop_6		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_50		proc	near
+ai_scan_loop		proc	near
 		mov	cx,8
 
 locloop_247:
@@ -3758,7 +3754,7 @@ loc_248:
 		loop	locloop_247		; Loop if cx > 0
 
 		retn
-sub_50		endp
+ai_scan_loop		endp
 
 			                        ;* No entry point to code
 		cbw				; Convrt byte to word

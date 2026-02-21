@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_39	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    3          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  DATA_TABLES - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -296,7 +292,7 @@ zr2_39		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_31		proc	near
+data_func_31		proc	near
 		db	0C5h,0C6h,0C0h,0C2h, 00h, 00h
 		db	0B1h,0BAh,0C8h
 data_175	dw	0C9C3h			; Data table (indexed access)
@@ -309,14 +305,14 @@ data_176	dw	0BEC9h			; Data table (indexed access)
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_32:
+data_func_32:
 		db	0C8h, 00h, 00h, 00h, 00h, 00h
 		db	 00h, 9Ch,0C9h, 00h, 00h, 00h
 		db	 00h, 00h, 00h,0BBh,0BAh
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_33:
+data_func_33:
 		db	7 dup (0)
 		db	0B9h, 00h, 65h, 68h, 6Ch, 6Ch
 		db	 70h, 74h, 00h
@@ -334,13 +330,13 @@ sub_33:
 data_177	dw	9188h			; Data table (indexed access)
 		db	 93h, 00h, 6Bh, 6Ah, 88h, 8Ch
 		db	 8Bh, 76h, 78h, 00h
-data_178	dw	offset sub_62
+data_178	dw	offset data_func_62
 		db	 6Fh, 72h
-data_179	dw	offset sub_31
+data_179	dw	offset data_func_31
 data_180	dw	0			; Data table (indexed access)
 		db	 00h, 0Bh
-data_181	dw	offset sub_42
-data_182	dw	offset sub_42
+data_181	dw	offset data_func_42
+data_182	dw	offset data_func_42
 		db	 14h, 00h, 03h, 0Ch, 15h, 15h
 		db	 15h, 15h, 15h, 00h, 04h, 0Dh
 		db	 16h, 16h, 16h, 16h, 16h, 00h
@@ -446,7 +442,7 @@ data_189	db	1Ch			; Data table (indexed access)
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_34:
+data_func_34:
 		add	[si+6Eh],ah
 		db	 6Eh, 89h, 76h, 78h, 00h, 00h
 		db	 00h, 00h, 6Fh, 72h, 00h, 00h
@@ -783,7 +779,7 @@ loc_18:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_39:
+data_func_39:
 		sahf				; Store ah into flags
 		push	ds
 		push	ds
@@ -831,7 +827,7 @@ data_254	db	27h, 'obbbbAG', 27h, 27h, 27h, 27h
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_40:
+data_func_40:
 		sbb	bx,[bp+di]
 		db	0
 		db	17 dup (0)
@@ -844,7 +840,7 @@ sub_40:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_41:
+data_func_41:
 		xor	[bp+si],dh
 		xor	dh,[bp+si]
 		db	 36h, 3Ch, 9Bh, 6Ah, 30h
@@ -922,7 +918,7 @@ data_264	db	1Ch			; Data table (indexed access)
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_42:
+data_func_42:
 		add	[di+7Ch],dh
 		add	word ptr [bx+si],0
 		add	[bx+si],al
@@ -1106,7 +1102,7 @@ data_289	db	'll bet the green slime creatures'
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_44:
+data_func_44:
 		cmpsb				; Cmp [si] to es:[di]
 		test	al,0A9h
 		cmpsb				; Cmp [si] to es:[di]
@@ -1193,7 +1189,7 @@ data_294	db	0			; Data table (indexed access)
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_45:
+data_func_45:
 		mov	dl,0B2h
 		mov	ah,0B2h
 		mov	dl,0B3h
@@ -1267,7 +1263,7 @@ data_297	db	0ABh
 		db	 00h,0ABh,0ABh,0ABh,0ABh,0ABh
 		db	 00h, 00h, 00h, 1Ch,0ABh,0ABh
 		db	0ABh
-data_300	dw	offset sub_33
+data_300	dw	offset data_func_33
 		db	 00h, 00h, 1Ch,0ACh,0ABh,0ABh
 		db	0ABh, 00h, 00h, 00h,0ABh,0ABh
 
@@ -1782,21 +1778,21 @@ data_356	db	27h, 'kbbbbAG', 27h, 27h, 27h, 27h
 		db	 00h, 00h, 4Eh, 4Fh, 52h, 4Fh
 		db	 4Fh, 52h, 00h
 data_360	dw	5100h
-data_361	dw	offset sub_59		; Data table (indexed access)
-data_362	dw	offset sub_58		; Data table (indexed access)
+data_361	dw	offset data_func_59		; Data table (indexed access)
+data_362	dw	offset data_func_58		; Data table (indexed access)
 		db	 53h, 00h, 00h, 52h, 52h, 2Fh
-data_363	dw	offset sub_50		; Data table (indexed access)
+data_363	dw	offset data_func_50		; Data table (indexed access)
 		db	 31h, 00h, 00h, 52h, 53h, 30h
 		db	 2Ch, 2Dh, 2Eh, 00h, 00h
 		db	 51h, 4Fh, 30h
 data_364	dw	2E2Bh
 data_365	dw	2Eh
-data_366	dw	offset sub_57		; Data table (indexed access)
+data_366	dw	offset data_func_57		; Data table (indexed access)
 		db	 4Fh, 2Fh
-data_367	dw	offset sub_50
+data_367	dw	offset data_func_50
 		db	 31h, 00h, 00h, 52h
 data_368	dw	offset loc_34
-data_369	dw	offset sub_56
+data_369	dw	offset data_func_56
 		db	 4Fh, 00h, 00h, 52h, 53h, 4Fh
 		db	 52h, 51h, 52h, 00h, 00h, 52h
 		db	 4Fh, 52h, 4Fh, 4Fh, 53h, 00h
@@ -1839,7 +1835,7 @@ data_369	dw	offset sub_56
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_50:
+data_func_50:
 		xor	dh,[bp+si]
 		inc	cx
 		inc	di
@@ -2124,7 +2120,7 @@ data_398	dw	6E61h			; Data table (indexed access)
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_51:
+data_func_51:
 ;*		fisub	dword ptr [si]		; st = st - memory
 		db	0DAh, 24h		;  Fixup - byte match
 		and	al,24h			; '$'
@@ -2136,7 +2132,7 @@ sub_51:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_53:
+data_func_53:
 		and	al,24h			; '$'
 		and	al,24h			; '$'
 		and	al,0
@@ -2194,12 +2190,12 @@ sub_53:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_54:
+data_func_54:
 		sbb	[bx+di],bx
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_55:
+data_func_55:
 		sbb	[bx+si],ax
 		add	[bp+di],dl
 		sbb	bx,[bp+di]
@@ -2248,7 +2244,7 @@ locloop_27:
 ;*		ficom	word ptr [si-17h]	; Compare with st
 		db	0DEh, 54h,0E9h		;  Fixup - byte match
 		jmp	$+0ECh
-sub_31		endp
+data_func_31		endp
 
 		db	 00h,0D8h,0DEh,0E6h,0E6h,0E6h
 		db	0E6h, 00h, 00h,0D9h,0E0h,0EAh
@@ -2771,7 +2767,7 @@ data_454	db	27h, 27h, '(', 27h, 27h, 27h, '5;'
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_56		proc	near
+data_func_56		proc	near
 		add	[bx+si],al
 		mov	bx,1CABh
 		sbb	al,1Ch
@@ -2949,7 +2945,7 @@ sub_56		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_57:
+data_func_57:
 		pop	ds
 		pop	ds
 		db	 66h, 00h, 00h, 00h, 36h, 3Ch
@@ -2966,7 +2962,7 @@ sub_57:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_58:
+data_func_58:
 		db	 3Eh, 54h
 
 ;ƒƒƒƒƒ Indexed Entry Point ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
@@ -3027,7 +3023,7 @@ loc_35:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_59:
+data_func_59:
 		add	[bx+si],al
 		mov	bx,1CABh
 		sbb	al,1Ch
@@ -3470,7 +3466,7 @@ loc_44:
 		db	0DEh,0E7h		;  Fixup - byte match
 		out	54h,al			; port 54h ??I/O Non-standard
 ;*		jmp	loc_32			;*
-sub_56		endp
+data_func_56		endp
 
 		db	0E9h,0E9h,0E9h		;  Fixup - byte match
 		db	0D8h,0DEh,0E6h,0E6h,0E7h,0E6h
@@ -3849,7 +3845,7 @@ locloop_47:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_60		proc	near
+data_process_loop		proc	near
 		db	 66h,0E2h, 6Ah, 55h,0E2h, 4Eh
 		db	 66h,0E2h, 6Ah, 54h,0E2h, 4Eh
 		db	 66h,0E2h, 6Ah, 55h,0E2h, 4Eh
@@ -3868,7 +3864,7 @@ data_554	dw	0E215h			; Data table (indexed access)
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_61:
+data_func_61:
 		db	 6Ah, 15h,0E2h, 5Ch, 06h,0E2h
 		db	 6Ah, 15h,0E2h
 		db	5Ch
@@ -3922,7 +3918,7 @@ locloop_54:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_62:
+data_func_62:
 		inc	si
 		cmc				; Complement carry
 		add	[bp+di],ax
@@ -4722,7 +4718,7 @@ loc_111:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_63:
+data_func_63:
 		in	ax,6Eh			; port 6Eh ??I/O Non-standard
 		out	59h,al			; port 59h ??I/O Non-standard
 		loop	$+42h			; Loop if cx > 0
@@ -4778,7 +4774,7 @@ sub_63:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_64:
+data_func_64:
 		inc	cx
 		pop	di
 		xor	[bx+si],di
@@ -4862,7 +4858,7 @@ loc_112:
 		inc	di
 		dec	bx
 		jmp	loc_279
-sub_60		endp
+data_process_loop		endp
 
 		db	 41h, 42h
 data_561	dw	4043h			; Data table (indexed access)
@@ -4891,7 +4887,7 @@ data_562	db	4Ah			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_65		proc	near
+data_func_65		proc	near
 		in	ax,69h			; port 69h ??I/O Non-standard
 		dec	bx
 		dec	sp
@@ -4907,7 +4903,7 @@ sub_65		proc	near
 		dec	sp
 		dec	bp
 		jmp	$+4008h
-sub_65		endp
+data_func_65		endp
 
 			                        ;* No entry point to code
 		inc	cx
@@ -6221,7 +6217,7 @@ loc_151:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_66		proc	near
+data_func_66		proc	near
 ;*		sub	bl,ah
 		db	 28h,0E3h		;  Fixup - byte match
 		in	ax,2Fh			; port 2Fh ??I/O Non-standard
@@ -7138,7 +7134,7 @@ loc_175:
 		pop	es
 		daa				; Decimal adjust
 		iret				; Interrupt return
-sub_66		endp
+data_func_66		endp
 
 		db	 27h,0CFh, 27h,0CFh, 27h,0CFh
 		db	 27h,0CFh, 27h,0CFh, 27h,0CFh
@@ -7220,7 +7216,7 @@ loc_176:
 		add	al,30h			; '0'
 		mov	byte ptr cs:data_720,0
 		mov	al,0FFh
-		call	sub_67
+		call	data_func_67
 		mov	cx,59h
 
 locloop_177:
@@ -7235,7 +7231,7 @@ locloop_177:
 		mov	di,0
 		mov	ds,cs:data_722
 		mov	si,8000h
-		call	sub_78
+		call	fill_buffer
 		pop	ds
 		pop	cx
 		push	cx
@@ -7246,7 +7242,7 @@ locloop_177:
 		mov	cx,1858h
 		call	word ptr cs:data_363
 		mov	al,0Ah
-		call	sub_67
+		call	data_func_67
 		pop	cx
 		loop	locloop_177		; Loop if cx > 0
 
@@ -7261,10 +7257,10 @@ locloop_177:
 		mov	es,ax
 		mov	si,0A000h
 		mov	di,0
-		call	sub_76
+		call	data_process_loop_2
 		mov	di,0
 		call	word ptr cs:data_367
-		call	sub_70
+		call	data_multiply
 		push	cs
 		pop	es
 		mov	si,817Eh
@@ -7274,7 +7270,7 @@ locloop_177:
 		mov	es,cs:data_722
 		mov	si,0A000h
 		mov	di,4000h
-		call	sub_76
+		call	data_process_loop_2
 		mov	ax,1
 		call	word ptr cs:data_364
 		mov	ax,7
@@ -7285,7 +7281,7 @@ locloop_177:
 		mov	bx,1D12h
 		mov	cx,1C64h
 		call	word ptr cs:data_360
-		call	sub_70
+		call	data_multiply
 		push	cs
 		pop	es
 		mov	si,8148h
@@ -7295,13 +7291,13 @@ locloop_177:
 		mov	es,cs:data_722
 		mov	si,0A000h
 		mov	di,4000h
-		call	sub_76
+		call	data_process_loop_2
 		mov	di,4000h
 		mov	bx,1610h
 		mov	cx,2468h
 		mov	al,5
 		call	word ptr cs:data_365
-		call	sub_70
+		call	data_multiply
 		push	cs
 		pop	es
 		mov	si,8152h
@@ -7311,7 +7307,7 @@ locloop_177:
 		mov	es,cs:data_722
 		mov	si,0A000h
 		mov	di,4000h
-		call	sub_76
+		call	data_process_loop_2
 		push	cs
 		pop	es
 		mov	si,815Dh
@@ -7321,7 +7317,7 @@ locloop_177:
 		mov	es,cs:data_722
 		mov	si,0A000h
 		mov	di,8000h
-		call	sub_76
+		call	data_process_loop_2
 		xor	ax,ax			; Zero register
 		call	word ptr cs:data_364
 		mov	ax,6
@@ -7342,7 +7338,7 @@ locloop_177:
 		mov	bx,2D18h
 		mov	cx,1858h
 		call	word ptr cs:data_363
-		call	sub_70
+		call	data_multiply
 		push	cs
 		pop	es
 		mov	si,8168h
@@ -7352,14 +7348,14 @@ locloop_177:
 		mov	es,cs:data_722
 		mov	si,0A000h
 		mov	di,8000h
-		call	sub_76
+		call	data_process_loop_2
 		mov	es,cs:data_722
 		mov	di,8000h
 		mov	al,0FFh
 		mov	bx,2D18h
 		mov	cx,1858h
 		call	word ptr cs:data_360
-		call	sub_70
+		call	data_multiply
 		push	cs
 		pop	es
 		mov	si,8189h
@@ -7369,7 +7365,7 @@ locloop_177:
 		mov	es,cs:data_722
 		mov	si,0A000h
 		mov	di,4000h
-		call	sub_76
+		call	data_process_loop_2
 		push	cs
 		pop	es
 		mov	si,8194h
@@ -7379,7 +7375,7 @@ locloop_177:
 		mov	es,cs:data_722
 		mov	si,0A000h
 		mov	di,8000h
-		call	sub_76
+		call	data_process_loop_2
 		mov	ax,2
 		call	word ptr cs:data_364
 		mov	ax,7
@@ -7396,7 +7392,7 @@ locloop_177:
 		mov	bx,3325h
 		mov	cx,1251h
 		call	word ptr cs:data_360
-		call	sub_70
+		call	data_multiply
 		mov	es,cs:data_722
 		mov	di,4000h
 		xor	ax,ax			; Zero register
@@ -7419,7 +7415,7 @@ locloop_178:
 		mov	bx,0B12h
 		mov	cx,1A64h
 		call	word ptr cs:data_360
-		call	sub_70
+		call	data_multiply
 		mov	al,0FFh
 		mov	bx,0
 		mov	cx,50C8h
@@ -7430,21 +7426,21 @@ locloop_178:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_67		proc	near
+data_func_67		proc	near
 loc_179:
-		call	sub_68
+		call	data_func_68
 		cmp	cs:data_720,al
 		jb	loc_179			; Jump if below
 		mov	byte ptr cs:data_720,0
 		retn
-sub_67		endp
+data_func_67		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_68		proc	near
+data_func_68		proc	near
 		push	si
 		push	ax
 		call	word ptr cs:data_179
@@ -7454,18 +7450,18 @@ sub_68		proc	near
 		pop	ax
 		pop	si
 		retn
-sub_68		endp
+data_func_68		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_70		proc	near
+data_multiply		proc	near
 		mov	byte ptr cs:data_720,0
 loc_180:
 		mov	al,10h
-		call	sub_67
+		call	data_func_67
 loc_181:
 		push	cs
 		pop	ds
@@ -7535,7 +7531,7 @@ loc_184:
 		jmp	loc_180
 loc_185:
 		mov	si,word ptr ds:[6630h]
-		call	sub_71
+		call	data_check_state
 		mov	dx,word ptr ds:[6632h]
 		add	dx,cx
 		cmp	dx,138h
@@ -7663,15 +7659,15 @@ loc_209:
 		jmp	short loc_207
 loc_210:
 		mov	al,0F0h
-		call	sub_67
+		call	data_func_67
 		jmp	loc_180
 loc_211:
 		mov	al,0F0h
-		call	sub_67
+		call	data_func_67
 		mov	al,0F0h
-		call	sub_67
+		call	data_func_67
 		mov	al,0F0h
-		call	sub_67
+		call	data_func_67
 		jmp	loc_180
 loc_212:
 		mov	es,cs:data_722
@@ -7785,14 +7781,14 @@ loc_219:
 		mov	cx,208h
 		call	word ptr cs:data_363
 		jmp	loc_181
-sub_70		endp
+data_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_71		proc	near
+data_check_state		proc	near
 		xor	cx,cx			; Zero register
 loc_220:
 		lodsb				; String [si] to al
@@ -7837,7 +7833,7 @@ loc_228:
 		add	cl,cs:data_576[bx]
 		adc	ch,bh
 		jmp	short loc_220
-sub_71		endp
+data_check_state		endp
 
 			                        ;* No entry point to code
 		test	al,6Ah			; 'j'
@@ -7888,16 +7884,16 @@ loc_229:
 		int	60h			; ??INT Non-standard interrupt
 		pop	ds
 		mov	data_548,787Eh
-		call	sub_72
+		call	data_check_state_2
 loc_230:
-		call	sub_75
+		call	data_func_75
 		jmp	short loc_230
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_72		proc	near
+data_check_state_2		proc	near
 		mov	byte ptr data_720,0
 loc_231:
 		mov	si,data_548
@@ -7943,7 +7939,7 @@ loc_239:
 loc_240:
 		push	ax
 		xor	al,al			; Zero register
-		call	sub_73
+		call	data_func_73
 		mov	al,data_550
 		mov	cl,0Eh
 		mul	cl			; ax = reg * al
@@ -7960,12 +7956,12 @@ loc_240:
 		inc	data_549
 loc_241:
 		mov	al,0FFh
-		call	sub_73
+		call	data_func_73
 		mov	al,data_552
-		call	sub_74
+		call	data_func_74
 		jmp	loc_231
 loc_242:
-		call	sub_75
+		call	data_func_75
 		test	byte ptr data_721,0FFh
 		jz	loc_242			; Jump if zero
 		mov	byte ptr data_721,0
@@ -7978,9 +7974,9 @@ loc_243:
 		jmp	loc_231
 loc_244:
 		xor	al,al			; Zero register
-		call	sub_73
+		call	data_func_73
 loc_245:
-		call	sub_75
+		call	data_func_75
 		mov	ax,data_723
 		cmp	ax,data_551
 		jb	loc_245			; Jump if below
@@ -8007,20 +8003,20 @@ loc_248:
 		jmp	loc_231
 loc_249:
 		xor	al,al			; Zero register
-		call	sub_73
+		call	data_func_73
 		mov	data_549,0
 		inc	data_550
 		jmp	loc_231
 loc_250:
 		xor	al,al			; Zero register
-		call	sub_73
+		call	data_func_73
 		add	data_549,4
 		and	data_549,0FCh
 		jmp	loc_241
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_73:
+data_func_73:
 		push	ax
 		mov	al,data_550
 		mov	cl,0Eh
@@ -8033,18 +8029,18 @@ sub_73:
 		jmp	word ptr cs:data_368
 loc_251:
 		xor	al,al			; Zero register
-		call	sub_73
+		call	data_func_73
 		retn
 loc_252:
 		xor	al,al			; Zero register
-		call	sub_73
+		call	data_func_73
 		mov	bl,data_553
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		call	data_545[bx]		;*
 		inc	data_553
 		jmp	loc_231
-sub_72		endp
+data_check_state_2		endp
 
 			                        ;* No entry point to code
 		db	 2Eh, 68h, 5Ah, 68h, 91h, 68h
@@ -8105,21 +8101,21 @@ data_591	dw	20E9h			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_74		proc	near
+data_func_74		proc	near
 loc_253:
-		call	sub_75
+		call	data_func_75
 		cmp	cs:data_720,al
 		jb	loc_253			; Jump if below
 		mov	byte ptr cs:data_720,0
 		retn
-sub_74		endp
+data_func_74		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_75		proc	near
+data_func_75		proc	near
 		push	si
 		push	ax
 		call	word ptr cs:data_179
@@ -8127,7 +8123,7 @@ sub_75		proc	near
 		pop	ax
 		pop	si
 		retn
-sub_75		endp
+data_func_75		endp
 
 		db	8 dup (0)
 
@@ -8135,13 +8131,13 @@ sub_75		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_76		proc	near
-		call	sub_77
+data_process_loop_2		proc	near
+		call	data_func_77
 		jmp	short loc_258
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_77:
+data_func_77:
 		push	di
 		lodsw				; String [si] to ax
 		mov	cx,ax
@@ -8219,7 +8215,7 @@ locloop_259:
 		loop	locloop_259		; Loop if cx > 0
 
 		retn
-sub_76		endp
+data_process_loop_2		endp
 
 loc_260:
 		test	byte ptr [si],40h	; '@'
@@ -8253,7 +8249,7 @@ loc_264:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_78		proc	near
+fill_buffer		proc	near
 		mov	bx,18h
 		mul	bx			; dx:ax = reg * ax
 		add	si,ax
@@ -8263,7 +8259,7 @@ sub_78		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_79:
+data_func_79:
 		rep	movsw			; Rep when cx >0 Mov [si] to es:[di]
 		mov	cx,0Ch
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
@@ -8281,7 +8277,7 @@ sub_79:
 		mov	cx,0Ch
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_78		endp
+fill_buffer		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -8332,7 +8328,7 @@ locloop_268:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_80		proc	near
+data_process_loop_3		proc	near
 		inc	di
 		loop	locloop_268		; Loop if cx > 0
 
@@ -8343,7 +8339,7 @@ sub_80		proc	near
 
 		pop	ds
 		retn
-sub_80		endp
+data_process_loop_3		endp
 
 		db	0F0h,0FAh,0F3h, 41h
 data_595	db	't long last, Jashiin was destroy'
@@ -9360,7 +9356,7 @@ data_673	dw	0A02Bh			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_82		proc	near
+data_func_82		proc	near
 		add	ax,429h
 		inc	ax
 		adc	[bp+si],dh
@@ -9403,7 +9399,7 @@ loc_296:
 		pop	ss
 		pop	data_577[bx+di]
 ;*		jmp	far ptr loc_435		;*
-sub_82		endp
+data_func_82		endp
 
 		db	0EAh
 		dw	0AFAAh, 0EEFFh		;  Fixup - byte match
@@ -9446,7 +9442,7 @@ loc_297:
 		stosb				; Store al to es:[di]
 		xor	al,[bp+di]
 		add	ax,0FFE6h
-;*		call	sub_81			;*
+;*		call	data_func_81			;*
 		db	0E8h, 00h,0FEh		;  Fixup - byte match
 		mov	si,33AFh
 		add	al,0BFh
@@ -9816,7 +9812,7 @@ data_676	dw	9Bh			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_83		proc	near
+data_func_83		proc	near
 		push	sp
 		push	cx
 		push	bp
@@ -9898,7 +9894,7 @@ loc_309:
 		stosb				; Store al to es:[di]
 		das				; Decimal adjust
 		stosb				; Store al to es:[di]
-		call	sub_61
+		call	data_func_61
 		add	dh,[bp+si-56h]
 		xchg	ch,al
 		xor	al,[bx]
@@ -10111,7 +10107,7 @@ loc_312:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_84:
+data_func_84:
 		add	al,1
 		sub	[bp+si],ax
 		jge	$-7			; Jump if > or =
@@ -10220,7 +10216,7 @@ loc_313:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_85:
+data_func_85:
 		jnc	$+2			; delay for I/O
 		add	[di+15h],al
 		sub	[bx+di],ax
@@ -10535,7 +10531,7 @@ locloop_319:
 		inc	si
 		pushf				; Push flags
 		jmp	short loc_318
-sub_83		endp
+data_func_83		endp
 
 			                        ;* No entry point to code
 ;*		pop	cs			; Dangerous-8088 only
@@ -10720,7 +10716,7 @@ loc_326:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_87		proc	near
+data_func_87		proc	near
 		stc				; Set carry flag
 		jcxz	loc_327			; Jump if cx=0
 		xor	ax,7F8Ch
@@ -10861,7 +10857,7 @@ loc_331:
 		pop	di
 		mov	di,300h
 		jmp	short loc_331
-sub_87		endp
+data_func_87		endp
 
 			                        ;* No entry point to code
 ;*		fistp	word ptr [si+0]		; Pop st to memory
@@ -11249,7 +11245,7 @@ data_688	dw	180h
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_88		proc	near
+data_func_88		proc	near
 		add	ax,3420h
 		adc	al,7
 		push	bp
@@ -11989,7 +11985,7 @@ data_713	dw	9301h, 440h
 loc_336:
 		push	ax
 		adc	[bx+di-3Ch],al
-		call	sub_41
+		call	data_func_41
 		add	[bx+si],cx
 		xchg	bx,ax
 ;*		fsub	qword ptr [bx+di+40h]	; st = st - memory
@@ -12463,7 +12459,7 @@ data_716	db	0F0h			; Data table (indexed access)
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_89:
+data_func_89:
 		xchg	cx,ax
 		inc	word ptr ds:[0BC0Eh][bx+si]
 		db	0C1h, 9Eh, 2Ah,0FFh, 80h, 0Fh
@@ -12493,7 +12489,7 @@ loc_340:
 		inc	ax
 		adc	[si],ax
 		retn	3F06h
-sub_88		endp
+data_func_88		endp
 
 			                        ;* No entry point to code
 		cld				; Clear direction
@@ -13050,7 +13046,7 @@ locloop_354:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_92		proc	near
+extract_bits		proc	near
 		adc	al,86h
 		add	[bp+di],dl
 		les	ax,dword ptr [bx+si]	; Load seg:offset ptr
@@ -13067,7 +13063,7 @@ sub_92		proc	near
 
 locloop_355:
 		add	al,[bx+di]
-		call	sub_93
+		call	data_func_93
 		add	sp,sp
 		rol	word ptr [bx+si],cl	; Rotate
 		add	ax,[bp+si-2Dh]
@@ -13124,7 +13120,7 @@ data_748	db	80h			; Data table (indexed access)
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_93:
+data_func_93:
 		add	ch,ds:data_46e[bx+si]
 		stosb				; Store al to es:[di]
 		and	ds:data_47e[bx+si],bp
@@ -13161,7 +13157,7 @@ sub_93:
 ;*		add	bh,dl
 		db	 00h,0D7h		;  Fixup - byte match
                            lock	retn
-sub_92		endp
+extract_bits		endp
 
 			                        ;* No entry point to code
 		mov	al,ds:data_900e
@@ -16109,7 +16105,7 @@ data_811	dw	880h
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_94		proc	near
+data_func_94		proc	near
 		xor	[bx+si],dl
 		db	 6Dh, 15h, 6Ah, 2Dh,0A1h, 12h
 		db	 82h,0A0h, 21h,0B2h, 28h, 02h
@@ -16804,7 +16800,7 @@ loc_386:
 loc_387:
 		mov	bx,0B3BFh
 		retn	80h
-sub_94		endp
+data_func_94		endp
 
 			                        ;* No entry point to code
 		add	ch,[bp+si-12h]
@@ -20319,7 +20315,7 @@ locloop_425:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_95		proc	near
+data_func_95		proc	near
 		add	[bx+si],ax
 		add	[bx+si],ax
 		stosw				; Store ax to es:[di]
@@ -20371,7 +20367,7 @@ sub_95		proc	near
 		db	 8Eh, 01h, 00h, 01h, 00h, 03h
 		db	0AAh, 01h, 00h, 01h, 00h, 03h
 		db	0F8h
-sub_95		endp
+data_func_95		endp
 
 
 seg_a		ends

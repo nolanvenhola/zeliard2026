@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_14	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ENEMY_ORC - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -75,18 +71,18 @@ start:
 		call	word ptr cs:data_18e
 		mov	si,0A2A6h
 		call	word ptr cs:data_17e
-		call	sub_2
+		call	orc_process_loop
 		mov	bx,0D60h
 		mov	cx,3637h
 		mov	al,0FFh
 		call	word ptr cs:data_14e
-		call	sub_5
+		call	orc_func_5
 		mov	ds:data_34e,si
 loc_1:
 		call	word ptr cs:data_23e
 		cmp	al,0FFh
 		je	loc_2			; Jump if equal
-		call	sub_1
+		call	orc_func_1
 		jmp	short loc_1
 loc_2:
 		jmp	word ptr cs:data_20e
@@ -97,12 +93,12 @@ zr2_14		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+orc_func_1		proc	near
 		mov	bl,al
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr cs:data_24e[bx]	;*
-sub_1		endp
+orc_func_1		endp
 
 			                        ;* No entry point to code
 		in	ax,0A0h			; port 0A0h ??I/O Non-standard
@@ -114,7 +110,7 @@ sub_1		endp
 		db	0C6h, 06h, 1Ah
 data_1		dw	offset loc_10		; Data table (indexed access)
 loc_3:
-		call	sub_3
+		call	orc_func_3
 		cmp	byte ptr ds:data_32e,0FAh
 		jb	loc_3			; Jump if below
 		retn
@@ -127,7 +123,7 @@ loc_4:
 		call	word ptr cs:data_16e
 		mov	byte ptr ds:data_32e,0
 loc_5:
-		call	sub_3
+		call	orc_func_3
 		cmp	byte ptr ds:data_32e,14h
 		jb	loc_5			; Jump if below
 		jmp	short loc_4
@@ -183,7 +179,7 @@ locloop_12:
 		loop	locloop_11		; Loop if cx > 0
 
 loc_13:
-		call	sub_3
+		call	orc_func_3
 		cmp	byte ptr ds:data_32e,20h	; ' '
 		jb	loc_13			; Jump if below
 		inc	byte ptr ds:data_30e
@@ -194,7 +190,7 @@ loc_13:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+orc_process_loop		proc	near
 		mov	si,data_27e
 		mov	bx,0E17h
 		mov	cx,8
@@ -219,7 +215,7 @@ locloop_15:
 		loop	locloop_14		; Loop if cx > 0
 
 		retn
-sub_2		endp
+orc_process_loop		endp
 
 		db	 00h, 01h, 02h, 03h, 04h, 05h
 		db	 06h, 07h, 08h, 09h, 0Ah, 0Bh
@@ -237,7 +233,7 @@ sub_2		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+orc_func_3		proc	near
 		cmp	word ptr ds:data_37e,20h
 		jae	loc_16			; Jump if above or =
 		retn
@@ -248,12 +244,12 @@ loc_16:
 		jne	loc_17			; Jump if not equal
 		mov	byte ptr ds:data_31e,0
 loc_17:
-		call	sub_4
+		call	orc_func_4
 		jmp	short loc_21
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_4:
+orc_func_4:
 		mov	bl,ds:data_31e
 		xor	bh,bh			; Zero register
 		add	bx,bx
@@ -331,7 +327,7 @@ loc_24:
 		loop	locloop_22		; Loop if cx > 0
 
 		retn
-sub_3		endp
+orc_func_3		endp
 
 			                        ;* No entry point to code
 		xor	al,35h			; '5'
@@ -343,7 +339,7 @@ sub_3		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+orc_func_5		proc	near
 		mov	ax,word ptr data_1
 		cmp	ax,word ptr ds:[0B2h]
 		mov	si,0A2B4h
@@ -352,7 +348,7 @@ sub_5		proc	near
 loc_25:
 		mov	si,0A2F2h
 		retn
-sub_5		endp
+orc_func_5		endp
 
 			                        ;* No entry point to code
 		add	[bx],dx

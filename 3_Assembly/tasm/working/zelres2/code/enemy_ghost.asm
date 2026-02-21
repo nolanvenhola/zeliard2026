@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR2_12	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  ENEMY_GHOST - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -129,8 +125,8 @@ start:
 		call	word ptr cs:data_61e
 		mov	si,data_93e
 		call	word ptr cs:data_60e
-		call	sub_1
-		call	sub_2
+		call	ghost_process_loop
+		call	ghost_process_loop_2
 		push	cs
 		pop	es
 		mov	bl,ds:data_120e
@@ -142,7 +138,7 @@ start:
 		mov	cx,12h
 		rep	movsw			; Rep when cx >0 Mov [si] to es:[di]
 		xor	al,al			; Zero register
-		call	sub_10
+		call	ghost_func_10
 		mov	byte ptr ds:data_104e,0FFh
 		mov	bx,0D60h
 		mov	cx,3637h
@@ -161,7 +157,7 @@ loc_1:
 		call	word ptr cs:data_71e
 		cmp	al,0FFh
 		je	loc_2			; Jump if equal
-		call	sub_3
+		call	ghost_func_3
 		jmp	short loc_1
 loc_2:
 		jmp	word ptr cs:data_66e
@@ -172,7 +168,7 @@ zr2_12		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+ghost_process_loop		proc	near
 		mov	si,0D2h
 		mov	al,ds:data_120e
 		dec	al
@@ -198,14 +194,14 @@ loc_5:
 
 		mov	ds:data_116e,dh
 		retn
-sub_1		endp
+ghost_process_loop		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+ghost_process_loop_2		proc	near
 		mov	si,0DBh
 		mov	al,ds:data_120e
 		dec	al
@@ -231,19 +227,19 @@ loc_7:
 
 		mov	ds:data_117e,dh
 		retn
-sub_2		endp
+ghost_process_loop_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_3		proc	near
+ghost_func_3		proc	near
 		mov	bl,al
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr cs:data_81e[bx]	;*
-sub_3		endp
+ghost_func_3		endp
 
 			                        ;* No entry point to code
 		sub	ax,59A1h
@@ -290,14 +286,14 @@ loc_8:
 		mov	si,0B1DEh
 		test	byte ptr ds:data_109e,0FFh
 		jnz	loc_9			; Jump if not zero
-;*		call	sub_5			;*
+;*		call	ghost_func_5			;*
 		db	0E8h, 76h, 05h		;  Fixup - byte match
 		mov	si,0B1FFh
 loc_9:
 		mov	ds:data_123e,si
 		retn
 			                        ;* No entry point to code
-		call	sub_8
+		call	ghost_func_8
 		test	byte ptr ds:[93h],0FFh
 		jnz	loc_10			; Jump if not zero
 		mov	word ptr ds:data_123e,0AE4Ah
@@ -333,7 +329,7 @@ loc_11:
 		mov	word ptr ds:data_129e,302Eh
 		call	word ptr cs:data_73e
 		pushf				; Push flags
-		call	sub_8
+		call	ghost_func_8
 		popf				; Pop flags
 		mov	word ptr ds:data_123e,0ADEFh
 		jnc	loc_12			; Jump if carry=0
@@ -402,7 +398,7 @@ loc_15:
 		add	al,ds:data_130e
 		mov	bx,data_132e
 		xlat				; al=[al+[bx]] table
-		call	sub_4
+		call	ghost_func_4
 		push	ax
 		mov	word ptr ds:data_123e,0B0DCh
 		call	word ptr cs:data_71e
@@ -525,7 +521,7 @@ loc_19:
 		xor	bh,bh			; Zero register
 		and	byte ptr ds:[0D2h][bx],0FBh
 loc_20:
-		call	sub_1
+		call	ghost_process_loop
 		mov	ah,byte ptr ds:[92h]
 		mov	al,4
 		call	word ptr cs:[10Ch]
@@ -537,7 +533,7 @@ loc_20:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_4		proc	near
+ghost_func_4		proc	near
 		cmp	al,3
 		je	loc_21			; Jump if equal
 		retn
@@ -553,7 +549,7 @@ loc_23:
 		pop	ax
 		mov	word ptr ds:data_123e,0B24Ch
 		retn
-sub_4		endp
+ghost_func_4		endp
 
 			                        ;* No entry point to code
 		mov	byte ptr ds:data_109e,0FFh
@@ -710,7 +706,7 @@ loc_28:
 loc_29:
 		mov	al,ds:data_114e
 		mov	byte ptr ds:[93h],al
-		call	sub_2
+		call	ghost_process_loop_2
 		mov	al,byte ptr ds:[93h]
 		mov	bx,3EA4h
 		call	word ptr cs:data_65e
@@ -748,8 +744,8 @@ loc_31:
 		mov	byte ptr ds:data_135e,20h	; ' '
 loc_32:
 		and	al,7
-		call	sub_10
-		call	sub_6
+		call	ghost_func_10
+		call	ghost_func_6
 		pop	si
 		jmp	short loc_30
 			                        ;* No entry point to code
@@ -783,7 +779,7 @@ loc_34:
 		mov	byte ptr ds:data_107e,0
 		mov	byte ptr ds:data_108e,0
 		xor	al,al			; Zero register
-		call	sub_10
+		call	ghost_func_10
 		mov	byte ptr ds:data_104e,0FFh
 		mov	word ptr ds:data_123e,0AFE0h
 		retn
@@ -841,7 +837,7 @@ loc_38:
 		add	al,ds:data_130e
 		mov	bx,data_132e
 		xlat				; al=[al+[bx]] table
-		call	sub_7
+		call	ghost_func_7
 		push	ax
 		push	ax
 		mov	word ptr ds:data_123e,0B0DDh
@@ -885,14 +881,14 @@ loc_39:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_6		proc	near
+ghost_func_6		proc	near
 		mov	byte ptr ds:data_121e,0
 loc_40:
-		call	sub_9
+		call	ghost_check_state
 		cmp	byte ptr ds:data_121e,32h	; '2'
 		jb	loc_40			; Jump if below
 		retn
-sub_6		endp
+ghost_func_6		endp
 
 			                        ;* No entry point to code
 		mov	bx,2F2Bh
@@ -902,14 +898,14 @@ sub_6		endp
 		mov	word ptr ds:data_129e,302Eh
 		call	word ptr cs:data_73e
 		pushf				; Push flags
-		call	sub_8
+		call	ghost_func_8
 		popf				; Pop flags
 		mov	word ptr ds:data_123e,0B336h
 		jnc	loc_41			; Jump if carry=0
 		retn
 loc_41:
 		xor	al,al			; Zero register
-		call	sub_10
+		call	ghost_func_10
 		mov	word ptr ds:data_123e,0B375h
 		call	word ptr cs:data_71e
 		mov	byte ptr ds:[92h],4
@@ -928,7 +924,7 @@ loc_41:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_7		proc	near
+ghost_func_7		proc	near
 		cmp	al,3
 		je	loc_42			; Jump if equal
 		retn
@@ -944,7 +940,7 @@ loc_44:
 		pop	ax
 		mov	word ptr ds:data_123e,0B240h
 		retn
-sub_7		endp
+ghost_func_7		endp
 
 		db	0B0h, 03h,0E9h,0CDh, 00h
 
@@ -952,19 +948,19 @@ sub_7		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_8		proc	near
+ghost_func_8		proc	near
 		mov	bx,2717h
 		mov	cx,1C41h
 		xor	al,al			; Zero register
 		jmp	word ptr cs:data_57e
-sub_8		endp
+ghost_func_8		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_9		proc	near
+ghost_check_state		proc	near
 		test	byte ptr ds:data_104e,0FFh
 		jnz	loc_45			; Jump if not zero
 		retn
@@ -1054,7 +1050,7 @@ loc_55:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_10:
+ghost_func_10:
 loc_56:
 		xor	ah,ah			; Zero register
 		add	ax,ax
@@ -1102,7 +1098,7 @@ locloop_60:
 		loop	locloop_57		; Loop if cx > 0
 
 		retn
-sub_9		endp
+ghost_check_state		endp
 
 			                        ;* No entry point to code
 		add	al,[bx+si-56h]

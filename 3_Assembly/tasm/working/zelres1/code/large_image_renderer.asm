@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR1_10	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  LARGE_IMAGE_RENDERER - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -131,7 +127,7 @@ loc_4:
 		mov	si,ds:data_42e
 		cmp	byte ptr [si+1Dh],0FDh
 		jne	loc_5			; Jump if not equal
-		call	sub_7
+		call	limg_multiply_2
 loc_5:
 		mov	word ptr ds:data_18e,4BF8h
 		mov	si,ds:data_42e
@@ -141,46 +137,46 @@ loc_5:
 		mov	di,0E000h
 		mov	byte ptr ds:data_19e,0
 loc_6:
-		call	sub_1
+		call	limg_scan_loop
 		xor	bl,bl			; Zero register
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_7			; Jump if zero
-		call	sub_4
+		call	limg_func_4
 loc_7:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_8			; Jump if zero
-		call	sub_4
+		call	limg_func_4
 loc_8:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_9			; Jump if zero
-		call	sub_4
+		call	limg_func_4
 loc_9:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_10			; Jump if zero
-		call	sub_3
+		call	limg_func_3
 loc_10:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_11			; Jump if zero
-		call	sub_3
+		call	limg_func_3
 loc_11:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_12			; Jump if zero
-		call	sub_2
+		call	limg_multiply
 loc_12:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_13			; Jump if zero
-		call	sub_3
+		call	limg_func_3
 loc_13:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_14			; Jump if zero
-		call	sub_3
+		call	limg_func_3
 loc_14:
 		add	word ptr ds:data_18e,4
 		inc	byte ptr ds:data_19e
@@ -194,7 +190,7 @@ zr1_10		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+limg_scan_loop		proc	near
 		cmp	byte ptr ds:data_19e,1Bh
 		jne	loc_15			; Jump if not equal
 		retn
@@ -221,7 +217,7 @@ loc_16:
 locloop_17:
 		push	cx
 		push	di
-		call	sub_11
+		call	limg_check_state
 		pop	di
 		add	di,4
 		pop	cx
@@ -231,21 +227,21 @@ locloop_17:
 		pop	es
 		pop	di
 		retn
-sub_1		endp
+limg_scan_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+limg_multiply		proc	near
 		cmp	byte ptr [si-1],0FDh
 		jne	loc_18			; Jump if not equal
 		jmp	loc_51
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_3:
+limg_func_3:
 loc_18:
 		mov	al,[di-1]
 		mov	byte ptr [di-1],0FEh
@@ -401,7 +397,7 @@ loc_36:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_4:
+limg_func_4:
 		mov	al,[di-1]
 		mov	byte ptr [di-1],0FEh
 		inc	al
@@ -464,14 +460,14 @@ loc_38:
 locloop_39:
 		push	cx
 		mov	al,ds:[bp]
-		call	sub_29
+		call	limg_process_loop_6
 		mov	cl,al
 		mov	ax,cs:[bx]
 		and	ax,dx
 		or	ax,[si]
 		stosw				; Store ax to es:[di]
 		mov	al,cl
-		call	sub_29
+		call	limg_process_loop_6
 		mov	ax,cs:[bx+2]
 		and	ax,dx
 		or	ax,[si+2]
@@ -551,12 +547,12 @@ loc_49:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_5:
+limg_func_5:
 		mov	cx,6
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_6:
+limg_func_6:
 		push	cs
 		pop	es
 
@@ -593,29 +589,29 @@ loc_51:
 		xor	dh,dh			; Zero register
 		add	dx,word ptr cs:[80h]
 		mov	ds:data_23e,dx
-		call	sub_8
+		call	limg_func_8
 		mov	es:data_20e,al
 		cmp	byte ptr es:data_22e,0FDh
 		jne	loc_52			; Jump if not equal
 		inc	dx
-		call	sub_8
+		call	limg_func_8
 		mov	es:data_22e,al
 loc_52:
 		mov	si,3E67h
 		mov	di,425Bh
-		call	sub_5
+		call	limg_func_5
 		mov	si,cs:data_38e
 loc_53:
-		call	sub_14
+		call	limg_scan_loop_2
 		or	bl,bl			; Zero ?
 		jz	loc_54			; Jump if zero
 		push	si
 		push	bx
-		call	sub_13
+		call	limg_multiply_3
 		pop	bx
 		mov	es,cs:data_43e
 		mov	si,data_20e
-		call	sub_12
+		call	limg_get_value
 		pop	si
 loc_54:
 		add	si,8
@@ -637,7 +633,7 @@ loc_54:
 		mov	es,ax
 		inc	ch
 		jz	loc_55			; Jump if zero
-		call	sub_11
+		call	limg_check_state
 loc_55:
 		pop	di
 		pop	cx
@@ -647,7 +643,7 @@ loc_55:
 		add	di,4
 		inc	cl
 		jz	loc_56			; Jump if zero
-		call	sub_11
+		call	limg_check_state
 loc_56:
 		pop	di
 		pop	es
@@ -661,14 +657,14 @@ loc_56:
 		pop	si
 		pop	ds
 		retn
-sub_2		endp
+limg_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+limg_multiply_2		proc	near
 		push	es
 		push	ds
 		mov	si,ds:data_42e
@@ -682,16 +678,16 @@ sub_7		proc	near
 		cmp	byte ptr ds:data_20e,0FDh
 		jne	loc_57			; Jump if not equal
 		inc	dx
-		call	sub_8
+		call	limg_func_8
 		mov	ds:data_20e,al
 loc_57:
 		mov	si,data_20e
 		mov	di,425Bh
 		mov	cx,3
-		call	sub_6
+		call	limg_func_6
 		mov	si,cs:data_38e
 loc_58:
-		call	sub_14
+		call	limg_scan_loop_2
 		or	bl,bl			; Zero ?
 		jz	loc_59			; Jump if zero
 		push	si
@@ -699,14 +695,14 @@ loc_58:
 		mov	al,3
 		mul	bl			; ax = reg * al
 		push	ax
-		call	sub_13
+		call	limg_multiply_3
 		pop	ax
 		add	di,ax
 		mov	bp,di
 		mov	es,cs:data_43e
 		mov	si,3E67h
 		mov	di,425Bh
-		call	sub_15
+		call	limg_multiply_4
 		pop	si
 loc_59:
 		add	si,8
@@ -717,7 +713,7 @@ loc_59:
 		mov	si,data_32e
 		mov	ax,0B800h
 		mov	es,ax
-		call	sub_11
+		call	limg_check_state
 		pop	ds
 		pop	es
 		mov	di,data_39e
@@ -726,39 +722,39 @@ loc_59:
 		stosb				; Store al to es:[di]
 		stosb				; Store al to es:[di]
 		retn
-sub_7		endp
+limg_multiply_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
-		call	sub_9
+limg_func_8		proc	near
+		call	limg_func_9
 		mov	al,[si+3]
 		cmp	al,0FDh
 		je	loc_60			; Jump if equal
 		retn
 loc_60:
 		add	si,8
-		call	sub_10
+		call	limg_func_10
 		mov	al,[si+3]
 		cmp	al,0FDh
 		je	loc_60			; Jump if equal
 		retn
-sub_8		endp
+limg_func_8		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+limg_func_9		proc	near
 		mov	si,ds:data_38e
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_10:
+limg_func_10:
 loc_61:
 		cmp	dx,[si]
 		jne	loc_62			; Jump if not equal
@@ -766,14 +762,14 @@ loc_61:
 loc_62:
 		add	si,8
 		jmp	short loc_61
-sub_9		endp
+limg_func_9		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_11		proc	near
+limg_check_state		proc	near
 		mov	cx,3
 loc_63:
 		movsw				; Mov [si] to es:[di]
@@ -841,21 +837,21 @@ locloop_72:
 
 loc_ret_73:
 		retn
-sub_11		endp
+limg_check_state		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+limg_get_value		proc	near
 		mov	bp,di
 		dec	bl
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		call	word ptr cs:data_12e[bx]	;*
 		retn
-sub_12		endp
+limg_get_value		endp
 
 		db	0C6h, 35h,0BEh, 35h,0BFh, 5Bh
 		db	 42h,0E8h, 70h, 00h,0EBh, 6Eh
@@ -867,7 +863,7 @@ sub_12		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+limg_multiply_3		proc	near
 		mov	al,[si+2]
 		mov	ch,al
 		and	al,7Fh
@@ -887,14 +883,14 @@ loc_74:
 		mul	cl			; ax = reg * al
 		add	di,ax
 		retn
-sub_13		endp
+limg_multiply_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+limg_scan_loop_2		proc	near
 		mov	cx,2
 		mov	dx,ds:data_23e
 
@@ -909,7 +905,7 @@ loc_76:
 
 		mov	bl,cl
 		retn
-sub_14		endp
+limg_scan_loop_2		endp
 
 			                        ;* No entry point to code
 		mov	bp,di
@@ -927,7 +923,7 @@ sub_14		endp
 		jmp	short loc_77
 			                        ;* No entry point to code
 		mov	di,419Bh
-		call	sub_15
+		call	limg_multiply_4
 		jmp	short loc_77
 			                        ;* No entry point to code
 		mov	di,41FBh
@@ -938,7 +934,7 @@ sub_14		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+limg_multiply_4		proc	near
 loc_77:
 		mov	cx,3
 
@@ -967,7 +963,7 @@ locloop_78:
 		mov	ds,cs:data_43e
 		push	cs
 		pop	es
-		call	sub_16
+		call	limg_process_loop
 		pop	bp
 		pop	es
 		pop	si
@@ -976,7 +972,7 @@ locloop_78:
 		loop	locloop_78		; Loop if cx > 0
 
 		retn
-sub_15		endp
+limg_multiply_4		endp
 
 			                        ;* No entry point to code
 		push	cs
@@ -1001,7 +997,7 @@ locloop_79:
 		add	ax,2000h
 		mov	word ptr cs:data_28e+2,ax
 		mov	ds,cs:data_43e
-		call	sub_16
+		call	limg_process_loop
 		pop	si
 		pop	ds
 		pop	cx
@@ -1013,7 +1009,7 @@ locloop_79:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+limg_process_loop		proc	near
 		push	ds
 		push	si
 		push	di
@@ -1023,9 +1019,9 @@ sub_16		proc	near
 locloop_80:
 		push	cx
 		lodsb				; String [si] to al
-		call	sub_29
+		call	limg_process_loop_6
 		and	es:[di],dx
-		call	sub_29
+		call	limg_process_loop_6
 		and	es:[di+2],dx
 		add	di,4
 		pop	cx
@@ -1045,7 +1041,7 @@ locloop_81:
 		loop	locloop_81		; Loop if cx > 0
 
 		retn
-sub_16		endp
+limg_process_loop		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1210,7 +1206,7 @@ loc_93:
 		add	si,8000h
 		add	bh,bh
 		add	bh,bh
-		call	sub_28
+		call	extract_bits
 		mov	di,ax
 		mov	ds,cs:data_43e
 		mov	ax,0B800h
@@ -1237,7 +1233,7 @@ loc_95:
 		push	cs
 		pop	ds
 		add	bh,bh
-		call	sub_28
+		call	extract_bits
 		mov	di,ax
 		mov	ax,0B800h
 		mov	es,ax
@@ -1303,7 +1299,7 @@ loc_99:
 		add	ax,ax
 		add	si,ax
 		mov	si,[si]
-		call	sub_17
+		call	limg_func_17
 		pop	ax
 		pop	di
 		test	byte ptr ds:data_44e,0FFh
@@ -1314,7 +1310,7 @@ loc_99:
 		add	di,ax
 		mov	dl,[di]
 		mov	ax,[di+1]
-		call	sub_20
+		call	limg_process_loop_2
 loc_100:
 		pop	di
 		pop	si
@@ -1324,7 +1320,7 @@ loc_100:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+limg_func_17		proc	near
 		push	cs
 		pop	es
 		mov	di,3ECBh
@@ -1339,20 +1335,20 @@ loc_102:
 		push	ds
 		push	si
 		and	bl,1
-		call	sub_18
+		call	limg_func_18
 		pop	si
 		pop	ds
 		pop	bx
 		inc	bl
 		jmp	short loc_101
-sub_17		endp
+limg_func_17		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+limg_func_18		proc	near
 		sub	al,20h			; ' '
 		xor	ah,ah			; Zero register
 		shl	ax,1			; Shift w/zeros fill
@@ -1370,9 +1366,9 @@ sub_18		proc	near
 loc_103:
 		push	bx
 		lodsb				; String [si] to al
-		call	sub_19
+		call	limg_func_19
 		push	ax
-		call	sub_19
+		call	limg_func_19
 		pop	bx
 		mov	bl,ah
 		mov	dh,bl
@@ -1398,14 +1394,14 @@ loc_103:
 loc_104:
 		inc	di
 		retn
-sub_18		endp
+limg_func_18		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+limg_func_19		proc	near
 		xor	ah,ah			; Zero register
 		mov	dl,2
 loc_105:
@@ -1420,7 +1416,7 @@ loc_105:
 		dec	dl
 		jnz	loc_105			; Jump if not zero
 		retn
-sub_19		endp
+limg_func_19		endp
 
 			                        ;* No entry point to code
 		push	dx
@@ -1433,7 +1429,7 @@ sub_19		endp
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		pop	ax
 		pop	dx
-		call	sub_22
+		call	limg_process_loop_4
 		mov	di,3ECBh
 		mov	si,3A1Fh
 		mov	cx,7
@@ -1445,8 +1441,8 @@ sub_19		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
-		call	sub_22
+limg_process_loop_2		proc	near
+		call	limg_process_loop_4
 		push	cs
 		pop	es
 		mov	di,3ECBh
@@ -1462,7 +1458,7 @@ locloop_106:
 		push	di
 		lodsb				; String [si] to al
 		push	si
-		call	sub_21
+		call	limg_process_loop_3
 		pop	si
 		pop	di
 		add	di,3
@@ -1470,14 +1466,14 @@ locloop_106:
 		loop	locloop_106		; Loop if cx > 0
 
 		retn
-sub_20		endp
+limg_process_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_21		proc	near
+limg_process_loop_3		proc	near
 		inc	al
 		jnz	loc_107			; Jump if not zero
 		retn
@@ -1495,26 +1491,26 @@ locloop_108:
 		lodsb				; String [si] to al
 		add	al,al
 		add	al,al
-		call	sub_19
+		call	limg_func_19
 		or	es:[di],ah
-		call	sub_19
+		call	limg_func_19
 		or	es:[di+1],ah
-		call	sub_19
+		call	limg_func_19
 		or	es:[di+2],ah
 		add	di,50h
 		loop	locloop_108		; Loop if cx > 0
 
 		retn
-sub_21		endp
+limg_process_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_22		proc	near
+limg_process_loop_4		proc	near
 		mov	di,3A1Fh
-		call	sub_23
+		call	limg_func_23
 		mov	cx,6
 
 locloop_109:
@@ -1527,7 +1523,7 @@ loc_110:
 		loop	locloop_109		; Loop if cx > 0
 
 		retn
-sub_22		endp
+limg_process_loop_4		endp
 
 		db	7 dup (0)
 
@@ -1535,38 +1531,38 @@ sub_22		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_23		proc	near
+limg_func_23		proc	near
 		mov	cl,0Fh
 		mov	bx,4240h
-		call	sub_24
+		call	limg_func_24
 		mov	cs:[di],dh
 		mov	cl,1
 		mov	bx,86A0h
-		call	sub_24
+		call	limg_func_24
 		mov	cs:[di+1],dh
 		xor	cl,cl			; Zero register
 		mov	bx,2710h
-		call	sub_24
+		call	limg_func_24
 		mov	cs:[di+2],dh
 		mov	bx,3E8h
-		call	sub_25
+		call	limg_func_25
 		mov	cs:[di+3],dh
 		mov	bx,64h
-		call	sub_25
+		call	limg_func_25
 		mov	cs:[di+4],dh
 		mov	bx,0Ah
-		call	sub_25
+		call	limg_func_25
 		mov	cs:[di+5],dh
 		mov	cs:[di+6],al
 		retn
-sub_23		endp
+limg_func_23		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_24		proc	near
+limg_func_24		proc	near
 		xor	dh,dh			; Zero register
 loc_111:
 		sub	dl,cl
@@ -1584,21 +1580,21 @@ loc_113:
 loc_114:
 		add	dl,cl
 		retn
-sub_24		endp
+limg_func_24		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_25		proc	near
+limg_func_25		proc	near
 		xor	dh,dh			; Zero register
 		div	bx			; ax,dx rem=dx:ax/reg
 		xchg	dx,ax
 		mov	dh,dl
 		xor	dl,dl			; Zero register
 		retn
-sub_25		endp
+limg_func_25		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1606,7 +1602,7 @@ sub_25		endp
 		add	bh,bh
 		add	bl,cl
 		dec	bl
-		call	sub_28
+		call	extract_bits
 		mov	di,ax
 		mov	si,ax
 		sub	si,2000h
@@ -1654,7 +1650,7 @@ loc_118:
 		push	ds
 		push	ax
 		add	bh,bh
-		call	sub_28
+		call	extract_bits
 		mov	di,ax
 		mov	si,ax
 		add	si,2000h
@@ -1791,18 +1787,18 @@ locloop_128:
 		xchg	ah,al
 		not	ax
 		mov	cs:data_27e,ax
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
 		push	es
 		push	di
 		les	di,dword ptr cs:data_28e	; Load seg:offset ptr
-		call	sub_27
+		call	limg_scan_loop_3
 		mov	al,dl
 		stosb				; Store al to es:[di]
 		mov	cs:data_28e,di
@@ -1873,11 +1869,11 @@ locloop_131:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_26e,ax
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
@@ -1903,15 +1899,15 @@ locloop_133:
 		lodsw				; String [si] to ax
 		xchg	al,ah
 		mov	cs:data_27e,ax
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_27
+		call	limg_scan_loop_3
 		mov	es:[bp],dl
 		inc	bp
 		pop	cx
@@ -1932,15 +1928,15 @@ locloop_134:
 		lodsw				; String [si] to ax
 		xchg	al,ah
 		mov	cs:data_26e,ax
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_27
+		call	limg_scan_loop_3
 		mov	es:[bp],dl
 		inc	bp
 		pop	cx
@@ -1961,15 +1957,15 @@ locloop_135:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_26e,ax
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_27
+		call	limg_scan_loop_3
 		mov	es:[bp],dl
 		inc	bp
 		pop	cx
@@ -1989,11 +1985,11 @@ locloop_136:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_26e,ax
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_26
+		call	limg_process_loop_5
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
@@ -2008,7 +2004,7 @@ locloop_136:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_26		proc	near
+limg_process_loop_5		proc	near
 		mov	cx,4
 
 locloop_137:
@@ -2033,7 +2029,7 @@ locloop_137:
 		loop	locloop_137		; Loop if cx > 0
 
 		retn
-sub_26		endp
+limg_process_loop_5		endp
 
 		db	 00h, 07h, 04h, 02h, 03h, 01h
 		db	 08h, 05h, 07h, 0Fh, 0Ch, 0Eh
@@ -2052,7 +2048,7 @@ sub_26		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_27		proc	near
+limg_scan_loop_3		proc	near
 		mov	cx,8
 
 locloop_138:
@@ -2071,14 +2067,14 @@ loc_139:
 		loop	locloop_138		; Loop if cx > 0
 
 		retn
-sub_27		endp
+limg_scan_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_28		proc	near
+extract_bits		proc	near
 		mov	dh,bl
 		ror	dh,1			; Rotate
 		ror	dh,1			; Rotate
@@ -2093,14 +2089,14 @@ sub_28		proc	near
 		xor	bh,bh			; Zero register
 		add	ax,bx
 		retn
-sub_28		endp
+extract_bits		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_29		proc	near
+limg_process_loop_6		proc	near
 		mov	cx,4
 
 locloop_140:
@@ -2116,7 +2112,7 @@ locloop_140:
 
 		xchg	dh,dl
 		retn
-sub_29		endp
+limg_process_loop_6		endp
 
 		db	1719 dup (0)
 

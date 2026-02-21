@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR3_14	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  LEVEL_RENDERER - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -218,7 +214,7 @@ loc_6:
 		shr	bx,1			; Shift w/zeros fill
 		shr	bx,1			; Shift w/zeros fill
 loc_7:
-		call	sub_4
+		call	lvrender_func_4
 		mov	byte ptr ds:data_50e,2Fh	; '/'
 		cmp	byte ptr ds:data_22e,2Fh	; '/'
 		jae	loc_8			; Jump if above or =
@@ -252,13 +248,13 @@ loc_11:
 		repne	scasb			; Rep zf=0+cx >0 Scan es:[di] for al
 		jnz	loc_12			; Jump if not zero
 		push	ax
-		call	sub_1
+		call	lvrender_func_1
 		sbb	al,al
 		mov	ds:data_31e,al
 		pop	ax
 		cmp	al,7
 		jne	loc_12			; Jump if not equal
-		call	sub_1
+		call	lvrender_func_1
 		sbb	al,al
 		mov	ds:data_31e,al
 loc_12:
@@ -287,7 +283,7 @@ loc_16:
 		repne	scasb			; Rep zf=0+cx >0 Scan es:[di] for al
 		jnz	loc_18			; Jump if not zero
 		push	ax
-		call	sub_2
+		call	lvrender_get_value
 		cmc				; Complement carry
 		sbb	al,al
 		mov	ds:data_31e,al
@@ -297,7 +293,7 @@ loc_16:
 		cmp	al,3
 		jne	loc_14			; Jump if not equal
 loc_17:
-		call	sub_2
+		call	lvrender_get_value
 		cmc				; Complement carry
 		sbb	al,al
 		mov	ds:data_31e,al
@@ -354,7 +350,7 @@ zr3_14		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+lvrender_func_1		proc	near
 		mov	ax,ds:data_22e
 		dec	ax
 		mov	bx,0Eh
@@ -363,7 +359,7 @@ sub_1		proc	near
 		cmc				; Complement carry
 		jnc	$+3			; Jump if carry=0
 		retn
-sub_1		endp
+lvrender_func_1		endp
 
 		db	0F8h,0C3h
 
@@ -371,14 +367,14 @@ sub_1		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+lvrender_get_value		proc	near
 		mov	ax,ds:data_22e
 		inc	ax
 		mov	bx,32h
 		sub	bx,ax
 		jnc	$+3			; Jump if carry=0
 		retn
-sub_2		endp
+lvrender_get_value		endp
 
 		db	0A3h,0A0h,0A7h,0F8h,0C3h
 		db	 0Eh, 07h
@@ -498,7 +494,7 @@ loc_32:
 locloop_33:
 		jmp	loc_28
 loc_34:
-		call	sub_3
+		call	lvrender_func_3
 		mov	word ptr [si],0FFFFh
 		test	byte ptr ds:data_36e,0FFh
 		jnz	loc_35			; Jump if not zero
@@ -562,7 +558,7 @@ loc_42:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+lvrender_func_3		proc	near
 		test	byte ptr ds:data_36e,0FFh
 		jnz	loc_43			; Jump if not zero
 		retn
@@ -592,14 +588,14 @@ loc_44:
 		mov	ds:data_46e[bx],al
 		add	si,10h
 		retn
-sub_3		endp
+lvrender_func_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+lvrender_func_4		proc	near
 		mov	ax,ds:data_24e
 		sub	ax,bx
 		jnc	loc_45			; Jump if carry=0
@@ -618,7 +614,7 @@ loc_46:
 		mov	byte ptr ds:data_36e,0
 		mov	byte ptr ds:data_47e,0FFh
 		retn
-sub_4		endp
+lvrender_func_4		endp
 
 loc_47:
 		cmp	byte ptr ds:data_27e,28h	; '('

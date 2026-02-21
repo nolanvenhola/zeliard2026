@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR1_03	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  IMAGE_DECODE - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -96,7 +92,7 @@ locloop_1:
 		mov	cs:data_71e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_1		; Loop if cx > 0
 
@@ -134,7 +130,7 @@ locloop_2:
 		mov	cs:data_69e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_2		; Loop if cx > 0
 
@@ -149,13 +145,13 @@ locloop_2:
 		push	ax
 		push	es
 		push	di
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		pop	si
 		pop	ds
 		pop	ax
 		mov	word ptr cs:data_76e,32A6h
-		call	sub_1
+		call	imgdec_func_1
 		pop	ds
 		retn
 			                        ;* No entry point to code
@@ -182,7 +178,7 @@ locloop_3:
 		mov	cs:data_70e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_69e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_3		; Loop if cx > 0
 
@@ -195,7 +191,7 @@ locloop_3:
 		push	ax
 		push	es
 		push	di
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		pop	si
 		pop	ds
@@ -204,10 +200,10 @@ locloop_3:
 		mov	byte ptr cs:data_75e,0
 		or	al,al			; Zero ?
 		jnz	loc_4			; Jump if not zero
-		call	sub_1
+		call	imgdec_func_1
 loc_4:
 		mov	byte ptr cs:data_75e,0FFh
-		call	sub_1
+		call	imgdec_func_1
 		pop	ds
 		retn
 loc_5:
@@ -215,7 +211,7 @@ loc_5:
 		push	ax
 		push	es
 		push	di
-		call	sub_21
+		call	math_calc
 		add	di,ax
 		pop	si
 		pop	ds
@@ -224,10 +220,10 @@ loc_5:
 		mov	byte ptr cs:data_75e,0
 		or	al,al			; Zero ?
 		jnz	loc_6			; Jump if not zero
-		call	sub_1
+		call	imgdec_func_1
 loc_6:
 		mov	byte ptr cs:data_75e,0FFh
-		call	sub_1
+		call	imgdec_func_1
 		pop	ds
 		retn
 
@@ -237,7 +233,7 @@ zr1_03		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+imgdec_func_1		proc	near
 		mov	byte ptr cs:data_73e,0
 		mov	ax,0B000h
 		mov	es,ax
@@ -302,7 +298,7 @@ loc_12:
 
 loc_ret_13:
 		retn
-sub_1		endp
+imgdec_func_1		endp
 
 			                        ;* No entry point to code
 		test	byte ptr cs:data_75e,0FFh
@@ -456,7 +452,7 @@ loc_25:
 locloop_26:
 		push	cx
 		lodsb				; String [si] to al
-		call	sub_2
+		call	imgdec_process_loop
 		mov	es:[di],dx
 		add	di,50h
 		pop	cx
@@ -472,7 +468,7 @@ loc_27:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+imgdec_process_loop		proc	near
 		mov	cx,8
 
 locloop_28:
@@ -486,7 +482,7 @@ locloop_28:
 		or	dx,bx
 		xchg	dh,dl
 		retn
-sub_2		endp
+imgdec_process_loop		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -519,7 +515,7 @@ sub_2		endp
 		rep	movsw			; Rep when cx >0 Mov [si] to es:[di]
 		pop	bx
 		push	bx
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		pop	bx
 		mov	al,50h			; 'P'
@@ -543,11 +539,11 @@ sub_2		endp
 
 locloop_29:
 		push	cx
-		call	sub_3
+		call	imgdec_process_loop_2
 		add	di,2000h
 		cmp	di,6000h
 		jb	loc_30			; Jump if below
-		call	sub_3
+		call	imgdec_process_loop_2
 		add	di,data_97e
 loc_30:
 		add	bp,bx
@@ -562,7 +558,7 @@ loc_30:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+imgdec_process_loop_2		proc	near
 		push	di
 		push	si
 		push	bp
@@ -581,7 +577,7 @@ locloop_31:
 		pop	si
 		pop	di
 		retn
-sub_3		endp
+imgdec_process_loop_2		endp
 
 loc_32:
 		push	ds
@@ -611,7 +607,7 @@ locloop_33:
 		mov	cs:data_69e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_33		; Loop if cx > 0
 
@@ -621,7 +617,7 @@ locloop_33:
 		pop	ds
 loc_34:
 		push	ds
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		mov	si,data_93e
 		push	es
@@ -741,7 +737,7 @@ loc_40:
 		mov	es,ax
 		mov	si,di
 		mov	di,bp
-		call	sub_4
+		call	copy_buffer
 		pop	si
 		pop	ds
 loc_41:
@@ -782,7 +778,7 @@ locloop_44:
 		mov	es,ax
 		mov	ds,cs:data_87e
 		mov	si,bp
-		call	sub_6
+		call	imgdec_multiply
 		pop	si
 		pop	ds
 loc_45:
@@ -810,7 +806,7 @@ locloop_47:
 		add	ax,3000h
 		mov	ds,ax
 		mov	si,bp
-		call	sub_5
+		call	copy_buffer_2
 		pop	si
 		pop	ds
 		pop	cx
@@ -834,7 +830,7 @@ loc_49:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+copy_buffer		proc	near
 		push	si
 		push	cx
 loc_50:
@@ -855,14 +851,14 @@ loc_51:
 		pop	cx
 		pop	si
 		retn
-sub_4		endp
+copy_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+copy_buffer_2		proc	near
 		push	di
 		push	cx
 loc_52:
@@ -895,14 +891,14 @@ loc_53:
 		pop	cx
 		pop	di
 		retn
-sub_5		endp
+copy_buffer_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+imgdec_multiply		proc	near
 		push	di
 		push	cx
 		mov	al,ch
@@ -914,11 +910,11 @@ loc_54:
 		push	cx
 		mov	cl,ch
 		xor	ch,ch			; Zero register
-		call	sub_7
+		call	imgdec_process_loop_3
 		add	di,2000h
 		cmp	di,6000h
 		jb	loc_55			; Jump if below
-		call	sub_7
+		call	imgdec_process_loop_3
 		add	di,0A05Ah
 loc_55:
 		add	si,cx
@@ -928,14 +924,14 @@ loc_55:
 		pop	cx
 		pop	di
 		retn
-sub_6		endp
+imgdec_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+imgdec_process_loop_3		proc	near
 		push	di
 		push	si
 		push	cx
@@ -947,7 +943,7 @@ locloop_56:
 		lodsb				; String [si] to al
 		mov	cs:data_68e,ax
 		push	bx
-		call	sub_20
+		call	imgdec_process_loop_5
 		pop	bx
 		or	es:[di],al
 		inc	di
@@ -957,7 +953,7 @@ locloop_56:
 		pop	si
 		pop	di
 		retn
-sub_7		endp
+imgdec_process_loop_3		endp
 
 		db	 00h, 90h, 20h, 06h, 80h, 91h
 		db	 20h, 06h, 00h, 93h, 20h, 06h
@@ -979,7 +975,7 @@ locloop_57:
 		mov	cs:data_68e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_69e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_57		; Loop if cx > 0
 
@@ -1010,7 +1006,7 @@ locloop_58:
 		mov	cs:data_69e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_58		; Loop if cx > 0
 
@@ -1031,7 +1027,7 @@ locloop_60:
 		push	bx
 		push	ds
 		push	si
-		call	sub_8
+		call	imgdec_multiply_2
 		pop	si
 		pop	ds
 		pop	bx
@@ -1050,7 +1046,7 @@ locloop_60:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
+imgdec_multiply_2		proc	near
 		mov	ds,cs:data_87e
 		mov	dx,cs
 		add	dx,2000h
@@ -1104,7 +1100,7 @@ locloop_64:
 		loop	locloop_63		; Loop if cx > 0
 
 		retn
-sub_8		endp
+imgdec_multiply_2		endp
 
 			                        ;* No entry point to code
 		mov	word ptr cs:data_71e,0
@@ -1144,7 +1140,7 @@ loc_66:
 		pop	ax
 		mov	bl,al
 		xor	bh,bh			; Zero register
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		mov	ax,0B000h
 		mov	es,ax
@@ -1159,7 +1155,7 @@ locloop_67:
 		mov	ax,ds:data_90e[si]
 		mov	cs:data_70e,ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		or	es:[di],ax
 		inc	di
 		inc	di
@@ -1178,7 +1174,7 @@ locloop_68:
 		mov	ax,ds:data_90e[si]
 		mov	cs:data_70e,ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		or	es:[di],ax
 		inc	di
 		inc	di
@@ -1201,7 +1197,7 @@ locloop_70:
 		xchg	ah,al
 		mov	cs:data_70e,ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		or	es:[di],ax
 		dec	di
 		dec	di
@@ -1222,7 +1218,7 @@ locloop_71:
 		xchg	ah,al
 		mov	cs:data_70e,ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		or	es:[di],ax
 		dec	di
 		dec	di
@@ -1243,7 +1239,7 @@ loc_73:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_75			; Jump if zero
-		call	sub_9
+		call	imgdec_func_9
 		add	di,205Ah
 		cmp	di,6000h
 		jb	loc_74			; Jump if below
@@ -1258,7 +1254,7 @@ loc_76:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_77			; Jump if zero
-		call	sub_9
+		call	imgdec_func_9
 		inc	di
 		jmp	short loc_76
 loc_77:
@@ -1269,7 +1265,7 @@ loc_78:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_80			; Jump if zero
-		call	sub_9
+		call	imgdec_func_9
 		sub	di,205Ah
 		jnc	loc_79			; Jump if carry=0
 		add	di,5FA6h
@@ -1284,7 +1280,7 @@ loc_81:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_82			; Jump if zero
-		call	sub_9
+		call	imgdec_func_9
 		dec	di
 		jmp	short loc_81
 loc_82:
@@ -1307,7 +1303,7 @@ loc_85:
 locloop_86:
 		push	cx
 		mov	al,18h
-		call	sub_9
+		call	imgdec_func_9
 		add	di,205Ah
 		cmp	di,6000h
 		jb	loc_87			; Jump if below
@@ -1331,7 +1327,7 @@ loc_89:
 locloop_90:
 		push	cx
 		mov	al,18h
-		call	sub_9
+		call	imgdec_func_9
 		inc	di
 		pop	cx
 		loop	locloop_90		; Loop if cx > 0
@@ -1348,7 +1344,7 @@ loc_91:
 locloop_92:
 		push	cx
 		mov	al,18h
-		call	sub_9
+		call	imgdec_func_9
 		sub	di,205Ah
 		jnc	loc_93			; Jump if carry=0
 		add	di,5FA6h
@@ -1372,7 +1368,7 @@ loc_95:
 locloop_96:
 		push	cx
 		mov	al,18h
-		call	sub_9
+		call	imgdec_func_9
 		dec	di
 		pop	cx
 		loop	locloop_96		; Loop if cx > 0
@@ -1387,7 +1383,7 @@ loc_97:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+imgdec_func_9		proc	near
 		push	si
 		push	di
 		dec	al
@@ -1439,7 +1435,7 @@ loc_101:
 		pop	di
 		pop	si
 		retn
-sub_9		endp
+imgdec_func_9		endp
 
 		db	 00h, 00h, 00h, 03h, 80h, 80h
 		db	 8Ah, 88h, 03h, 03h, 03h, 03h
@@ -1522,7 +1518,7 @@ loc_104:
 		mov	ax,[si]
 		mov	cs:data_70e,ax
 loc_105:
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		pop	si
 		inc	si
@@ -1554,7 +1550,7 @@ locloop_107:
 		push	cx
 		push	bx
 		push	si
-		call	sub_10
+		call	imgdec_multiply_3
 		pop	si
 		pop	bx
 		pop	cx
@@ -1575,12 +1571,12 @@ loc_108:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_10		proc	near
+imgdec_multiply_3		proc	near
 		push	bx
 		mov	bl,cs:data_73e
 		add	bl,10h
 		mov	bh,4
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		pop	bx
 		cmp	cs:data_73e,bl
@@ -1644,11 +1640,11 @@ loc_113:
 		xor	ax,ax			; Zero register
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_10		endp
+imgdec_multiply_3		endp
 
 			                        ;* No entry point to code
 		mov	cs:data_73e,bl
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		mov	ax,0B000h
 		mov	es,ax
@@ -1658,7 +1654,7 @@ sub_10		endp
 		sub	cx,5
 		push	cx
 		push	di
-		call	sub_11
+		call	fill_buffer
 		pop	di
 		inc	byte ptr cs:data_73e
 		add	di,2000h
@@ -1667,12 +1663,12 @@ sub_10		endp
 		add	di,data_84e
 loc_114:
 		mov	cx,2
-		call	sub_12
+		call	clear_buffer
 		pop	cx
 
 locloop_115:
 		push	cx
-		call	sub_13
+		call	imgdec_get_value
 		or	byte ptr es:[di],30h	; '0'
 		and	byte ptr es:[di],0F0h
 		or	byte ptr es:[bx+di-1],0Ch
@@ -1681,7 +1677,7 @@ locloop_115:
 		add	di,2000h
 		cmp	di,data_95e
 		jb	loc_116			; Jump if below
-		call	sub_13
+		call	imgdec_get_value
 		or	byte ptr es:[di],30h	; '0'
 		and	byte ptr es:[di],0F0h
 		or	byte ptr es:[bx+di-1],0Ch
@@ -1693,15 +1689,15 @@ loc_116:
 		loop	locloop_115		; Loop if cx > 0
 
 		mov	cx,1
-		call	sub_12
+		call	clear_buffer
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_11		proc	near
+fill_buffer		proc	near
 		push	di
-		call	sub_13
+		call	imgdec_get_value
 		or	byte ptr es:[di],3Fh	; '?'
 		inc	di
 		mov	cx,bx
@@ -1715,7 +1711,7 @@ sub_11		proc	near
 		jae	loc_117			; Jump if above or =
 		retn
 loc_117:
-		call	sub_13
+		call	imgdec_get_value
 		or	byte ptr es:[di],3Fh	; '?'
 		inc	di
 		mov	cx,bx
@@ -1724,19 +1720,19 @@ loc_117:
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		or	byte ptr es:[di],0FCh
 		retn
-sub_11		endp
+fill_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+clear_buffer		proc	near
 
 locloop_118:
 		push	cx
 		push	di
-		call	sub_13
+		call	imgdec_get_value
 		or	byte ptr es:[di],30h	; '0'
 		and	byte ptr es:[di],0F0h
 		inc	di
@@ -1752,7 +1748,7 @@ locloop_118:
 		cmp	di,data_95e
 		jb	loc_119			; Jump if below
 		push	di
-		call	sub_13
+		call	imgdec_get_value
 		or	byte ptr es:[di],30h	; '0'
 		and	byte ptr es:[di],0F0h
 		inc	di
@@ -1769,17 +1765,17 @@ loc_119:
 		loop	locloop_118		; Loop if cx > 0
 
 		retn
-sub_12		endp
+clear_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+imgdec_get_value		proc	near
 		mov	word ptr es:[di-1],0
 		retn
-sub_13		endp
+imgdec_get_value		endp
 
 			                        ;* No entry point to code
 		push	bx
@@ -1822,10 +1818,10 @@ locloop_120:
 		mov	ds:data_79e,es
 		mov	di,69Ah
 		add	di,ds:data_78e
-		call	sub_16
+		call	imgdec_process_loop_4
 		mov	di,6BCh
 		add	di,ds:data_78e
-		call	sub_16
+		call	imgdec_process_loop_4
 		mov	ax,0B000h
 		mov	es,ax
 		mov	ds,cs:data_79e
@@ -1843,7 +1839,7 @@ locloop_121:
 		mul	bl			; ax = reg * al
 		push	ax
 		xor	bh,bh			; Zero register
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		pop	ax
 		add	ax,cs:data_78e
@@ -1853,10 +1849,10 @@ locloop_121:
 		jb	loc_122			; Jump if below
 		cmp	ax,71h
 		jae	loc_122			; Jump if above or =
-		call	sub_15
+		call	imgdec_scan_loop_2
 		jmp	short loc_123
 loc_122:
-		call	sub_14
+		call	imgdec_scan_loop
 loc_123:
 		pop	cx
 		push	cx
@@ -1869,7 +1865,7 @@ loc_123:
 		mul	bl			; ax = reg * al
 		push	ax
 		xor	bh,bh			; Zero register
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		pop	ax
 		add	ax,cs:data_78e
@@ -1879,10 +1875,10 @@ loc_123:
 		jb	loc_124			; Jump if below
 		cmp	ax,71h
 		jae	loc_124			; Jump if above or =
-		call	sub_15
+		call	imgdec_scan_loop_2
 		jmp	short loc_125
 loc_124:
-		call	sub_14
+		call	imgdec_scan_loop
 loc_125:
 		cmp	byte ptr cs:data_86e,4
 		jb	loc_125			; Jump if below
@@ -1896,7 +1892,7 @@ loc_125:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+imgdec_scan_loop		proc	near
 		mov	cx,28h
 		mov	word ptr cs:data_71e,0
 
@@ -1907,7 +1903,7 @@ locloop_126:
 		mov	cs:data_69e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		push	di
 		add	di,1FFEh
@@ -1919,14 +1915,14 @@ loc_127:
 		loop	locloop_126		; Loop if cx > 0
 
 		retn
-sub_14		endp
+imgdec_scan_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+imgdec_scan_loop_2		proc	near
 		mov	cx,0Bh
 		mov	word ptr cs:data_71e,0
 
@@ -1938,7 +1934,7 @@ locloop_128:
 		mov	cs:data_69e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosb				; Store al to es:[di]
 		push	di
 		add	di,1FFFh
@@ -1960,7 +1956,7 @@ locloop_130:
 		mov	cs:data_69e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		push	di
 		add	di,1FFEh
@@ -1983,7 +1979,7 @@ locloop_132:
 		mov	cs:data_69e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosb				; Store al to es:[di]
 		push	di
 		add	di,1FFFh
@@ -1995,17 +1991,17 @@ loc_133:
 		loop	locloop_132		; Loop if cx > 0
 
 		retn
-sub_15		endp
+imgdec_scan_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+imgdec_process_loop_4		proc	near
 		push	di
 		mov	ax,0FC3Fh
-		call	sub_17
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,5Bh
 
@@ -2016,12 +2012,12 @@ locloop_134:
 		loop	locloop_134		; Loop if cx > 0
 
 		mov	ax,0FC3Fh
-		call	sub_17
+		call	fill_buffer_2
 		pop	di
 		add	di,data_57e
 		push	di
 		mov	ax,0FD7Fh
-		call	sub_17
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,2Dh
 
@@ -2038,11 +2034,11 @@ locloop_135:
 		mov	byte ptr es:[di+19h],0Eh
 		add	di,50h
 		mov	ax,0FD7Fh
-		call	sub_17
+		call	fill_buffer_2
 		pop	di
 		add	di,data_57e
 		mov	ax,0FC3Fh
-		call	sub_17
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,5Bh
 
@@ -2053,16 +2049,16 @@ locloop_136:
 		loop	locloop_136		; Loop if cx > 0
 
 		mov	ax,0FC3Fh
-		call	sub_17
+		call	fill_buffer_2
 		retn
-sub_16		endp
+imgdec_process_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+fill_buffer_2		proc	near
 		stosb				; Store al to es:[di]
 		mov	al,0FFh
 		mov	cx,18h
@@ -2070,7 +2066,7 @@ sub_17		proc	near
 		mov	al,ah
 		stosb				; Store al to es:[di]
 		retn
-sub_17		endp
+fill_buffer_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2088,12 +2084,12 @@ locloop_137:
 		neg	ax
 		add	ax,39h
 		add	ax,ax
-		call	sub_18
+		call	imgdec_multiply_4
 		pop	ax
 		push	ax
 		add	ax,ax
 		dec	ax
-		call	sub_18
+		call	imgdec_multiply_4
 loc_138:
 		cmp	byte ptr cs:data_86e,4
 		jb	loc_138			; Jump if below
@@ -2107,7 +2103,7 @@ loc_138:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+imgdec_multiply_4		proc	near
 		push	ax
 		mov	bl,al
 		mov	al,2Fh			; '/'
@@ -2115,7 +2111,7 @@ sub_18		proc	near
 		add	ax,cs:data_78e
 		mov	si,ax
 		xor	bh,bh			; Zero register
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		pop	ax
 		cmp	ax,14h
@@ -2140,7 +2136,7 @@ locloop_141:
 		mov	cs:data_69e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosb				; Store al to es:[di]
 		push	di
 		add	di,1FFFh
@@ -2164,7 +2160,7 @@ locloop_144:
 		mov	cs:data_69e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosb				; Store al to es:[di]
 		push	di
 		add	di,1FFFh
@@ -2182,7 +2178,7 @@ loc_145:
 		mov	cs:data_69e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		and	al,0FCh
 		and	byte ptr es:[di],3
 		or	es:[di],al
@@ -2194,7 +2190,7 @@ loc_146:
 		and	byte ptr es:[di],3
 		or	es:[di],al
 		retn
-sub_18		endp
+imgdec_multiply_4		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2212,12 +2208,12 @@ locloop_147:
 		neg	ax
 		add	ax,39h
 		add	ax,ax
-		call	sub_19
+		call	imgdec_multiply_5
 		pop	ax
 		push	ax
 		add	ax,ax
 		dec	ax
-		call	sub_19
+		call	imgdec_multiply_5
 loc_148:
 		cmp	byte ptr cs:data_86e,4
 		jb	loc_148			; Jump if below
@@ -2231,7 +2227,7 @@ loc_148:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+imgdec_multiply_5		proc	near
 		push	ax
 		mov	bl,al
 		mov	al,2Fh			; '/'
@@ -2241,7 +2237,7 @@ sub_19		proc	near
 		mov	si,ax
 		add	bl,14h
 		xor	bh,bh			; Zero register
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		add	di,21h
 		pop	ax
@@ -2258,7 +2254,7 @@ locloop_149:
 		mov	cs:data_69e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_68e,ax
-		call	sub_20
+		call	imgdec_process_loop_5
 		stosw				; Store ax to es:[di]
 		push	di
 		add	di,1FFEh
@@ -2284,11 +2280,11 @@ loc_151:
 loc_152:
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		retn
-sub_19		endp
+imgdec_multiply_5		endp
 
 			                        ;* No entry point to code
 		push	ax
-		call	sub_21
+		call	math_calc
 		mov	di,ax
 		mov	ax,0B000h
 		mov	es,ax
@@ -2688,7 +2684,7 @@ data_40		dw	0			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+imgdec_process_loop_5		proc	near
 		push	cx
 		push	si
 		mov	si,cs:data_67e
@@ -2720,7 +2716,7 @@ locloop_155:
 		pop	si
 		pop	cx
 		retn
-sub_20		endp
+imgdec_process_loop_5		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2767,7 +2763,7 @@ loc_157:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_21		proc	near
+math_calc		proc	near
 		xor	ax,ax			; Zero register
 		mov	al,bl
 		add	ax,1Ch
@@ -2786,7 +2782,7 @@ sub_21		proc	near
 		xor	bh,bh			; Zero register
 		add	ax,bx
 		retn
-sub_21		endp
+math_calc		endp
 
 		db	888 dup (0)
 

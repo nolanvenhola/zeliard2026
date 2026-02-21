@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_00	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  MAIN_GAME_LOOP - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -222,7 +218,7 @@ loc_1:
 		jnz	loc_2			; Jump if not zero
 		jmp	loc_7
 loc_2:
-		call	sub_29
+		call	game_func_29
 		mov	ax,1
 		int	60h			; ??INT Non-standard interrupt
 		mov	byte ptr ds:data_142e,0FFh
@@ -244,7 +240,7 @@ loc_2:
 		mov	byte ptr ds:data_228e,0
 		call	word ptr cs:data_82
 		call	word ptr cs:data_81
-		call	sub_53
+		call	game_multiply_2
 		mov	byte ptr ds:data_142e,0
 		push	ds
 		mov	ds,cs:data_219e
@@ -287,7 +283,7 @@ zr2_00		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+vga_operation		proc	near
 		mov	es,cs:data_219e
 		mov	di,data_95e
 		mov	al,2
@@ -316,7 +312,7 @@ loc_6:
 		jmp	short loc_8
 loc_7:
 		call	word ptr cs:[2012h]
-		call	sub_28
+		call	game_get_value_2
 		mov	si,ds:data_193e
 		call	word ptr cs:[2010h]
 		call	word ptr cs:[2016h]
@@ -331,10 +327,10 @@ loc_9:
 		mov	byte ptr ds:data_172e,0FFh
 		mov	word ptr ds:[80h],29h
 		mov	byte ptr ds:[83h],5
-		call	sub_30
-		call	sub_49
+		call	vga_operation0
+		call	fill_buffer
 loc_10:
-		call	sub_45
+		call	game_check_state_3
 		test	byte ptr ds:[0E6h],0FFh
 		jnz	loc_10			; Jump if not zero
 		push	ds
@@ -351,8 +347,8 @@ loc_10:
 		mov	byte ptr ds:data_173e,0FFh
 		mov	si,ds:data_186e
 		lodsb				; String [si] to al
-		call	sub_74
-		call	sub_75
+		call	copy_buffer
+		call	vga_operation_2
 		push	ds
 		mov	ds,cs:data_219e
 		mov	si,8030h
@@ -369,15 +365,15 @@ loc_10:
 		mov	byte ptr ds:data_162e,0Dh
 		mov	byte ptr ds:[83h],0Ch
 		mov	byte ptr ds:data_140e,0Ch
-		call	sub_70
-		call	sub_29
+		call	game_func_70
+		call	game_func_29
 		jmp	loc_6
 loc_11:
-		call	sub_30
+		call	vga_operation0
 		test	byte ptr ds:data_173e,0FFh
 		jz	loc_12			; Jump if zero
-		call	sub_49
-		call	sub_45
+		call	fill_buffer
+		call	game_check_state_3
 		mov	byte ptr ds:data_172e,0
 		jmp	short loc_14
 loc_12:
@@ -385,8 +381,8 @@ loc_12:
 		jz	loc_13			; Jump if zero
 		call	word ptr cs:data_80
 loc_13:
-		call	sub_49
-		call	sub_140
+		call	fill_buffer
+		call	clear_buffer
 loc_14:
 		test	byte ptr ds:[49h],0FFh
 		jz	loc_15			; Jump if zero
@@ -410,13 +406,13 @@ loc_16:
 loc_17:
 		test	byte ptr ds:data_230e,0FFh
 		jnz	loc_20			; Jump if not zero
-		call	sub_43
-		call	sub_9
-		call	sub_45
-;*		call	sub_107			;*
+		call	game_func_43
+		call	game_func_9
+		call	game_check_state_3
+;*		call	game_func_107			;*
 		db	0E8h, 01h, 25h		;  Fixup - byte match
-		call	sub_7
-		call	sub_8
+		call	game_func_7
+		call	game_func_8
 		inc	byte ptr ds:data_148e
 		cmp	byte ptr ds:data_148e,2
 		jne	loc_18			; Jump if not equal
@@ -429,8 +425,8 @@ loc_18:
 		jz	loc_19			; Jump if zero
 		and	byte ptr ds:[0C2h],0FDh
 loc_19:
-		call	sub_20
-		call	sub_6
+		call	game_func_20
+		call	game_check_state
 		retn
 loc_20:
 		mov	byte ptr ds:data_229e,0
@@ -439,18 +435,18 @@ loc_20:
 		mov	byte ptr ds:data_232e,0
 		call	word ptr cs:data_74
 		mov	byte ptr ds:data_239e,0
-		call	sub_45
-		call	sub_8
-		call	sub_6
+		call	game_check_state_3
+		call	game_func_8
+		call	game_check_state
 		cmp	byte ptr ds:data_230e,0FFh
 		jne	loc_21			; Jump if not equal
-		call	sub_38
+		call	vga_operation8
 		inc	si
-		call	sub_25
+		call	game_get_value
 		jc	loc_20			; Jump if carry Set
 		add	si,24h
-		call	sub_35
-		call	sub_25
+		call	vga_operation5
+		call	game_get_value
 		jc	loc_20			; Jump if carry Set
 loc_21:
 		and	byte ptr ds:[0C2h],0FDh
@@ -461,14 +457,14 @@ loc_21:
 		mov	byte ptr ds:data_167e,0
 		mov	byte ptr ds:[0E7h],7Fh
 		jmp	loc_17
-sub_3		endp
+vga_operation		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+game_check_state		proc	near
 		mov	byte ptr ds:data_168e,0
 		int	61h			; ??INT Non-standard interrupt
 		cmp	al,5
@@ -511,14 +507,14 @@ loc_28:
 		cmp	al,ds:data_170e
 		mov	ds:data_170e,al
 		jz	loc_29			; Jump if zero
-		call	sub_10
+		call	game_func_10
 loc_29:
 		pop	ax
 		mov	al,ah
 		push	ax
 		cmp	al,2
 		jne	loc_30			; Jump if not equal
-		call	sub_22
+		call	game_func_22
 loc_30:
 		pop	ax
 		and	al,0Ch
@@ -530,7 +526,7 @@ loc_31:
 		jne	loc_32			; Jump if not equal
 		jmp	loc_107
 loc_32:
-		call	sub_10
+		call	game_func_10
 		mov	al,ds:data_230e
 		or	al,ds:data_229e
 		jz	loc_33			; Jump if zero
@@ -541,7 +537,7 @@ loc_33:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_7:
+game_func_7:
 		test	byte ptr ds:data_229e,0FFh
 		jz	loc_34			; Jump if zero
 		retn
@@ -550,23 +546,23 @@ loc_34:
 		jz	loc_35			; Jump if zero
 		retn
 loc_35:
-		call	sub_38
+		call	vga_operation8
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jnz	loc_36			; Jump if not zero
 		retn
 loc_36:
 		inc	si
 		inc	si
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jnz	loc_37			; Jump if not zero
 		retn
 loc_37:
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jz	loc_38			; Jump if zero
 		jmp	loc_95
 loc_38:
@@ -574,7 +570,7 @@ loc_38:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_8:
+game_func_8:
 		test	byte ptr ds:data_155e,0FFh
 		jnz	loc_39			; Jump if not zero
 		retn
@@ -602,8 +598,8 @@ loc_41:
 		mov	byte ptr ds:data_233e,7Fh
 		mov	byte ptr ds:data_216e,0
 loc_42:
-		call	sub_15
-		call	sub_15
+		call	game_func_15
+		call	game_func_15
 		jmp	short loc_45
 loc_43:
 		test	byte ptr ds:data_230e,0FFh
@@ -612,8 +608,8 @@ loc_43:
 		mov	byte ptr ds:data_233e,7Fh
 		mov	byte ptr ds:data_216e,0
 loc_44:
-		call	sub_18
-		call	sub_18
+		call	game_process_loop
+		call	game_process_loop
 		jmp	short loc_45
 loc_45:
 		test	byte ptr ds:data_230e,0FFh
@@ -629,7 +625,7 @@ loc_47:
 		jz	loc_48			; Jump if zero
 		retn
 loc_48:
-		call	sub_24
+		call	game_func_24
 		jnc	loc_49			; Jump if carry=0
 		retn
 loc_49:
@@ -643,8 +639,8 @@ loc_50:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_9:
-		call	sub_37
+game_func_9:
+		call	vga_operation7
 		jz	loc_51			; Jump if zero
 		retn
 loc_51:
@@ -657,9 +653,9 @@ loc_52:
 		retn
 loc_53:
 		dec	byte ptr ds:data_166e
-		call	sub_38
+		call	vga_operation8
 		add	si,6Dh
-		call	sub_35
+		call	vga_operation5
 		mov	al,[si]
 		cmp	al,40h			; '@'
 		jb	loc_54			; Jump if below
@@ -685,8 +681,8 @@ loc_57:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_10:
-		call	sub_37
+game_func_10:
+		call	vga_operation7
 		jz	loc_58			; Jump if zero
 		retn
 loc_58:
@@ -713,13 +709,13 @@ loc_62:
 		retn
 loc_63:
 		mov	byte ptr ds:data_159e,0
-		call	sub_69
-		call	sub_80
-		call	sub_12
+		call	game_func_69
+		call	game_func_80
+		call	game_func_12
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_11:
+game_func_11:
 		inc	byte ptr ds:data_166e
 		cmp	byte ptr ds:data_166e,0Ah
 		jb	loc_64			; Jump if below
@@ -733,11 +729,11 @@ loc_65:
 		mov	al,ds:data_147e
 		cmp	al,ds:data_151e
 		jae	loc_69			; Jump if above or =
-		call	sub_38
+		call	vga_operation8
 		sub	si,23h
-		call	sub_36
+		call	vga_operation6
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jnz	loc_67			; Jump if not zero
 		mov	byte ptr ds:[0E7h],0
 		and	byte ptr ds:[0C2h],0FDh
@@ -768,13 +764,13 @@ loc_69:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_12:
-		call	sub_38
+game_func_12:
+		call	vga_operation8
 		inc	si
-		call	sub_25
+		call	game_get_value
 		jc	loc_73			; Jump if carry Set
 		dec	si
-		call	sub_25
+		call	game_get_value
 		jnc	loc_70			; Jump if carry=0
 		test	byte ptr ds:[0C2h],1
 		jnz	loc_79			; Jump if not zero
@@ -782,7 +778,7 @@ sub_12:
 loc_70:
 		inc	si
 		inc	si
-		call	sub_25
+		call	game_get_value
 		jc	loc_71			; Jump if carry Set
 		retn
 loc_71:
@@ -796,17 +792,17 @@ loc_73:
 		mov	byte ptr ds:data_230e,0FFh
 		mov	byte ptr ds:data_229e,0
 loc_74:
-		call	sub_38
+		call	vga_operation8
 		sub	si,23h
-		call	sub_36
+		call	vga_operation6
 		dec	byte ptr ds:[0E7h]
-		call	sub_25
+		call	game_get_value
 		jc	loc_75			; Jump if carry Set
 		or	byte ptr ds:[0E7h],1
 		retn
 loc_75:
-		call	sub_13
-		call	sub_45
+		call	game_func_13
+		call	game_check_state_3
 		test	byte ptr ds:[0E7h],1
 		jz	loc_76			; Jump if zero
 		retn
@@ -815,17 +811,17 @@ loc_76:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_13:
+game_func_13:
 loc_77:
 		dec	byte ptr ds:[82h]
 		mov	si,ds:data_223e
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		mov	ds:data_223e,si
 		retn
 loc_78:
 		mov	byte ptr ds:data_149e,0FFh
-		call	sub_11
+		call	game_func_11
 		jmp	short loc_79
 loc_79:
 		mov	byte ptr ds:data_159e,0
@@ -841,7 +837,7 @@ loc_81:
 		jne	loc_82			; Jump if not equal
 		jmp	loc_114
 loc_82:
-		call	sub_15
+		call	game_func_15
 		jnc	loc_83			; Jump if carry=0
 		jmp	loc_114
 loc_83:
@@ -850,7 +846,7 @@ loc_83:
 		jz	loc_84			; Jump if zero
 		retn
 loc_84:
-		call	sub_37
+		call	vga_operation7
 		jnz	loc_85			; Jump if not zero
 		test	byte ptr ds:data_166e,0FFh
 		jnz	loc_85			; Jump if not zero
@@ -869,35 +865,35 @@ loc_86:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_15:
+game_func_15:
 loc_87:
-		call	sub_38
+		call	vga_operation8
 		mov	di,si
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		dec	si
 		mov	cx,4
 
 locloop_88:
-		call	sub_39
+		call	vga_operation9
 		add	al,al
 		jnc	loc_89			; Jump if carry=0
 		retn
 loc_89:
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		loop	locloop_88		; Loop if cx > 0
 
 		xchg	di,si
 		test	byte ptr ds:data_229e,0FFh
 		jnz	loc_91			; Jump if not zero
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		stc				; Set carry flag
 		jz	loc_90			; Jump if zero
 		retn
 loc_90:
-		call	sub_16
+		call	game_func_16
 		jnc	loc_91			; Jump if carry=0
 		retn
 loc_91:
@@ -905,15 +901,15 @@ loc_91:
 
 locloop_92:
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		mov	al,[si]
-		call	sub_42
+		call	game_func_42
 		stc				; Set carry flag
 		jz	loc_93			; Jump if zero
 		retn
 loc_93:
 		push	cx
-		call	sub_16
+		call	game_func_16
 		pop	cx
 		jnc	loc_94			; Jump if carry=0
 		retn
@@ -944,7 +940,7 @@ loc_96:
 		mov	di,0E8DCh
 		xor	dl,dl			; Zero register
 loc_97:
-		call	sub_32
+		call	vga_operation2
 		dec	si
 		add	dl,bh
 loc_98:
@@ -965,14 +961,14 @@ loc_98:
 		mov	si,ds:data_144e
 		xor	dh,dh			; Zero register
 loc_99:
-		call	sub_32
+		call	vga_operation2
 		dec	si
 		add	dh,bh
 		cmp	dh,40h			; '@'
 		jb	loc_99			; Jump if below
 loc_100:
 		mov	ds:data_144e,si
-		call	sub_100
+		call	game_func_100
 		mov	bx,word ptr ds:[80h]
 		mov	byte ptr ds:data_244e,0
 		mov	si,ds:data_194e
@@ -988,7 +984,7 @@ loc_102:
 		jne	loc_103			; Jump if not equal
 		xor	ah,ah			; Zero register
 		mov	al,[si+2]
-		call	sub_34
+		call	vga_operation4
 		mov	al,ds:data_244e
 		or	al,80h
 		mov	[di],al
@@ -999,7 +995,7 @@ loc_103:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_16:
+game_func_16:
 		cmp	byte ptr ds:data_195e,7
 		clc				; Clear carry flag
 		jnz	loc_104			; Jump if not zero
@@ -1007,7 +1003,7 @@ sub_16:
 loc_104:
 		mov	al,[si]
 		push	si
-		call	sub_63
+		call	game_func_63
 		pop	si
 		cmp	cl,2
 		stc				; Set carry flag
@@ -1018,7 +1014,7 @@ loc_105:
 		retn
 loc_106:
 		mov	byte ptr ds:data_149e,0FFh
-		call	sub_11
+		call	game_func_11
 		jmp	short loc_107
 loc_107:
 		mov	byte ptr ds:data_159e,0
@@ -1030,14 +1026,14 @@ loc_107:
 loc_108:
 		cmp	byte ptr ds:data_238e,2
 		je	loc_114			; Jump if equal
-		call	sub_18
+		call	game_process_loop
 		jc	loc_114			; Jump if carry Set
 		mov	byte ptr ds:data_168e,1
 		test	byte ptr ds:data_230e,0FFh
 		jz	loc_109			; Jump if zero
 		retn
 loc_109:
-		call	sub_37
+		call	vga_operation7
 		jnz	loc_110			; Jump if not zero
 		test	byte ptr ds:data_166e,0FFh
 		jnz	loc_110			; Jump if not zero
@@ -1056,7 +1052,7 @@ loc_111:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_17:
+game_func_17:
 loc_112:
 		xor	byte ptr ds:[0C2h],1
 		test	byte ptr ds:data_230e,0FFh
@@ -1074,43 +1070,43 @@ loc_114:
 loc_115:
 		mov	byte ptr ds:[0E7h],80h
 		retn
-sub_6		endp
+game_check_state		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+game_process_loop		proc	near
 loc_116:
-		call	sub_38
+		call	vga_operation8
 		inc	si
 		inc	si
 		mov	di,si
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		mov	cx,4
 
 locloop_117:
-		call	sub_39
+		call	vga_operation9
 		add	al,al
 		jnc	loc_118			; Jump if carry=0
 		retn
 loc_118:
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		loop	locloop_117		; Loop if cx > 0
 
 		xchg	di,si
 		test	byte ptr ds:data_229e,0FFh
 		jnz	loc_120			; Jump if not zero
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		stc				; Set carry flag
 		jz	loc_119			; Jump if zero
 		retn
 loc_119:
-		call	sub_19
+		call	game_func_19
 		jnc	loc_120			; Jump if carry=0
 		retn
 loc_120:
@@ -1118,15 +1114,15 @@ loc_120:
 
 locloop_121:
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		mov	al,[si]
-		call	sub_42
+		call	game_func_42
 		stc				; Set carry flag
 		jz	loc_122			; Jump if zero
 		retn
 loc_122:
 		push	cx
-		call	sub_19
+		call	game_func_19
 		pop	cx
 		jnc	loc_123			; Jump if carry=0
 		retn
@@ -1150,7 +1146,7 @@ loc_125:
 		mov	si,ds:data_144e
 		inc	si
 		mov	di,0E023h
-		call	sub_33
+		call	vga_operation3
 		dec	si
 		mov	ds:data_144e,si
 		mov	ax,word ptr ds:[80h]
@@ -1163,14 +1159,14 @@ loc_126:
 		mov	si,ds:data_143e
 		xor	dh,dh			; Zero register
 loc_127:
-		call	sub_31
+		call	vga_operation1
 		inc	si
 		add	dh,bh
 		cmp	dh,40h			; '@'
 		jb	loc_127			; Jump if below
 loc_128:
 		mov	ds:data_143e,si
-		call	sub_99
+		call	game_func_99
 		mov	byte ptr ds:data_244e,0
 		mov	bx,word ptr ds:[80h]
 		add	bx,23h
@@ -1192,7 +1188,7 @@ loc_131:
 		jne	loc_132			; Jump if not equal
 		mov	ah,23h			; '#'
 		mov	al,[si+2]
-		call	sub_34
+		call	vga_operation4
 		mov	al,ds:data_244e
 		or	al,80h
 		mov	[di],al
@@ -1200,14 +1196,14 @@ loc_132:
 		inc	byte ptr ds:data_244e
 		add	si,10h
 		jmp	short loc_130
-sub_18		endp
+game_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+game_func_19		proc	near
 		cmp	byte ptr ds:data_195e,7
 		clc				; Clear carry flag
 		jnz	loc_133			; Jump if not zero
@@ -1215,7 +1211,7 @@ sub_19		proc	near
 loc_133:
 		mov	al,[si]
 		push	si
-		call	sub_63
+		call	game_func_63
 		pop	si
 		dec	cl
 		stc				; Set carry flag
@@ -1224,14 +1220,14 @@ loc_133:
 loc_134:
 		clc				; Clear carry flag
 		retn
-sub_19		endp
+game_func_19		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+game_func_20		proc	near
 		test	byte ptr ds:data_156e,0FFh
 		jz	loc_135			; Jump if zero
 		retn
@@ -1240,9 +1236,9 @@ loc_135:
 		jz	loc_136			; Jump if zero
 		retn
 loc_136:
-		call	sub_84
-		call	sub_21
-		call	sub_24
+		call	game_func_84
+		call	game_func_21
+		call	game_func_24
 		jnc	loc_137			; Jump if carry=0
 		jmp	loc_170
 loc_137:
@@ -1256,14 +1252,14 @@ loc_137:
 loc_138:
 		pop	ax
 		jnz	loc_139			; Jump if not zero
-		call	sub_23
+		call	game_func_23
 loc_139:
 		test	byte ptr ds:[0C2h],2
 		jnz	loc_140			; Jump if not zero
-		call	sub_38
+		call	vga_operation8
 		add	si,49h
-		call	sub_35
-		call	sub_25
+		call	vga_operation5
+		call	game_get_value
 		jnc	loc_140			; Jump if carry=0
 		mov	byte ptr ds:data_230e,0FFh
 		retn
@@ -1316,19 +1312,19 @@ loc_148:
 		test	byte ptr ds:[0C2h],1
 		jnz	loc_145			; Jump if not zero
 		and	byte ptr ds:[0C2h],0FDh
-		call	sub_17
+		call	game_func_17
 loc_149:
-		call	sub_38
+		call	vga_operation8
 		add	si,6Dh
-		call	sub_35
+		call	vga_operation5
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jz	loc_150			; Jump if zero
 		retn
 loc_150:
 		inc	si
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jnz	loc_151			; Jump if not zero
 		retn
 loc_151:
@@ -1337,19 +1333,19 @@ loc_152:
 		test	byte ptr ds:[0C2h],1
 		jz	loc_145			; Jump if zero
 		and	byte ptr ds:[0C2h],0FDh
-		call	sub_17
+		call	game_func_17
 loc_153:
-		call	sub_38
+		call	vga_operation8
 		add	si,6Dh
-		call	sub_35
+		call	vga_operation5
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jz	loc_154			; Jump if zero
 		retn
 loc_154:
 		dec	si
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jnz	loc_155			; Jump if not zero
 		retn
 loc_155:
@@ -1357,12 +1353,12 @@ loc_155:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_21:
+game_func_21:
 		mov	byte ptr ds:data_238e,0
-		call	sub_38
+		call	vga_operation8
 		add	si,49h
-		call	sub_35
-		call	sub_26
+		call	vga_operation5
+		call	game_scan_loop
 		jz	loc_156			; Jump if zero
 		retn
 loc_156:
@@ -1405,17 +1401,17 @@ loc_163:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_22:
+game_func_22:
 		mov	byte ptr ds:data_159e,0
 		test	byte ptr ds:data_238e,0FFh
 		jz	loc_164			; Jump if zero
 		retn
 loc_164:
-		call	sub_78
-		call	sub_38
+		call	game_func_78
+		call	vga_operation8
 		add	si,6Dh
-		call	sub_35
-		call	sub_25
+		call	vga_operation5
+		call	game_get_value
 		jc	loc_166			; Jump if carry Set
 		test	byte ptr ds:data_230e,0FFh
 		jz	loc_165			; Jump if zero
@@ -1427,18 +1423,18 @@ loc_165:
 		mov	byte ptr ds:data_229e,0FFh
 		retn
 loc_166:
-		call	sub_38
+		call	vga_operation8
 		add	si,6Dh
-		call	sub_35
+		call	vga_operation5
 		inc	byte ptr ds:[0E7h]
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jz	loc_167			; Jump if zero
 		or	byte ptr ds:[0E7h],1
 		retn
 loc_167:
-		call	sub_23
-		call	sub_45
+		call	game_func_23
+		call	game_check_state_3
 		test	byte ptr ds:[0E7h],1
 		jz	loc_168			; Jump if zero
 		retn
@@ -1447,12 +1443,12 @@ loc_168:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_23:
+game_func_23:
 loc_169:
 		inc	byte ptr ds:[82h]
 		mov	si,ds:data_223e
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		mov	ds:data_223e,si
 		retn
 loc_170:
@@ -1477,32 +1473,32 @@ loc_172:
 loc_173:
 		mov	byte ptr ds:data_229e,0FFh
 		retn
-sub_20		endp
+game_func_20		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_24		proc	near
-		call	sub_38
+game_func_24		proc	near
+		call	vga_operation8
 		add	si,6Dh
-		call	sub_35
+		call	vga_operation5
 		mov	di,si
-		call	sub_39
+		call	vga_operation9
 		add	al,al
 		jnc	loc_174			; Jump if carry=0
 		retn
 loc_174:
 		dec	si
-		call	sub_39
+		call	vga_operation9
 		add	al,al
 		jnc	loc_175			; Jump if carry=0
 		retn
 loc_175:
 		mov	si,di
 		mov	al,[si]
-		call	sub_42
+		call	game_func_42
 		stc				; Set carry flag
 		jz	loc_176			; Jump if zero
 		retn
@@ -1514,7 +1510,7 @@ loc_176:
 loc_177:
 		dec	si
 		mov	al,[si]
-		call	sub_42
+		call	game_func_42
 		clc				; Clear carry flag
 		jnz	loc_178			; Jump if not zero
 		retn
@@ -1522,33 +1518,33 @@ loc_178:
 		inc	si
 		inc	si
 		mov	al,[si]
-		call	sub_42
+		call	game_func_42
 		stc				; Set carry flag
 		jz	loc_179			; Jump if zero
 		retn
 loc_179:
 		clc				; Clear carry flag
 		retn
-sub_24		endp
+game_func_24		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_25		proc	near
+game_get_value		proc	near
 		mov	al,[si]
 		dec	al
 		cmp	al,2
 		retn
-sub_25		endp
+game_get_value		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_26		proc	near
+game_scan_loop		proc	near
 		mov	es,cs:data_219e
 		mov	al,[si]
 		mov	di,data_2e
@@ -1583,14 +1579,14 @@ loc_184:
 loc_185:
 		or	dl,dl			; Zero ?
 		retn
-sub_26		endp
+game_scan_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_27		proc	near
+game_func_27		proc	near
 		mov	si,ds:data_192e
 loc_186:
 		mov	di,[si]
@@ -1623,20 +1619,20 @@ loc_190:
 		inc	si
 		inc	si
 		jmp	short loc_186
-sub_27		endp
+game_func_27		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_28		proc	near
+game_get_value_2		proc	near
 		mov	si,6C44h
 		call	word ptr cs:[200Eh]
 		mov	si,6C4Ch
 		call	word ptr cs:[200Eh]
 		retn
-sub_28		endp
+game_get_value_2		endp
 
 			                        ;* No entry point to code
 		or	ax,1BBh
@@ -1654,7 +1650,7 @@ sub_28		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_29		proc	near
+game_func_29		proc	near
 		mov	bx,210h
 		xor	al,al			; Zero register
 		mov	ch,21h			; '!'
@@ -1673,7 +1669,7 @@ sub_29		proc	near
 		call	word ptr cs:[2004h]
 		mov	si,6C8Fh
 		jmp	word ptr cs:[200Eh]
-sub_29		endp
+game_func_29		endp
 
 			                        ;* No entry point to code
 		or	ax,2AFh
@@ -1686,7 +1682,7 @@ sub_29		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_30		proc	near
+vga_operation0		proc	near
 		mov	si,data_201e
 		mov	cx,word ptr ds:[80h]
 		or	cx,cx			; Zero ?
@@ -1695,7 +1691,7 @@ sub_30		proc	near
 locloop_191:
 		xor	dh,dh			; Zero register
 loc_192:
-		call	sub_31
+		call	vga_operation1
 		inc	si
 		add	dh,bh
 		cmp	dh,40h			; '@'
@@ -1710,7 +1706,7 @@ loc_193:
 
 locloop_194:
 		push	di
-		call	sub_33
+		call	vga_operation3
 		pop	di
 		inc	di
 		inc	ax
@@ -1729,17 +1725,17 @@ loc_196:
 		mov	ds:data_144e,si
 		mov	al,byte ptr ds:[82h]
 		xor	ah,ah			; Zero register
-		call	sub_34
+		call	vga_operation4
 		mov	ds:data_223e,di
 		retn
-sub_30		endp
+vga_operation0		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_31		proc	near
+vga_operation1		proc	near
 		mov	bl,[si]
 		and	bl,0C0h
 		rol	bl,1			; Rotate
@@ -1747,7 +1743,7 @@ sub_31		proc	near
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr ds:data_96e[bx]	;*
-sub_31		endp
+vga_operation1		endp
 
 			                        ;* No entry point to code
 		pop	ds
@@ -1758,7 +1754,7 @@ sub_31		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_32		proc	near
+vga_operation2		proc	near
 		mov	bl,[si]
 		and	bl,0C0h
 		rol	bl,1			; Rotate
@@ -1766,7 +1762,7 @@ sub_32		proc	near
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr ds:data_97e[bx]	;*
-sub_32		endp
+vga_operation2		endp
 
 			                        ;* No entry point to code
 		daa				; Decimal adjust
@@ -1786,10 +1782,10 @@ sub_32		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_33		proc	near
+vga_operation3		proc	near
 		xor	dl,dl			; Zero register
 loc_197:
-		call	sub_31
+		call	vga_operation1
 		inc	si
 		add	dl,bh
 loc_198:
@@ -1800,14 +1796,14 @@ loc_198:
 		cmp	dl,40h			; '@'
 		jb	loc_197			; Jump if below
 		retn
-sub_33		endp
+vga_operation3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_34		proc	near
+vga_operation4		proc	near
 		push	bx
 		and	al,3Fh			; '?'
 		mov	bl,ah
@@ -1819,14 +1815,14 @@ sub_34		proc	near
 		mov	di,ax
 		pop	bx
 		retn
-sub_34		endp
+vga_operation4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_35		proc	near
+vga_operation5		proc	near
 loc_199:
 		cmp	si,0E900h
 		jae	loc_200			; Jump if above or =
@@ -1834,28 +1830,28 @@ loc_199:
 loc_200:
 		sub	si,900h
 		retn
-sub_35		endp
+vga_operation5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_36		proc	near
+vga_operation6		proc	near
 		cmp	si,0E000h
 		jb	loc_201			; Jump if below
 		retn
 loc_201:
 		add	si,900h
 		retn
-sub_36		endp
+vga_operation6		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_37		proc	near
+vga_operation7		proc	near
 		cmp	byte ptr ds:data_195e,4
 		je	loc_202			; Jump if equal
 		retn
@@ -1868,14 +1864,14 @@ loc_202:
 loc_203:
 		xor	al,al			; Zero register
 		retn
-sub_37		endp
+vga_operation7		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_38		proc	near
+vga_operation8		proc	near
 		mov	al,byte ptr ds:[84h]
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
@@ -1886,14 +1882,14 @@ sub_38		proc	near
 		mov	si,ax
 		add	si,ds:data_223e
 		jmp	short loc_199
-sub_38		endp
+vga_operation8		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_39		proc	near
+vga_operation9		proc	near
 		mov	al,[si]
 		test	al,80h
 		stc				; Set carry flag
@@ -1908,14 +1904,14 @@ loc_204:
 		mov	al,[bx+4]
 		or	al,al			; Zero ?
 		retn
-sub_39		endp
+vga_operation9		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_40		proc	near
+game_check_state_2		proc	near
 		cmp	al,40h			; '@'
 		jb	loc_205			; Jump if below
 		cmp	al,al
@@ -1923,7 +1919,7 @@ sub_40		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_41:
+game_func_41:
 		cmp	al,49h			; 'I'
 		jb	loc_205			; Jump if below
 		cmp	al,al
@@ -1952,14 +1948,14 @@ loc_207:
 		mov	al,0FFh
 		or	al,al			; Zero ?
 		retn
-sub_40		endp
+game_check_state_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_42		proc	near
+game_func_42		proc	near
 		cmp	al,49h			; 'I'
 		jb	loc_208			; Jump if below
 		cmp	al,al
@@ -1979,14 +1975,14 @@ loc_209:
 		and	al,80h
 		cmp	al,80h
 		retn
-sub_42		endp
+game_func_42		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_43		proc	near
+game_func_43		proc	near
 		test	byte ptr ds:[92h],0FFh
 		jnz	loc_210			; Jump if not zero
 		retn
@@ -2025,9 +2021,9 @@ loc_214:
 loc_215:
 		test	byte ptr ds:data_225e,0FFh
 		jnz	loc_219			; Jump if not zero
-		call	sub_38
+		call	vga_operation8
 		sub	si,93h
-		call	sub_36
+		call	vga_operation6
 		xor	dl,dl			; Zero register
 		mov	cx,4
 
@@ -2037,7 +2033,7 @@ locloop_216:
 
 locloop_217:
 		push	cx
-		call	sub_39
+		call	vga_operation9
 		jc	loc_218			; Jump if carry Set
 		test	al,60h			; '`'
 		jnz	loc_218			; Jump if not zero
@@ -2050,7 +2046,7 @@ loc_218:
 		loop	locloop_217		; Loop if cx > 0
 
 		add	si,1Ch
-		call	sub_35
+		call	vga_operation5
 		pop	cx
 		loop	locloop_216		; Loop if cx > 0
 
@@ -2074,14 +2070,14 @@ loc_223:
 		mov	byte ptr ds:data_217e,0
 		mov	byte ptr ds:data_239e,0FFh
 		retn
-sub_43		endp
+game_func_43		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_44		proc	near
+game_func_44		proc	near
 		test	byte ptr ds:data_239e,0FFh
 		jnz	loc_224			; Jump if not zero
 		retn
@@ -2092,14 +2088,14 @@ loc_224:
 		jz	loc_225			; Jump if zero
 		retn
 loc_225:
-		call	sub_38
+		call	vga_operation8
 		mov	bx,90h
 		test	byte ptr ds:data_229e,0FFh
 		jz	loc_226			; Jump if zero
 		mov	bx,6Ch
 loc_226:
 		sub	si,bx
-		call	sub_36
+		call	vga_operation6
 		mov	bl,byte ptr ds:[0C2h]
 		and	bl,1
 		add	bl,bl
@@ -2135,8 +2131,8 @@ loc_229:
 loc_230:
 		xor	ah,ah			; Zero register
 		add	si,ax
-		call	sub_35
-		call	sub_39
+		call	vga_operation5
+		call	vga_operation9
 		jc	loc_229			; Jump if carry Set
 		test	al,20h			; ' '
 		jnz	loc_229			; Jump if not zero
@@ -2146,14 +2142,14 @@ loc_230:
 		and	byte ptr [bx+5],0E0h
 		or	byte ptr [bx+5],1
 		jmp	short loc_229
-sub_44		endp
+game_func_44		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_45		proc	near
+game_check_state_3		proc	near
 loc_231:
 		mov	al,2
 		cmp	byte ptr ds:[9Eh],1
@@ -2161,7 +2157,7 @@ loc_231:
 		mov	al,4
 loc_232:
 		mov	ds:data_151e,al
-		call	sub_61
+		call	game_process_loop_2
 		test	byte ptr ds:data_233e,0FFh
 		jnz	loc_234			; Jump if not zero
 		mov	byte ptr ds:data_147e,0
@@ -2169,11 +2165,11 @@ loc_232:
 		cmp	al,byte ptr ds:[84h]
 		je	loc_234			; Jump if equal
 		jc	loc_233			; Jump if carry Set
-		call	sub_13
+		call	game_func_13
 		inc	byte ptr ds:[84h]
 		jmp	short loc_234
 loc_233:
-		call	sub_23
+		call	game_func_23
 		dec	byte ptr ds:[84h]
 loc_234:
 		test	byte ptr ds:[0E6h],0FFh
@@ -2186,39 +2182,39 @@ loc_235:
 		mov	al,[si]
 		cmp	byte ptr ds:[83h],al
 		je	loc_237			; Jump if equal
-		call	sub_18
+		call	game_process_loop
 		dec	byte ptr ds:[83h]
 		jmp	short loc_237
 loc_236:
 		mov	al,byte ptr ds:[83h]
 		cmp	al,0Ch
 		je	loc_237			; Jump if equal
-		call	sub_15
+		call	game_func_15
 		inc	byte ptr ds:[83h]
 loc_237:
 		mov	al,byte ptr ds:[84h]
 		add	al,byte ptr ds:[82h]
 		and	al,3Fh			; '?'
 		mov	ds:data_226e,al
-		call	sub_64
-		call	sub_85
-		call	sub_77
-		call	sub_83
-		call	sub_66
-		call	sub_111
+		call	game_check_state_4
+		call	game_func_85
+		call	game_scan_loop_4
+		call	game_scan_loop_5
+		call	game_func_66
+		call	game_func_111
 		test	byte ptr ds:data_222e,0FFh
 		jnz	loc_238			; Jump if not zero
-		call	sub_116
+		call	game_func_116
 loc_238:
 		mov	byte ptr ds:data_227e,0
 		mov	byte ptr ds:data_155e,0
-;*		call	sub_55			;*
+;*		call	game_func_55			;*
 		db	0E8h,0E3h, 04h		;  Fixup - byte match
 		call	word ptr cs:data_74
-		call	sub_94
-		call	sub_104
+		call	copy_buffer_2
+		call	game_scan_loop_8
 		call	word ptr cs:data_75
-		call	sub_54
+		call	game_scan_loop_3
 		cmp	byte ptr ds:data_195e,7
 		jne	loc_239			; Jump if not equal
 		cmp	byte ptr ds:[9Eh],5
@@ -2229,11 +2225,11 @@ loc_238:
 		mov	byte ptr ds:data_227e,0FFh
 		mov	byte ptr ds:data_246e,9
 		mov	ax,0Fh
-		call	sub_60
+		call	game_func_60
 		mov	dx,9BB9h
-		call	sub_51
+		call	game_func_51
 loc_239:
-		call	sub_47
+		call	game_func_47
 		test	byte ptr ds:[0E8h],0FFh
 		jz	loc_240			; Jump if zero
 		mov	byte ptr ds:data_227e,0
@@ -2241,7 +2237,7 @@ loc_239:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_46:
+game_func_46:
 loc_240:
 		mov	byte ptr ds:data_228e,0
 loc_241:
@@ -2264,7 +2260,7 @@ loc_242:
 loc_243:
 		test	byte ptr ds:data_228e,0FFh
 		jnz	loc_244			; Jump if not zero
-		call	sub_53
+		call	game_multiply_2
 loc_244:
 		call	word ptr cs:data_73
 		test	byte ptr ds:[0E8h],0FFh
@@ -2297,12 +2293,12 @@ loc_247:
 loc_248:
 		cmp	ds:data_215e,al
 		jb	loc_248			; Jump if below
-		call	sub_104
+		call	game_scan_loop_8
 		call	word ptr cs:data_74
-		call	sub_90
-		call	sub_102
-		call	sub_109
-		call	sub_44
+		call	game_check_state_5
+		call	game_func_102
+		call	game_func_109
+		call	game_func_44
 		call	word ptr cs:data_75
 		mov	cl,ds:data_224e
 		mov	al,4
@@ -2316,7 +2312,7 @@ loc_249:
 		call	word ptr cs:[118h]
 		call	word ptr cs:[11Eh]
 		jnc	loc_250			; Jump if carry=0
-		call	sub_65
+		call	game_func_65
 loc_250:
 		pop	ax
 		cmp	ds:data_215e,al
@@ -2357,11 +2353,11 @@ loc_254:
 		add	si,5
 		lodsw				; String [si] to ax
 		push	si
-		call	sub_143
+		call	game_func_143
 		pop	si
 		add	si,4
 		lodsw				; String [si] to ax
-		call	sub_120
+		call	game_func_120
 		mov	byte ptr ds:data_164e,0FFh
 loc_255:
 		test	byte ptr ds:data_220e,0FFh
@@ -2375,7 +2371,7 @@ loc_256:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_47:
+game_func_47:
 		test	byte ptr ds:data_128e,0FFh
 		jz	loc_259			; Jump if zero
 		mov	al,0FCh
@@ -2437,9 +2433,9 @@ loc_263:
 loc_264:
 		mov	byte ptr ds:data_246e,0Bh
 		call	word ptr cs:[2002h]
-		call	sub_48
+		call	game_func_48
 		call	word ptr cs:data_181e
-		call	sub_48
+		call	game_func_48
 		cmp	byte ptr ds:data_245e,8
 		jne	loc_265			; Jump if not equal
 		jmp	loc_707
@@ -2451,7 +2447,7 @@ loc_265:
 		call	word ptr cs:[2044h]
 		pop	ds
 		mov	byte ptr ds:data_132e,0FFh
-		call	sub_49
+		call	fill_buffer
 		mov	byte ptr ds:data_216e,0
 		mov	byte ptr ds:data_217e,0
 		mov	byte ptr ds:data_127e,0
@@ -2460,7 +2456,7 @@ loc_265:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_48:
+game_func_48:
 		mov	es,cs:data_219e
 		mov	di,data_9e
 		mov	si,data_181e
@@ -2522,7 +2518,7 @@ loc_269:
 		mov	[bx],ax
 		jmp	short loc_269
 loc_270:
-		call	sub_38
+		call	vga_operation8
 		mov	ax,word ptr ds:[80h]
 		mov	bl,byte ptr ds:[83h]
 		xor	bh,bh			; Zero register
@@ -2538,9 +2534,9 @@ loc_271:
 loc_272:
 		mov	si,ds:data_191e
 		mov	[si],ax
-		call	sub_66
-		call	sub_47
-		call	sub_53
+		call	game_func_66
+		call	game_func_47
+		call	game_multiply_2
 		call	word ptr cs:data_80
 		mov	bx,21Ch
 		xor	al,al			; Zero register
@@ -2550,14 +2546,14 @@ loc_272:
 		int	60h			; ??INT Non-standard interrupt
 		mov	byte ptr ds:data_164e,0
 		jmp	loc_1
-sub_45		endp
+game_check_state_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_49		proc	near
+fill_buffer		proc	near
 loc_273:
 		push	cs
 		pop	es
@@ -2566,14 +2562,14 @@ loc_273:
 		mov	al,0FDh
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		retn
-sub_49		endp
+fill_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_50		proc	near
+game_scan_loop_2		proc	near
 loc_274:
 		push	di
 		mov	es,cs:data_219e
@@ -2595,14 +2591,14 @@ loc_276:
 loc_277:
 		pop	di
 		retn
-sub_50		endp
+game_scan_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_51		proc	near
+game_func_51		proc	near
 loc_278:
 		push	si
 		push	dx
@@ -2621,14 +2617,14 @@ loc_278:
 		call	word ptr cs:[202Ah]
 		pop	si
 		retn
-sub_51		endp
+game_func_51		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_52		proc	near
+game_multiply		proc	near
 		lodsb				; String [si] to al
 		add	al,19h
 		mov	cl,al
@@ -2680,14 +2676,14 @@ loc_282:
 		mov	cl,ds:data_131e
 		add	cl,0Ch
 		jmp	short loc_279
-sub_52		endp
+game_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_53		proc	near
+game_multiply_2		proc	near
 		mov	al,byte ptr ds:[84h]
 		mov	cl,1Ch
 		mul	cl			; ax = reg * al
@@ -2709,25 +2705,25 @@ locloop_283:
 		loop	locloop_283		; Loop if cx > 0
 
 		retn
-sub_53		endp
+game_multiply_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_54		proc	near
+game_scan_loop_3		proc	near
 		cmp	byte ptr ds:[9Eh],2
 		jne	loc_284			; Jump if not equal
 		retn
 loc_284:
 		mov	byte ptr ds:data_158e,0
-		call	sub_38
+		call	vga_operation8
 		mov	cx,3
 		test	byte ptr ds:data_229e,0FFh
 		jz	locloop_285		; Jump if zero
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		dec	cx
 
 locloop_285:
@@ -2738,7 +2734,7 @@ locloop_286:
 		push	cx
 		mov	al,[si]
 		inc	si
-		call	sub_50
+		call	game_scan_loop_2
 		jnz	loc_287			; Jump if not zero
 		mov	byte ptr ds:data_158e,0FFh
 loc_287:
@@ -2746,7 +2742,7 @@ loc_287:
 		loop	locloop_286		; Loop if cx > 0
 
 		add	si,21h
-		call	sub_35
+		call	vga_operation5
 		pop	cx
 		loop	locloop_285		; Loop if cx > 0
 
@@ -2754,7 +2750,7 @@ loc_287:
 		jnz	loc_288			; Jump if not zero
 		inc	si
 		mov	al,[si]
-		call	sub_50
+		call	game_scan_loop_2
 		jnz	loc_288			; Jump if not zero
 		mov	byte ptr ds:data_158e,0FFh
 loc_288:
@@ -2784,7 +2780,7 @@ loc_289:
 		retn
 loc_290:
 		mov	word ptr ds:data_154e,0
-		call	sub_38
+		call	vga_operation8
 		dec	si
 		mov	di,9F0Eh
 		mov	bx,7651h
@@ -2792,7 +2788,7 @@ loc_290:
 		jnz	loc_291			; Jump if not zero
 		mov	bx,763Eh
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 loc_291:
 		push	bx
 		push	di
@@ -2801,7 +2797,7 @@ loc_291:
 		sbb	al,al
 		mov	[di],al
 		jz	loc_292			; Jump if zero
-		call	sub_56
+		call	game_func_56
 loc_292:
 		pop	si
 		pop	di
@@ -2813,12 +2809,12 @@ loc_292:
 		push	si
 		call	bx			;*
 		jc	loc_293			; Jump if carry Set
-		call	sub_59
+		call	game_func_59
 loc_293:
 		sbb	al,al
 		mov	[di],al
 		jz	loc_294			; Jump if zero
-		call	sub_56
+		call	game_func_56
 loc_294:
 		pop	si
 		pop	di
@@ -2830,12 +2826,12 @@ loc_294:
 		push	si
 		call	bx			;*
 		jc	loc_295			; Jump if carry Set
-		call	sub_59
+		call	game_func_59
 loc_295:
 		sbb	al,al
 		mov	[di],al
 		jz	loc_296			; Jump if zero
-		call	sub_57
+		call	game_func_57
 loc_296:
 		pop	si
 		pop	di
@@ -2846,7 +2842,7 @@ loc_296:
 		sbb	al,al
 		mov	[di],al
 		jz	loc_297			; Jump if zero
-		call	sub_57
+		call	game_func_57
 loc_297:
 		mov	di,data_152e
 		mov	al,[di]
@@ -2864,7 +2860,7 @@ loc_ret_298:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_56:
+game_func_56:
 		test	byte ptr ds:[0E8h],0FFh
 		jz	loc_299			; Jump if zero
 		retn
@@ -2876,7 +2872,7 @@ loc_299:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_57:
+game_func_57:
 		test	byte ptr ds:[0E8h],0FFh
 		jz	loc_300			; Jump if zero
 		retn
@@ -2898,21 +2894,21 @@ loc_301:
 		jnz	loc_303			; Jump if not zero
 loc_302:
 		push	ax
-		call	sub_58
+		call	game_func_58
 		mov	word ptr ds:[94h],0
 		pop	ax
 loc_303:
-		call	sub_60
+		call	game_func_60
 		mov	byte ptr ds:data_246e,8
 		retn
 loc_304:
-		call	sub_60
+		call	game_func_60
 		mov	byte ptr ds:data_246e,9
 		retn
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_58:
+game_func_58:
 		mov	byte ptr ds:[93h],0
 		mov	bx,0C51Ch
 		mov	al,0FFh
@@ -2925,7 +2921,7 @@ sub_58:
 		mov	dx,9AB4h
 		jmp	loc_278
 			                        ;* No entry point to code
-		call	sub_39
+		call	vga_operation9
 		jc	loc_305			; Jump if carry Set
 		test	al,40h			; '@'
 		jnz	loc_305			; Jump if not zero
@@ -2933,8 +2929,8 @@ sub_58:
 		jmp	short loc_309
 loc_305:
 		add	si,24h
-		call	sub_35
-		call	sub_39
+		call	vga_operation5
+		call	vga_operation9
 		jc	loc_306			; Jump if carry Set
 		test	al,40h			; '@'
 		jnz	loc_306			; Jump if not zero
@@ -2943,11 +2939,11 @@ loc_305:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_59:
+game_func_59:
 loc_306:
 		add	si,24h
-		call	sub_35
-		call	sub_39
+		call	vga_operation5
+		call	vga_operation9
 		cmc				; Complement carry
 		jc	loc_307			; Jump if carry Set
 		retn
@@ -2970,7 +2966,7 @@ loc_309:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_60:
+game_func_60:
 loc_310:
 		sub	word ptr ds:[90h],ax
 		jnc	loc_311			; Jump if carry=0
@@ -2980,40 +2976,40 @@ loc_311:
 		call	word ptr cs:[2008h]
 		pop	si
 		retn
-sub_54		endp
+game_scan_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_61		proc	near
+game_process_loop_2		proc	near
 		mov	byte ptr ds:data_156e,0
-		call	sub_38
+		call	vga_operation8
 		add	si,49h
-		call	sub_35
+		call	vga_operation5
 		mov	cx,3
 
 locloop_312:
 		push	cx
-		call	sub_62
+		call	game_func_62
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		pop	cx
 		loop	locloop_312		; Loop if cx > 0
 
 		retn
-sub_61		endp
+game_process_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_62		proc	near
+game_func_62		proc	near
 		mov	al,[si]
 		push	si
-		call	sub_63
+		call	game_func_63
 		pop	si
 		jz	loc_314			; Jump if zero
 		retn
@@ -3024,7 +3020,7 @@ loc_314:
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr ds:data_99e[bx]	;*
-sub_62		endp
+game_func_62		endp
 
 			                        ;* No entry point to code
 ;*		aam	76h			; 'v' undocumented inst
@@ -3035,23 +3031,23 @@ sub_62		endp
 		db	 76h,0E8h		;  Fixup - byte match
 		dec	dx
 		out	dx,ax			; port 0FFFFh ??I/O Non-standard
-		call	sub_13
+		call	game_func_13
 		mov	byte ptr ds:data_156e,0FFh
 		mov	byte ptr ds:data_233e,0
 		mov	byte ptr ds:[0E7h],80h
 		retn
 			                        ;* No entry point to code
-		call	sub_18
+		call	game_process_loop
 		jmp	loc_116
 			                        ;* No entry point to code
-		call	sub_15
+		call	game_func_15
 		jmp	loc_87
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_63		proc	near
+game_func_63		proc	near
 		or	al,al			; Zero ?
 		jz	loc_323			; Jump if zero
 		mov	es,cs:data_219e
@@ -3104,18 +3100,18 @@ loc_323:
 		mov	cl,0FFh
 		or	cl,cl			; Zero ?
 		retn
-sub_63		endp
+game_func_63		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_64		proc	near
+game_check_state_4		proc	near
 		mov	ax,ds:data_196e
 		cmp	ax,0FFFFh
 		je	loc_328			; Jump if equal
-		call	sub_141
+		call	game_func_141
 		jc	loc_328			; Jump if carry Set
 		mov	al,byte ptr ds:[83h]
 		add	al,4
@@ -3166,7 +3162,7 @@ loc_327:
 loc_328:
 		mov	byte ptr ds:data_213e,0
 		retn
-sub_64		endp
+game_check_state_4		endp
 
 		db	 00h, 01h, 04h, 09h, 10h, 19h
 		db	 24h, 31h, 40h, 51h, 64h, 79h
@@ -3199,17 +3195,17 @@ sub_64		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_65		proc	near
+game_func_65		proc	near
 		mov	bx,601Ch
 		jmp	loc_366
-sub_65		endp
+game_func_65		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_66		proc	near
+game_func_66		proc	near
 		mov	bp,ds:data_191e
 loc_329:
 		mov	ax,ds:[bp]
@@ -3217,7 +3213,7 @@ loc_329:
 		jne	loc_330			; Jump if not equal
 		retn
 loc_330:
-		call	sub_68
+		call	game_func_68
 		jc	loc_332			; Jump if carry Set
 		mov	al,ds:[bp+3]
 		and	al,7
@@ -3226,7 +3222,7 @@ loc_330:
 		mov	ds:data_104e,al
 		mov	al,ds:[bp+2]
 		xor	ah,ah			; Zero register
-		call	sub_34
+		call	vga_operation4
 		cmp	bl,4
 		jb	loc_333			; Jump if below
 		mov	cx,bx
@@ -3270,7 +3266,7 @@ locloop_336:
 		push	di
 		push	si
 loc_337:
-		call	sub_67
+		call	game_get_value_3
 		inc	di
 		inc	si
 		dec	al
@@ -3280,21 +3276,21 @@ loc_337:
 		xchg	si,di
 		pop	si
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		xchg	di,si
 		pop	ax
 		pop	cx
 		loop	locloop_336		; Loop if cx > 0
 
 		jmp	short loc_332
-sub_66		endp
+game_func_66		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_67		proc	near
+game_get_value_3		proc	near
 		test	byte ptr [di],80h
 		jz	loc_338			; Jump if zero
 		retn
@@ -3302,14 +3298,14 @@ loc_338:
 		mov	dl,[si]
 		mov	[di],dl
 		retn
-sub_67		endp
+game_get_value_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_68		proc	near
+game_func_68		proc	near
 		add	ax,3
 		push	ax
 		sub	ax,ds:data_187e
@@ -3338,7 +3334,7 @@ loc_341:
 		mov	ax,27h
 		sub	ax,bx
 		retn
-sub_68		endp
+game_func_68		endp
 
 		db	'IJaKLMOPQN_RST`_UVW`IJaKLMX', 0
 		db	'YN_Z', 0
@@ -3376,10 +3372,10 @@ sub_68		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_69		proc	near
-		call	sub_38
+game_func_69		proc	near
+		call	vga_operation8
 		sub	si,25h
-		call	sub_36
+		call	vga_operation6
 		cmp	byte ptr [si],4Ah	; 'J'
 		je	loc_344			; Jump if equal
 		inc	si
@@ -3438,7 +3434,7 @@ loc_351:
 		pop	ax
 		test	byte ptr [si+3],80h
 		jnz	loc_354			; Jump if not zero
-		call	sub_72
+		call	game_func_72
 		jc	loc_352			; Jump if carry Set
 		retn
 loc_352:
@@ -3461,11 +3457,11 @@ loc_354:
 		or	[bx],al
 loc_355:
 		push	si
-		call	sub_91
-		call	sub_49
+		call	game_func_91
+		call	fill_buffer
 		call	word ptr cs:data_74
-		call	sub_73
-		call	sub_46
+		call	game_func_73
+		call	game_func_46
 		mov	si,ds:data_194e
 		mov	word ptr [si],0FFFFh
 		pop	si
@@ -3491,9 +3487,9 @@ loc_356:
 		call	word ptr cs:[10Ch]
 		test	byte ptr ds:[0C4h],80h
 		jnz	loc_357			; Jump if not zero
-		call	sub_27
+		call	game_func_27
 loc_357:
-		call	sub_70
+		call	game_func_70
 		mov	si,ds:data_186e
 		lodsb				; String [si] to al
 		test	al,1
@@ -3530,7 +3526,7 @@ loc_358:
 		call	word ptr cs:data_86
 		mov	si,ds:data_186e
 		lodsb				; String [si] to al
-		call	sub_74
+		call	copy_buffer
 loc_359:
 		mov	byte ptr ds:data_231e,0
 		mov	byte ptr ds:data_132e,0FFh
@@ -3549,7 +3545,7 @@ loc_359:
 		mov	al,byte ptr ds:[0C8h]
 		mov	ds:data_137e,al
 		mov	byte ptr ds:data_142e,0FFh
-		call	sub_75
+		call	vga_operation_2
 		mov	es,cs:data_219e
 		mov	si,9BE6h
 		mov	di,6000h
@@ -3579,7 +3575,7 @@ locloop_361:
 		add	bh,2
 		push	bx
 		call	word ptr cs:data_87
-		call	sub_76
+		call	game_multiply_3
 		pop	bx
 		push	bx
 		mov	cx,218h
@@ -3607,7 +3603,7 @@ locloop_363:
 		sub	bh,2
 		push	bx
 		call	word ptr cs:data_87
-		call	sub_76
+		call	game_multiply_3
 		pop	bx
 		push	bx
 		add	bh,4
@@ -3627,7 +3623,7 @@ loc_364:
 		mov	ah,al
 		and	al,1
 		jz	loc_365			; Jump if zero
-		call	sub_75
+		call	vga_operation_2
 		mov	si,ds:data_186e
 		lodsb				; String [si] to al
 		mov	ah,al
@@ -3675,7 +3671,7 @@ loc_366:
 		mov	ax,1
 		int	60h			; ??INT Non-standard interrupt
 		push	bx
-		call	sub_71
+		call	game_func_71
 		mov	word ptr ds:[80h],ax
 		mov	byte ptr ds:[83h],bl
 		mov	si,ds:data_186e
@@ -3694,14 +3690,14 @@ loc_366:
 		pop	bx
 		xor	al,al			; Zero register
 		jmp	word ptr cs:[10Ch]
-sub_69		endp
+game_func_69		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_70		proc	near
+game_func_70		proc	near
 		mov	ax,ds:data_161e
 		add	ax,0FFF0h
 		or	ah,ah			; Zero ?
@@ -3715,14 +3711,14 @@ loc_367:
 		and	al,3Fh			; '?'
 		mov	byte ptr ds:[82h],al
 		retn
-sub_70		endp
+game_func_70		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_71		proc	near
+game_func_71		proc	near
 		mov	bx,0Dh
 		mov	ax,ds:data_161e
 		mov	cx,ds:data_187e
@@ -3746,14 +3742,14 @@ loc_369:
 		mov	bl,ds:data_161e
 		sub	bl,4
 		retn
-sub_71		endp
+game_func_71		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_72		proc	near
+game_func_72		proc	near
 		mov	bl,[si+8]
 		and	bl,1
 		jnz	loc_371			; Jump if not zero
@@ -3782,14 +3778,14 @@ loc_372:
 		mov	al,[si+0Bh]
 		or	[bx],al
 		retn
-sub_72		endp
+game_func_72		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_73		proc	near
+game_func_73		proc	near
 		xor	al,al			; Zero register
 		mov	ds:data_239e,al
 		mov	ds:data_240e,al
@@ -3809,14 +3805,14 @@ sub_73		proc	near
 		mov	ds:data_231e,al
 		mov	ds:data_132e,al
 		jmp	loc_273
-sub_73		endp
+game_func_73		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_74		proc	near
+copy_buffer		proc	near
 		push	cs
 		pop	es
 		mov	di,data_133e
@@ -3836,14 +3832,14 @@ loc_373:
 		mov	al,0FFh
 		stosb				; Store al to es:[di]
 		retn
-sub_74		endp
+copy_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_75		proc	near
+vga_operation_2		proc	near
 		mov	es,cs:data_219e
 		mov	si,9C13h
 		mov	di,8C00h
@@ -3919,14 +3915,14 @@ loc_378:
 		mov	al,5
 		call	word ptr cs:[10Ch]
 		retn
-sub_75		endp
+vga_operation_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_76		proc	near
+game_multiply_3		proc	near
 		mov	cl,ds:data_224e
 		mov	al,4
 		mul	cl			; ax = reg * al
@@ -3942,14 +3938,14 @@ loc_379:
 		jb	loc_379			; Jump if below
 		mov	byte ptr ds:data_215e,0
 		retn
-sub_76		endp
+game_multiply_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_77		proc	near
+game_scan_loop_4		proc	near
 		mov	si,ds:data_188e
 loc_380:
 		mov	ax,[si]
@@ -3957,16 +3953,16 @@ loc_380:
 		jne	loc_381			; Jump if not equal
 		retn
 loc_381:
-		call	sub_87
+		call	game_func_87
 		jc	loc_383			; Jump if carry Set
 		mov	ah,bl
 		mov	al,[si+2]
-		call	sub_34
+		call	vga_operation4
 		mov	cx,3
 		mov	dl,40h			; '@'
 
 locloop_382:
-		call	sub_89
+		call	game_func_89
 		inc	di
 		inc	dl
 		loop	locloop_382		; Loop if cx > 0
@@ -3974,35 +3970,35 @@ locloop_382:
 loc_383:
 		add	si,3
 		jmp	short loc_380
-sub_77		endp
+game_scan_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_78		proc	near
+game_func_78		proc	near
 		test	byte ptr ds:data_230e,0FFh
 		jz	loc_384			; Jump if zero
 		retn
 loc_384:
-		call	sub_38
+		call	vga_operation8
 		add	si,6Dh
-		call	sub_35
+		call	vga_operation5
 		mov	dl,40h			; '@'
-		call	sub_82
+		call	game_func_82
 		jz	loc_385			; Jump if zero
 		retn
 loc_385:
 		mov	di,ds:data_188e
 		mov	dl,40h			; '@'
-		call	sub_79
+		call	game_process_loop_3
 		jnc	loc_386			; Jump if carry=0
 		pop	ax
 		mov	byte ptr ds:[0E7h],80h
 		jmp	loc_169
 loc_386:
-		call	sub_39
+		call	vga_operation9
 		jnc	loc_387			; Jump if carry=0
 		retn
 loc_387:
@@ -4017,20 +4013,20 @@ loc_389:
 		or	byte ptr [bx+5],40h	; '@'
 		and	byte ptr [bx+5],0E0h
 		retn
-sub_78		endp
+game_func_78		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_79		proc	near
+game_process_loop_3		proc	near
 		push	dx
-		call	sub_81
+		call	game_func_81
 		pop	dx
 		mov	bx,si
 		add	si,23h
-		call	sub_35
+		call	vga_operation5
 		test	byte ptr [si],80h
 		clc				; Clear carry flag
 		jz	loc_390			; Jump if zero
@@ -4048,7 +4044,7 @@ loc_392:
 
 		mov	si,bx
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		push	di
 		mov	di,si
 		mov	cx,3
@@ -4056,12 +4052,12 @@ loc_392:
 locloop_393:
 		push	dx
 		push	bx
-		call	sub_89
+		call	game_func_89
 		pop	bx
 		xchg	di,bx
 		push	bx
 		xor	dl,dl			; Zero register
-		call	sub_89
+		call	game_func_89
 		pop	bx
 		xchg	di,bx
 		inc	di
@@ -4075,44 +4071,44 @@ locloop_393:
 		and	byte ptr [di+2],3Fh	; '?'
 		stc				; Set carry flag
 		retn
-sub_79		endp
+game_process_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_80		proc	near
+game_func_80		proc	near
 		test	byte ptr ds:data_230e,0FFh
 		jz	loc_394			; Jump if zero
 		retn
 loc_394:
-		call	sub_38
+		call	vga_operation8
 		sub	si,23h
-		call	sub_36
+		call	vga_operation6
 		mov	al,[si]
-		call	sub_40
+		call	game_check_state_2
 		jz	loc_395			; Jump if zero
 		retn
 loc_395:
 		add	si,90h
-		call	sub_35
+		call	vga_operation5
 		mov	dl,40h			; '@'
-		call	sub_82
+		call	game_func_82
 		jz	loc_396			; Jump if zero
 		retn
 loc_396:
 		mov	di,ds:data_188e
 		mov	dl,40h			; '@'
 		push	dx
-		call	sub_81
+		call	game_func_81
 		pop	dx
 		mov	ax,si
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		mov	bx,si
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		mov	cx,3
 
 locloop_397:
@@ -4131,7 +4127,7 @@ loc_399:
 		mov	bx,ax
 		mov	si,bx
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		push	di
 		mov	di,si
 		mov	cx,3
@@ -4139,12 +4135,12 @@ loc_399:
 locloop_400:
 		push	dx
 		push	bx
-		call	sub_89
+		call	game_func_89
 		pop	bx
 		xchg	di,bx
 		push	bx
 		xor	dl,dl			; Zero register
-		call	sub_89
+		call	game_func_89
 		pop	bx
 		xchg	di,bx
 		inc	di
@@ -4161,14 +4157,14 @@ locloop_400:
 		mov	byte ptr ds:[0E7h],80h
 		mov	byte ptr ds:data_233e,0
 		jmp	loc_77
-sub_80		endp
+game_func_80		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_81		proc	near
+game_func_81		proc	near
 		mov	al,byte ptr ds:[83h]
 		add	al,4
 		add	al,dh
@@ -4191,22 +4187,22 @@ loc_403:
 		add	di,3
 		jmp	short loc_402
 loc_404:
-		call	sub_87
+		call	game_func_87
 		mov	al,[di+2]
 		mov	ah,bl
 		push	di
-		call	sub_34
+		call	vga_operation4
 		mov	si,di
 		pop	di
 		retn
-sub_81		endp
+game_func_81		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_82		proc	near
+game_func_82		proc	near
 		mov	dh,1
 		cmp	dl,[si]
 		jne	loc_405			; Jump if not equal
@@ -4222,14 +4218,14 @@ loc_406:
 		inc	dl
 		cmp	dl,[si]
 		retn
-sub_82		endp
+game_func_82		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_83		proc	near
+game_scan_loop_5		proc	near
 		mov	si,ds:data_189e
 loc_407:
 		mov	ax,[si]
@@ -4237,16 +4233,16 @@ loc_407:
 		jne	loc_408			; Jump if not equal
 		retn
 loc_408:
-		call	sub_87
+		call	game_func_87
 		jc	loc_410			; Jump if carry Set
 		mov	ah,bl
 		mov	al,[si+2]
-		call	sub_34
+		call	vga_operation4
 		mov	cx,3
 		mov	dl,43h			; 'C'
 
 locloop_409:
-		call	sub_89
+		call	game_func_89
 		inc	di
 		inc	dl
 		loop	locloop_409		; Loop if cx > 0
@@ -4254,37 +4250,37 @@ locloop_409:
 loc_410:
 		add	si,3
 		jmp	short loc_407
-sub_83		endp
+game_scan_loop_5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_84		proc	near
-		call	sub_38
+game_func_84		proc	near
+		call	vga_operation8
 		add	si,6Dh
-		call	sub_35
+		call	vga_operation5
 		mov	dl,43h			; 'C'
-		call	sub_82
+		call	game_func_82
 		jz	loc_411			; Jump if zero
 		retn
 loc_411:
 		mov	di,ds:data_189e
 		mov	dl,43h			; 'C'
-		call	sub_79
+		call	game_process_loop_3
 		jc	loc_412			; Jump if carry Set
 		retn
 loc_412:
 		jmp	loc_169
-sub_84		endp
+game_func_84		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_85		proc	near
+game_func_85		proc	near
 		inc	byte ptr ds:data_145e
 		mov	si,ds:data_190e
 loc_413:
@@ -4294,7 +4290,7 @@ loc_413:
 		retn
 loc_414:
 		and	ax,3FFFh
-		call	sub_88
+		call	game_func_88
 		jc	loc_419			; Jump if carry Set
 		mov	cl,bl
 		dec	bx
@@ -4304,7 +4300,7 @@ loc_414:
 		inc	cl
 		mov	al,[si+2]
 		xor	ah,ah			; Zero register
-		call	sub_34
+		call	vga_operation4
 		jmp	short loc_417
 loc_415:
 		mov	ax,bx
@@ -4313,7 +4309,7 @@ loc_415:
 		push	ax
 		mov	al,[si+2]
 		mov	ah,22h			; '"'
-		call	sub_34
+		call	vga_operation4
 		pop	ax
 		add	di,ax
 		mov	cl,al
@@ -4323,14 +4319,14 @@ loc_415:
 loc_416:
 		mov	ah,bl
 		mov	al,[si+2]
-		call	sub_34
+		call	vga_operation4
 		mov	cl,3
 loc_417:
 		xor	ch,ch			; Zero register
 		xor	dl,dl			; Zero register
 
 locloop_418:
-		call	sub_89
+		call	game_func_89
 		inc	di
 		loop	locloop_418		; Loop if cx > 0
 
@@ -4347,16 +4343,16 @@ loc_419:
 		add	bx,bx
 		call	word ptr ds:data_105e[bx]	;*
 loc_420:
-		call	sub_87
+		call	game_func_87
 		jc	loc_422			; Jump if carry Set
 		mov	ah,bl
 		mov	al,[si+2]
-		call	sub_34
+		call	vga_operation4
 		mov	cx,3
 		mov	dl,46h			; 'F'
 
 locloop_421:
-		call	sub_89
+		call	game_func_89
 		inc	di
 		inc	dl
 		loop	locloop_421		; Loop if cx > 0
@@ -4364,7 +4360,7 @@ locloop_421:
 loc_422:
 		add	si,7
 		jmp	loc_413
-sub_85		endp
+game_func_85		endp
 
 			                        ;* No entry point to code
 		dec	dx
@@ -4393,9 +4389,9 @@ loc_423:
 loc_424:
 		push	si
 		push	ax
-		call	sub_86
+		call	game_scan_loop_6
 		jc	loc_425			; Jump if carry Set
-		call	sub_18
+		call	game_process_loop
 loc_425:
 		pop	ax
 		pop	si
@@ -4410,9 +4406,9 @@ loc_426:
 loc_427:
 		push	si
 		push	ax
-		call	sub_86
+		call	game_scan_loop_6
 		jc	loc_428			; Jump if carry Set
-		call	sub_15
+		call	game_func_15
 loc_428:
 		pop	ax
 		pop	si
@@ -4435,7 +4431,7 @@ loc_430:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_86		proc	near
+game_scan_loop_6		proc	near
 		mov	dl,ds:data_233e
 		or	dl,ds:data_230e
 		stc				; Set carry flag
@@ -4455,7 +4451,7 @@ loc_431:
 loc_432:
 		mov	ax,[si]
 		and	ax,3FFFh
-		call	sub_87
+		call	game_func_87
 		jnc	loc_433			; Jump if carry=0
 		retn
 loc_433:
@@ -4474,14 +4470,14 @@ loc_435:
 
 		stc				; Set carry flag
 		retn
-sub_86		endp
+game_scan_loop_6		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_87		proc	near
+game_func_87		proc	near
 		mov	bx,ax
 		sub	ax,word ptr ds:[80h]
 		jc	loc_436			; Jump if carry Set
@@ -4502,14 +4498,14 @@ loc_437:
 		mov	ax,21h
 		sub	ax,bx
 		retn
-sub_87		endp
+game_func_87		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_88		proc	near
+game_func_88		proc	near
 		add	ax,2
 		mov	bx,ax
 		sub	ax,ds:data_187e
@@ -4536,14 +4532,14 @@ loc_440:
 		mov	ax,25h
 		sub	ax,bx
 		retn
-sub_88		endp
+game_func_88		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_89		proc	near
+game_func_89		proc	near
 		test	byte ptr [di],80h
 		jnz	loc_441			; Jump if not zero
 		mov	[di],dl
@@ -4554,14 +4550,14 @@ loc_441:
 		xor	bh,bh			; Zero register
 		mov	ds:data_211e[bx],dl
 		retn
-sub_89		endp
+game_func_89		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_90		proc	near
+game_check_state_5		proc	near
 		mov	si,data_210e
 loc_442:
 		cmp	byte ptr [si],0FFh
@@ -4569,7 +4565,7 @@ loc_442:
 		retn
 loc_443:
 		push	si
-		call	sub_92
+		call	game_func_92
 		pop	si
 		mov	al,[si]
 		mov	[si+0Bh],al
@@ -4584,7 +4580,7 @@ loc_443:
 		mov	[si+0Ch],al
 		mov	ah,[si+0Bh]
 		push	ax
-		call	sub_101
+		call	game_multiply_4
 		pop	ax
 		cmp	byte ptr [di],0FFh
 		je	loc_444			; Jump if equal
@@ -4610,7 +4606,7 @@ loc_444:
 loc_445:
 		mov	byte ptr [si],0
 		jmp	short loc_444
-sub_90		endp
+game_check_state_5		endp
 
 			                        ;* No entry point to code
 		add	[bx+di],al
@@ -4620,27 +4616,27 @@ sub_90		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_91		proc	near
+game_func_91		proc	near
 		mov	si,data_210e
 loc_446:
 		cmp	byte ptr [si],0FFh
 		je	loc_447			; Jump if equal
 		push	si
-		call	sub_92
+		call	game_func_92
 		pop	si
 		add	si,0Dh
 		jmp	short loc_446
 loc_447:
 		mov	byte ptr ds:data_210e,0FFh
 		retn
-sub_91		endp
+game_func_91		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_92		proc	near
+game_func_92		proc	near
 		test	word ptr [si+7],8000h
 		jnz	loc_448			; Jump if not zero
 		retn
@@ -4649,34 +4645,34 @@ loc_448:
 		mov	dx,[si+7]
 		mov	al,[si+0Ch]
 		mov	ah,[si+0Bh]
-sub_92		endp
+game_func_92		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_93		proc	near
+game_func_93		proc	near
 loc_449:
 		push	ax
-		call	sub_101
+		call	game_multiply_4
 		pop	ax
 		cmp	byte ptr [di],0FCh
 		jb	loc_450			; Jump if below
 		retn
 loc_450:
 		add	al,byte ptr ds:[82h]
-		call	sub_34
+		call	vga_operation4
 		mov	al,[di]
 		jmp	word ptr cs:data_78
-sub_93		endp
+game_func_93		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_94		proc	near
+copy_buffer_2		proc	near
 		mov	si,data_210e
 		mov	di,data_210e
 		push	cs
@@ -4697,7 +4693,7 @@ loc_453:
 		inc	byte ptr [si+3]
 		push	es
 		push	di
-		call	sub_95
+		call	game_scan_loop_7
 		pop	di
 		pop	es
 		push	si
@@ -4715,15 +4711,15 @@ loc_454:
 loc_455:
 		add	si,0Dh
 		jmp	short loc_451
-sub_94		endp
+copy_buffer_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_95		proc	near
-		call	sub_97
+game_scan_loop_7		proc	near
+		call	game_func_97
 		test	byte ptr [si+5],8
 		jnz	loc_457			; Jump if not zero
 		mov	ah,[si]
@@ -4732,9 +4728,9 @@ sub_95		proc	near
 		retn
 loc_456:
 		mov	al,[si+1]
-		call	sub_34
+		call	vga_operation4
 		mov	al,[di]
-		call	sub_41
+		call	game_func_41
 		jz	loc_457			; Jump if zero
 		mov	byte ptr [si],0
 		retn
@@ -4799,7 +4795,7 @@ loc_463:
 loc_464:
 		mov	al,[si+6]
 		xor	ah,ah			; Zero register
-		call	sub_60
+		call	game_func_60
 		mov	byte ptr ds:data_246e,9
 		mov	al,0FFh
 		mov	ds:data_155e,al
@@ -4834,25 +4830,25 @@ loc_466:
 		jz	loc_467			; Jump if zero
 		inc	al
 loc_467:
-		call	sub_96
+		call	game_func_96
 		jc	loc_464			; Jump if carry Set
 loc_468:
 		mov	byte ptr ds:data_246e,0Ah
 		retn
-sub_95		endp
+game_scan_loop_7		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_96		proc	near
+game_func_96		proc	near
 		mov	bl,[si+5]
 		and	bx,7
 		add	bx,bx
 		and	al,3Fh			; '?'
 		jmp	word ptr ds:data_107e[bx]	;*
-sub_96		endp
+game_func_96		endp
 
 			                        ;* No entry point to code
 		xchg	cx,ax
@@ -4881,10 +4877,10 @@ sub_96		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_97		proc	near
+game_func_97		proc	near
 		test	byte ptr [si+5],40h	; '@'
 		jz	loc_470			; Jump if zero
-		call	sub_98
+		call	game_func_98
 		jnc	loc_470			; Jump if carry=0
 		retn
 loc_470:
@@ -4894,7 +4890,7 @@ loc_470:
 		call	word ptr ds:data_108e[bx]	;*
 		and	byte ptr [si+1],3Fh	; '?'
 		retn
-sub_97		endp
+game_func_97		endp
 
 			                        ;* No entry point to code
 ;*		aad	85h			; undocumented inst
@@ -4912,7 +4908,7 @@ sub_97		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_98		proc	near
+game_func_98		proc	near
 		mov	bl,[si+3]
 		xor	bh,bh			; Zero register
 		mov	di,[si+9]
@@ -4927,7 +4923,7 @@ loc_471:
 		and	byte ptr [si+5],0F8h
 		or	[si+5],al
 		retn
-sub_98		endp
+game_func_98		endp
 
 			                        ;* No entry point to code
 		cmp	byte ptr ds:data_165e,1Fh
@@ -4957,7 +4953,7 @@ loc_474:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_99		proc	near
+game_func_99		proc	near
 		mov	si,data_210e
 loc_475:
 		mov	al,[si]
@@ -4971,14 +4967,14 @@ loc_476:
 loc_477:
 		add	si,0Dh
 		jmp	short loc_475
-sub_99		endp
+game_func_99		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_100		proc	near
+game_func_100		proc	near
 		mov	si,data_210e
 loc_478:
 		mov	al,[si]
@@ -4992,14 +4988,14 @@ loc_479:
 loc_480:
 		add	si,0Dh
 		jmp	short loc_478
-sub_100		endp
+game_func_100		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_101		proc	near
+game_multiply_4		proc	near
 		and	al,3Fh			; '?'
 		mov	bl,ah
 		mov	bh,1Ch
@@ -5010,14 +5006,14 @@ sub_101		proc	near
 		mov	di,ax
 		add	di,0E900h
 		retn
-sub_101		endp
+game_multiply_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_102		proc	near
+game_func_102		proc	near
 		mov	si,data_209e
 		mov	cx,4
 
@@ -5025,7 +5021,7 @@ locloop_481:
 		push	cx
 		cmp	byte ptr [si],0FFh
 		je	loc_483			; Jump if equal
-		call	sub_103
+		call	game_func_103
 		test	byte ptr [si+2],0FFh
 		jnz	loc_482			; Jump if not zero
 		mov	byte ptr [si],0FFh
@@ -5044,7 +5040,7 @@ loc_482:
 		and	al,3Fh			; '?'
 		mov	[si+6],al
 		push	ax
-		call	sub_101
+		call	game_multiply_4
 		pop	ax
 		cmp	byte ptr [di],0FFh
 		je	loc_483			; Jump if equal
@@ -5064,14 +5060,14 @@ loc_483:
 		loop	locloop_481		; Loop if cx > 0
 
 		retn
-sub_102		endp
+game_func_102		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_103		proc	near
+game_func_103		proc	near
 		test	word ptr [si+3],8000h
 		jnz	loc_484			; Jump if not zero
 		retn
@@ -5081,14 +5077,14 @@ loc_484:
 		mov	ah,[si+5]
 		mov	al,[si+6]
 		jmp	loc_449
-sub_103		endp
+game_func_103		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_104		proc	near
+game_scan_loop_8		proc	near
 		mov	si,data_209e
 		mov	cx,4
 
@@ -5108,55 +5104,55 @@ locloop_485:
 		mov	al,byte ptr ds:[84h]
 		add	al,[bx+1]
 		add	al,byte ptr ds:[82h]
-		call	sub_34
+		call	vga_operation4
 		xchg	si,di
 		sub	si,25h
-		call	sub_36
+		call	vga_operation6
 		xchg	si,di
-		call	sub_105
+		call	game_func_105
 loc_486:
 		add	si,7
 		pop	cx
 		loop	locloop_485		; Loop if cx > 0
 
 		retn
-sub_104		endp
+game_scan_loop_8		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_105		proc	near
+game_func_105		proc	near
 		test	byte ptr ds:data_225e,0FFh
 		jz	loc_487			; Jump if zero
 		test	byte ptr ds:data_222e,0FFh
 		jz	loc_487			; Jump if zero
 		retn
 loc_487:
-		call	sub_106
+		call	game_func_106
 		inc	di
-		call	sub_106
+		call	game_func_106
 		xchg	si,di
 		add	si,23h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
-		call	sub_106
+		call	game_func_106
 		inc	di
-sub_105		endp
+game_func_105		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_106		proc	near
+game_func_106		proc	near
 		test	byte ptr [si+2],0FFh
 		jnz	loc_488			; Jump if not zero
 		retn
 loc_488:
 		xchg	si,di
-		call	sub_39
+		call	vga_operation9
 		xchg	si,di
 		jnc	loc_489			; Jump if carry=0
 		retn
@@ -5173,7 +5169,7 @@ loc_491:
 		or	byte ptr [bx+5],49h	; 'I'
 		dec	byte ptr [si+2]
 		retn
-sub_106		endp
+game_func_106		endp
 
 			                        ;* No entry point to code
 		add	al,[bx+di]
@@ -5320,7 +5316,7 @@ loc_502:
 
 locloop_503:
 		push	cx
-;*		call	sub_108			;*
+;*		call	game_func_108			;*
 		db	0E8h, 4Dh,0FFh		;  Fixup - byte match
 		add	si,10h
 		pop	cx
@@ -5342,7 +5338,7 @@ locloop_503:
 loc_504:
 		mov	si,ds:data_223e
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		mov	cx,13h
 
 locloop_505:
@@ -5353,13 +5349,13 @@ locloop_506:
 		push	cx
 		test	byte ptr [si],80h
 		jz	loc_507			; Jump if zero
-		call	sub_115
+		call	game_func_115
 loc_507:
 		inc	si
 		pop	cx
 		loop	locloop_506		; Loop if cx > 0
 
-		call	sub_35
+		call	vga_operation5
 		pop	cx
 		loop	locloop_505		; Loop if cx > 0
 
@@ -5368,14 +5364,14 @@ loc_508:
 		mov	byte ptr ds:data_246e,19h
 		call	word ptr cs:data_83
 		mov	byte ptr ds:data_217e,0
-		call	sub_49
+		call	fill_buffer
 		jmp	loc_231
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_109		proc	near
+game_func_109		proc	near
 		mov	si,0EB15h
 		mov	cx,4
 loc_509:
@@ -5385,7 +5381,7 @@ loc_509:
 		retn
 loc_510:
 		push	cx
-		call	sub_110
+		call	game_func_110
 		cmp	byte ptr [si+1],0FFh
 		jne	loc_511			; Jump if not equal
 		mov	word ptr [si],0FFFFh
@@ -5408,7 +5404,7 @@ loc_512:
 		mov	di,[di]
 		add	di,bx
 		mov	ax,[si]
-		call	sub_141
+		call	game_func_141
 		jc	loc_516			; Jump if carry Set
 		mov	[si+6],bl
 		mov	al,[si+2]
@@ -5441,7 +5437,7 @@ locloop_513:
 		push	ax
 		mov	ax,bx
 		push	ax
-		call	sub_101
+		call	game_multiply_4
 		pop	ax
 		cmp	byte ptr [di],0FFh
 		je	loc_514			; Jump if equal
@@ -5484,14 +5480,14 @@ locloop_517:
 
 loc_ret_518:
 		retn
-sub_109		endp
+game_func_109		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_110		proc	near
+game_func_110		proc	near
 		test	word ptr [si+8],8000h
 		jz	loc_519			; Jump if zero
 		and	word ptr [si+8],7FFFh
@@ -5499,7 +5495,7 @@ sub_110		proc	near
 		mov	ah,[si+6]
 		mov	al,[si+7]
 		push	si
-		call	sub_93
+		call	game_func_93
 		pop	si
 loc_519:
 		test	word ptr [si+0Ah],8000h
@@ -5510,7 +5506,7 @@ loc_519:
 		inc	ah
 		mov	al,[si+7]
 		push	si
-		call	sub_93
+		call	game_func_93
 		pop	si
 loc_520:
 		test	word ptr [si+0Ch],8000h
@@ -5522,7 +5518,7 @@ loc_520:
 		inc	al
 		and	al,3Fh			; '?'
 		push	si
-		call	sub_93
+		call	game_func_93
 		pop	si
 loc_521:
 		test	word ptr [si+0Eh],8000h
@@ -5537,21 +5533,21 @@ loc_522:
 		inc	al
 		and	al,3Fh			; '?'
 		push	si
-		call	sub_93
+		call	game_func_93
 		pop	si
 		retn
-sub_110		endp
+game_func_110		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_111		proc	near
+game_func_111		proc	near
 		test	byte ptr ds:data_234e,0FFh
 		jnz	$+3			; Jump if not zero
 		retn
-sub_111		endp
+game_func_111		endp
 
 			                        ;* No entry point to code
 		mov	si,0EB15h
@@ -5579,7 +5575,7 @@ loc_523:
 		jb	loc_524			; Jump if below
 		jmp	loc_532
 loc_524:
-		call	sub_112
+		call	game_func_112
 		jmp	loc_536
 			                        ;* No entry point to code
 		inc	byte ptr [si+4]
@@ -5589,7 +5585,7 @@ loc_524:
 loc_525:
 		cmp	byte ptr [si+4],4
 		jae	loc_526			; Jump if above or =
-		call	sub_113
+		call	game_func_113
 		jmp	short loc_527
 loc_526:
 		and	byte ptr [si+5],3
@@ -5597,22 +5593,22 @@ loc_526:
 		cmp	byte ptr [si+4],3
 		je	loc_527			; Jump if equal
 		mov	ax,[si]
-		call	sub_141
+		call	game_func_141
 		jc	loc_527			; Jump if carry Set
 		cmp	bl,21h			; '!'
 		jae	loc_527			; Jump if above or =
 		mov	ah,bl
 		mov	al,[si+2]
-		call	sub_34
+		call	vga_operation4
 		xchg	si,di
 		add	si,48h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		mov	al,[di]
-		call	sub_40
+		call	game_check_state_2
 		jnz	loc_527			; Jump if not zero
 		mov	al,[di+1]
-		call	sub_40
+		call	game_check_state_2
 		jnz	loc_527			; Jump if not zero
 		inc	byte ptr [si+2]
 		and	byte ptr [si+2],3Fh	; '?'
@@ -5628,7 +5624,7 @@ locloop_528:
 		push	cx
 		add	byte ptr [si+2],2
 		and	byte ptr [si+2],3Fh	; '?'
-		call	sub_114
+		call	game_scan_loop_9
 		add	si,10h
 		pop	cx
 		loop	locloop_528		; Loop if cx > 0
@@ -5642,8 +5638,8 @@ locloop_528:
 
 locloop_529:
 		push	cx
-		call	sub_112
-		call	sub_114
+		call	game_func_112
+		call	game_scan_loop_9
 		add	si,10h
 		pop	cx
 		loop	locloop_529		; Loop if cx > 0
@@ -5667,7 +5663,7 @@ loc_532:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_112		proc	near
+game_func_112		proc	near
 		mov	al,[si+5]
 		inc	al
 		cmp	al,3
@@ -5678,7 +5674,7 @@ loc_533:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_113:
+game_func_113:
 		mov	ax,[si]
 		mov	bl,[si+3]
 		and	bx,1
@@ -5698,14 +5694,14 @@ loc_534:
 loc_535:
 		mov	[si],ax
 		retn
-sub_112		endp
+game_func_112		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_114		proc	near
+game_scan_loop_9		proc	near
 loc_536:
 		test	byte ptr ds:data_225e,0FFh
 		jz	loc_537			; Jump if zero
@@ -5715,7 +5711,7 @@ loc_536:
 		retn
 loc_537:
 		mov	ax,[si]
-		call	sub_141
+		call	game_func_141
 		jnc	loc_538			; Jump if carry=0
 		retn
 loc_538:
@@ -5727,11 +5723,11 @@ loc_538:
 		retn
 loc_539:
 		mov	al,[si+2]
-		call	sub_34
+		call	vga_operation4
 		push	si
 		xchg	di,si
 		sub	si,25h
-		call	sub_36
+		call	vga_operation6
 		mov	byte ptr ds:data_176e,0
 		mov	cx,3
 
@@ -5741,13 +5737,13 @@ locloop_540:
 
 locloop_541:
 		push	cx
-		call	sub_115
+		call	game_func_115
 		pop	cx
 		inc	si
 		loop	locloop_541		; Loop if cx > 0
 
 		add	si,21h
-		call	sub_35
+		call	vga_operation5
 		pop	cx
 		loop	locloop_540		; Loop if cx > 0
 
@@ -5756,15 +5752,15 @@ locloop_541:
 		add	al,al
 		cmc				; Complement carry
 		retn
-sub_114		endp
+game_scan_loop_9		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_115		proc	near
-		call	sub_39
+game_func_115		proc	near
+		call	vga_operation9
 		jnc	loc_542			; Jump if carry=0
 		retn
 loc_542:
@@ -5785,7 +5781,7 @@ loc_544:
 		mov	[bx+5],al
 		mov	byte ptr ds:data_176e,0FFh
 		retn
-sub_115		endp
+game_func_115		endp
 
 		db	 00h, 00h, 01h, 00h, 00h, 01h
 		db	 01h, 01h, 99h, 8Ch,0A5h, 8Ch
@@ -5803,7 +5799,7 @@ sub_115		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_116		proc	near
+game_func_116		proc	near
 		mov	si,ds:data_194e
 		mov	al,ds:data_225e
 		or	al,byte ptr ds:[0E6h]
@@ -5820,14 +5816,14 @@ loc_547:
 		mov	byte ptr [si+3],0FFh
 		cmp	ah,0FFh
 		je	loc_548			; Jump if equal
-		call	sub_141
+		call	game_func_141
 		jc	loc_548			; Jump if carry Set
 		mov	[si+3],bl
-		call	sub_117
+		call	game_func_117
 		cmp	byte ptr [si+1],0FFh
 		je	loc_548			; Jump if equal
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		mov	bl,ds:data_244e
 		xor	bh,bh			; Zero register
 		mov	al,bl
@@ -5840,7 +5836,7 @@ loc_547:
 		jz	loc_548			; Jump if zero
 		xchg	si,di
 		add	si,48h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		mov	bl,ds:data_244e
 		inc	bl
@@ -5858,21 +5854,21 @@ loc_548:
 		mov	[si+0Fh],al
 loc_549:
 		jnz	loc_550			; Jump if not zero
-		call	sub_139
+		call	game_check_state_6
 loc_550:
 		inc	byte ptr ds:data_244e
 		add	si,10h
 		jmp	short loc_546
-sub_116		endp
+game_func_116		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_117		proc	near
+game_func_117		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		mov	al,[si+5]
 		and	al,0DFh
 		test	al,40h			; '@'
@@ -5894,7 +5890,7 @@ loc_552:
 		jz	loc_553			; Jump if zero
 		xchg	si,di
 		add	si,48h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		mov	al,ds:data_244e
 		inc	al
@@ -5982,7 +5978,7 @@ loc_561:
 		retn
 loc_562:
 		and	byte ptr [si+4],7Fh
-		call	sub_125
+		call	game_func_125
 		add	byte ptr [si+6],80h
 		jc	loc_563			; Jump if carry Set
 		retn
@@ -6002,7 +5998,7 @@ loc_564:
 loc_565:
 		jmp	loc_588
 			                        ;* No entry point to code
-		call	sub_121
+		call	game_scan_loop_10
 		jnc	loc_566			; Jump if carry=0
 		retn
 loc_566:
@@ -6020,7 +6016,7 @@ loc_567:
 		mov	byte ptr [si+9],0
 		retn
 loc_568:
-		call	sub_119
+		call	game_func_119
 		mov	bl,[si+6]
 		and	bl,0Fh
 		dec	bl
@@ -6060,15 +6056,15 @@ loc_569:
 		cmp	al,5
 		jne	loc_570			; Jump if not equal
 		mov	ax,0Ah
-		call	sub_120
+		call	game_func_120
 		jmp	loc_588
 loc_570:
 		mov	ax,64h
-		call	sub_120
+		call	game_func_120
 		jmp	loc_588
 			                        ;* No entry point to code
 		mov	dx,9A72h
-		call	sub_118
+		call	game_func_118
 		jnc	loc_571			; Jump if carry=0
 		retn
 loc_571:
@@ -6090,8 +6086,8 @@ data_82		dw	0E3CCh
 data_83		dw	680h
 data_84		dw	0C6h
 data_85		dw	0E90Ah
-data_86		dw	offset sub_3
-data_87		dw	offset sub_142
+data_86		dw	offset vga_operation
+data_87		dw	offset game_func_142
 		db	 02h,0E8h, 6Eh, 01h, 73h, 01h
 data_88		dw	0BAC3h
 data_89		dw	9A99h
@@ -6112,7 +6108,7 @@ loc_573:
 		add	bx,ds:data_199e
 		push	si
 		mov	si,[bx]
-		call	sub_52
+		call	game_multiply
 		pop	si
 		retn
 loc_574:
@@ -6125,7 +6121,7 @@ loc_575:
 		retn
 			                        ;* No entry point to code
 		mov	dx,9AF3h
-		call	sub_118
+		call	game_func_118
 		jnc	loc_576			; Jump if carry=0
 		retn
 loc_576:
@@ -6133,7 +6129,7 @@ loc_576:
 		jmp	loc_588
 			                        ;* No entry point to code
 		mov	dx,9B63h
-		call	sub_118
+		call	game_func_118
 		jnc	loc_577			; Jump if carry=0
 		retn
 loc_577:
@@ -6149,7 +6145,7 @@ loc_577:
 		mov	al,[di]
 		mov	dx,[di+1]
 		push	ax
-		call	sub_118
+		call	game_func_118
 		pop	ax
 		jnc	loc_578			; Jump if carry=0
 		retn
@@ -6172,10 +6168,10 @@ loc_580:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_118:
+game_func_118:
 		push	dx
-		call	sub_125
-		call	sub_121
+		call	game_func_125
+		call	game_scan_loop_10
 		pop	dx
 		jnc	loc_581			; Jump if carry=0
 		retn
@@ -6227,7 +6223,7 @@ loc_587:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_119:
+game_func_119:
 loc_588:
 		mov	word ptr [si],0FF00h
 		test	byte ptr [si+7],20h	; ' '
@@ -6244,7 +6240,7 @@ loc_590:
 		or	[di],al
 		mov	word ptr [si+0Bh],0FFFFh
 		retn
-sub_117		endp
+game_func_117		endp
 
 			                        ;* No entry point to code
 		add	word ptr ds:[86h],ax
@@ -6258,7 +6254,7 @@ sub_117		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_120		proc	near
+game_func_120		proc	near
 		add	word ptr ds:[8Bh],ax
 		jnc	loc_591			; Jump if carry=0
 		mov	word ptr ds:[8Bh],0FFFFh
@@ -6267,14 +6263,14 @@ loc_591:
 		call	word ptr cs:[2014h]
 		pop	si
 		retn
-sub_120		endp
+game_func_120		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_121		proc	near
+game_scan_loop_10		proc	near
 		test	byte ptr ds:[0E8h],0FFh
 		stc				; Set carry flag
 		jz	loc_592			; Jump if zero
@@ -6323,21 +6319,21 @@ loc_597:
 loc_598:
 		stc				; Set carry flag
 		retn
-sub_121		endp
+game_scan_loop_10		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_122		proc	near
+game_func_122		proc	near
 loc_599:
 		cmp	byte ptr [si+3],22h	; '"'
 		cmc				; Complement carry
 		jnc	loc_600			; Jump if carry=0
 		retn
 loc_600:
-		call	sub_128
+		call	game_func_128
 		jnc	loc_601			; Jump if carry=0
 		retn
 loc_601:
@@ -6348,16 +6344,16 @@ loc_601:
 		jnc	loc_602			; Jump if carry=0
 		retn
 loc_602:
-		call	sub_134
+		call	game_func_134
 		jnc	loc_603			; Jump if carry=0
 		retn
 loc_603:
-		call	sub_126
+		call	game_func_126
 		jmp	loc_625
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_123:
+game_func_123:
 loc_604:
 		mov	al,[si+3]
 		or	al,al			; Zero ?
@@ -6370,7 +6366,7 @@ loc_605:
 		jnz	loc_606			; Jump if not zero
 		retn
 loc_606:
-		call	sub_132
+		call	game_func_132
 		jnc	loc_607			; Jump if carry=0
 		retn
 loc_607:
@@ -6380,22 +6376,22 @@ loc_607:
 		jae	loc_608			; Jump if above or =
 		retn
 loc_608:
-		call	sub_136
+		call	game_func_136
 		jnc	loc_609			; Jump if carry=0
 		retn
 loc_609:
-		call	sub_127
+		call	game_func_127
 		jmp	short loc_625
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_124:
+game_func_124:
 loc_610:
 		cmp	byte ptr [si+3],2
 		jae	loc_611			; Jump if above or =
 		retn
 loc_611:
-		call	sub_130
+		call	game_func_130
 		jnc	loc_612			; Jump if carry=0
 		retn
 loc_612:
@@ -6405,16 +6401,16 @@ loc_612:
 		jae	loc_613			; Jump if above or =
 		retn
 loc_613:
-		call	sub_137
+		call	game_func_137
 		jnc	loc_614			; Jump if carry=0
 		retn
 loc_614:
-		call	sub_127
+		call	game_func_127
 		jmp	short loc_624
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_125:
+game_func_125:
 		mov	al,[si+3]
 		or	al,al			; Zero ?
 		stc				; Set carry flag
@@ -6426,7 +6422,7 @@ loc_615:
 		jnz	loc_616			; Jump if not zero
 		retn
 loc_616:
-		call	sub_133
+		call	game_func_133
 		jnc	loc_617			; Jump if carry=0
 		retn
 loc_617:
@@ -6437,16 +6433,16 @@ loc_617:
 		jnc	loc_618			; Jump if carry=0
 		retn
 loc_618:
-		call	sub_135
+		call	game_func_135
 		jnc	loc_619			; Jump if carry=0
 		retn
 loc_619:
-		call	sub_126
+		call	game_func_126
 		jmp	short loc_624
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_126:
+game_func_126:
 loc_620:
 		mov	ax,[si]
 		inc	ax
@@ -6462,7 +6458,7 @@ loc_621:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_127:
+game_func_127:
 loc_622:
 		mov	ax,[si]
 		or	ax,ax			; Zero ?
@@ -6482,51 +6478,51 @@ loc_625:
 		dec	byte ptr [si+2]
 		and	byte ptr [si+2],3Fh	; '?'
 		retn
-sub_122		endp
+game_func_122		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_128		proc	near
+game_func_128		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		inc	di
 		inc	di
-		call	sub_129
+		call	game_func_129
 		jnc	loc_626			; Jump if carry=0
 		retn
 loc_626:
 		xchg	si,di
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
-		call	sub_129
+		call	game_func_129
 		jnc	loc_627			; Jump if carry=0
 		retn
 loc_627:
 		xchg	si,di
 		mov	al,[si]
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		or	al,[si]
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		or	al,[si]
 		xchg	si,di
 		add	al,al
 		retn
-sub_128		endp
+game_func_128		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_129		proc	near
+game_func_129		proc	near
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_628			; Jump if zero
 		retn
@@ -6537,7 +6533,7 @@ loc_628:
 		retn
 loc_629:
 		push	si
-		call	sub_63
+		call	game_func_63
 		pop	si
 		dec	cl
 		clc				; Clear carry flag
@@ -6546,26 +6542,26 @@ loc_629:
 loc_630:
 		stc				; Set carry flag
 		retn
-sub_129		endp
+game_func_129		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_130		proc	near
+game_func_130		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		dec	di
-		call	sub_131
+		call	game_func_131
 		jnc	loc_631			; Jump if carry=0
 		retn
 loc_631:
 		xchg	si,di
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
-		call	sub_131
+		call	game_func_131
 		jnc	loc_632			; Jump if carry=0
 		retn
 loc_632:
@@ -6573,24 +6569,24 @@ loc_632:
 		xchg	si,di
 		mov	al,[si]
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		or	al,[si]
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		or	al,[si]
 		xchg	si,di
 		add	al,al
 		retn
-sub_130		endp
+game_func_130		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_131		proc	near
+game_func_131		proc	near
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_633			; Jump if zero
 		retn
@@ -6601,7 +6597,7 @@ loc_633:
 		retn
 loc_634:
 		push	si
-		call	sub_63
+		call	game_func_63
 		pop	si
 		dec	cl
 		dec	cl
@@ -6611,63 +6607,63 @@ loc_634:
 loc_635:
 		stc				; Set carry flag
 		retn
-sub_131		endp
+game_func_131		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_132		proc	near
+game_func_132		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		xchg	si,di
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		xchg	si,di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_636			; Jump if zero
 		retn
 loc_636:
 		mov	al,[di+1]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_637			; Jump if zero
 		retn
 loc_637:
 		xchg	si,di
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		xchg	si,di
 		mov	al,[di+1]
 		or	al,[di]
 		or	al,[di-1]
 		add	al,al
 		retn
-sub_132		endp
+game_func_132		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_133		proc	near
+game_func_133		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		xchg	si,di
 		add	si,48h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_638			; Jump if zero
 		retn
 loc_638:
 		mov	al,[di+1]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_639			; Jump if zero
 		retn
@@ -6676,20 +6672,20 @@ loc_639:
 		or	al,[di-1]
 		add	al,al
 		retn
-sub_133		endp
+game_func_133		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_134		proc	near
+game_func_134		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		inc	di
 		inc	di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_640			; Jump if zero
 		retn
@@ -6697,49 +6693,49 @@ loc_640:
 		mov	cl,al
 		xchg	si,di
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		xchg	si,di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_641			; Jump if zero
 		retn
 loc_641:
 		or	cl,al
 		mov	al,[di-1]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_642			; Jump if zero
 		retn
 loc_642:
 		xchg	si,di
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		xchg	si,di
 		or	cl,[di]
 		or	cl,[di-1]
 		or	cl,[di-2]
 		add	cl,cl
 		retn
-sub_134		endp
+game_func_134		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_135		proc	near
+game_func_135		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		inc	di
 		inc	di
 		mov	cl,[di]
 		xchg	si,di
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_643			; Jump if zero
 		retn
@@ -6747,17 +6743,17 @@ loc_643:
 		or	cl,al
 		xchg	si,di
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_644			; Jump if zero
 		retn
 loc_644:
 		or	cl,al
 		mov	al,[di-1]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_645			; Jump if zero
 		retn
@@ -6766,19 +6762,19 @@ loc_645:
 		or	cl,[di-2]
 		add	cl,cl
 		retn
-sub_135		endp
+game_func_135		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_136		proc	near
+game_func_136		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		dec	di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_646			; Jump if zero
 		retn
@@ -6787,68 +6783,68 @@ loc_646:
 		mov	cl,[di]
 		xchg	si,di
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		xchg	si,di
 		or	cl,[di]
 		mov	al,[di+1]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_647			; Jump if zero
 		retn
 loc_647:
 		mov	al,[di+2]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_648			; Jump if zero
 		retn
 loc_648:
 		xchg	si,di
 		sub	si,24h
-		call	sub_36
+		call	vga_operation6
 		xchg	si,di
 		or	cl,[di+2]
 		or	cl,[di+1]
 		or	cl,[di]
 		add	cl,cl
 		retn
-sub_136		endp
+game_func_136		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_137		proc	near
+game_func_137		proc	near
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		dec	di
 		dec	di
 		mov	cl,[di]
 		xchg	si,di
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		or	cl,[di]
 		inc	di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_649			; Jump if zero
 		retn
 loc_649:
 		xchg	si,di
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		mov	al,[di]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_650			; Jump if zero
 		retn
 loc_650:
 		or	cl,al
 		mov	al,[di+1]
-		call	sub_138
+		call	game_func_138
 		stc				; Set carry flag
 		jz	loc_651			; Jump if zero
 		retn
@@ -6857,14 +6853,14 @@ loc_651:
 		or	cl,[di-1]
 		add	cl,cl
 		retn
-sub_137		endp
+game_func_137		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_138		proc	near
+game_func_138		proc	near
 		cmp	al,49h			; 'I'
 		jb	loc_653			; Jump if below
 		or	al,al			; Zero ?
@@ -6883,14 +6879,14 @@ loc_653:
 		pop	cx
 		pop	di
 		retn
-sub_138		endp
+game_func_138		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_139		proc	near
+game_check_state_6		proc	near
 		cmp	byte ptr [si+1],0FFh
 		je	loc_654			; Jump if equal
 		retn
@@ -6906,7 +6902,7 @@ loc_655:
 		jne	loc_656			; Jump if not equal
 		retn
 loc_656:
-		call	sub_141
+		call	game_func_141
 		jnc	loc_657			; Jump if carry=0
 		retn
 loc_657:
@@ -6937,11 +6933,11 @@ loc_660:
 		mov	[si+3],bl
 		mov	al,[si+0Dh]
 		mov	ah,bl
-		call	sub_34
+		call	vga_operation4
 		push	di
 		xchg	si,di
 		sub	si,25h
-		call	sub_36
+		call	vga_operation6
 		xor	al,al			; Zero register
 		mov	cx,3
 
@@ -6950,7 +6946,7 @@ locloop_661:
 		or	al,[si+1]
 		or	al,[si+2]
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		loop	locloop_661		; Loop if cx > 0
 
 		xchg	si,di
@@ -6985,11 +6981,11 @@ loc_664:
 		mov	[si+13h],bl
 		mov	al,[si+0Dh]
 		mov	ah,bl
-		call	sub_34
+		call	vga_operation4
 		push	di
 		xchg	si,di
 		sub	si,25h
-		call	sub_36
+		call	vga_operation6
 		xor	al,al			; Zero register
 		mov	cx,5
 
@@ -6998,7 +6994,7 @@ locloop_665:
 		or	al,[si+1]
 		or	al,[si+2]
 		add	si,24h
-		call	sub_35
+		call	vga_operation5
 		loop	locloop_665		; Loop if cx > 0
 
 		xchg	si,di
@@ -7012,7 +7008,7 @@ loc_666:
 		mov	[di],al
 		xchg	si,di
 		add	si,48h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		inc	al
 		mov	[di],al
@@ -7041,14 +7037,14 @@ loc_666:
 		xor	bh,bh			; Zero register
 		mov	word ptr ds:data_211e[bx],0
 		retn
-sub_139		endp
+game_check_state_6		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_140		proc	near
+clear_buffer		proc	near
 		push	cs
 		pop	es
 		mov	di,data_211e
@@ -7067,12 +7063,12 @@ loc_668:
 		cmp	ah,0FFh
 		je	loc_669			; Jump if equal
 		mov	byte ptr [si+3],0FFh
-		call	sub_141
+		call	game_func_141
 		jc	loc_669			; Jump if carry Set
 		mov	[si+3],bl
 		mov	al,[si+2]
 		mov	ah,bl
-		call	sub_34
+		call	vga_operation4
 		mov	al,ds:data_244e
 		or	al,80h
 		mov	[di],al
@@ -7080,14 +7076,14 @@ loc_669:
 		inc	byte ptr ds:data_244e
 		add	si,10h
 		jmp	short loc_667
-sub_140		endp
+clear_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_141		proc	near
+game_func_141		proc	near
 		mov	bx,ax
 		sub	ax,word ptr ds:[80h]
 		jnc	loc_671			; Jump if carry=0
@@ -7104,7 +7100,7 @@ loc_671:
 		mov	ax,23h
 		sub	ax,bx
 		retn
-sub_141		endp
+game_func_141		endp
 
 loc_672:
 		mov	al,[si+4]
@@ -7114,7 +7110,7 @@ loc_672:
 		mov	bx,data_184e
 		xlat				; al=[al+[bx]] table
 		xor	ah,ah			; Zero register
-		call	sub_143
+		call	game_func_143
 		jmp	short loc_673
 loc_673:
 		mov	byte ptr [si+6],0
@@ -7145,14 +7141,14 @@ loc_675:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_143		proc	near
+game_func_143		proc	near
 		add	word ptr ds:[8Eh],ax
 		jc	loc_676			; Jump if carry Set
 		retn
 loc_676:
 		mov	word ptr ds:[8Eh],0FFFFh
 		retn
-sub_143		endp
+game_func_143		endp
 
 			                        ;* No entry point to code
 		and	al,7
@@ -7182,7 +7178,7 @@ locloop_677:
 		push	cx
 		push	si
 		mov	al,[di]
-		call	sub_63
+		call	game_func_63
 		mov	bl,cl
 		pop	si
 		pop	cx
@@ -7197,31 +7193,31 @@ loc_678:
 		add	bx,bx
 		jmp	word ptr ds:data_120e[bx]	;*
 			                        ;* No entry point to code
-;*		call	far ptr sub_155		;*
+;*		call	far ptr game_func_155		;*
 		db	9Ah
 		dw	9497h, 8E97h		;  Fixup - byte match
 		xchg	di,ax
-		call	sub_122
+		call	game_func_122
 		jmp	loc_599
 			                        ;* No entry point to code
-		call	sub_124
+		call	game_func_124
 		jmp	loc_610
 			                        ;* No entry point to code
-		call	sub_123
+		call	game_func_123
 		jmp	loc_604
 			                        ;* No entry point to code
 		mov	ax,[si+2]
-		call	sub_34
+		call	vga_operation4
 		xchg	si,di
 		add	si,48h
-		call	sub_35
+		call	vga_operation5
 		xchg	si,di
 		mov	al,[di]
 		jmp	loc_274
 			                        ;* No entry point to code
 		mov	al,[si+5]
 		and	al,1Fh
-		call	sub_144
+		call	game_multiply_5
 		mov	al,[si+8]
 		sub	al,ah
 		jbe	loc_679			; Jump if below or =
@@ -7286,7 +7282,7 @@ loc_685:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_144		proc	near
+game_multiply_5		proc	near
 		mov	ah,byte ptr ds:[8Dh]
 		shr	ah,1			; Shift w/zeros fill
 		inc	ah
@@ -7342,7 +7338,7 @@ loc_693:
 loc_694:
 		mov	ah,0FFh
 		retn
-sub_144		endp
+game_multiply_5		endp
 
 			                        ;* No entry point to code
 		add	[bp+si],ax
@@ -7368,7 +7364,7 @@ loc_696:
 		je	loc_698			; Jump if equal
 		mov	ax,[di]
 		push	dx
-		call	sub_141
+		call	game_func_141
 		pop	dx
 		jnc	loc_697			; Jump if carry=0
 		test	byte ptr [di+4],10h
@@ -7396,14 +7392,14 @@ loc_700:
 		mov	byte ptr ds:[0E7h],0
 		mov	byte ptr ds:data_230e,0
 		mov	byte ptr ds:data_228e,0
-		call	sub_45
+		call	game_check_state_3
 		mov	ax,9929h
 		push	ax
-		call	sub_20
+		call	game_func_20
 		pop	ax
 		mov	byte ptr ds:data_228e,0
 loc_701:
-		call	sub_45
+		call	game_check_state_3
 		mov	byte ptr ds:data_228e,0
 		cmp	byte ptr ds:[0E7h],2
 		je	loc_702			; Jump if equal
@@ -7431,7 +7427,7 @@ loc_703:
 
 locloop_704:
 		push	cx
-		call	sub_45
+		call	game_check_state_3
 		pop	cx
 		mov	al,cl
 		and	al,1
@@ -7452,7 +7448,7 @@ loc_705:
 		neg	al
 		add	al,7Fh
 		xor	ah,ah			; Zero register
-		call	sub_143
+		call	game_func_143
 		mov	byte ptr ds:[85h],0
 		mov	word ptr ds:[86h],0
 		shr	word ptr ds:[8Bh],1	; Shift w/zeros fill

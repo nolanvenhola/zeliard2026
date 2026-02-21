@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
-;лл					                                 лл
-;лл				ZR3_31	                                 лл
-;лл					                                 лл
-;лл      Created:   16-Feb-26		                                 лл
-;лл      Code type: zero start		                                 лл
-;лл      Passes:    9          Analysis	Options on: none                 лл
-;лл					                                 лл
-;лллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллллл
+;==========================================================================
+;
+;  TRIGGER_EVENTS - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -39,7 +35,7 @@ start:
 		xlat				; al=[al+[bx]] table
 		or	bx,ax
 		jns	$-26h			; Jump if not sign
-		call	sub_1
+		call	trigger_func_1
 ;*		fld	dword ptr [di]		; Push onto stack
 		db	0D9h, 05h		;  Fixup - byte match
 		db	0FFh,0FFh,0FFh, 0Ah, 00h, 00h
@@ -171,9 +167,9 @@ zr3_31		endp
 ;                              SUBROUTINE
 ;мммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммммм
 
-sub_1		proc	near
+trigger_func_1		proc	near
 		retf	86D8h
-sub_1		endp
+trigger_func_1		endp
 
 			                        ;* No entry point to code
 		retn

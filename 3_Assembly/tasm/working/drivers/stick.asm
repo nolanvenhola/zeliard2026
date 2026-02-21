@@ -1,58 +1,74 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				STICK	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  STICK.BIN - Joystick & Keyboard Input Driver
+;
+;  Interrupt-driven multi-input driver supporting:
+;  - Keyboard scanning with remappable scan codes
+;  - Joystick support with dead zone calibration (port 201h)
+;  - Pause/menu state management
+;  - Save/load game file I/O with compression
+;  - Game state machine (pause, exit dialogs)
+;
+;  Entry Points (jump table at offset 0):
+;    +0x00  Keyboard IRQ handler (INT 09h replacement)
+;    +0x03  Joystick/input polling (called from INT 08h timer)
+;    +0x06  Game state handler (pause/exit dialogs)
+;    +0x09  Input state query (returns current button/direction)
+;
+;  Code type: zero start
+;  Created:   16-Feb-26
+;  Passes:    9          Analysis Options on: none
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
 include  srmacros.inc
 
 
-; The following equates show data references outside the range of the program.
+; External references - graphics/screen functions in loaded segments
 
-data_51e	equ	2000h			;*
-data_52e	equ	2022h			;*
-data_53e	equ	2026h			;*
-data_54e	equ	2028h			;*
-data_55e	equ	202Ah			;*
-data_56e	equ	444Dh			;*
-data_57e	equ	0FF00h			;*
-data_58e	equ	0FF04h			;*
-data_59e	equ	0FF09h			;*
-data_60e	equ	0FF0Ah			;*
-data_61e	equ	0FF0Ch			;*
-data_62e	equ	0FF10h			;*
-data_63e	equ	0FF16h			;*
-data_64e	equ	0FF17h			;*
-data_65e	equ	0FF18h			;*
-data_66e	equ	0FF1Ah			;*
-data_67e	equ	0FF1Bh			;*
-data_68e	equ	0FF1Dh			;*
-data_69e	equ	0FF1Eh			;*
-data_70e	equ	0FF1Fh			;*
-data_72e	equ	0FF27h			;*
-data_73e	equ	0FF28h			;*
-data_74e	equ	0FF29h			;*
-data_75e	equ	0FF33h			;*
-data_76e	equ	0FF3Bh			;*
-data_77e	equ	0FF48h			;*
-data_78e	equ	0FF49h			;*
-data_79e	equ	0FF50h			;*
-data_80e	equ	0FF74h			;*
-data_81e	equ	0FF75h			;*
-data_82e	equ	0FF78h			;*
-data_83e	equ	0FF79h			;*
-data_84e	equ	0B000h			;*
-data_85e	equ	0			;*
-data_86e	equ	0E34h			;*
+gfx_screen_base	equ	2000h			; Screen buffer base
+gfx_fn_setup	equ	2022h			; Screen setup function
+gfx_fn_draw	equ	2026h			; Screen draw function
+gfx_fn_restore	equ	2028h			; Screen restore function
+gfx_fn_clear	equ	202Ah			; Screen clear function
+save_file_magic	equ	444Dh			; Save file magic number 'DM'
+
+; Game state variables (0xFF00+ shared with zeliad.exe and game.bin)
+
+gvar_chunk_load_fn equ	0FF00h			; Chunk loader function
+gvar_old_int08	equ	0FF04h			; Original INT 08h vector
+gvar_key_released equ	0FF09h			; Key released flag
+gvar_last_key	equ	0FF0Ah			; Last key scancode
+gvar_input_fn	equ	0FF0Ch			; Input handler function ptr
+gvar_gfx_fn	equ	0FF10h			; Graphics handler function ptr
+gvar_timer_flag	equ	0FF16h			; Timer flag
+gvar_timer_count equ	0FF17h			; Timer counter
+gvar_skip_input	equ	0FF18h			; Input skip flag
+gvar_frame_timer equ	0FF1Ah			; Frame timer
+gvar_anim_timer	equ	0FF1Bh			; Animation timer
+gvar_skip_flag	equ	0FF1Dh			; Skip/interrupt flag
+gvar_state_a	equ	0FF1Eh			; Game state A
+gvar_state_b	equ	0FF1Fh			; Game state B
+gvar_sound_flag	equ	0FF27h			; Sound enabled flag
+gvar_key_pressed equ	0FF28h			; Key pressed scancode
+gvar_enter_key	equ	0FF29h			; Enter key scancode (0x0D)
+gvar_save_name	equ	0FF33h			; Save filename (8 chars)
+gvar_music_state equ	0FF3Bh			; Music state flag
+gvar_joy_cal_x	equ	0FF48h			; Joystick X calibration
+gvar_joy_cal_y	equ	0FF49h			; Joystick Y calibration
+gvar_frame_count equ	0FF50h			; Frame counter
+gvar_volume_a	equ	0FF74h			; Volume A
+gvar_volume_b	equ	0FF75h			; Volume B
+gvar_old_int09	equ	0FF78h			; Original INT 09h vector
+gvar_old_int09_seg equ	0FF79h			; Original INT 09h segment
+herc_video_seg	equ	0B000h			; Hercules video segment
+zero_offset	equ	0			; Zero constant
+dialog_text_ofs	equ	0E34h			; Dialog text offset
 
 seg_a		segment	byte public
 		assume	cs:seg_a, ds:seg_a
@@ -82,11 +98,11 @@ start:
 
 stick		endp
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_1		proc	near
+handle_pause_key		proc	near
 		test	byte ptr cs:[2BEh],0FFh
 		jz	loc_1			; Jump if zero
 		test	byte ptr cs:data_63e,1
@@ -115,14 +131,14 @@ loc_4:
 loc_5:
 		mov	byte ptr cs:[2BFh],0FFh
 		retn
-sub_1		endp
+handle_pause_key		endp
 
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_2		proc	near
+poll_joystick_buttons		proc	near
 		test	byte ptr cs:data_76e,0FFh
 		jnz	loc_6			; Jump if not zero
 		retn
@@ -133,12 +149,12 @@ loc_6:
 loc_7:
 		mov	dx,201h
 		in	al,dx			; port 201h, start game 1-shots
-		call	sub_3
+		call	decode_joystick_bits
 		jmp	short loc_11
 
-;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ External Entry into Subroutine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_3:
+decode_joystick_bits:
 		test	byte ptr cs:[2C0h],0FFh
 		jz	loc_9			; Jump if zero
 		test	al,10h
@@ -172,14 +188,14 @@ loc_13:
 loc_14:
 		mov	byte ptr cs:[2C1h],0FFh
 		retn
-sub_2		endp
+poll_joystick_buttons		endp
 
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_4		proc	near
+handle_special_keys		proc	near
 		test	byte ptr cs:[2C2h],0FFh
 		jz	loc_15			; Jump if zero
 		cmp	word ptr cs:data_65e,1000h
@@ -212,7 +228,7 @@ loc_18:
 loc_19:
 		mov	byte ptr cs:[2C3h],0FFh
 		retn
-sub_4		endp
+handle_special_keys		endp
 
 loc_20:
 		push	ax
@@ -230,9 +246,9 @@ loc_20:
 		dec	byte ptr cs:[2BCh]
 		jnz	loc_21			; Jump if not zero
 		mov	byte ptr cs:[2BCh],5
-		call	sub_4
-		call	sub_1
-		call	sub_2
+		call	handle_special_keys
+		call	handle_pause_key
+		call	poll_joystick_buttons
 loc_21:
 		inc	byte ptr cs:data_66e
 		inc	word ptr cs:data_79e
@@ -279,7 +295,7 @@ loc_24:
 		je	loc_27			; Jump if equal
 		cmp	al,0FEh
 		je	loc_27			; Jump if equal
-		call	sub_5
+		call	process_scancode
 loc_25:
 		mov	ah,1
 		int	16h			; Keyboard i/o  ah=function 01h
@@ -323,13 +339,13 @@ loc_27:
 		pop	ax
 		iret				; Interrupt return
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_5		proc	near
+process_scancode		proc	near
 		push	ax
-		call	sub_6
+		call	dispatch_extended_key
 		pop	ax
 		cmp	al,0E0h
 		jb	loc_28			; Jump if below
@@ -522,14 +538,14 @@ loc_43:
 		or	al,ah
 		mov	ds:data_64e,al
 		retn
-sub_5		endp
+process_scancode		endp
 
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_6		proc	near
+dispatch_extended_key		proc	near
 		cmp	al,0E0h
 		jb	loc_44			; Jump if below
 		mov	byte ptr cs:[5C5h],0FFh
@@ -559,7 +575,7 @@ loc_48:
 		mov	al,cs:[bx+di]
 		mov	cs:data_74e,al
 		retn
-sub_6		endp
+dispatch_extended_key		endp
 
 		db	0
 		db	'1234567890'
@@ -582,11 +598,11 @@ sub_6		endp
 		db	 4Dh
 		db	47 dup (0)
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_7		proc	near
+calibrate_joystick		proc	near
 		mov	dx,201h
 		xor	si,si			; Zero register
 		xor	di,di			; Zero register
@@ -617,7 +633,7 @@ loc_50:
 		jnz	loc_50			; Jump if not zero
 		sti				; Enable interrupts
 		retn
-sub_7		endp
+calibrate_joystick		endp
 
 loc_51:
 		push	bx
@@ -628,7 +644,7 @@ loc_51:
 		mov	al,cs:data_76e
 		and	al,ds:data_60e
 		jz	loc_52			; Jump if zero
-		call	sub_8
+		call	calc_joystick_deadzone
 loc_52:
 		mov	al,cs:data_64e
 		or	al,cs:data_77e
@@ -639,15 +655,15 @@ loc_52:
 		pop	bx
 		iret				; Interrupt return
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_8		proc	near
+calc_joystick_deadzone		proc	near
 		push	si
 		push	di
 		push	cx
-		call	sub_7
+		call	calibrate_joystick
 		mov	cx,word ptr cs:[5C6h]
 		add	cx,8
 		jnc	loc_53			; Jump if carry=0
@@ -699,7 +715,7 @@ loc_60:
 		pop	di
 		pop	si
 		retn
-sub_8		endp
+calc_joystick_deadzone		endp
 
 			                        ;* No entry point to code
 		cmp	word ptr cs:data_65e,14h
@@ -707,7 +723,7 @@ sub_8		endp
 		retn
 loc_61:
 		push	ds
-		call	sub_12
+		call	handle_pause_key2
 		mov	cl,0FFh
 		mov	ax,3
 		int	60h			; ??INT Non-standard interrupt
@@ -724,7 +740,7 @@ loc_62:
 		jz	loc_62			; Jump if zero
 		test	ax,20h
 		jnz	loc_63			; Jump if not zero
-		call	sub_14
+		call	handle_pause_key4
 		xor	cl,cl			; Zero register
 		mov	ax,3
 		int	60h			; ??INT Non-standard interrupt
@@ -758,7 +774,7 @@ loc_64:
 loc_65:
 		cmp	word ptr cs:data_65e,0Eh
 		jne	loc_66			; Jump if not equal
-		call	sub_9
+		call	draw_screen_element
 loc_66:
 		test	byte ptr cs:data_68e,0FFh
 		jnz	loc_67			; Jump if not zero
@@ -766,7 +782,7 @@ loc_66:
 		jnz	loc_67			; Jump if not zero
 		jmp	short loc_65
 loc_67:
-		call	sub_9
+		call	draw_screen_element
 		mov	byte ptr cs:data_68e,0
 		mov	byte ptr cs:data_69e,0
 		xor	cl,cl			; Zero register
@@ -774,16 +790,16 @@ loc_67:
 		int	60h			; ??INT Non-standard interrupt
 		retn
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_9		proc	near
+draw_screen_element		proc	near
 		mov	ax,101Eh
 		mov	cx,810h
 		mov	di,3C80h
 		jmp	word ptr cs:data_54e
-sub_9		endp
+draw_screen_element		endp
 
 			                        ;* No entry point to code
 		push	ax
@@ -798,7 +814,7 @@ sub_9		endp
 		add	byte ptr ds:[175h][bx+si],al
 		retn
 			                        ;* No entry point to code
-		call	sub_12
+		call	handle_pause_key2
 		push	cs
 		pop	ds
 		mov	si,845h
@@ -811,7 +827,7 @@ loc_68:
 		mov	al,ds:data_75e
 		neg	al
 		add	al,0Ah
-		call	sub_10
+		call	handle_pause_key0
 		push	ax
 		add	al,30h			; '0'
 		mov	ah,1
@@ -823,7 +839,7 @@ loc_68:
 		add	al,0Ah
 		mov	ds:data_75e,al
 		mov	byte ptr cs:data_81e,1
-		call	sub_15
+		call	handle_pause_key5
 		mov	byte ptr cs:data_64e,0
 		mov	byte ptr cs:data_68e,0
 		mov	byte ptr cs:data_69e,0
@@ -838,7 +854,7 @@ loc_69:
 		or	al,cs:data_69e
 		jz	loc_69			; Jump if zero
 loc_70:
-		call	sub_14
+		call	handle_pause_key4
 		mov	byte ptr cs:data_64e,0
 		mov	byte ptr cs:data_68e,0
 		mov	byte ptr cs:data_69e,0
@@ -846,11 +862,11 @@ loc_70:
 		db	'Speed change', 0Dh, 'Select 0-9:'
 		db	0FFh
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_10		proc	near
+handle_pause_key0		proc	near
 		mov	byte ptr ds:data_74e,0
 loc_71:
 		test	byte ptr ds:data_74e,0FFh
@@ -867,25 +883,25 @@ loc_72:
 		clc				; Clear carry flag
 		mov	al,ah
 		retn
-sub_10		endp
+handle_pause_key0		endp
 
 			                        ;* No entry point to code
 		cmp	word ptr cs:data_65e,104h
 		je	loc_73			; Jump if equal
 		retn
 loc_73:
-		call	sub_11
+		call	handle_pause_key1
 		mov	byte ptr cs:data_64e,0
 loc_74:
 		cmp	word ptr cs:data_65e,104h
 		je	loc_74			; Jump if equal
 		retn
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_11		proc	near
+handle_pause_key1		proc	near
 		test	byte ptr cs:data_76e,0FFh
 		jz	loc_75			; Jump if zero
 		retn
@@ -906,7 +922,7 @@ locloop_77:
 		loopnz	locloop_77		; Loop if zf=0, cx>0
 
 		jcxz	loc_ret_78		; Jump if cx=0
-		call	sub_7
+		call	calibrate_joystick
 ;*		cmp	si,0FFFFh
 		db	 83h,0FEh,0FFh		;  Fixup - byte match
 		jz	loc_ret_78		; Jump if zero
@@ -924,7 +940,7 @@ locloop_77:
 
 loc_ret_78:
 		retn
-sub_11		endp
+handle_pause_key1		endp
 
 			                        ;* No entry point to code
 		cmp	word ptr cs:data_65e,804h
@@ -961,7 +977,7 @@ loc_82:
 		jz	loc_82			; Jump if zero
 		test	ax,20h
 		pushf				; Push flags
-		call	sub_14
+		call	handle_pause_key4
 		mov	byte ptr cs:data_64e,0
 		mov	byte ptr cs:data_68e,0
 		mov	byte ptr cs:data_69e,0
@@ -978,16 +994,16 @@ loc_83:
 		db	'Restore Game', 0Dh, ' Sure?(Y/N)'
 		db	0FFh
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_12		proc	near
+handle_pause_key2		proc	near
 		mov	byte ptr cs:data_81e,2
 
-;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ External Entry into Subroutine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_13:
+handle_pause_key3:
 		mov	ax,0C46h
 		mov	cx,1028h
 		mov	di,3C80h
@@ -996,26 +1012,26 @@ sub_13:
 		mov	cx,1E28h
 		mov	al,0FFh
 		jmp	word ptr cs:data_51e
-sub_12		endp
+handle_pause_key2		endp
 
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_14		proc	near
+handle_pause_key4		proc	near
 		mov	ax,0C46h
 		mov	cx,1028h
 		mov	di,3C80h
 		jmp	word ptr cs:data_54e
-sub_14		endp
+handle_pause_key4		endp
 
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_15		proc	near
+handle_pause_key5		proc	near
 		push	dx
 loc_84:
 		mov	dl,0FFh
@@ -1025,7 +1041,7 @@ loc_84:
 		jnz	loc_84			; Jump if not zero
 		pop	dx
 		retn
-sub_15		endp
+handle_pause_key5		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1148,9 +1164,9 @@ data_29		db	2
 		db	0
 loc_91:
 		mov	cs:data_46,0
-		call	sub_17
+		call	handle_pause_key7
 		push	ax
-		call	sub_18
+		call	handle_pause_key8
 		pop	dx
 		pop	es
 		pop	di
@@ -1212,27 +1228,27 @@ locloop_93:
 		pop	ds
 		jmp	word ptr cs:[bx]	;*
 			                        ;* No entry point to code
-		call	sub_16
+		call	handle_pause_key6
 		jnc	loc_94			; Jump if carry=0
 		retn
 loc_94:
 		mov	bx,ax
 		jmp	loc_109
 loc_95:
-		call	sub_16
+		call	handle_pause_key6
 		jnc	loc_96			; Jump if carry=0
 		retn
 loc_96:
 		mov	cx,cs:data_48
 		mov	bx,ax
-		call	sub_17
+		call	handle_pause_key7
 		jmp	loc_109
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_16		proc	near
+handle_pause_key6		proc	near
 loc_97:
 		mov	cs:data_48,0FFFFh
 		mov	cs:data_49,0FFFFh
@@ -1263,14 +1279,14 @@ loc_99:
 		test	byte ptr cs:data_82e,0FFh
 		jnz	loc_102			; Jump if not zero
 		push	es
-		call	sub_13
+		call	handle_pause_key3
 		push	cs
 		pop	ds
 		mov	si,0D47h
 		mov	bx,6Ch
 		mov	cl,4Ah			; 'J'
 		call	word ptr cs:data_55e
-		call	sub_15
+		call	handle_pause_key5
 		push	dx
 		mov	byte ptr cs:data_68e,0
 loc_100:
@@ -1283,7 +1299,7 @@ loc_100:
 		jz	loc_100			; Jump if zero
 loc_101:
 		pop	dx
-		call	sub_14
+		call	handle_pause_key4
 		pop	es
 		push	cs
 		pop	ds
@@ -1368,9 +1384,9 @@ loc_107:
 		db	0FFh, 00h, 00h, 00h, 00h, 00h
 		db	 64h, 75h, 6Dh, 6Dh, 79h, 00h
 
-;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ External Entry into Subroutine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_17:
+handle_pause_key7:
 		lds	dx,dword ptr cs:data_46	; Load seg:offset ptr
 		mov	ah,3Fh
 		int	21h			; DOS Services  ah=function 3Fh
@@ -1382,9 +1398,9 @@ sub_17:
 loc_ret_108:
 		retn
 
-;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ External Entry into Subroutine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_18:
+handle_pause_key8:
 loc_109:
 		mov	ah,3Eh
 		int	21h			; DOS Services  ah=function 3Eh
@@ -1400,13 +1416,13 @@ loc_111:
 		add	ax,3000h
 		mov	ds,ax
 		mov	si,data_85e
-		call	sub_19
+		call	handle_pause_key9
 		pop	ds
 		retn
 
-;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ External Entry into Subroutine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_19:
+handle_pause_key9:
 		xor	bx,bx			; Zero register
 		lodsb				; String [si] to al
 		dec	dx
@@ -1431,15 +1447,15 @@ loc_112:
 		xor	al,[bx+si]
 loc_113:
 		lodsb				; String [si] to al
-		call	sub_20
+		call	poll_joystick_buttons0
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		dec	dx
 		jnz	loc_113			; Jump if not zero
 		retn
 
-;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ External Entry into Subroutine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_20:
+poll_joystick_buttons0:
 		push	bp
 		mov	ah,al
 		and	ah,0F0h
@@ -1491,15 +1507,15 @@ loc_120:
 		db	 8Bh,0EEh,0E8h,0CFh,0FFh
 loc_121:
 		lodsb				; String [si] to al
-		call	sub_21
+		call	poll_joystick_buttons1
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		dec	dx
 		jnz	loc_121			; Jump if not zero
 		retn
 
-;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ External Entry into Subroutine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_21:
+poll_joystick_buttons1:
 		push	bp
 		mov	ah,al
 		and	ah,0Fh
@@ -1569,15 +1585,15 @@ loc_129:
 		jne	loc_129			; Jump if not equal
 loc_130:
 		lodsb				; String [si] to al
-		call	sub_22
+		call	poll_joystick_buttons2
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		dec	dx
 		jnz	loc_130			; Jump if not zero
 		retn
 
-;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ External Entry into Subroutine ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_22:
+poll_joystick_buttons2:
 		push	bp
 		mov	cx,1
 loc_131:
@@ -1666,7 +1682,7 @@ loc_139:
 loc_140:
 		lds	dx,dword ptr cs:data_44	; Load seg:offset ptr
 		jmp	dword ptr cs:data_57e
-sub_16		endp
+handle_pause_key6		endp
 
 		db	12 dup (0)
 		db	 02h, 15h
@@ -1696,11 +1712,11 @@ sub_16		endp
 		db	0, 2
 		db	'!MP51.MD'
 
-;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 ;                              SUBROUTINE
-;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-sub_23		proc	near
+poll_joystick_buttons3		proc	near
 		push	sp
 		add	[bp+si],al
 		and	cl,[di+50h]
@@ -1774,7 +1790,7 @@ data_49		dw	4D2Ch
 		db	0, 1
 		db	'.ESMP.MDT'
 		db	0
-sub_23		endp
+poll_joystick_buttons3		endp
 
 
 seg_a		ends

@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_13	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ENEMY_GOBLIN - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -102,7 +98,7 @@ start:
 		call	word ptr cs:data_42e
 		mov	si,data_61e
 		call	word ptr cs:data_41e
-		call	sub_4
+		call	goblin_process_loop
 		mov	bx,0D60h
 		mov	cx,3637h
 		mov	al,0FFh
@@ -119,7 +115,7 @@ locloop_1:
 		mov	word ptr ds:data_82e,0A98Bh
 		call	word ptr cs:data_50e
 loc_2:
-		call	sub_5
+		call	goblin_multiply
 		cmp	byte ptr ds:[0FF1Ah],3Fh	; '?'
 		jb	loc_2			; Jump if below
 		pop	cx
@@ -131,7 +127,7 @@ loc_3:
 		call	word ptr cs:data_50e
 		cmp	al,0FFh
 		je	loc_4			; Jump if equal
-		call	sub_1
+		call	goblin_func_1
 		jmp	short loc_3
 loc_4:
 		jmp	word ptr cs:data_45e
@@ -142,12 +138,12 @@ zr2_13		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+goblin_func_1		proc	near
 		mov	bl,al
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr cs:data_56e[bx]	;*
-sub_1		endp
+goblin_func_1		endp
 
 		db	0C0h,0A0h,0D2h,0A0h,0F3h,0A5h
 		db	 19h,0A6h,0C6h, 06h, 1Ah,0FFh
@@ -181,10 +177,10 @@ loc_6:
 		mov	word ptr ds:data_82e,0AC5Ah
 		retn
 			                        ;* No entry point to code
-		call	sub_2
+		call	goblin_func_2
 		mov	byte ptr ds:data_68e,0
 		mov	si,data_59e
-		call	sub_6
+		call	goblin_process_loop_2
 		test	word ptr ds:[8Bh],0FFFFh
 		mov	word ptr ds:data_82e,0A9B2h
 		jnz	loc_7			; Jump if not zero
@@ -233,7 +229,7 @@ loc_8:
 		retn
 loc_9:
 		push	dx
-		call	sub_2
+		call	goblin_func_2
 		pop	dx
 		mov	byte ptr ds:data_70e,0FFh
 		mov	word ptr ds:data_82e,0AA82h
@@ -261,10 +257,10 @@ loc_12:
 		jnz	loc_11			; Jump if not zero
 		jmp	short loc_10
 			                        ;* No entry point to code
-		call	sub_2
+		call	goblin_func_2
 		mov	byte ptr ds:data_68e,0
 		mov	si,data_59e
-		call	sub_6
+		call	goblin_process_loop_2
 		mov	word ptr ds:data_82e,0AAA1h
 		mov	ax,word ptr ds:[86h]
 		mov	dl,byte ptr ds:[85h]
@@ -307,7 +303,7 @@ loc_14:
 		mov	bx,3148h
 		call	word ptr cs:data_48e
 		int	61h			; ??INT Non-standard interrupt
-		call	sub_3
+		call	goblin_func_3
 		test	ah,1
 		jnz	loc_18			; Jump if not zero
 		mov	word ptr ds:data_82e,0AA48h
@@ -393,10 +389,10 @@ loc_24:
 		mov	word ptr ds:data_82e,0AB10h
 		retn
 			                        ;* No entry point to code
-		call	sub_2
+		call	goblin_func_2
 		mov	byte ptr ds:data_68e,0
 		mov	si,data_59e
-		call	sub_6
+		call	goblin_process_loop_2
 		mov	word ptr ds:data_82e,0AB32h
 		mov	ax,word ptr ds:[89h]
 		mov	dl,byte ptr ds:[88h]
@@ -444,7 +440,7 @@ loc_26:
 		mov	bx,3148h
 		call	word ptr cs:data_48e
 		int	61h			; ??INT Non-standard interrupt
-		call	sub_3
+		call	goblin_func_3
 		test	ah,1
 		jnz	loc_30			; Jump if not zero
 		mov	word ptr ds:data_82e,0AA48h
@@ -537,7 +533,7 @@ loc_35:
 		call	word ptr cs:data_54e
 		jmp	word ptr cs:data_44e
 			                        ;* No entry point to code
-		call	sub_2
+		call	goblin_func_2
 		mov	word ptr ds:data_82e,0ABF7h
 		mov	al,byte ptr ds:[88h]
 		xor	ah,ah			; Zero register
@@ -569,12 +565,12 @@ loc_37:
 			                        ;* No entry point to code
 		mov	byte ptr ds:data_68e,0
 		mov	si,data_58e
-		call	sub_7
+		call	goblin_func_7
 		mov	byte ptr ds:data_68e,0FFh
 		mov	word ptr ds:data_67e,0A773h
 		mov	byte ptr ds:[0FF1Ah],0
 loc_38:
-		call	sub_5
+		call	goblin_multiply
 		cmp	byte ptr ds:[0FF1Ah],64h	; 'd'
 		jb	loc_38			; Jump if below
 		retn
@@ -586,19 +582,19 @@ loc_38:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+goblin_func_2		proc	near
 		mov	bx,2717h
 		mov	cx,1C41h
 		xor	al,al			; Zero register
 		jmp	word ptr cs:data_39e
-sub_2		endp
+goblin_func_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+goblin_func_3		proc	near
 		mov	dl,ds:data_75e
 		mov	bx,ds:data_76e
 		test	al,8
@@ -647,14 +643,14 @@ loc_42:
 		mov	ds:data_75e,dl
 		mov	ds:data_76e,bx
 		retn
-sub_3		endp
+goblin_func_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+goblin_process_loop		proc	near
 		mov	si,data_57e
 		mov	bx,717h
 		mov	cx,8
@@ -679,7 +675,7 @@ locloop_44:
 		loop	locloop_43		; Loop if cx > 0
 
 		retn
-sub_4		endp
+goblin_process_loop		endp
 
 		db	'lmnopqrstuvwxy'
 		db	 00h, 01h, 02h, 03h, 04h, 05h
@@ -702,7 +698,7 @@ sub_4		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+goblin_multiply		proc	near
 		test	byte ptr ds:data_68e,0FFh
 		jnz	loc_45			; Jump if not zero
 		retn
@@ -719,14 +715,14 @@ loc_46:
 		mul	cl			; ax = reg * al
 		mov	si,ax
 		add	si,ds:data_67e
-sub_5		endp
+goblin_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+goblin_process_loop_2		proc	near
 		mov	bx,91Fh
 		mov	cx,5
 
@@ -750,7 +746,7 @@ locloop_48:
 		loop	locloop_47		; Loop if cx > 0
 
 		retn
-sub_6		endp
+goblin_process_loop_2		endp
 
 		db	 00h, 01h, 02h, 03h, 04h, 05h
 		db	 06h, 07h, 08h, 09h, 0Ah, 0Bh
@@ -785,7 +781,7 @@ sub_6		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+goblin_func_7		proc	near
 		mov	byte ptr ds:[0FF1Ah],0
 		lodsw				; String [si] to ax
 		cmp	ax,0FFFFh
@@ -794,12 +790,12 @@ sub_7		proc	near
 loc_49:
 		push	si
 		mov	si,ax
-		call	sub_6
+		call	goblin_process_loop_2
 		cmp	byte ptr ds:[0FF1Ah],28h	; '('
 		jb	$-5			; Jump if below
 		pop	si
 		jmp	short $-1Ah
-sub_7		endp
+goblin_func_7		endp
 
 			                        ;* No entry point to code
 		inc	bx

@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR1_07	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  VGA_DECOMPRESSOR - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -121,7 +117,7 @@ locloop_2:
 		mov	si,ds:data_30e
 		cmp	byte ptr [si+1Dh],0FDh
 		jne	loc_3			; Jump if not equal
-		call	sub_7
+		call	vgadec_multiply_2
 loc_3:
 		mov	word ptr ds:data_16e,186Ch
 		mov	si,ds:data_30e
@@ -131,46 +127,46 @@ loc_3:
 		mov	di,0E000h
 		mov	byte ptr ds:data_17e,0
 loc_4:
-		call	sub_1
+		call	vga_operation
 		xor	bl,bl			; Zero register
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_5			; Jump if zero
-		call	sub_4
+		call	vgadec_func_4
 loc_5:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_6			; Jump if zero
-		call	sub_4
+		call	vgadec_func_4
 loc_6:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_7			; Jump if zero
-		call	sub_4
+		call	vgadec_func_4
 loc_7:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_8			; Jump if zero
-		call	sub_3
+		call	vgadec_func_3
 loc_8:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_9			; Jump if zero
-		call	sub_3
+		call	vgadec_func_3
 loc_9:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_10			; Jump if zero
-		call	sub_2
+		call	vgadec_multiply
 loc_10:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_11			; Jump if zero
-		call	sub_3
+		call	vgadec_func_3
 loc_11:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_12			; Jump if zero
-		call	sub_3
+		call	vgadec_func_3
 loc_12:
 		add	word ptr ds:data_16e,2
 		inc	byte ptr ds:data_17e
@@ -184,7 +180,7 @@ zr1_07		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+vga_operation		proc	near
 		cmp	byte ptr ds:data_17e,1Bh
 		jne	loc_13			; Jump if not equal
 		retn
@@ -219,7 +215,7 @@ loc_14:
 
 locloop_15:
 		push	cx
-		call	sub_11
+		call	vga_operation1
 		add	di,0F882h
 		pop	cx
 		loop	locloop_15		; Loop if cx > 0
@@ -232,21 +228,21 @@ locloop_15:
 		pop	es
 		pop	di
 		retn
-sub_1		endp
+vga_operation		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+vgadec_multiply		proc	near
 		cmp	byte ptr [si-1],0FDh
 		jne	loc_16			; Jump if not equal
 		jmp	loc_33
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_3:
+vgadec_func_3:
 loc_16:
 		mov	al,[di-1]
 		mov	byte ptr [di-1],0FEh
@@ -382,7 +378,7 @@ loc_19:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_4:
+vgadec_func_4:
 		mov	al,[di-1]
 		mov	byte ptr [di-1],0FEh
 		inc	al
@@ -447,7 +443,7 @@ loc_21:
 						;  al = 2, map mask register
 		inc	dx
 		mov	ds,cs:data_31e
-;*		mov	ax,offset sub_25	;*
+;*		mov	ax,offset vgadec_func_25	;*
 		db	0B8h, 00h,0A0h		;  Fixup - byte match
 		mov	es,ax
 		pop	ax
@@ -608,12 +604,12 @@ locloop_30:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_5:
+vgadec_func_5:
 		mov	cx,6
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_6:
+vgadec_func_6:
 		mov	ax,0A000h
 		mov	es,ax
 
@@ -670,29 +666,29 @@ loc_33:
 		xor	dh,dh			; Zero register
 		add	dx,word ptr cs:[80h]
 		mov	ds:data_20e,dx
-		call	sub_8
+		call	vgadec_func_8
 		mov	es:data_18e,al
 		cmp	byte ptr es:data_19e,0FDh
 		jne	loc_34			; Jump if not equal
 		inc	dx
-		call	sub_8
+		call	vgadec_func_8
 		mov	es:data_19e,al
 loc_34:
 		mov	si,3BB4h
 		mov	di,3EE0h
-		call	sub_5
+		call	vgadec_func_5
 		mov	si,cs:data_25e
 loc_35:
-		call	sub_14
+		call	vga_operation4
 		or	bl,bl			; Zero ?
 		jz	loc_36			; Jump if zero
 		push	si
 		push	bx
-		call	sub_13
+		call	vga_operation3
 		pop	bx
 		mov	es,cs:data_31e
 		mov	si,data_18e
-		call	sub_12
+		call	vga_operation2
 		pop	si
 loc_36:
 		add	si,8
@@ -723,7 +719,7 @@ loc_36:
 						;  al = 5, mode
 		inc	ch
 		jz	loc_37			; Jump if zero
-		call	sub_11
+		call	vga_operation1
 loc_37:
 		pop	di
 		pop	cx
@@ -734,7 +730,7 @@ loc_37:
 		inc	di
 		inc	cl
 		jz	loc_38			; Jump if zero
-		call	sub_11
+		call	vga_operation1
 loc_38:
 		mov	ax,5
 		out	dx,ax			; port 3CEh, EGA graphic index
@@ -751,14 +747,14 @@ loc_38:
 		pop	si
 		pop	ds
 		retn
-sub_2		endp
+vgadec_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+vgadec_multiply_2		proc	near
 		push	es
 		push	ds
 		mov	si,ds:data_30e
@@ -772,16 +768,16 @@ sub_7		proc	near
 		cmp	byte ptr ds:data_18e,0FDh
 		jne	loc_39			; Jump if not equal
 		inc	dx
-		call	sub_8
+		call	vgadec_func_8
 		mov	ds:data_18e,al
 loc_39:
 		mov	si,data_18e
 		mov	di,3EE0h
 		mov	cx,3
-		call	sub_6
+		call	vgadec_func_6
 		mov	si,cs:data_25e
 loc_40:
-		call	sub_14
+		call	vga_operation4
 		or	bl,bl			; Zero ?
 		jz	loc_41			; Jump if zero
 		push	si
@@ -789,14 +785,14 @@ loc_40:
 		mov	al,3
 		mul	bl			; ax = reg * al
 		push	ax
-		call	sub_13
+		call	vga_operation3
 		pop	ax
 		add	di,ax
 		mov	bp,di
 		mov	es,cs:data_31e
 		mov	si,data_18e
 		mov	di,3EE0h
-		call	sub_15
+		call	vga_operation_2
 		pop	si
 loc_41:
 		add	si,8
@@ -816,7 +812,7 @@ loc_41:
 		mov	ax,105h
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 5, mode
-		call	sub_11
+		call	vga_operation1
 		mov	ax,5
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 5, mode
@@ -828,39 +824,39 @@ loc_41:
 		stosb				; Store al to es:[di]
 		stosb				; Store al to es:[di]
 		retn
-sub_7		endp
+vgadec_multiply_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
-		call	sub_9
+vgadec_func_8		proc	near
+		call	vgadec_func_9
 		mov	al,[si+3]
 		cmp	al,0FDh
 		je	loc_42			; Jump if equal
 		retn
 loc_42:
 		add	si,8
-		call	sub_10
+		call	vga_operation0
 		mov	al,[si+3]
 		cmp	al,0FDh
 		je	loc_42			; Jump if equal
 		retn
-sub_8		endp
+vgadec_func_8		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+vgadec_func_9		proc	near
 		mov	si,ds:data_25e
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_10:
+vga_operation0:
 loc_43:
 		cmp	dx,[si]
 		jne	loc_44			; Jump if not equal
@@ -868,14 +864,14 @@ loc_43:
 loc_44:
 		add	si,8
 		jmp	short loc_43
-sub_9		endp
+vgadec_func_9		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_11		proc	near
+vga_operation1		proc	near
 		mov	bx,4Eh
 		mov	cx,3
 
@@ -907,21 +903,21 @@ locloop_45:
 		loop	locloop_45		; Loop if cx > 0
 
 		retn
-sub_11		endp
+vga_operation1		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+vga_operation2		proc	near
 		mov	bp,di
 		dec	bl
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		call	word ptr cs:data_11e[bx]	;*
 		retn
-sub_12		endp
+vga_operation2		endp
 
 			                        ;* No entry point to code
 		retf	0C235h
@@ -936,7 +932,7 @@ sub_12		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+vga_operation3		proc	near
 		mov	al,[si+2]
 		mov	ch,al
 		and	al,7Fh
@@ -956,14 +952,14 @@ loc_46:
 		mul	cl			; ax = reg * al
 		add	di,ax
 		retn
-sub_13		endp
+vga_operation3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+vga_operation4		proc	near
 		mov	cx,2
 		mov	dx,ds:data_20e
 
@@ -978,7 +974,7 @@ loc_48:
 
 		mov	bl,cl
 		retn
-sub_14		endp
+vga_operation4		endp
 
 			                        ;* No entry point to code
 		mov	bp,di
@@ -994,7 +990,7 @@ sub_14		endp
 		jmp	short loc_49
 			                        ;* No entry point to code
 		mov	di,3E80h
-		call	sub_15
+		call	vga_operation_2
 		jmp	short loc_49
 			                        ;* No entry point to code
 		mov	di,data_45e
@@ -1005,7 +1001,7 @@ sub_14		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+vga_operation_2		proc	near
 loc_49:
 		mov	cx,3
 
@@ -1027,7 +1023,7 @@ locloop_50:
 		mov	ds,cs:data_31e
 		mov	ax,0A000h
 		mov	es,ax
-		call	sub_16
+		call	vga_operation6
 		pop	bp
 		pop	es
 		pop	si
@@ -1036,7 +1032,7 @@ locloop_50:
 		loop	locloop_50		; Loop if cx > 0
 
 		retn
-sub_15		endp
+vga_operation_2		endp
 
 			                        ;* No entry point to code
 		mov	di,data_44e
@@ -1054,7 +1050,7 @@ locloop_51:
 		mov	ds,cs:data_31e
 		mov	ax,0A000h
 		mov	es,ax
-		call	sub_16
+		call	vga_operation6
 		pop	si
 		pop	ds
 		pop	cx
@@ -1066,7 +1062,7 @@ locloop_51:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+vga_operation6		proc	near
 		mov	dx,3C4h
 		mov	ax,702h
 		out	dx,ax			; port 3C4h, EGA sequencr index
@@ -1160,7 +1156,7 @@ locloop_52:
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 8, data bit mask
 		retn
-sub_16		endp
+vga_operation6		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1463,7 +1459,7 @@ locloop_64:
 		add	ax,ax
 		add	si,ax
 		mov	si,[si]
-		call	sub_17
+		call	vga_operation7
 		pop	ax
 		pop	di
 		test	byte ptr ds:data_32e,0FFh
@@ -1474,7 +1470,7 @@ locloop_64:
 		add	di,ax
 		mov	dl,[di]
 		mov	ax,[di+1]
-		call	sub_19
+		call	vga_operation9
 loc_65:
 		pop	di
 		pop	si
@@ -1484,7 +1480,7 @@ loc_65:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+vga_operation7		proc	near
 		push	cs
 		pop	es
 		mov	di,data_22e
@@ -1499,20 +1495,20 @@ loc_67:
 		push	ds
 		push	si
 		and	bl,3
-		call	sub_18
+		call	vga_operation8
 		pop	si
 		pop	ds
 		pop	bx
 		inc	bl
 		jmp	short loc_66
-sub_17		endp
+vga_operation7		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+vga_operation8		proc	near
 		sub	al,20h			; ' '
 		xor	ah,ah			; Zero register
 		shl	ax,1			; Shift w/zeros fill
@@ -1546,7 +1542,7 @@ loc_68:
 loc_69:
 		inc	di
 		retn
-sub_18		endp
+vga_operation8		endp
 
 			                        ;* No entry point to code
 		push	dx
@@ -1559,7 +1555,7 @@ sub_18		endp
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		pop	ax
 		pop	dx
-		call	sub_21
+		call	vgadec_process_loop_2
 		mov	di,3BE4h
 		mov	si,3A31h
 		mov	cx,7
@@ -1571,8 +1567,8 @@ sub_18		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
-		call	sub_21
+vga_operation9		proc	near
+		call	vgadec_process_loop_2
 		push	cs
 		pop	es
 		mov	di,data_22e
@@ -1587,7 +1583,7 @@ locloop_70:
 		push	di
 		lodsb				; String [si] to al
 		push	si
-		call	sub_20
+		call	vgadec_process_loop
 		pop	si
 		pop	di
 		pop	bx
@@ -1600,14 +1596,14 @@ locloop_70:
 		loop	locloop_70		; Loop if cx > 0
 
 		retn
-sub_19		endp
+vga_operation9		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+vgadec_process_loop		proc	near
 		inc	al
 		jnz	loc_71			; Jump if not zero
 		retn
@@ -1638,16 +1634,16 @@ loc_73:
 		loop	locloop_72		; Loop if cx > 0
 
 		retn
-sub_20		endp
+vgadec_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_21		proc	near
+vgadec_process_loop_2		proc	near
 		mov	di,3A31h
-		call	sub_22
+		call	vgadec_func_22
 		mov	cx,6
 
 locloop_74:
@@ -1660,7 +1656,7 @@ loc_75:
 		loop	locloop_74		; Loop if cx > 0
 
 		retn
-sub_21		endp
+vgadec_process_loop_2		endp
 
 		db	7 dup (0)
 
@@ -1668,38 +1664,38 @@ sub_21		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_22		proc	near
+vgadec_func_22		proc	near
 		mov	cl,0Fh
 		mov	bx,4240h
-		call	sub_23
+		call	vgadec_func_23
 		mov	cs:[di],dh
 		mov	cl,1
 		mov	bx,86A0h
-		call	sub_23
+		call	vgadec_func_23
 		mov	cs:[di+1],dh
 		xor	cl,cl			; Zero register
 		mov	bx,2710h
-		call	sub_23
+		call	vgadec_func_23
 		mov	cs:[di+2],dh
 		mov	bx,3E8h
-		call	sub_24
+		call	vgadec_func_24
 		mov	cs:[di+3],dh
 		mov	bx,64h
-		call	sub_24
+		call	vgadec_func_24
 		mov	cs:[di+4],dh
 		mov	bx,0Ah
-		call	sub_24
+		call	vgadec_func_24
 		mov	cs:[di+5],dh
 		mov	cs:[di+6],al
 		retn
-sub_22		endp
+vgadec_func_22		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_23		proc	near
+vgadec_func_23		proc	near
 		xor	dh,dh			; Zero register
 loc_76:
 		sub	dl,cl
@@ -1717,21 +1713,21 @@ loc_78:
 loc_79:
 		add	dl,cl
 		retn
-sub_23		endp
+vgadec_func_23		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_24		proc	near
+vgadec_func_24		proc	near
 		xor	dh,dh			; Zero register
 		div	bx			; ax,dx rem=dx:ax/reg
 		xchg	dx,ax
 		mov	dh,dl
 		xor	dl,dl			; Zero register
 		retn
-sub_24		endp
+vgadec_func_24		endp
 
 			                        ;* No entry point to code
 		push	ds

@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR1_11	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  SMALL_IMAGE_RENDERER - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -126,7 +122,7 @@ locloop_2:
 		mov	si,ds:data_39e
 		cmp	byte ptr [si+1Dh],0FDh
 		jne	loc_3			; Jump if not equal
-		call	sub_7
+		call	simg_multiply_2
 loc_3:
 		mov	word ptr ds:data_17e,61B0h
 		mov	si,ds:data_39e
@@ -136,46 +132,46 @@ loc_3:
 		mov	di,0E000h
 		mov	byte ptr ds:data_18e,0
 loc_4:
-		call	sub_1
+		call	vga_operation
 		xor	bl,bl			; Zero register
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_5			; Jump if zero
-		call	sub_4
+		call	simg_func_4
 loc_5:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_6			; Jump if zero
-		call	sub_4
+		call	simg_func_4
 loc_6:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_7			; Jump if zero
-		call	sub_4
+		call	simg_func_4
 loc_7:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_8			; Jump if zero
-		call	sub_3
+		call	simg_func_3
 loc_8:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_9			; Jump if zero
-		call	sub_3
+		call	simg_func_3
 loc_9:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_10			; Jump if zero
-		call	sub_2
+		call	simg_multiply
 loc_10:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_11			; Jump if zero
-		call	sub_3
+		call	simg_func_3
 loc_11:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_12			; Jump if zero
-		call	sub_3
+		call	simg_func_3
 loc_12:
 		add	word ptr ds:data_17e,8
 		inc	byte ptr ds:data_18e
@@ -189,7 +185,7 @@ zr1_11		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+vga_operation		proc	near
 		cmp	byte ptr ds:data_18e,1Bh
 		jne	loc_13			; Jump if not equal
 		retn
@@ -219,7 +215,7 @@ loc_14:
 locloop_15:
 		push	cx
 		push	di
-		call	sub_11
+		call	vga_operation1
 		pop	di
 		add	di,8
 		pop	cx
@@ -230,21 +226,21 @@ locloop_15:
 		pop	es
 		pop	di
 		retn
-sub_1		endp
+vga_operation		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+simg_multiply		proc	near
 		cmp	byte ptr [si-1],0FDh
 		jne	loc_16			; Jump if not equal
 		jmp	loc_37
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_3:
+simg_func_3:
 loc_16:
 		mov	al,[di-1]
 		mov	byte ptr [di-1],0FEh
@@ -346,7 +342,7 @@ locloop_21:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_4:
+simg_func_4:
 		mov	al,[di-1]
 		mov	byte ptr [di-1],0FEh
 		inc	al
@@ -504,12 +500,12 @@ loc_34:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_5:
+simg_func_5:
 		mov	cx,6
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_6:
+simg_func_6:
 		mov	ax,0A000h
 		mov	es,ax
 
@@ -567,29 +563,29 @@ loc_37:
 		xor	dh,dh			; Zero register
 		add	dx,word ptr cs:[80h]
 		mov	ds:data_21e,dx
-		call	sub_8
+		call	simg_func_8
 		mov	es:data_19e,al
 		cmp	byte ptr es:data_20e,0FDh
 		jne	loc_38			; Jump if not equal
 		inc	dx
-		call	sub_8
+		call	simg_func_8
 		mov	es:data_20e,al
 loc_38:
 		mov	si,3C9Bh
 		mov	di,0FB80h
-		call	sub_5
+		call	simg_func_5
 		mov	si,cs:data_35e
 loc_39:
-		call	sub_14
+		call	vga_operation4
 		or	bl,bl			; Zero ?
 		jz	loc_40			; Jump if zero
 		push	si
 		push	bx
-		call	sub_13
+		call	vga_operation3
 		pop	bx
 		mov	es,cs:data_40e
 		mov	si,data_19e
-		call	sub_12
+		call	vga_operation2
 		pop	si
 loc_40:
 		add	si,8
@@ -612,7 +608,7 @@ loc_40:
 		mov	ds,ax
 		inc	ch
 		jz	loc_41			; Jump if zero
-		call	sub_11
+		call	vga_operation1
 loc_41:
 		pop	di
 		pop	cx
@@ -622,7 +618,7 @@ loc_41:
 		add	di,8
 		inc	cl
 		jz	loc_42			; Jump if zero
-		call	sub_11
+		call	vga_operation1
 loc_42:
 		pop	di
 		pop	es
@@ -636,14 +632,14 @@ loc_42:
 		pop	si
 		pop	ds
 		retn
-sub_2		endp
+simg_multiply		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_7		proc	near
+simg_multiply_2		proc	near
 		push	es
 		push	ds
 		mov	si,ds:data_39e
@@ -657,16 +653,16 @@ sub_7		proc	near
 		cmp	byte ptr ds:data_19e,0FDh
 		jne	loc_43			; Jump if not equal
 		inc	dx
-		call	sub_8
+		call	simg_func_8
 		mov	ds:data_19e,al
 loc_43:
 		mov	si,3C9Bh
 		mov	di,0FB80h
 		mov	cx,3
-		call	sub_6
+		call	simg_func_6
 		mov	si,cs:data_35e
 loc_44:
-		call	sub_14
+		call	vga_operation4
 		or	bl,bl			; Zero ?
 		jz	loc_45			; Jump if zero
 		push	si
@@ -674,14 +670,14 @@ loc_44:
 		mov	al,3
 		mul	bl			; ax = reg * al
 		push	ax
-		call	sub_13
+		call	vga_operation3
 		pop	ax
 		add	di,ax
 		mov	bp,di
 		mov	es,cs:data_40e
 		mov	si,3C9Bh
 		mov	di,0FB80h
-		call	sub_15
+		call	vga_operation_2
 		pop	si
 loc_45:
 		add	si,8
@@ -693,7 +689,7 @@ loc_45:
 		mov	ax,0A000h
 		mov	es,ax
 		mov	ds,ax
-		call	sub_11
+		call	vga_operation1
 		pop	ds
 		pop	es
 		mov	di,data_36e
@@ -702,39 +698,39 @@ loc_45:
 		stosb				; Store al to es:[di]
 		stosb				; Store al to es:[di]
 		retn
-sub_7		endp
+simg_multiply_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_8		proc	near
-		call	sub_9
+simg_func_8		proc	near
+		call	simg_func_9
 		mov	al,[si+3]
 		cmp	al,0FDh
 		je	loc_46			; Jump if equal
 		retn
 loc_46:
 		add	si,8
-		call	sub_10
+		call	vga_operation0
 		mov	al,[si+3]
 		cmp	al,0FDh
 		je	loc_46			; Jump if equal
 		retn
-sub_8		endp
+simg_func_8		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_9		proc	near
+simg_func_9		proc	near
 		mov	si,ds:data_35e
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_10:
+vga_operation0:
 loc_47:
 		cmp	dx,[si]
 		jne	loc_48			; Jump if not equal
@@ -742,14 +738,14 @@ loc_47:
 loc_48:
 		add	si,8
 		jmp	short loc_47
-sub_9		endp
+simg_func_9		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_11		proc	near
+vga_operation1		proc	near
 		mov	cx,18h
 
 locloop_49:
@@ -761,21 +757,21 @@ locloop_49:
 		loop	locloop_49		; Loop if cx > 0
 
 		retn
-sub_11		endp
+vga_operation1		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_12		proc	near
+vga_operation2		proc	near
 		mov	bp,di
 		dec	bl
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		call	word ptr cs:data_12e[bx]	;*
 		retn
-sub_12		endp
+vga_operation2		endp
 
 			                        ;* No entry point to code
 		in	al,34h			; port 34h ??I/O Non-standard
@@ -788,7 +784,7 @@ sub_12		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_13		proc	near
+vga_operation3		proc	near
 		mov	al,[si+2]
 		mov	ch,al
 		and	al,7Fh
@@ -808,14 +804,14 @@ loc_50:
 		mul	cl			; ax = reg * al
 		add	di,ax
 		retn
-sub_13		endp
+vga_operation3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_14		proc	near
+vga_operation4		proc	near
 		mov	cx,2
 		mov	dx,ds:data_21e
 
@@ -830,7 +826,7 @@ loc_52:
 
 		mov	bl,cl
 		retn
-sub_14		endp
+vga_operation4		endp
 
 			                        ;* No entry point to code
 		mov	bp,di
@@ -848,7 +844,7 @@ sub_14		endp
 		jmp	short loc_53
 			                        ;* No entry point to code
 		mov	di,0FA00h
-		call	sub_15
+		call	vga_operation_2
 		jmp	short loc_53
 			                        ;* No entry point to code
 		mov	di,data_58e
@@ -859,7 +855,7 @@ sub_14		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_15		proc	near
+vga_operation_2		proc	near
 loc_53:
 		mov	cx,3
 
@@ -890,7 +886,7 @@ locloop_54:
 		mov	ds,cs:data_40e
 		mov	ax,0A000h
 		mov	es,ax
-		call	sub_16
+		call	vga_operation6
 		pop	bp
 		pop	es
 		pop	si
@@ -899,7 +895,7 @@ locloop_54:
 		loop	locloop_54		; Loop if cx > 0
 
 		retn
-sub_15		endp
+vga_operation_2		endp
 
 			                        ;* No entry point to code
 		mov	di,data_57e
@@ -926,7 +922,7 @@ locloop_55:
 		mov	ds,cs:data_40e
 		mov	ax,0A000h
 		mov	es,ax
-		call	sub_16
+		call	vga_operation6
 		pop	si
 		pop	ds
 		pop	cx
@@ -938,7 +934,7 @@ locloop_55:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_16		proc	near
+vga_operation6		proc	near
 		push	ds
 		push	si
 		push	di
@@ -987,7 +983,7 @@ locloop_58:
 		loop	locloop_58		; Loop if cx > 0
 
 		retn
-sub_16		endp
+vga_operation6		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1249,7 +1245,7 @@ locloop_69:
 		add	ax,ax
 		add	si,ax
 		mov	si,[si]
-		call	sub_17
+		call	vga_operation7
 		pop	ax
 		pop	di
 		test	byte ptr ds:data_41e,0FFh
@@ -1260,7 +1256,7 @@ locloop_69:
 		add	di,ax
 		mov	dl,[di]
 		mov	ax,[di+1]
-		call	sub_19
+		call	vga_operation9
 loc_70:
 		pop	di
 		pop	si
@@ -1270,7 +1266,7 @@ loc_70:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_17		proc	near
+vga_operation7		proc	near
 		push	cs
 		pop	es
 		mov	di,data_29e
@@ -1283,18 +1279,18 @@ loc_71:
 loc_72:
 		push	ds
 		push	si
-		call	sub_18
+		call	extract_bits
 		pop	si
 		pop	ds
 		jmp	short loc_71
-sub_17		endp
+vga_operation7		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_18		proc	near
+extract_bits		proc	near
 		sub	al,20h			; ' '
 		xor	ah,ah			; Zero register
 		shl	ax,1			; Shift w/zeros fill
@@ -1328,7 +1324,7 @@ loc_74:
 		pop	di
 		add	di,5
 		retn
-sub_18		endp
+extract_bits		endp
 
 			                        ;* No entry point to code
 		push	dx
@@ -1341,7 +1337,7 @@ sub_18		endp
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		pop	ax
 		pop	dx
-		call	sub_21
+		call	simg_process_loop_2
 		mov	di,3DEFh
 		mov	si,3929h
 		mov	cx,7
@@ -1353,8 +1349,8 @@ sub_18		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_19		proc	near
-		call	sub_21
+vga_operation9		proc	near
+		call	simg_process_loop_2
 		push	cs
 		pop	es
 		mov	di,data_30e
@@ -1370,7 +1366,7 @@ locloop_75:
 		push	di
 		lodsb				; String [si] to al
 		push	si
-		call	sub_20
+		call	simg_process_loop
 		pop	si
 		pop	di
 		add	di,6
@@ -1378,14 +1374,14 @@ locloop_75:
 		loop	locloop_75		; Loop if cx > 0
 
 		retn
-sub_19		endp
+vga_operation9		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_20		proc	near
+simg_process_loop		proc	near
 		inc	al
 		jnz	loc_76			; Jump if not zero
 		retn
@@ -1416,16 +1412,16 @@ loc_78:
 		loop	locloop_77		; Loop if cx > 0
 
 		retn
-sub_20		endp
+simg_process_loop		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_21		proc	near
+simg_process_loop_2		proc	near
 		mov	di,3929h
-		call	sub_22
+		call	simg_func_22
 		mov	cx,6
 
 locloop_79:
@@ -1438,7 +1434,7 @@ loc_80:
 		loop	locloop_79		; Loop if cx > 0
 
 		retn
-sub_21		endp
+simg_process_loop_2		endp
 
 		db	7 dup (0)
 
@@ -1446,38 +1442,38 @@ sub_21		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_22		proc	near
+simg_func_22		proc	near
 		mov	cl,0Fh
 		mov	bx,4240h
-		call	sub_23
+		call	simg_func_23
 		mov	cs:[di],dh
 		mov	cl,1
 		mov	bx,86A0h
-		call	sub_23
+		call	simg_func_23
 		mov	cs:[di+1],dh
 		xor	cl,cl			; Zero register
 		mov	bx,2710h
-		call	sub_23
+		call	simg_func_23
 		mov	cs:[di+2],dh
 		mov	bx,3E8h
-		call	sub_24
+		call	simg_func_24
 		mov	cs:[di+3],dh
 		mov	bx,64h
-		call	sub_24
+		call	simg_func_24
 		mov	cs:[di+4],dh
 		mov	bx,0Ah
-		call	sub_24
+		call	simg_func_24
 		mov	cs:[di+5],dh
 		mov	cs:[di+6],al
 		retn
-sub_22		endp
+simg_func_22		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_23		proc	near
+simg_func_23		proc	near
 		xor	dh,dh			; Zero register
 loc_81:
 		sub	dl,cl
@@ -1495,21 +1491,21 @@ loc_83:
 loc_84:
 		add	dl,cl
 		retn
-sub_23		endp
+simg_func_23		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_24		proc	near
+simg_func_24		proc	near
 		xor	dh,dh			; Zero register
 		div	bx			; ax,dx rem=dx:ax/reg
 		xchg	dx,ax
 		mov	dh,dl
 		xor	dl,dl			; Zero register
 		retn
-sub_24		endp
+simg_func_24		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1695,11 +1691,11 @@ locloop_91:
 		xchg	ah,al
 		not	ax
 		mov	cs:data_25e,ax
-		call	sub_25
+		call	simg_process_loop_3
 		push	es
 		push	di
 		les	di,dword ptr cs:data_26e	; Load seg:offset ptr
-		call	sub_27
+		call	simg_scan_loop
 		mov	al,dl
 		stosb				; Store al to es:[di]
 		mov	cs:data_26e,di
@@ -1771,7 +1767,7 @@ locloop_94:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_24e,ax
-		call	sub_25
+		call	simg_process_loop_3
 		mov	byte ptr es:[bp],0
 		inc	bp
 		pop	cx
@@ -1792,8 +1788,8 @@ locloop_95:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_25e,ax
-		call	sub_25
-		call	sub_27
+		call	simg_process_loop_3
+		call	simg_scan_loop
 		mov	es:[bp],dl
 		inc	bp
 		pop	cx
@@ -1814,8 +1810,8 @@ locloop_96:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_24e,ax
-		call	sub_25
-		call	sub_27
+		call	simg_process_loop_3
+		call	simg_scan_loop
 		mov	es:[bp],dl
 		inc	bp
 		pop	cx
@@ -1836,8 +1832,8 @@ locloop_97:
 		lodsw				; String [si] to ax
 		xchg	al,ah
 		mov	cs:data_24e,ax
-		call	sub_25
-		call	sub_27
+		call	simg_process_loop_3
+		call	simg_scan_loop
 		mov	es:[bp],dl
 		inc	bp
 		pop	cx
@@ -1857,7 +1853,7 @@ locloop_98:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_24e,ax
-		call	sub_25
+		call	simg_process_loop_3
 		mov	byte ptr es:[bp],0FFh
 		inc	bp
 		pop	cx
@@ -1869,15 +1865,15 @@ locloop_98:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_25		proc	near
+simg_process_loop_3		proc	near
 		mov	cx,2
 
 locloop_99:
-		call	sub_26
-		call	sub_26
-		call	sub_26
-		call	sub_26
-		call	sub_26
+		call	simg_func_26
+		call	simg_func_26
+		call	simg_func_26
+		call	simg_func_26
+		call	simg_func_26
 		rol	word ptr cs:data_24e,1	; Rotate
 		adc	ax,ax
 		stosw				; Store ax to es:[di]
@@ -1885,20 +1881,20 @@ locloop_99:
 		adc	ax,ax
 		rol	word ptr cs:data_22e,1	; Rotate
 		adc	ax,ax
-		call	sub_26
-		call	sub_26
+		call	simg_func_26
+		call	simg_func_26
 		stosb				; Store al to es:[di]
 		loop	locloop_99		; Loop if cx > 0
 
 		retn
-sub_25		endp
+simg_process_loop_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_26		proc	near
+simg_func_26		proc	near
 		rol	word ptr cs:data_24e,1	; Rotate
 		adc	ax,ax
 		rol	word ptr cs:data_23e,1	; Rotate
@@ -1906,14 +1902,14 @@ sub_26		proc	near
 		rol	word ptr cs:data_22e,1	; Rotate
 		adc	ax,ax
 		retn
-sub_26		endp
+simg_func_26		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_27		proc	near
+simg_scan_loop		proc	near
 		mov	cx,8
 
 locloop_100:
@@ -1932,7 +1928,7 @@ loc_101:
 		loop	locloop_100		; Loop if cx > 0
 
 		retn
-sub_27		endp
+simg_scan_loop		endp
 
 		db	2135 dup (0)
 

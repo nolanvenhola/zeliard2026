@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR1_00	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  OPENING_SCENE - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -108,7 +104,7 @@ start:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_15
+		call	fill_buffer
 		mov	ax,4
 		call	word ptr cs:data_92
 		xor	bx,bx			; Zero register
@@ -133,7 +129,7 @@ start:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		call	word ptr cs:data_51
 		mov	byte ptr cs:data_173e,0
 		mov	byte ptr cs:data_176e,0
@@ -145,7 +141,7 @@ start:
 		mov	es,cs:data_177e
 		mov	di,data_137e
 		call	word ptr cs:data_89
-		call	sub_3
+		call	scene_scan_loop
 		mov	ax,2
 		call	word ptr cs:data_92
 		mov	al,0FFh
@@ -157,7 +153,7 @@ start:
 		mov	es,cs:data_177e
 		mov	si,data_170e
 		mov	di,data_150e
-		call	sub_13
+		call	scene_process_loop
 		mov	bx,2048h
 		mov	cx,1040h
 		mov	es,cs:data_177e
@@ -175,8 +171,8 @@ start:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_167e
-		call	sub_13
-		call	sub_16
+		call	scene_process_loop
+		call	fill_buffer_2
 		mov	bx,1220h
 		mov	cx,2C68h
 		call	word ptr cs:data_91
@@ -202,29 +198,29 @@ loc_1:
 		call	word ptr cs:data_98
 		pop	si
 		mov	al,14h
-		call	sub_4
+		call	scene_func_4
 		jmp	short loc_1
 loc_2:
 		mov	byte ptr ds:data_172e,0
 		mov	al,0F0h
-		call	sub_4
+		call	scene_func_4
 		mov	si,data_152e
-		call	sub_1
+		call	scene_func_1
 		mov	byte ptr ds:data_172e,0
 		mov	al,0F0h
-		call	sub_4
+		call	scene_func_4
 		mov	al,2
 		mov	bx,1720h
 		call	word ptr cs:data_98
 		mov	byte ptr ds:data_172e,0
 		mov	al,0Fh
-		call	sub_4
+		call	scene_func_4
 		mov	al,3
 		mov	bx,1720h
 		call	word ptr cs:data_98
 		mov	byte ptr ds:data_172e,0
 		mov	al,0F0h
-		call	sub_4
+		call	scene_func_4
 		xor	al,al			; Zero register
 		mov	bx,94h
 		mov	cx,501Eh
@@ -238,7 +234,7 @@ loc_2:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_15
+		call	fill_buffer
 		push	cs
 		pop	es
 		mov	si,data_161e
@@ -268,7 +264,7 @@ loc_2:
 		pop	ds
 		call	word ptr cs:data_100
 		mov	al,0F0h
-		call	sub_4
+		call	scene_func_4
 		xor	al,al			; Zero register
 		mov	bx,0B48h
 		mov	cx,3180h
@@ -279,9 +275,9 @@ loc_2:
 		mov	es,cs:data_177e
 		mov	si,data_169e
 		mov	di,data_137e
-		call	sub_15
+		call	fill_buffer
 		mov	al,0F0h
-		call	sub_4
+		call	scene_func_4
 		mov	bx,70Fh
 		mov	cx,4170h
 		mov	es,cs:data_177e
@@ -291,11 +287,11 @@ loc_2:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_15
+		call	fill_buffer
 		mov	si,data_154e
 		call	word ptr cs:data_102
 		mov	al,0F0h
-		call	sub_4
+		call	scene_func_4
 		mov	ax,0C7h
 		mov	cx,64h
 
@@ -309,7 +305,7 @@ locloop_3:
 		mov	al,ah
 		call	word ptr cs:data_103
 		mov	al,50h			; 'P'
-		call	sub_4
+		call	scene_func_4
 		pop	ax
 		add	ah,2
 		sub	al,2
@@ -317,7 +313,7 @@ locloop_3:
 		loop	locloop_3		; Loop if cx > 0
 
 loc_4:
-		call	sub_5
+		call	scene_func_5
 		test	byte ptr ds:data_175e,0FFh
 		jz	loc_4			; Jump if zero
 		jmp	loc_17
@@ -328,7 +324,7 @@ zr1_00		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+scene_func_1		proc	near
 		mov	byte ptr ds:data_140e,8Ah
 loc_5:
 		mov	byte ptr ds:data_172e,0
@@ -347,18 +343,18 @@ loc_7:
 		pop	si
 		jmp	short loc_6
 loc_8:
-		call	sub_2
+		call	scene_func_2
 		mov	al,14h
-		call	sub_4
+		call	scene_func_4
 		jmp	short loc_5
-sub_1		endp
+scene_func_1		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+scene_func_2		proc	near
 		cmp	al,0FFh
 		jne	loc_11			; Jump if not equal
 		lodsb				; String [si] to al
@@ -402,14 +398,14 @@ loc_11:
 loc_12:
 		mov	byte ptr ds:data_178e,3Fh	; '?'
 		retn
-sub_2		endp
+scene_func_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+scene_scan_loop		proc	near
 		mov	bx,20h
 		mov	cx,5078h
 		call	word ptr cs:data_93
@@ -428,7 +424,7 @@ locloop_14:
 		mov	cx,5078h
 		call	word ptr cs:data_95
 		mov	al,1Ch
-		call	sub_4
+		call	scene_func_4
 		pop	cx
 		loop	locloop_14		; Loop if cx > 0
 
@@ -444,25 +440,25 @@ locloop_15:
 		mov	cx,5078h
 		call	word ptr cs:data_95
 		mov	al,1Ch
-		call	sub_4
+		call	scene_func_4
 		pop	cx
 		loop	locloop_15		; Loop if cx > 0
 
 		retn
-sub_3		endp
+scene_scan_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+scene_func_4		proc	near
 loc_16:
 		test	byte ptr cs:data_173e,0FFh
 		jnz	loc_17			; Jump if not zero
 		cmp	byte ptr cs:data_176e,0Dh
 		je	loc_17			; Jump if equal
-		call	sub_5
+		call	scene_func_5
 		cmp	cs:data_172e,al
 		jb	loc_16			; Jump if below
 		mov	byte ptr cs:data_172e,0
@@ -470,7 +466,7 @@ loc_16:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_5:
+scene_func_5:
 		push	si
 		push	ax
 		call	word ptr cs:[110h]
@@ -514,18 +510,18 @@ loc_18:
 		mov	byte ptr cs:data_176e,0
 		mov	ax,1
 		call	word ptr cs:data_92
-		call	sub_7
+		call	scene_func_7
 		jmp	short loc_20
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_6:
+scene_func_6:
 loc_19:
 		test	byte ptr cs:data_173e,0FFh
 		jnz	loc_20			; Jump if not zero
 		cmp	byte ptr cs:data_176e,0Dh
 		je	loc_20			; Jump if equal
-		call	sub_5
+		call	scene_func_5
 		cmp	cs:data_172e,al
 		jb	loc_19			; Jump if below
 		mov	byte ptr cs:data_172e,0
@@ -542,7 +538,7 @@ loc_21:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_7:
+scene_func_7:
 		mov	bx,20h
 		mov	cx,5078h
 		call	word ptr cs:data_93
@@ -561,7 +557,7 @@ locloop_23:
 		mov	cx,5078h
 		call	word ptr cs:data_95
 		mov	al,1Ch
-		call	sub_6
+		call	scene_func_6
 		pop	cx
 		loop	locloop_23		; Loop if cx > 0
 
@@ -577,7 +573,7 @@ locloop_24:
 		mov	cx,5078h
 		call	word ptr cs:data_95
 		mov	al,1Ch
-		call	sub_6
+		call	scene_func_6
 		pop	cx
 		loop	locloop_24		; Loop if cx > 0
 
@@ -607,7 +603,7 @@ loc_25:
 		mov	es,ax
 		mov	si,data_168e
 		mov	di,0
-		call	sub_13
+		call	scene_process_loop
 		push	cs
 		pop	es
 		mov	si,data_163e
@@ -617,7 +613,7 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		mov	bx,0
 		mov	cx,5088h
 		mov	ax,cs
@@ -630,7 +626,7 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	di,data_137e
 		call	word ptr cs:data_96
-		call	sub_10
+		call	scene_multiply
 		mov	ax,9
 		call	word ptr cs:data_92
 		mov	bx,410h
@@ -647,8 +643,8 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
-		call	sub_10
+		call	scene_process_loop
+		call	scene_multiply
 		xor	ax,ax			; Zero register
 		call	word ptr cs:data_104
 		mov	ax,6
@@ -667,22 +663,22 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_167e
-		call	sub_13
-		call	sub_10
+		call	scene_process_loop
+		call	scene_multiply
 		mov	al,4
-		call	sub_20
+		call	scene_multiply_2
 		mov	ax,cs
 		add	ax,2000h
 		mov	es,ax
 		mov	di,0
-		call	sub_22
+		call	scene_process_loop_3
 		mov	bx,410h
 		mov	cx,4868h
 		mov	es,cs:data_177e
 		mov	di,4000h
 		call	word ptr cs:data_96
-		call	sub_10
-		call	sub_10
+		call	scene_multiply
+		call	scene_multiply
 		mov	ax,cs
 		add	ax,2000h
 		mov	es,ax
@@ -691,10 +687,10 @@ loc_25:
 		mov	cx,2230h
 		mov	al,7
 		call	word ptr cs:data_105
-		call	sub_10
-		call	sub_10
+		call	scene_multiply
+		call	scene_multiply
 		mov	al,2
-		call	sub_20
+		call	scene_multiply_2
 		mov	ax,cs
 		add	ax,2000h
 		mov	es,ax
@@ -704,9 +700,9 @@ loc_25:
 		call	word ptr cs:data_96
 		mov	byte ptr cs:data_172e,0
 		mov	al,0Fh
-		call	sub_8
+		call	scene_func_8
 		mov	al,3
-		call	sub_20
+		call	scene_multiply_2
 		mov	ax,cs
 		add	ax,2000h
 		mov	es,ax
@@ -723,11 +719,11 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		mov	bx,410h
 		mov	cx,4868h
 		call	word ptr cs:data_91
-		call	sub_10
+		call	scene_multiply
 		mov	ax,7
 		call	word ptr cs:data_92
 		mov	al,0FFh
@@ -736,7 +732,7 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	di,4000h
 		call	word ptr cs:data_90
-		call	sub_10
+		call	scene_multiply
 		push	cs
 		pop	es
 		mov	si,95BEh
@@ -746,15 +742,15 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		xor	al,al			; Zero register
 		mov	bx,410h
 		mov	cx,4868h
 		mov	es,cs:data_177e
 		mov	di,data_137e
 		call	word ptr cs:data_90
-		call	sub_10
-		call	sub_10
+		call	scene_multiply
+		call	scene_multiply
 		push	cs
 		pop	es
 		mov	si,95C8h
@@ -764,16 +760,16 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		mov	di,data_137e
 		mov	bx,1610h
 		mov	cx,2468h
 		mov	al,5
 		call	word ptr cs:data_105
-		call	sub_10
+		call	scene_multiply
 		xor	ax,ax			; Zero register
 		call	word ptr cs:data_104
-		call	sub_10
+		call	scene_multiply
 		push	cs
 		pop	es
 		mov	si,95D2h
@@ -783,7 +779,7 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		mov	al,0FFh
 		mov	bx,410h
 		mov	cx,4868h
@@ -799,7 +795,7 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		push	cs
 		pop	es
 		mov	si,data_166e
@@ -809,9 +805,9 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_149e
-		call	sub_13
-		call	sub_10
-		call	sub_10
+		call	scene_process_loop
+		call	scene_multiply
+		call	scene_multiply
 		xor	ax,ax			; Zero register
 		call	word ptr cs:data_104
 		mov	ax,6
@@ -832,8 +828,8 @@ loc_25:
 		mov	bx,2D18h
 		mov	cx,1858h
 		call	word ptr cs:data_96
-		call	sub_10
-		call	sub_10
+		call	scene_multiply
+		call	scene_multiply
 		push	cs
 		pop	es
 		mov	si,9613h
@@ -843,7 +839,7 @@ loc_25:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_149e
-		call	sub_13
+		call	scene_process_loop
 		xor	ax,ax			; Zero register
 		call	word ptr cs:data_104
 		mov	ax,8
@@ -855,8 +851,8 @@ loc_25:
 		mov	di,data_149e
 		mov	bx,1618h
 		call	word ptr cs:data_107
-		call	sub_10
-		call	sub_10
+		call	scene_multiply
+		call	scene_multiply
 		mov	bx,1515h
 		mov	dx,315Dh
 		mov	cx,18h
@@ -869,7 +865,7 @@ locloop_26:
 		mov	cx,dx
 		call	word ptr cs:data_106
 		mov	al,0Fh
-		call	sub_8
+		call	scene_func_8
 		pop	bx
 		pop	dx
 		inc	bh
@@ -888,8 +884,8 @@ locloop_26:
 		mov	bx,0B18h
 		mov	cx,1858h
 		call	word ptr cs:data_96
-		call	sub_10
-		call	sub_10
+		call	scene_multiply
+		call	scene_multiply
 		mov	bx,2C15h
 		mov	dx,1A5Dh
 		mov	cx,18h
@@ -902,7 +898,7 @@ locloop_27:
 		mov	cx,dx
 		call	word ptr cs:data_106
 		mov	al,0Fh
-		call	sub_8
+		call	scene_func_8
 		pop	bx
 		pop	dx
 		inc	bh
@@ -923,13 +919,13 @@ locloop_27:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		mov	es,cs:data_177e
 		mov	di,data_137e
 		mov	bx,1010h
 		mov	cx,3160h
 		call	word ptr cs:data_96
-		call	sub_10
+		call	scene_multiply
 		push	cs
 		pop	es
 		mov	si,95E8h
@@ -943,22 +939,22 @@ locloop_27:
 		mov	es,cs:data_177e
 		mov	si,data_168e
 		mov	di,data_137e
-		call	sub_13
+		call	scene_process_loop
 		mov	bx,0
 		mov	cx,50C8h
 		call	word ptr cs:data_91
 		mov	bx,808h
 		mov	es,cs:data_177e
 		mov	di,data_9e
-		call	sub_24
+		call	scene_process_loop_5
 		mov	es,cs:data_177e
 		mov	si,data_171e
 		mov	di,data_171e
-		call	sub_13
+		call	scene_process_loop
 		mov	es,cs:data_177e
 		mov	di,4000h
 		mov	si,data_15e
-		call	sub_23
+		call	scene_process_loop_4
 		mov	al,0FFh
 		mov	bx,808h
 		mov	cx,40C0h
@@ -967,7 +963,7 @@ locloop_27:
 		call	word ptr cs:data_90
 		mov	byte ptr cs:data_172e,0
 		mov	al,0F0h
-		call	sub_8
+		call	scene_func_8
 		mov	al,0FFh
 		mov	bx,808h
 		mov	cx,40C0h
@@ -977,13 +973,13 @@ locloop_27:
 		mov	ax,1
 		call	word ptr cs:data_92
 		mov	si,7338h
-		call	sub_12
+		call	scene_scan_loop_2
 		mov	cx,0Ah
 
 locloop_28:
 		push	cx
 		mov	al,0C8h
-		call	sub_8
+		call	scene_func_8
 		pop	cx
 		loop	locloop_28		; Loop if cx > 0
 
@@ -991,9 +987,9 @@ locloop_28:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_8:
+scene_func_8:
 loc_29:
-		call	sub_9
+		call	scene_func_9
 		cmp	cs:data_172e,al
 		jb	loc_29			; Jump if below
 		mov	byte ptr cs:data_172e,0
@@ -1001,7 +997,7 @@ loc_29:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_9:
+scene_func_9:
 		test	byte ptr cs:data_173e,0FFh
 		jnz	loc_30			; Jump if not zero
 		cmp	byte ptr cs:data_176e,0Dh
@@ -1030,7 +1026,7 @@ loc_30:
 		call	word ptr cs:[10Ch]
 		mov	ax,0FFFFh
 		jmp	word ptr cs:data_141e
-sub_4		endp
+scene_func_4		endp
 
 		db	 00h,0A0h
 
@@ -1038,11 +1034,11 @@ sub_4		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_10		proc	near
+scene_multiply		proc	near
 		mov	byte ptr cs:data_172e,0
 loc_31:
 		mov	al,10h
-		call	sub_8
+		call	scene_func_8
 loc_32:
 		push	cs
 		pop	ds
@@ -1108,7 +1104,7 @@ loc_34:
 		jmp	loc_31
 loc_35:
 		mov	si,ds:data_142e
-		call	sub_11
+		call	scene_check_state
 		mov	dx,ds:data_143e
 		add	dx,cx
 		cmp	dx,138h
@@ -1224,15 +1220,15 @@ loc_55:
 		jmp	short loc_53
 loc_56:
 		mov	al,0F0h
-		call	sub_8
+		call	scene_func_8
 		jmp	loc_31
 loc_57:
 		mov	al,0F0h
-		call	sub_8
+		call	scene_func_8
 		mov	al,0F0h
-		call	sub_8
+		call	scene_func_8
 		mov	al,0F0h
-		call	sub_8
+		call	scene_func_8
 		jmp	loc_31
 loc_58:
 		mov	es,cs:data_177e
@@ -1299,14 +1295,14 @@ loc_61:
 		mov	cx,0B10h
 		call	word ptr cs:data_96
 		jmp	loc_32
-sub_10		endp
+scene_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_11		proc	near
+scene_check_state		proc	near
 		xor	cx,cx			; Zero register
 loc_62:
 		lodsb				; String [si] to al
@@ -1351,14 +1347,14 @@ loc_70:
 		add	cl,cs:data_156e[bx]
 		adc	ch,bh
 		jmp	short loc_62
-sub_11		endp
+scene_check_state		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+scene_scan_loop_2		proc	near
 		push	si
 		mov	bx,20h
 		mov	cx,5078h
@@ -1378,7 +1374,7 @@ locloop_72:
 		mov	cx,50A0h
 		call	word ptr cs:data_95
 		mov	al,1Ch
-		call	sub_8
+		call	scene_func_8
 		pop	cx
 		loop	locloop_72		; Loop if cx > 0
 
@@ -1394,12 +1390,12 @@ locloop_73:
 		mov	cx,50A0h
 		call	word ptr cs:data_95
 		mov	al,1Ch
-		call	sub_8
+		call	scene_func_8
 		pop	cx
 		loop	locloop_73		; Loop if cx > 0
 
 		retn
-sub_12		endp
+scene_scan_loop_2		endp
 
 		db	0C6h, 79h, 00h, 00h, 00h, 00h
 		db	 00h, 00h
@@ -1408,13 +1404,13 @@ sub_12		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
-		call	sub_14
+scene_process_loop		proc	near
+		call	scene_func_14
 		jmp	short loc_78
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_14:
+scene_func_14:
 		push	di
 		lodsw				; String [si] to ax
 		mov	cx,ax
@@ -1492,14 +1488,14 @@ locloop_79:
 		loop	locloop_79		; Loop if cx > 0
 
 		retn
-sub_13		endp
+scene_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+fill_buffer		proc	near
 loc_80:
 		test	byte ptr [si],40h	; '@'
 		jz	loc_84			; Jump if zero
@@ -1527,14 +1523,14 @@ loc_84:
 		test	al,80h
 		jz	loc_83			; Jump if zero
 		jmp	short loc_82
-sub_15		endp
+fill_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+fill_buffer_2		proc	near
 		push	ds
 		mov	ax,cs
 		add	ax,2000h
@@ -1548,57 +1544,57 @@ sub_16		proc	near
 		mov	bx,0
 		mov	cx,2230h
 		mov	si,data_14e
-		call	sub_17
+		call	scene_func_17
 		mov	bx,0F30h
 		mov	cx,620h
 		mov	si,data_13e
-		call	sub_17
+		call	scene_func_17
 		mov	bx,850h
 		mov	cx,1220h
 		mov	si,data_12e
-		call	sub_18
+		call	scene_func_18
 		pop	ds
 		retn
-sub_16		endp
+fill_buffer_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+scene_func_17		proc	near
 		push	di
 		add	di,data_4e
-		call	sub_19
+		call	copy_buffer
 		pop	di
 		push	di
-		call	sub_19
+		call	copy_buffer
 		pop	di
 		retn
-sub_17		endp
+scene_func_17		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+scene_func_18		proc	near
 		push	di
-		call	sub_19
+		call	copy_buffer
 		pop	di
 		push	di
 		add	di,data_4e
-		call	sub_19
+		call	copy_buffer
 		pop	di
 		retn
-sub_18		endp
+scene_func_18		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+copy_buffer		proc	near
 		push	bx
 		push	cx
 		mov	al,22h			; '"'
@@ -1621,14 +1617,14 @@ loc_85:
 		pop	cx
 		pop	bx
 		retn
-sub_19		endp
+copy_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+scene_multiply_2		proc	near
 		push	ds
 		xor	ah,ah			; Zero register
 		mov	dx,0CC0h
@@ -1640,17 +1636,17 @@ sub_20		proc	near
 		add	ax,2000h
 		mov	es,ax
 		mov	di,data_179e
-		call	sub_21
+		call	scene_process_loop_2
 		pop	ds
 		retn
-sub_20		endp
+scene_multiply_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_21		proc	near
+scene_process_loop_2		proc	near
 		mov	cx,30h
 
 locloop_86:
@@ -1674,14 +1670,14 @@ locloop_87:
 		loop	locloop_86		; Loop if cx > 0
 
 		retn
-sub_21		endp
+scene_process_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_22		proc	near
+scene_process_loop_3		proc	near
 		push	ds
 		push	es
 		pop	ds
@@ -1729,14 +1725,14 @@ locloop_89:
 
 		pop	ds
 		retn
-sub_22		endp
+scene_process_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_23		proc	near
+scene_process_loop_4		proc	near
 		add	di,data_2e
 		mov	cx,0A0h
 
@@ -1779,14 +1775,14 @@ locloop_91:
 		loop	locloop_90		; Loop if cx > 0
 
 		retn
-sub_23		endp
+scene_process_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_24		proc	near
+scene_process_loop_5		proc	near
 		push	bx
 		push	es
 		push	di
@@ -1814,7 +1810,7 @@ locloop_92:
 		mov	cx,40C0h
 		mov	al,0FFh
 		jmp	word ptr cs:data_90
-sub_24		endp
+scene_process_loop_5		endp
 
 		db	'           Two thousand years, ', 0Dh
 		db	'from the dark reaches of another'
@@ -2013,12 +2009,12 @@ data_49		db	'As the words of the demon resoun'
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_26		proc	near
+scene_func_26		proc	near
 		std				; Set direction flag
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_27:
+scene_func_27:
 		cmc				; Complement carry
 		cmc				; Complement carry
 		db	0FEh,0FDh,0F3h
@@ -2114,7 +2110,7 @@ sub_27:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_29:
+scene_func_29:
 		cmc				; Complement carry
 		cmc				; Complement carry
 		cmc				; Complement carry
@@ -2287,7 +2283,7 @@ sub_29:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_30:
+scene_func_30:
 		db	 6Fh, 75h, 20h, 90h, 6Dh, 75h
 		db	 93h, 73h, 74h, 20h, 92h, 62h
 		db	 65h, 20h, 90h, 74h, 68h, 65h
@@ -2346,7 +2342,7 @@ sub_30:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_31:
+scene_func_31:
 		xchg	sp,ax
 		db	 6Eh, 93h, 64h, 20h, 93h, 66h
 		db	 6Fh, 90h, 72h, 20h, 95h, 61h
@@ -2379,18 +2375,18 @@ data_94		dw	0FEFDh
 data_95		dw	0F3EFh
 data_96		dw	22FBh
 data_97		dw	6F59h
-data_98		dw	offset sub_27
+data_98		dw	offset scene_func_27
 data_99		dw	6168h
 data_100	dw	6576h
-data_101	dw	offset sub_29
-data_102	dw	offset sub_26
+data_101	dw	offset scene_func_29
+data_102	dw	offset scene_func_26
 data_103	dw	6573h
 data_104	dw	6E65h
 data_105	dw	7420h
 data_106	dw	6568h
 data_107	dw	6C20h
 		db	'ast of m'
-data_108	dw	offset sub_30
+data_108	dw	offset scene_func_30
 		db	' Jashiin!'
 		db	0F2h
 		db	'Your reign of evil is near its e'
@@ -2573,7 +2569,7 @@ data_108	dw	offset sub_30
 		db	0, 0, 0
 		db	'game.bin'
 		db	0
-sub_26		endp
+scene_func_26		endp
 
 
 seg_a		ends

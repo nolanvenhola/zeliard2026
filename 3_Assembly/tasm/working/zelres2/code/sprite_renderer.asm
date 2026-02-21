@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR2_02	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  SPRITE_RENDERER - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -125,25 +121,25 @@ locloop_1:
 		push	cx
 		test	byte ptr [si],80h
 		jz	loc_2			; Jump if zero
-		call	sub_3
+		call	sprite_func_3
 loc_2:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_3			; Jump if zero
-		call	sub_3
+		call	sprite_func_3
 loc_3:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_4			; Jump if zero
-		call	sub_3
+		call	sprite_func_3
 loc_4:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_5			; Jump if zero
-		call	sub_3
+		call	sprite_func_3
 loc_5:
 		inc	si
 		inc	bx
@@ -152,36 +148,36 @@ loc_5:
 
 		test	byte ptr [si],80h
 		jz	loc_6			; Jump if zero
-		call	sub_3
+		call	sprite_func_3
 loc_6:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_7			; Jump if zero
-		call	sub_3
+		call	sprite_func_3
 loc_7:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_8			; Jump if zero
-		call	sub_3
+		call	sprite_func_3
 loc_8:
 		inc	si
 		test	byte ptr [si],80h
 		jz	loc_9			; Jump if zero
-		call	sub_4
+		call	sprite_func_4
 loc_9:
 		mov	si,ds:data_96e
 		mov	di,0E900h
 		mov	byte ptr ds:data_67e,12h
 loc_10:
-		call	sub_21
+		call	vga_operation1
 		xor	bx,bx			; Zero register
 		add	si,3
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jns	loc_11			; Jump if not sign
-		call	sub_5
+		call	sprite_func_5
 loc_11:
 		mov	cx,6
 
@@ -189,22 +185,22 @@ locloop_12:
 		push	cx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_13			; Jump if zero
-		call	sub_1
+		call	sprite_func_1
 loc_13:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_14			; Jump if zero
-		call	sub_1
+		call	sprite_func_1
 loc_14:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_15			; Jump if zero
-		call	sub_1
+		call	sprite_func_1
 loc_15:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_16			; Jump if zero
-		call	sub_1
+		call	sprite_func_1
 loc_16:
 		inc	bx
 		pop	cx
@@ -212,17 +208,17 @@ loc_16:
 
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_17			; Jump if zero
-		call	sub_1
+		call	sprite_func_1
 loc_17:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_18			; Jump if zero
-		call	sub_1
+		call	sprite_func_1
 loc_18:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_19			; Jump if zero
-		call	sub_1
+		call	sprite_func_1
 loc_19:
 		inc	bx
 		lodsb				; String [si] to al
@@ -233,10 +229,10 @@ loc_19:
 loc_20:
 		cmp	al,es:[di-1]
 		je	loc_21			; Jump if equal
-		call	sub_1
+		call	sprite_func_1
 loc_21:
 		add	si,4
-		call	sub_37
+		call	sprite_func_37
 		add	word ptr ds:data_65e,280h
 		dec	byte ptr ds:data_67e
 		jnz	loc_10			; Jump if not zero
@@ -248,7 +244,7 @@ zr2_02		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+sprite_func_1		proc	near
 		mov	al,[si-1]
 		or	al,al			; Zero ?
 		jns	loc_22			; Jump if not sign
@@ -266,7 +262,7 @@ loc_23:
 		mov	dx,bx
 		add	dx,dx
 		add	dx,ds:data_65e
-		call	sub_2
+		call	vga_operation
 loc_24:
 		mov	al,ds:data_87e
 		sub	al,5
@@ -284,7 +280,7 @@ loc_26:
 		call	word ptr ds:data_53e[bx]	;*
 		pop	bx
 		retn
-sub_1		endp
+sprite_func_1		endp
 
 			                        ;* No entry point to code
 ;*		js	loc_30			;*Jump if sign=1
@@ -427,7 +423,7 @@ loc_40:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+vga_operation		proc	near
 		push	es
 		push	ds
 		push	di
@@ -578,7 +574,7 @@ loc_44:
 		pop	ds
 		pop	es
 		retn
-sub_2		endp
+vga_operation		endp
 
 			                        ;* No entry point to code
 		cmp	byte ptr ds:data_89e,0FFh
@@ -594,20 +590,20 @@ loc_46:
 		mov	byte ptr ds:data_89e,0FFh
 		mov	cl,[si]
 		add	si,25h
-		call	sub_37
+		call	sprite_func_37
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_47			; Jump if not sign
-		call	sub_15
+		call	sprite_get_value
 loc_47:
 		push	ax
 		mov	al,cl
-		call	sub_16
+		call	sprite_multiply_2
 		add	si,3
 		pop	ax
 		mov	ah,[si]
 		mov	dx,46Ch
-		call	sub_8
+		call	sprite_func_8
 		pop	bx
 		pop	si
 		retn
@@ -616,7 +612,7 @@ loc_47:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_3		proc	near
+sprite_func_3		proc	near
 		push	si
 		push	bx
 		mov	cx,bx
@@ -633,28 +629,28 @@ sub_3		proc	near
 		add	dx,46Ch
 		mov	cl,[si]
 		add	si,24h
-		call	sub_37
+		call	sprite_func_37
 		mov	bx,data_81e
 		lodsw				; String [si] to ax
 		mov	[bx],ax
 		mov	al,cl
-		call	sub_16
+		call	sprite_multiply_2
 		inc	si
 		inc	si
 		mov	di,data_81e
 		mov	bp,data_79e
-		call	sub_6
+		call	sprite_func_6
 		pop	bx
 		pop	si
 		retn
-sub_3		endp
+sprite_func_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_4		proc	near
+sprite_func_4		proc	near
 		cmp	byte ptr ds:data_90e,0FFh
 		jne	loc_48			; Jump if not equal
 		retn
@@ -666,15 +662,15 @@ loc_49:
 		mov	byte ptr ds:data_90e,0FFh
 		mov	cl,[si]
 		add	si,24h
-		call	sub_37
+		call	sprite_func_37
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_50			; Jump if not sign
-		call	sub_15
+		call	sprite_get_value
 loc_50:
 		push	ax
 		mov	al,cl
-		call	sub_16
+		call	sprite_multiply_2
 		add	si,2
 		pop	ax
 		mov	ah,[si]
@@ -683,7 +679,7 @@ loc_50:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_5:
+sprite_func_5:
 		push	si
 		push	di
 		push	bx
@@ -698,10 +694,10 @@ sub_5:
 		mov	cl,[si-1]
 		mov	dl,[si]
 		add	si,24h
-		call	sub_37
+		call	sprite_func_37
 		mov	dh,[si]
 		mov	al,cl
-		call	sub_16
+		call	sprite_multiply_2
 		inc	si
 		mov	bx,dx
 		pop	dx
@@ -718,9 +714,9 @@ sub_5:
 		push	dx
 		or	al,al			; Zero ?
 		jns	loc_51			; Jump if not sign
-		call	sub_15
+		call	sprite_get_value
 loc_51:
-		call	sub_8
+		call	sprite_func_8
 		pop	dx
 		pop	si
 		pop	bx
@@ -739,9 +735,9 @@ loc_52:
 		mov	al,bh
 		or	al,al			; Zero ?
 		jns	loc_53			; Jump if not sign
-		call	sub_15
+		call	sprite_get_value
 loc_53:
-		call	sub_8
+		call	sprite_func_8
 loc_54:
 		pop	bx
 		pop	di
@@ -764,7 +760,7 @@ loc_55:
 		mov	al,[si]
 		mov	[bx+1],al
 		add	si,24h
-		call	sub_37
+		call	sprite_func_37
 		mov	ax,[si-1]
 		mov	[bx+2],ax
 		pop	dx
@@ -776,20 +772,20 @@ loc_55:
 		add	dx,dx
 		add	dx,ds:data_65e
 		mov	al,cl
-		call	sub_16
+		call	sprite_multiply_2
 		mov	di,data_81e
 		mov	[di],al
 		mov	bp,data_79e
-		call	sub_6
+		call	sprite_func_6
 		cmp	byte ptr ds:data_67e,1
 		je	loc_56			; Jump if equal
 		add	dx,27Ch
-		call	sub_6
+		call	sprite_func_6
 		test	byte ptr ds:data_98e,0FFh
 		jz	loc_56			; Jump if zero
 		test	byte ptr ds:data_95e,0FFh
 		jz	loc_56			; Jump if zero
-		call	sub_17
+		call	sprite_check_state
 loc_56:
 		pop	bx
 		pop	di
@@ -809,10 +805,10 @@ loc_57:
 		mov	[bx+1],al
 		mov	cl,[si-1]
 		add	si,24h
-		call	sub_37
+		call	sprite_func_37
 		mov	dl,[si-1]
 		mov	al,cl
-		call	sub_16
+		call	sprite_multiply_2
 		mov	bl,al
 		mov	bh,dl
 		pop	dx
@@ -829,9 +825,9 @@ loc_57:
 		push	dx
 		or	al,al			; Zero ?
 		jns	loc_58			; Jump if not sign
-		call	sub_15
+		call	sprite_get_value
 loc_58:
-		call	sub_8
+		call	sprite_func_8
 		pop	dx
 		pop	si
 		pop	bx
@@ -850,9 +846,9 @@ loc_59:
 		mov	al,bh
 		or	al,al			; Zero ?
 		jns	loc_60			; Jump if not sign
-		call	sub_15
+		call	sprite_get_value
 loc_60:
-		call	sub_8
+		call	sprite_func_8
 loc_61:
 		pop	bx
 		pop	di
@@ -861,12 +857,12 @@ loc_61:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_6:
-		call	sub_7
+sprite_func_6:
+		call	sprite_func_7
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_7:
+sprite_func_7:
 		cmp	byte ptr ds:[bp],0FFh
 		je	loc_63			; Jump if equal
 		cmp	byte ptr ds:[bp],0FCh
@@ -875,13 +871,13 @@ sub_7:
 		mov	al,[di]
 		or	al,al			; Zero ?
 		jns	loc_62			; Jump if not sign
-		call	sub_15
+		call	sprite_get_value
 loc_62:
 		push	bp
 		push	si
 		push	di
 		push	dx
-		call	sub_8
+		call	sprite_func_8
 		pop	dx
 		pop	di
 		pop	si
@@ -896,7 +892,7 @@ loc_63:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_8:
+sprite_func_8:
 loc_64:
 		push	es
 		push	ds
@@ -927,49 +923,49 @@ loc_65:
 		js	loc_66			; Jump if sign=1
 		push	di
 		mov	di,data_119e
-		call	sub_11
+		call	sprite_func_11
 		pop	di
 		mov	si,data_119e
 		mov	ax,0A000h
 		mov	ds,ax
-		call	sub_12
+		call	sprite_func_12
 		pop	ds
 		pop	es
 		retn
 loc_66:
 		push	di
 		mov	di,data_56e
-		call	sub_9
+		call	sprite_multiply
 		pop	di
 		mov	si,data_119e
 		mov	ax,0A000h
 		mov	ds,ax
-		call	sub_12
+		call	sprite_func_12
 		pop	ds
 		pop	es
 		retn
-sub_4		endp
+sprite_func_4		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_9		proc	near
+sprite_multiply		proc	near
 		push	si
 		push	di
 		mov	al,30h			; '0'
 		mul	cl			; ax = reg * al
 		add	ax,8000h
 		mov	si,ax
-		call	sub_13
+		call	sprite_process_loop
 		pop	di
 		pop	si
 		jmp	short $+2		; delay for I/O
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_10:
+sprite_func_10:
 		mov	dx,3C4h
 		mov	ax,702h
 		out	dx,ax			; port 3C4h, EGA sequencr index
@@ -1051,14 +1047,14 @@ locloop_67:
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 8, data bit mask
 		retn
-sub_9		endp
+sprite_multiply		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_11		proc	near
+sprite_func_11		proc	near
 		mov	dx,3C4h
 		mov	ax,702h
 		out	dx,ax			; port 3C4h, EGA sequencr index
@@ -1118,14 +1114,14 @@ locloop_68:
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 8, data bit mask
 		retn
-sub_11		endp
+sprite_func_11		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_12		proc	near
+sprite_func_12		proc	near
 		mov	dx,3C4h
 		mov	ax,702h
 		out	dx,ax			; port 3C4h, EGA sequencr index
@@ -1161,14 +1157,14 @@ sub_12		proc	near
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 5, mode
 		retn
-sub_12		endp
+sprite_func_12		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_13		proc	near
+sprite_process_loop		proc	near
 		mov	dx,3C4h
 		mov	al,2
 		out	dx,al			; port 3C4h, EGA sequencr index
@@ -1192,14 +1188,14 @@ locloop_69:
 		loop	locloop_69		; Loop if cx > 0
 
 		retn
-sub_13		endp
+sprite_process_loop		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_14		proc	near
+sprite_func_14		proc	near
 		mov	dx,3C4h
 		mov	ax,702h
 		out	dx,ax			; port 3C4h, EGA sequencr index
@@ -1214,26 +1210,26 @@ sub_14		proc	near
 		stosw				; Store ax to es:[di]
 		stosw				; Store ax to es:[di]
 		retn
-sub_14		endp
+sprite_func_14		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_15		proc	near
+sprite_get_value		proc	near
 		and	al,7Fh
 		mov	bx,data_91e
 		xlat				; al=[al+[bx]] table
 		retn
-sub_15		endp
+sprite_get_value		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_16		proc	near
+sprite_multiply_2		proc	near
 		and	al,7Fh
 		mov	bl,al
 		xor	bh,bh			; Zero register
@@ -1267,14 +1263,14 @@ loc_71:
 		mov	ds:data_70e,al
 		mov	al,cl
 		retn
-sub_16		endp
+sprite_multiply_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_17		proc	near
+sprite_check_state		proc	near
 		cmp	byte ptr ds:data_69e,10h
 		jb	loc_72			; Jump if below
 		retn
@@ -1337,7 +1333,7 @@ loc_80:
 		mov	al,0FFh
 		stosb				; Store al to es:[di]
 		retn
-sub_17		endp
+sprite_check_state		endp
 
 			                        ;* No entry point to code
 		add	al,byte ptr ds:[607h]
@@ -1519,7 +1515,7 @@ loc_84:
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		jmp	short loc_89
 			                        ;* No entry point to code
-		call	sub_20
+		call	vga_operation0
 		mov	di,data_78e
 		mov	dl,ds:data_99e
 		dec	dl
@@ -1588,7 +1584,7 @@ loc_92:
 		jz	loc_93			; Jump if zero
 		mov	al,[di]
 		push	si
-		call	sub_16
+		call	sprite_multiply_2
 		inc	si
 		inc	si
 		inc	si
@@ -1600,7 +1596,7 @@ loc_93:
 		jz	loc_94			; Jump if zero
 		mov	al,[di+1]
 		push	si
-		call	sub_16
+		call	sprite_multiply_2
 		inc	si
 		inc	si
 		mov	al,[si]
@@ -1611,7 +1607,7 @@ loc_94:
 		jz	loc_95			; Jump if zero
 		mov	al,[di+4]
 		push	si
-		call	sub_16
+		call	sprite_multiply_2
 		inc	si
 		mov	al,[si]
 		pop	si
@@ -1619,7 +1615,7 @@ loc_94:
 loc_95:
 		mov	al,[di+5]
 		push	si
-		call	sub_16
+		call	sprite_multiply_2
 		mov	cl,[si]
 		pop	si
 		mov	[si],al
@@ -1665,7 +1661,7 @@ loc_97:
 		mov	cl,9
 		mul	cl			; ax = reg * al
 		push	ax
-		call	sub_19
+		call	sprite_func_19
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
 		pop	si
@@ -1691,7 +1687,7 @@ loc_100:
 		add	si,ax
 		jmp	short loc_104
 loc_101:
-		call	sub_19
+		call	sprite_func_19
 		or	al,al			; Zero ?
 		jz	loc_103			; Jump if zero
 		dec	al
@@ -1728,12 +1724,12 @@ loc_104:
 		jz	loc_105			; Jump if zero
 		mov	cx,6
 		mov	byte ptr ds:data_68e,3
-		call	sub_18
+		call	vga_operation_2
 		jmp	short loc_106
 loc_105:
 		mov	cx,9
 		mov	byte ptr ds:data_68e,0
-		call	sub_18
+		call	vga_operation_2
 loc_106:
 		mov	si,610Eh
 		test	byte ptr ds:data_104e,0FFh
@@ -1780,7 +1776,7 @@ loc_110:
 loc_111:
 		mov	cx,9
 		mov	byte ptr ds:data_68e,0
-		call	sub_18
+		call	vga_operation_2
 		test	byte ptr ds:[0E8h],0FFh
 		jz	loc_112			; Jump if zero
 		retn
@@ -1795,7 +1791,7 @@ loc_113:
 		mov	al,ds:data_103e
 		or	al,ds:data_104e
 		jz	loc_115			; Jump if zero
-		call	sub_19
+		call	sprite_func_19
 		or	al,al			; Zero ?
 		jnz	loc_114			; Jump if not zero
 		retn
@@ -1817,7 +1813,7 @@ loc_115:
 		mov	cl,9
 		mul	cl			; ax = reg * al
 		push	ax
-		call	sub_19
+		call	sprite_func_19
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
 		pop	si
@@ -1845,7 +1841,7 @@ loc_118:
 loc_119:
 		test	byte ptr ds:[0C2h],1
 		jz	loc_121			; Jump if zero
-		call	sub_19
+		call	sprite_func_19
 		or	al,al			; Zero ?
 		jz	loc_121			; Jump if zero
 		dec	al
@@ -1887,7 +1883,7 @@ loc_124:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_18		proc	near
+vga_operation_2		proc	near
 
 locloop_125:
 		push	cx
@@ -1911,7 +1907,7 @@ locloop_125:
 		mul	cl			; ax = reg * al
 		add	ax,3E90h
 		mov	di,ax
-		call	sub_10
+		call	sprite_func_10
 		pop	di
 		pop	si
 		pop	ds
@@ -1923,14 +1919,14 @@ loc_126:
 		loop	locloop_125		; Loop if cx > 0
 
 		retn
-sub_18		endp
+vga_operation_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_19		proc	near
+sprite_func_19		proc	near
 		mov	al,byte ptr ds:[93h]
 		or	al,al			; Zero ?
 		jnz	loc_127			; Jump if not zero
@@ -1943,7 +1939,7 @@ loc_127:
 loc_128:
 		mov	al,2
 		retn
-sub_19		endp
+sprite_func_19		endp
 
 loc_129:
 		mov	al,[si]
@@ -1966,13 +1962,13 @@ loc_129:
 		mul	cl			; ax = reg * al
 		add	ax,8000h
 		mov	si,ax
-		call	sub_13
+		call	sprite_process_loop
 		pop	di
 		pop	si
 		pop	ds
 		retn
 loc_130:
-		call	sub_14
+		call	sprite_func_14
 		pop	di
 		pop	si
 		pop	ds
@@ -1985,7 +1981,7 @@ loc_131:
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_132			; Jump if not sign
-		call	sub_15
+		call	sprite_get_value
 loc_132:
 		push	ax
 		mov	bl,ds:data_70e
@@ -2010,13 +2006,13 @@ loc_132:
 		or	al,al			; Zero ?
 		jz	loc_133			; Jump if zero
 		mov	cl,al
-		call	sub_9
+		call	sprite_multiply
 		pop	di
 		pop	si
 		pop	ds
 		retn
 loc_133:
-		call	sub_11
+		call	sprite_func_11
 		pop	di
 		pop	si
 		pop	ds
@@ -2026,7 +2022,7 @@ loc_133:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_20		proc	near
+vga_operation0		proc	near
 		mov	cl,byte ptr ds:[84h]
 		mov	al,24h			; '$'
 		mul	cl			; ax = reg * al
@@ -2036,7 +2032,7 @@ sub_20		proc	near
 		add	ax,cx
 		add	ax,ds:data_96e
 		mov	si,ax
-		call	sub_37
+		call	sprite_func_37
 		mov	di,data_81e
 		push	cs
 		pop	es
@@ -2046,18 +2042,18 @@ locloop_134:
 		movsw				; Mov [si] to es:[di]
 		movsb				; Mov [si] to es:[di]
 		add	si,21h
-		call	sub_37
+		call	sprite_func_37
 		loop	locloop_134		; Loop if cx > 0
 
 		retn
-sub_20		endp
+vga_operation0		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_21		proc	near
+vga_operation1		proc	near
 		mov	al,ds:data_67e
 		neg	al
 		add	al,12h
@@ -2068,7 +2064,7 @@ sub_21		proc	near
 		sub	al,2
 		cmp	al,cl
 		jne	loc_ret_135		; Jump if not equal
-		call	sub_26
+		call	vga_operation_3
 
 loc_ret_135:
 		retn
@@ -2080,7 +2076,7 @@ loc_136:
 		retn
 loc_137:
 		jnz	loc_138			; Jump if not zero
-		call	sub_22
+		call	vga_operation2
 		jmp	loc_164
 loc_138:
 		add	al,0Ah
@@ -2193,7 +2189,7 @@ loc_148:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_22:
+vga_operation2:
 		test	byte ptr ds:data_111e,0FFh
 		jnz	loc_149			; Jump if not zero
 		retn
@@ -2203,7 +2199,7 @@ loc_149:
 		push	di
 		push	si
 		push	bx
-		call	sub_24
+		call	vga_operation4
 		pop	bx
 		pop	si
 		pop	di
@@ -2214,7 +2210,7 @@ loc_149:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_23:
+vga_operation3:
 		mov	si,cs:data_72e
 		mov	ax,0A000h
 		mov	es,ax
@@ -2249,7 +2245,7 @@ locloop_150:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_24:
+vga_operation4:
 		mov	di,cs:data_72e
 		mov	ax,0A000h
 		mov	es,ax
@@ -2284,7 +2280,7 @@ locloop_151:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_25:
+vga_operation5:
 		mov	al,byte ptr ds:[84h]
 		add	al,ds:data_74e
 		and	al,3Fh			; '?'
@@ -2297,7 +2293,7 @@ sub_25:
 		add	ax,cx
 		mov	si,ax
 		add	si,ds:data_96e
-		call	sub_37
+		call	sprite_func_37
 		mov	cx,4
 
 locloop_152:
@@ -2316,7 +2312,7 @@ locloop_153:
 		loop	locloop_153		; Loop if cx > 0
 
 		add	si,20h
-		call	sub_37
+		call	sprite_func_37
 		pop	cx
 		loop	locloop_152		; Loop if cx > 0
 
@@ -2332,8 +2328,8 @@ loc_155:
 		push	di
 		push	si
 		push	bx
-		call	sub_25
-		call	sub_23
+		call	vga_operation5
+		call	vga_operation3
 		mov	bl,byte ptr cs:[92h]
 		dec	bl
 		xor	bh,bh			; Zero register
@@ -2482,7 +2478,7 @@ loc_163:
 		pop	ds
 		pop	es
 		retn
-sub_21		endp
+vga_operation1		endp
 
 			                        ;* No entry point to code
 		add	[si],ax
@@ -2500,7 +2496,7 @@ sub_21		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_26		proc	near
+vga_operation_3		proc	near
 loc_164:
 		test	byte ptr ds:data_101e,0FFh
 		jz	loc_165			; Jump if zero
@@ -2527,7 +2523,7 @@ locloop_167:
 locloop_168:
 		push	cx
 		push	di
-		call	sub_12
+		call	sprite_func_12
 		pop	di
 		inc	di
 		inc	di
@@ -2544,7 +2540,7 @@ locloop_168:
 		pop	ds
 		pop	es
 		retn
-sub_26		endp
+vga_operation_3		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2660,14 +2656,14 @@ locloop_171:
 locloop_172:
 		push	cx
 		lodsb				; String [si] to al
-		call	sub_27
+		call	vga_operation7
 		inc	di
 		inc	bl
 		pop	cx
 		loop	locloop_172		; Loop if cx > 0
 
 		add	si,4
-		call	sub_37
+		call	sprite_func_37
 		add	word ptr ds:data_65e,280h
 		pop	cx
 		loop	locloop_171		; Loop if cx > 0
@@ -2687,7 +2683,7 @@ loc_173:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_27		proc	near
+vga_operation7		proc	near
 		cmp	byte ptr [di],0FFh
 		jne	loc_174			; Jump if not equal
 		retn
@@ -2734,15 +2730,15 @@ loc_175:
 		and	al,3
 		neg	al
 		add	al,3
-		call	sub_30
-		call	sub_28
+		call	sprite_func_30
+		call	vga_operation8
 		pop	di
 		pop	si
 		mov	al,cs:data_76e
-		call	sub_30
+		call	sprite_func_30
 		inc	di
 		inc	si
-		call	sub_28
+		call	vga_operation8
 		pop	bx
 		pop	si
 		pop	di
@@ -2751,7 +2747,7 @@ loc_175:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_28:
+vga_operation8:
 		mov	cx,2
 
 locloop_176:
@@ -2784,40 +2780,40 @@ loc_177:
 		and	al,3
 		neg	al
 		add	al,3
-		call	sub_30
-		call	sub_29
+		call	sprite_func_30
+		call	vga_operation9
 		pop	di
 		mov	al,cs:data_76e
-		call	sub_30
+		call	sprite_func_30
 		inc	di
-		call	sub_29
+		call	vga_operation9
 		pop	bx
 		pop	si
 		pop	di
 		pop	ds
 		retn
-sub_27		endp
+vga_operation7		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_29		proc	near
+vga_operation9		proc	near
 		xor	al,al			; Zero register
 		xchg	es:[di],al
 		add	di,data_115e
 		xor	al,al			; Zero register
 		xchg	es:[di],al
 		retn
-sub_29		endp
+vga_operation9		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_30		proc	near
+sprite_func_30		proc	near
 		and	al,3
 		add	al,al
 		xor	ah,ah			; Zero register
@@ -2828,7 +2824,7 @@ sub_30		proc	near
 		mov	al,cs:[bx+1]
 		add	di,ax
 		retn
-sub_30		endp
+sprite_func_30		endp
 
 		db	 00h, 00h, 06h, 50h, 0Ch,0A0h
 		db	 12h,0F0h,0A0h, 83h, 00h, 02h
@@ -2857,14 +2853,14 @@ sub_30		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_31		proc	near
+sprite_process_loop_2		proc	near
 		mov	cx,9
 
 locloop_178:
 		push	cx
 		push	dx
 		push	bx
-		call	sub_32
+		call	vga_operation_4
 		pop	bx
 		pop	dx
 		sub	bl,0Ch
@@ -2885,21 +2881,21 @@ loc_181:
 loc_182:
 		push	dx
 		push	bx
-		call	sub_36
+		call	sprite_multiply_4
 		pop	bx
 		pop	dx
 		pop	cx
 		loop	locloop_178		; Loop if cx > 0
 
 		retn
-sub_31		endp
+sprite_process_loop_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_32		proc	near
+vga_operation_4		proc	near
 		push	dx
 		mov	ax,0A000h
 		mov	es,ax
@@ -2915,23 +2911,23 @@ sub_32		proc	near
 		push	dx
 		push	bx
 		mov	dh,bh
-		call	sub_34
+		call	sprite_extract_bits_2
 		pop	bx
 		pop	dx
 		push	dx
 		push	bx
 		mov	bh,dh
-		call	sub_34
+		call	sprite_extract_bits_2
 		pop	bx
 		pop	dx
 		push	dx
 		push	bx
 		mov	dl,bl
-		call	sub_33
+		call	sprite_extract_bits
 		pop	bx
 		pop	dx
 		mov	bl,dl
-		call	sub_33
+		call	sprite_extract_bits
 		mov	dx,3CEh
 		mov	ax,5
 		out	dx,ax			; port 3CEh, EGA graphic index
@@ -2940,14 +2936,14 @@ sub_32		proc	near
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 8, data bit mask
 		retn
-sub_32		endp
+vga_operation_4		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_33		proc	near
+sprite_extract_bits		proc	near
 		cmp	dh,bh
 		jae	loc_183			; Jump if above or =
 		xchg	dx,bx
@@ -2973,7 +2969,7 @@ loc_187:
 		inc	al
 		push	ax
 		mov	al,bh
-		call	sub_35
+		call	sprite_multiply_3
 		mov	al,bl
 		shr	al,1			; Shift w/zeros fill
 		shr	al,1			; Shift w/zeros fill
@@ -3009,14 +3005,14 @@ locloop_192:
 		loop	locloop_192		; Loop if cx > 0
 
 		retn
-sub_33		endp
+sprite_extract_bits		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_34		proc	near
+sprite_extract_bits_2		proc	near
 		cmp	dl,bl
 		jae	loc_193			; Jump if above or =
 		xchg	dx,bx
@@ -3038,7 +3034,7 @@ loc_196:
 		mov	dl,0DEh
 loc_197:
 		mov	al,bh
-		call	sub_35
+		call	sprite_multiply_3
 		mov	al,bl
 		shr	al,1			; Shift w/zeros fill
 		shr	al,1			; Shift w/zeros fill
@@ -3126,27 +3122,27 @@ loc_208:
 		mov	al,ds:data_76e
 		xchg	es:[di],al
 		retn
-sub_34		endp
+sprite_extract_bits_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_35		proc	near
+sprite_multiply_3		proc	near
 		mov	ah,50h			; 'P'
 		mul	ah			; ax = reg * al
 		mov	di,46Ch
 		add	di,ax
 		retn
-sub_35		endp
+sprite_multiply_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_36		proc	near
+sprite_multiply_4		proc	near
 		mov	cl,ds:data_97e
 		shr	cl,1			; Shift w/zeros fill
 		inc	cl
@@ -3164,7 +3160,7 @@ loc_209:
 		jb	loc_209			; Jump if below
 		mov	byte ptr ds:data_93e,0
 		retn
-sub_36		endp
+sprite_multiply_4		endp
 
 			                        ;* No entry point to code
 		mov	ax,0A000h
@@ -3261,14 +3257,14 @@ loc_214:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_37		proc	near
+sprite_func_37		proc	near
 		cmp	si,0E900h
 		jae	loc_215			; Jump if above or =
 		retn
 loc_215:
 		sub	si,900h
 		retn
-sub_37		endp
+sprite_func_37		endp
 
 			                        ;* No entry point to code
 		cmp	si,0E000h
@@ -3391,7 +3387,7 @@ locloop_221:
 		push	cx
 		lodsb				; String [si] to al
 		push	si
-		call	sub_38
+		call	copy_vga_buffer
 		pop	si
 		add	word ptr ds:data_65e,2
 		pop	cx
@@ -3407,7 +3403,7 @@ locloop_221:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_38		proc	near
+copy_vga_buffer		proc	near
 		push	ds
 		mov	cl,30h			; '0'
 		mul	cl			; ax = reg * al
@@ -3475,7 +3471,7 @@ locloop_222:
 						;  al = 5, mode
 		pop	ds
 		retn
-sub_38		endp
+copy_vga_buffer		endp
 
 		db	 66h, 48h, 77h, 48h, 7Fh, 48h
 		db	 90h, 48h,0AAh, 48h,0B8h, 02h
@@ -3500,7 +3496,7 @@ sub_38		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_39		proc	near
+sprite_process_loop_3		proc	near
 loc_223:
 		mov	si,cs:data_65e
 		mov	di,4Fh
@@ -3519,7 +3515,7 @@ locloop_224:
 		loop	locloop_224		; Loop if cx > 0
 
 		retn
-sub_39		endp
+sprite_process_loop_3		endp
 
 			                        ;* No entry point to code
 		pop	es

@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR3_16	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  TILE_COLLISION - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -284,7 +280,7 @@ loc_11:
 		mov	byte ptr ds:data_47e,0FFh
 		mov	byte ptr ds:data_63e,35h	; '5'
 loc_12:
-		call	sub_4
+		call	tilecol_func_4
 		test	byte ptr ds:data_53e,0FFh
 		jz	loc_13			; Jump if zero
 		mov	al,ds:data_43e
@@ -319,7 +315,7 @@ loc_17:
 		jnc	loc_20			; Jump if carry=0
 		test	byte ptr ds:data_47e,0FFh
 		jnz	loc_18			; Jump if not zero
-		call	sub_1
+		call	tilecol_func_1
 		jc	loc_20			; Jump if carry Set
 		inc	byte ptr ds:data_45e
 		jmp	short loc_20
@@ -329,7 +325,7 @@ loc_18:
 		mov	byte ptr ds:data_47e,0
 		jmp	short loc_20
 loc_19:
-		call	sub_2
+		call	tilecol_func_2
 		sbb	al,al
 		not	al
 		mov	ds:data_47e,al
@@ -440,7 +436,7 @@ zr3_16		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+tilecol_func_1		proc	near
 		mov	ax,ds:data_32e
 		dec	ax
 		mov	bx,0Eh
@@ -451,14 +447,14 @@ sub_1		proc	near
 loc_33:
 		mov	ds:data_32e,ax
 		retn
-sub_1		endp
+tilecol_func_1		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+tilecol_func_2		proc	near
 		mov	ax,ds:data_32e
 		inc	ax
 		mov	bx,1Eh
@@ -468,7 +464,7 @@ sub_2		proc	near
 loc_34:
 		mov	ds:data_32e,ax
 		retn
-sub_2		endp
+tilecol_func_2		endp
 
 loc_35:
 		push	cs
@@ -485,7 +481,7 @@ loc_35:
 		mov	si,ds:data_20e[bx]
 		mov	bp,ds:data_21e[bx]
 		mov	cx,0Ch
-		call	sub_3
+		call	tilecol_multiply
 		mov	byte ptr ds:data_35e,0Ch
 		mov	byte ptr ds:data_36e,0
 		mov	bl,ds:data_44e
@@ -494,7 +490,7 @@ loc_35:
 		mov	si,ds:data_28e[bx]
 		mov	bp,ds:data_29e[bx]
 		mov	cx,0Bh
-		call	sub_3
+		call	tilecol_multiply
 		mov	byte ptr ds:data_35e,9
 		mov	byte ptr ds:data_36e,6
 		mov	bl,ds:data_45e
@@ -503,7 +499,7 @@ loc_35:
 		mov	si,ds:data_24e[bx]
 		mov	bp,ds:data_25e[bx]
 		mov	cx,7
-		call	sub_3
+		call	tilecol_multiply
 		mov	byte ptr ds:data_35e,11h
 		mov	byte ptr ds:data_36e,6
 		mov	bl,ds:data_45e
@@ -512,13 +508,13 @@ loc_35:
 		mov	si,ds:data_26e[bx]
 		mov	bp,data_27e
 		mov	cx,7
-		call	sub_3
+		call	tilecol_multiply
 		mov	byte ptr ds:data_35e,19h
 		mov	byte ptr ds:data_36e,8
 		mov	si,data_22e
 		mov	bp,data_23e
 		mov	cx,4
-		call	sub_3
+		call	tilecol_multiply
 		mov	byte ptr ds:data_41e,0
 		mov	ax,ds:data_32e
 		mov	si,ds:data_58e
@@ -700,7 +696,7 @@ loc_54:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+tilecol_multiply		proc	near
 		mov	al,ds:data_35e
 		mov	bl,0Ah
 		mul	bl			; ax = reg * al
@@ -730,7 +726,7 @@ loc_57:
 		loop	locloop_55		; Loop if cx > 0
 
 		retn
-sub_3		endp
+tilecol_multiply		endp
 
 			                        ;* No entry point to code
 		cwd				; Word to double word
@@ -838,7 +834,7 @@ sub_3		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+tilecol_func_4		proc	near
 		mov	ax,ds:data_34e
 		sub	ax,bx
 		jnc	loc_58			; Jump if carry=0
@@ -861,7 +857,7 @@ loc_59:
 		mov	byte ptr ds:data_38e,0
 		mov	byte ptr ds:data_49e,0
 		retn
-sub_4		endp
+tilecol_func_4		endp
 
 loc_60:
 		cmp	byte ptr ds:data_40e,28h	; '('

@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR2_08	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  ENEMY_BAT - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -63,17 +59,17 @@ start:
 		db	0B9h, 10h, 00h
 
 locloop_6:
-		call	sub_3
+		call	bat_func_3
 		loop	locloop_6		; Loop if cx > 0
 
 		mov	si,data_16e
 		mov	cx,10h
 
 locloop_7:
-		call	sub_3
+		call	bat_func_3
 		loop	locloop_7		; Loop if cx > 0
 
-		call	sub_4
+		call	bat_func_4
 		retf				; Return far
 		db	 00h, 33h,0C9h
 loc_8:
@@ -270,13 +266,13 @@ locloop_21:
 		mov	dh,ds:data_21e[si]
 		mov	dl,[si]
 		inc	si
-		call	sub_1
+		call	bat_func_1
 		stosb				; Store al to es:[di]
-		call	sub_1
+		call	bat_func_1
 		stosb				; Store al to es:[di]
-		call	sub_1
+		call	bat_func_1
 		stosb				; Store al to es:[di]
-		call	sub_1
+		call	bat_func_1
 		stosb				; Store al to es:[di]
 		pop	cx
 		loop	locloop_21		; Loop if cx > 0
@@ -295,7 +291,7 @@ zr2_08		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+bat_func_1		proc	near
 		xor	al,al			; Zero register
 		add	dh,dh
 		adc	al,al
@@ -308,7 +304,7 @@ sub_1		proc	near
 		add	dl,dl
 		adc	al,al
 		retn
-sub_1		endp
+bat_func_1		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -331,9 +327,9 @@ locloop_23:
 		mov	dh,ds:data_21e[si]
 		mov	dl,[si]
 		inc	si
-		call	sub_2
+		call	bat_process_loop
 		stosb				; Store al to es:[di]
-		call	sub_2
+		call	bat_process_loop
 		stosb				; Store al to es:[di]
 		pop	cx
 		loop	locloop_23		; Loop if cx > 0
@@ -354,7 +350,7 @@ loc_24:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+bat_process_loop		proc	near
 		xor	al,al			; Zero register
 		mov	cx,2
 
@@ -377,7 +373,7 @@ locloop_25:
 		loop	locloop_25		; Loop if cx > 0
 
 		retn
-sub_2		endp
+bat_process_loop		endp
 
 		db	 00h, 07h, 09h, 01h, 07h, 0Fh
 		db	 0Bh, 07h, 09h, 0Bh, 0Bh, 03h
@@ -388,7 +384,7 @@ sub_2		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_3		proc	near
+bat_func_3		proc	near
 		xor	bl,bl			; Zero register
 loc_26:
 		lodsb				; String [si] to al
@@ -408,19 +404,19 @@ loc_27:
 		cmp	bl,1Ch
 		jne	loc_26			; Jump if not equal
 		retn
-sub_3		endp
+bat_func_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_4		proc	near
+bat_func_4		proc	near
 		xor	bx,bx			; Zero register
 		mov	bl,ds:data_9e
 		add	bx,bx
 		jmp	word ptr ds:data_13e[bx]	;*
-sub_4		endp
+bat_func_4		endp
 
 		db	0C7h, 35h, 43h, 36h, 43h, 36h
 		db	0C6h, 36h, 4Eh, 37h, 00h, 38h
@@ -433,10 +429,10 @@ sub_4		endp
 locloop_28:
 		mov	al,4
 		out	dx,al			; port 0, DMA-1 bas&add ch 0
-		call	sub_5
+		call	copy_buffer
 		mov	al,2
 		out	dx,al			; port 0, DMA-1 bas&add ch 0
-		call	sub_5
+		call	copy_buffer
 		add	di,50h
 		loop	locloop_28		; Loop if cx > 0
 
@@ -446,10 +442,10 @@ locloop_28:
 locloop_29:
 		mov	al,1
 		out	dx,al			; port 0, DMA-1 bas&add ch 0
-		call	sub_5
+		call	copy_buffer
 		mov	al,2
 		out	dx,al			; port 0, DMA-1 bas&add ch 0
-		call	sub_5
+		call	copy_buffer
 		add	di,50h
 		loop	locloop_29		; Loop if cx > 0
 
@@ -482,7 +478,7 @@ loc_30:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_5		proc	near
+copy_buffer		proc	near
 		push	di
 		push	cx
 		mov	cx,1Ch
@@ -490,7 +486,7 @@ sub_5		proc	near
 		pop	cx
 		pop	di
 		retn
-sub_5		endp
+copy_buffer		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -766,9 +762,9 @@ locloop_47:
 		mov	dl,[si]
 		inc	si
 		mov	bp,38C7h
-		call	sub_6
+		call	bat_process_loop_2
 		stosb				; Store al to es:[di]
-		call	sub_6
+		call	bat_process_loop_2
 		stosb				; Store al to es:[di]
 		pop	cx
 		loop	locloop_47		; Loop if cx > 0
@@ -807,9 +803,9 @@ locloop_50:
 		mov	dl,[si]
 		inc	si
 		mov	bp,38D7h
-		call	sub_6
+		call	bat_process_loop_2
 		stosb				; Store al to es:[di]
-		call	sub_6
+		call	bat_process_loop_2
 		stosb				; Store al to es:[di]
 		pop	cx
 		loop	locloop_50		; Loop if cx > 0
@@ -841,7 +837,7 @@ loc_51:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_6		proc	near
+bat_process_loop_2		proc	near
 		xor	al,al			; Zero register
 		mov	cx,2
 
@@ -865,7 +861,7 @@ locloop_52:
 		loop	locloop_52		; Loop if cx > 0
 
 		retn
-sub_6		endp
+bat_process_loop_2		endp
 
 		db	 00h, 03h, 04h, 07h, 03h, 0Bh
 		db	 05h, 0Ah, 04h, 05h, 0Ch, 06h

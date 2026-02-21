@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR2_15	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  ENEMY_WIZARD - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -97,7 +93,7 @@ start:
 		call	word ptr cs:data_39e
 		mov	si,0A81Ch
 		call	word ptr cs:data_38e
-		call	sub_1
+		call	wizard_process_loop
 		push	cs
 		pop	es
 		mov	bl,ds:data_69e
@@ -108,7 +104,7 @@ start:
 		mov	di,data_60e
 		mov	cx,0Ch
 		rep	movsw			; Rep when cx >0 Mov [si] to es:[di]
-		call	sub_5
+		call	wizard_process_loop_3
 		mov	bx,0D60h
 		mov	cx,3637h
 		mov	al,0FFh
@@ -118,7 +114,7 @@ loc_2:
 		call	word ptr cs:data_44e
 		cmp	al,0FFh
 		je	loc_3			; Jump if equal
-		call	sub_2
+		call	wizard_func_2
 		jmp	short loc_2
 loc_3:
 		jmp	word ptr cs:data_41e
@@ -129,7 +125,7 @@ zr2_15		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+wizard_process_loop		proc	near
 		mov	si,offset data_4
 		mov	al,ds:data_69e
 		dec	al
@@ -155,19 +151,19 @@ loc_5:
 
 		mov	ds:data_61e,dh
 		retn
-sub_1		endp
+wizard_process_loop		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+wizard_func_2		proc	near
 		mov	bl,al
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr cs:data_51e[bx]	;*
-sub_2		endp
+wizard_func_2		endp
 
 		db	0D5h,0A0h
 data_4		db	0EBh
@@ -176,15 +172,15 @@ data_4		db	0EBh
 		db	0A1h, 06h,0A1h,0C6h, 06h, 1Ah
 		db	0FFh, 00h
 loc_6:
-		call	sub_6
+		call	wizard_multiply
 		cmp	byte ptr ds:data_70e,50h	; 'P'
 		jb	loc_6			; Jump if below
 		mov	si,data_56e
-		call	sub_7
+		call	wizard_scan_loop
 		retn
 		db	0C6h, 06h, 1Ah,0FFh, 00h
 loc_7:
-		call	sub_6
+		call	wizard_multiply
 		cmp	byte ptr ds:data_70e,50h	; 'P'
 		jb	loc_7			; Jump if below
 		mov	si,0A74Fh
@@ -328,7 +324,7 @@ loc_12:
 		mov	word ptr ds:data_78e,302Eh
 		call	word ptr cs:data_46e
 		pushf				; Push flags
-		call	sub_4
+		call	wizard_func_4
 		popf				; Pop flags
 		mov	word ptr ds:data_72e,0A8A8h
 		jc	loc_13			; Jump if carry Set
@@ -337,7 +333,7 @@ loc_13:
 		mov	word ptr ds:data_72e,0A965h
 		retn
 			                        ;* No entry point to code
-		call	sub_3
+		call	wizard_process_loop_2
 		mov	byte ptr ds:data_79e,0
 		mov	al,ds:data_77e
 		cmp	al,2
@@ -452,7 +448,7 @@ loc_18:
 		mov	al,[di]
 		or	[si],al
 		call	word ptr cs:data_40e
-		call	sub_3
+		call	wizard_process_loop_2
 		mov	word ptr ds:data_72e,0A966h
 		test	byte ptr ds:data_77e,0FFh
 		jnz	loc_19			; Jump if not zero
@@ -470,7 +466,7 @@ loc_19:
 		jnc	loc_20			; Jump if carry=0
 		retn
 loc_20:
-		call	sub_4
+		call	wizard_func_4
 		mov	word ptr ds:data_72e,0A98Dh
 		retn
 			                        ;* No entry point to code
@@ -482,7 +478,7 @@ loc_20:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_3		proc	near
+wizard_process_loop_2		proc	near
 		push	cs
 		pop	es
 		mov	si,0A6h
@@ -502,7 +498,7 @@ loc_22:
 
 		mov	ds:data_77e,dl
 		retn
-sub_3		endp
+wizard_process_loop_2		endp
 
 			                        ;* No entry point to code
 		mov	byte ptr ds:data_64e,0
@@ -575,7 +571,7 @@ loc_25:
 		mov	word ptr ds:data_78e,302Eh
 		call	word ptr cs:data_46e
 		pushf				; Push flags
-		call	sub_4
+		call	wizard_func_4
 		popf				; Pop flags
 		mov	word ptr ds:data_72e,0A965h
 		jnc	loc_26			; Jump if carry=0
@@ -589,19 +585,19 @@ loc_26:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_4		proc	near
+wizard_func_4		proc	near
 		mov	bx,2717h
 		mov	cx,1D41h
 		xor	al,al			; Zero register
 		jmp	word ptr cs:data_36e
-sub_4		endp
+wizard_func_4		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_5		proc	near
+wizard_process_loop_3		proc	near
 		mov	si,data_53e
 		mov	bx,717h
 		mov	cx,8
@@ -626,7 +622,7 @@ locloop_28:
 		loop	locloop_27		; Loop if cx > 0
 
 		retn
-sub_5		endp
+wizard_process_loop_3		endp
 
 		db	 00h, 01h, 02h, 03h, 04h, 05h
 		db	 1Ch, 1Dh, 1Eh, 1Fh, 20h, 21h
@@ -650,7 +646,7 @@ sub_5		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_6		proc	near
+wizard_multiply		proc	near
 		cmp	word ptr ds:data_75e,2
 		jae	loc_29			; Jump if above or =
 		retn
@@ -696,7 +692,7 @@ locloop_33:
 		loop	locloop_32		; Loop if cx > 0
 
 		retn
-sub_6		endp
+wizard_multiply		endp
 
 		db	 1Ch, 1Dh, 1Eh, 1Fh
 		db	' !"#$'
@@ -709,7 +705,7 @@ sub_6		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_7		proc	near
+wizard_scan_loop		proc	near
 loc_34:
 		mov	byte ptr ds:data_70e,0
 		lodsw				; String [si] to ax
@@ -742,12 +738,12 @@ locloop_37:
 		loop	locloop_36		; Loop if cx > 0
 
 loc_38:
-		call	sub_6
+		call	wizard_multiply
 		cmp	byte ptr ds:data_70e,28h	; '('
 		jb	loc_38			; Jump if below
 		pop	si
 		jmp	short loc_34
-sub_7		endp
+wizard_scan_loop		endp
 
 		db	 69h,0A7h, 85h,0A7h,0A1h,0A7h
 		db	0BDh,0A7h,0FFh,0FFh,0BDh,0A7h

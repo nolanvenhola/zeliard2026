@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR2_03	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  PHYSICS_SUBSYSTEMS - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -131,25 +127,25 @@ locloop_1:
 		push	cx
 		test	byte ptr [si],80h
 		jz	loc_2			; Jump if zero
-		call	sub_3
+		call	physsub_func_3
 loc_2:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_3			; Jump if zero
-		call	sub_3
+		call	physsub_func_3
 loc_3:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_4			; Jump if zero
-		call	sub_3
+		call	physsub_func_3
 loc_4:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_5			; Jump if zero
-		call	sub_3
+		call	physsub_func_3
 loc_5:
 		inc	si
 		inc	bx
@@ -158,36 +154,36 @@ loc_5:
 
 		test	byte ptr [si],80h
 		jz	loc_6			; Jump if zero
-		call	sub_3
+		call	physsub_func_3
 loc_6:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_7			; Jump if zero
-		call	sub_3
+		call	physsub_func_3
 loc_7:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_8			; Jump if zero
-		call	sub_3
+		call	physsub_func_3
 loc_8:
 		inc	si
 		test	byte ptr [si],80h
 		jz	loc_9			; Jump if zero
-		call	sub_4
+		call	physsub_func_4
 loc_9:
 		mov	si,ds:data_100e
 		mov	di,0E900h
 		mov	byte ptr ds:data_66e,12h
 loc_10:
-		call	sub_21
+		call	physsub_func_21
 		xor	bx,bx			; Zero register
 		add	si,3
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jns	loc_11			; Jump if not sign
-		call	sub_5
+		call	physsub_func_5
 loc_11:
 		mov	cx,6
 
@@ -195,22 +191,22 @@ locloop_12:
 		push	cx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_13			; Jump if zero
-		call	sub_1
+		call	physsub_func_1
 loc_13:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_14			; Jump if zero
-		call	sub_1
+		call	physsub_func_1
 loc_14:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_15			; Jump if zero
-		call	sub_1
+		call	physsub_func_1
 loc_15:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_16			; Jump if zero
-		call	sub_1
+		call	physsub_func_1
 loc_16:
 		inc	bx
 		pop	cx
@@ -218,17 +214,17 @@ loc_16:
 
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_17			; Jump if zero
-		call	sub_1
+		call	physsub_func_1
 loc_17:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_18			; Jump if zero
-		call	sub_1
+		call	physsub_func_1
 loc_18:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_19			; Jump if zero
-		call	sub_1
+		call	physsub_func_1
 loc_19:
 		inc	bx
 		lodsb				; String [si] to al
@@ -239,10 +235,10 @@ loc_19:
 loc_20:
 		cmp	al,es:[di-1]
 		je	loc_21			; Jump if equal
-		call	sub_1
+		call	physsub_func_1
 loc_21:
 		add	si,4
-		call	sub_39
+		call	physsub_func_39
 		add	word ptr ds:data_63e,140h
 		dec	byte ptr ds:data_66e
 		jnz	loc_10			; Jump if not zero
@@ -254,7 +250,7 @@ zr2_03		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+physsub_func_1		proc	near
 		mov	al,[si-1]
 		or	al,al			; Zero ?
 		jns	loc_22			; Jump if not sign
@@ -272,7 +268,7 @@ loc_23:
 		mov	dx,bx
 		add	dx,dx
 		add	dx,ds:data_63e
-		call	sub_2
+		call	physsub_multiply
 loc_24:
 		mov	al,ds:data_89e
 		sub	al,5
@@ -290,7 +286,7 @@ loc_26:
 		call	word ptr ds:data_51e[bx]	;*
 		pop	bx
 		retn
-sub_1		endp
+physsub_func_1		endp
 
 			                        ;* No entry point to code
 ;*		js	loc_30			;*Jump if sign=1
@@ -433,7 +429,7 @@ loc_40:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+physsub_multiply		proc	near
 		push	es
 		push	ds
 		push	di
@@ -623,7 +619,7 @@ loc_67:
 		pop	ds
 		pop	es
 		retn
-sub_2		endp
+physsub_multiply		endp
 
 			                        ;* No entry point to code
 		cmp	byte ptr ds:data_92e,0FFh
@@ -639,20 +635,20 @@ loc_69:
 		mov	byte ptr ds:data_92e,0FFh
 		mov	cl,[si]
 		add	si,25h
-		call	sub_39
+		call	physsub_func_39
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_70			; Jump if not sign
-		call	sub_16
+		call	physsub_get_value
 loc_70:
 		push	ax
 		mov	al,cl
-		call	sub_17
+		call	physsub_multiply_3
 		add	si,3
 		pop	ax
 		mov	ah,[si]
 		mov	dx,23Ch
-		call	sub_8
+		call	physsub_func_8
 		pop	bx
 		pop	si
 		retn
@@ -661,7 +657,7 @@ loc_70:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_3		proc	near
+physsub_func_3		proc	near
 		push	si
 		push	bx
 		mov	cx,bx
@@ -678,28 +674,28 @@ sub_3		proc	near
 		add	dx,23Ch
 		mov	cl,[si]
 		add	si,24h
-		call	sub_39
+		call	physsub_func_39
 		mov	bx,data_81e
 		lodsw				; String [si] to ax
 		mov	[bx],ax
 		mov	al,cl
-		call	sub_17
+		call	physsub_multiply_3
 		inc	si
 		inc	si
 		mov	di,data_81e
 		mov	bp,data_79e
-		call	sub_6
+		call	physsub_func_6
 		pop	bx
 		pop	si
 		retn
-sub_3		endp
+physsub_func_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_4		proc	near
+physsub_func_4		proc	near
 		cmp	byte ptr ds:data_93e,0FFh
 		jne	loc_71			; Jump if not equal
 		retn
@@ -711,15 +707,15 @@ loc_72:
 		mov	byte ptr ds:data_93e,0FFh
 		mov	cl,[si]
 		add	si,24h
-		call	sub_39
+		call	physsub_func_39
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_73			; Jump if not sign
-		call	sub_16
+		call	physsub_get_value
 loc_73:
 		push	ax
 		mov	al,cl
-		call	sub_17
+		call	physsub_multiply_3
 		add	si,2
 		pop	ax
 		mov	ah,[si]
@@ -728,7 +724,7 @@ loc_73:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_5:
+physsub_func_5:
 		push	si
 		push	di
 		push	bx
@@ -743,10 +739,10 @@ sub_5:
 		mov	cl,[si-1]
 		mov	dl,[si]
 		add	si,24h
-		call	sub_39
+		call	physsub_func_39
 		mov	dh,[si]
 		mov	al,cl
-		call	sub_17
+		call	physsub_multiply_3
 		inc	si
 		mov	bx,dx
 		pop	dx
@@ -763,9 +759,9 @@ sub_5:
 		push	dx
 		or	al,al			; Zero ?
 		jns	loc_74			; Jump if not sign
-		call	sub_16
+		call	physsub_get_value
 loc_74:
-		call	sub_8
+		call	physsub_func_8
 		pop	dx
 		pop	si
 		pop	bx
@@ -784,9 +780,9 @@ loc_75:
 		mov	al,bh
 		or	al,al			; Zero ?
 		jns	loc_76			; Jump if not sign
-		call	sub_16
+		call	physsub_get_value
 loc_76:
-		call	sub_8
+		call	physsub_func_8
 loc_77:
 		pop	bx
 		pop	di
@@ -809,7 +805,7 @@ loc_78:
 		mov	al,[si]
 		mov	[bx+1],al
 		add	si,24h
-		call	sub_39
+		call	physsub_func_39
 		mov	ax,[si-1]
 		mov	[bx+2],ax
 		pop	dx
@@ -821,20 +817,20 @@ loc_78:
 		add	dx,dx
 		add	dx,ds:data_63e
 		mov	al,cl
-		call	sub_17
+		call	physsub_multiply_3
 		mov	di,data_81e
 		mov	[di],al
 		mov	bp,data_79e
-		call	sub_6
+		call	physsub_func_6
 		cmp	byte ptr ds:data_66e,1
 		je	loc_79			; Jump if equal
 		add	dx,13Ch
-		call	sub_6
+		call	physsub_func_6
 		test	byte ptr ds:data_102e,0FFh
 		jz	loc_79			; Jump if zero
 		test	byte ptr ds:data_99e,0FFh
 		jz	loc_79			; Jump if zero
-		call	sub_18
+		call	physsub_check_state_2
 loc_79:
 		pop	bx
 		pop	di
@@ -854,10 +850,10 @@ loc_80:
 		mov	[bx+1],al
 		mov	cl,[si-1]
 		add	si,24h
-		call	sub_39
+		call	physsub_func_39
 		mov	dl,[si-1]
 		mov	al,cl
-		call	sub_17
+		call	physsub_multiply_3
 		mov	bl,al
 		mov	bh,dl
 		pop	dx
@@ -874,9 +870,9 @@ loc_80:
 		push	dx
 		or	al,al			; Zero ?
 		jns	loc_81			; Jump if not sign
-		call	sub_16
+		call	physsub_get_value
 loc_81:
-		call	sub_8
+		call	physsub_func_8
 		pop	dx
 		pop	si
 		pop	bx
@@ -895,9 +891,9 @@ loc_82:
 		mov	al,bh
 		or	al,al			; Zero ?
 		jns	loc_83			; Jump if not sign
-		call	sub_16
+		call	physsub_get_value
 loc_83:
-		call	sub_8
+		call	physsub_func_8
 loc_84:
 		pop	bx
 		pop	di
@@ -906,12 +902,12 @@ loc_84:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_6:
-		call	sub_7
+physsub_func_6:
+		call	physsub_func_7
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_7:
+physsub_func_7:
 		cmp	byte ptr ds:[bp],0FFh
 		je	loc_86			; Jump if equal
 		cmp	byte ptr ds:[bp],0FCh
@@ -920,13 +916,13 @@ sub_7:
 		mov	al,[di]
 		or	al,al			; Zero ?
 		jns	loc_85			; Jump if not sign
-		call	sub_16
+		call	physsub_get_value
 loc_85:
 		push	bp
 		push	si
 		push	di
 		push	dx
-		call	sub_8
+		call	physsub_func_8
 		pop	dx
 		pop	di
 		pop	si
@@ -941,7 +937,7 @@ loc_86:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_8:
+physsub_func_8:
 loc_87:
 		push	es
 		push	ds
@@ -974,39 +970,39 @@ loc_88:
 		js	loc_89			; Jump if sign=1
 		push	di
 		mov	di,532Fh
-		call	sub_11
+		call	physsub_process_loop
 		pop	di
 		mov	si,data_85e
 		push	cs
 		pop	ds
 		mov	ax,0B800h
 		mov	es,ax
-		call	sub_13
+		call	physsub_check_state
 		pop	ds
 		pop	es
 		retn
 loc_89:
 		push	di
 		mov	di,data_85e
-		call	sub_9
+		call	physsub_multiply_2
 		pop	di
 		mov	si,data_85e
 		push	cs
 		pop	ds
 		mov	ax,0B800h
 		mov	es,ax
-		call	sub_13
+		call	physsub_check_state
 		pop	ds
 		pop	es
 		retn
-sub_4		endp
+physsub_func_4		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_9		proc	near
+physsub_multiply_2		proc	near
 		push	bp
 		push	si
 		push	di
@@ -1015,7 +1011,7 @@ sub_9		proc	near
 		mul	cl			; ax = reg * al
 		add	ax,8030h
 		mov	si,ax
-		call	sub_14
+		call	copy_buffer
 		pop	di
 		pop	si
 		pop	bp
@@ -1023,14 +1019,14 @@ sub_9		proc	near
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_10:
+physsub_func_10:
 		mov	cx,8
 
 locloop_90:
 		mov	ax,ds:[bp]
 		and	es:[di],ax
 		lodsw				; String [si] to ax
-		call	sub_12
+		call	extract_bits
 		or	es:[di],ax
 		inc	bp
 		inc	bp
@@ -1039,31 +1035,31 @@ locloop_90:
 		loop	locloop_90		; Loop if cx > 0
 
 		retn
-sub_9		endp
+physsub_multiply_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_11		proc	near
+physsub_process_loop		proc	near
 		mov	cx,8
 
 locloop_91:
 		lodsw				; String [si] to ax
-		call	sub_12
+		call	extract_bits
 		stosw				; Store ax to es:[di]
 		loop	locloop_91		; Loop if cx > 0
 
 		retn
-sub_11		endp
+physsub_process_loop		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_12		proc	near
+extract_bits		proc	near
 		mov	bx,ax
 		shr	bh,1			; Shift w/zeros fill
 		shr	bh,1			; Shift w/zeros fill
@@ -1102,14 +1098,14 @@ sub_12		proc	near
 		or	dl,cs:[bx]
 		mov	ax,dx
 		retn
-sub_12		endp
+extract_bits		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_13		proc	near
+physsub_check_state		proc	near
 		movsw				; Mov [si] to es:[di]
 		add	di,1FFEh
 		cmp	di,4000h
@@ -1154,49 +1150,49 @@ loc_97:
 loc_98:
 		movsw				; Mov [si] to es:[di]
 		retn
-sub_13		endp
+physsub_check_state		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_14		proc	near
+copy_buffer		proc	near
 		mov	cx,8
 		rep	movsw			; Rep when cx >0 Mov [si] to es:[di]
 		retn
-sub_14		endp
+copy_buffer		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_15		proc	near
+fill_buffer		proc	near
 		xor	ax,ax			; Zero register
 		mov	cx,8
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_15		endp
+fill_buffer		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_16		proc	near
+physsub_get_value		proc	near
 		and	al,7Fh
 		mov	bx,data_94e
 		xlat				; al=[al+[bx]] table
 		retn
-sub_16		endp
+physsub_get_value		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_17		proc	near
+physsub_multiply_3		proc	near
 		and	al,7Fh
 		mov	bl,al
 		xor	bh,bh			; Zero register
@@ -1230,14 +1226,14 @@ loc_100:
 		mov	ds:data_69e,al
 		mov	al,cl
 		retn
-sub_17		endp
+physsub_multiply_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_18		proc	near
+physsub_check_state_2		proc	near
 		cmp	byte ptr ds:data_68e,10h
 		jb	loc_101			; Jump if below
 		retn
@@ -1300,7 +1296,7 @@ loc_109:
 		mov	al,0FFh
 		stosb				; Store al to es:[di]
 		retn
-sub_18		endp
+physsub_check_state_2		endp
 
 			                        ;* No entry point to code
 		push	bp
@@ -1497,7 +1493,7 @@ loc_120:
 		jz	loc_121			; Jump if zero
 		mov	al,[di]
 		push	si
-		call	sub_17
+		call	physsub_multiply_3
 		inc	si
 		inc	si
 		inc	si
@@ -1509,7 +1505,7 @@ loc_121:
 		jz	loc_122			; Jump if zero
 		mov	al,[di+1]
 		push	si
-		call	sub_17
+		call	physsub_multiply_3
 		inc	si
 		inc	si
 		mov	al,[si]
@@ -1520,7 +1516,7 @@ loc_122:
 		jz	loc_123			; Jump if zero
 		mov	al,[di+4]
 		push	si
-		call	sub_17
+		call	physsub_multiply_3
 		inc	si
 		mov	al,[si]
 		pop	si
@@ -1528,7 +1524,7 @@ loc_122:
 loc_123:
 		mov	al,[di+5]
 		push	si
-		call	sub_17
+		call	physsub_multiply_3
 		mov	cl,[si]
 		pop	si
 		mov	[si],al
@@ -1574,7 +1570,7 @@ loc_125:
 		mov	cl,9
 		mul	cl			; ax = reg * al
 		push	ax
-		call	sub_20
+		call	physsub_func_20
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
 		pop	si
@@ -1600,7 +1596,7 @@ loc_128:
 		add	si,ax
 		jmp	short loc_132
 loc_129:
-		call	sub_20
+		call	physsub_func_20
 		or	al,al			; Zero ?
 		jz	loc_131			; Jump if zero
 		dec	al
@@ -1637,12 +1633,12 @@ loc_132:
 		jz	loc_133			; Jump if zero
 		mov	cx,6
 		mov	byte ptr ds:data_67e,3
-		call	sub_19
+		call	physsub_multiply_4
 		jmp	short loc_134
 loc_133:
 		mov	cx,9
 		mov	byte ptr ds:data_67e,0
-		call	sub_19
+		call	physsub_multiply_4
 loc_134:
 		mov	si,610Eh
 		test	byte ptr ds:data_107e,0FFh
@@ -1689,7 +1685,7 @@ loc_138:
 loc_139:
 		mov	cx,9
 		mov	byte ptr ds:data_67e,0
-		call	sub_19
+		call	physsub_multiply_4
 		test	byte ptr ds:[0E8h],0FFh
 		jz	loc_140			; Jump if zero
 		retn
@@ -1704,7 +1700,7 @@ loc_141:
 		mov	al,ds:data_106e
 		or	al,ds:data_107e
 		jz	loc_143			; Jump if zero
-		call	sub_20
+		call	physsub_func_20
 		or	al,al			; Zero ?
 		jnz	loc_142			; Jump if not zero
 		retn
@@ -1726,7 +1722,7 @@ loc_143:
 		mov	cl,9
 		mul	cl			; ax = reg * al
 		push	ax
-		call	sub_20
+		call	physsub_func_20
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
 		pop	si
@@ -1754,7 +1750,7 @@ loc_146:
 loc_147:
 		test	byte ptr ds:[0C2h],1
 		jz	loc_149			; Jump if zero
-		call	sub_20
+		call	physsub_func_20
 		or	al,al			; Zero ?
 		jz	loc_149			; Jump if zero
 		dec	al
@@ -1796,7 +1792,7 @@ loc_152:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_19		proc	near
+physsub_multiply_4		proc	near
 
 locloop_153:
 		push	cx
@@ -1822,7 +1818,7 @@ locloop_153:
 		mul	cl			; ax = reg * al
 		add	ax,529Fh
 		mov	di,ax
-		call	sub_10
+		call	physsub_func_10
 		pop	di
 		pop	si
 		pop	ds
@@ -1834,14 +1830,14 @@ loc_154:
 		loop	locloop_153		; Loop if cx > 0
 
 		retn
-sub_19		endp
+physsub_multiply_4		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_20		proc	near
+physsub_func_20		proc	near
 		mov	al,byte ptr ds:[93h]
 		or	al,al			; Zero ?
 		jnz	loc_155			; Jump if not zero
@@ -1854,7 +1850,7 @@ loc_155:
 loc_156:
 		mov	al,2
 		retn
-sub_20		endp
+physsub_func_20		endp
 
 loc_157:
 		mov	al,[si]
@@ -1878,13 +1874,13 @@ loc_157:
 		mul	cl			; ax = reg * al
 		add	ax,8030h
 		mov	si,ax
-		call	sub_14
+		call	copy_buffer
 		pop	di
 		pop	si
 		pop	ds
 		retn
 loc_158:
-		call	sub_15
+		call	fill_buffer
 		pop	di
 		pop	si
 		pop	ds
@@ -1897,7 +1893,7 @@ loc_159:
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_160			; Jump if not sign
-		call	sub_16
+		call	physsub_get_value
 loc_160:
 		push	ax
 		mov	bl,ds:data_69e
@@ -1924,13 +1920,13 @@ loc_160:
 		or	al,al			; Zero ?
 		jz	loc_161			; Jump if zero
 		mov	cl,al
-		call	sub_9
+		call	physsub_multiply_2
 		pop	di
 		pop	si
 		pop	ds
 		retn
 loc_161:
-		call	sub_11
+		call	physsub_process_loop
 		pop	di
 		pop	si
 		pop	ds
@@ -1945,7 +1941,7 @@ loc_161:
 		add	ax,cx
 		add	ax,ds:data_100e
 		mov	si,ax
-		call	sub_39
+		call	physsub_func_39
 		mov	di,data_81e
 		push	cs
 		pop	es
@@ -1955,7 +1951,7 @@ locloop_162:
 		movsw				; Mov [si] to es:[di]
 		movsb				; Mov [si] to es:[di]
 		add	si,21h
-		call	sub_39
+		call	physsub_func_39
 		loop	locloop_162		; Loop if cx > 0
 
 		retn
@@ -1964,7 +1960,7 @@ locloop_162:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_21		proc	near
+physsub_func_21		proc	near
 		mov	al,ds:data_66e
 		neg	al
 		add	al,12h
@@ -1975,7 +1971,7 @@ sub_21		proc	near
 		sub	al,2
 		cmp	al,cl
 		jne	loc_ret_163		; Jump if not equal
-		call	sub_26
+		call	physsub_func_26
 
 loc_ret_163:
 		retn
@@ -1987,7 +1983,7 @@ loc_164:
 		retn
 loc_165:
 		jnz	loc_166			; Jump if not zero
-		call	sub_22
+		call	physsub_func_22
 		jmp	loc_192
 loc_166:
 		add	al,0Ah
@@ -2100,7 +2096,7 @@ loc_176:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_22:
+physsub_func_22:
 		test	byte ptr ds:data_114e,0FFh
 		jnz	loc_177			; Jump if not zero
 		retn
@@ -2109,7 +2105,7 @@ loc_177:
 		push	di
 		push	si
 		push	bx
-		call	sub_24
+		call	physsub_func_24
 		pop	bx
 		pop	si
 		pop	di
@@ -2119,7 +2115,7 @@ loc_177:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_23:
+physsub_func_23:
 		push	ds
 		push	cs
 		pop	es
@@ -2146,7 +2142,7 @@ loc_179:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_24:
+physsub_func_24:
 		mov	di,cs:data_71e
 		mov	ax,0B800h
 		mov	es,ax
@@ -2169,7 +2165,7 @@ loc_181:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_25:
+physsub_func_25:
 		mov	al,byte ptr ds:[84h]
 		add	al,ds:data_73e
 		and	al,3Fh			; '?'
@@ -2182,7 +2178,7 @@ sub_25:
 		add	ax,cx
 		mov	si,ax
 		add	si,ds:data_100e
-		call	sub_39
+		call	physsub_func_39
 		mov	cx,4
 
 locloop_182:
@@ -2201,7 +2197,7 @@ locloop_183:
 		loop	locloop_183		; Loop if cx > 0
 
 		add	si,20h
-		call	sub_39
+		call	physsub_func_39
 		pop	cx
 		loop	locloop_182		; Loop if cx > 0
 
@@ -2217,8 +2213,8 @@ loc_185:
 		push	di
 		push	si
 		push	bx
-		call	sub_25
-		call	sub_23
+		call	physsub_func_25
+		call	physsub_func_23
 		mov	ds,cs:data_98e
 		mov	ax,0B800h
 		mov	es,ax
@@ -2252,7 +2248,7 @@ loc_188:
 locloop_189:
 		push	cx
 		lodsw				; String [si] to ax
-		call	sub_40
+		call	physsub_process_loop_2
 		or	es:[di],ax
 		add	di,2000h
 		cmp	di,4000h
@@ -2294,7 +2290,7 @@ loc_191:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_26:
+physsub_func_26:
 loc_192:
 		test	byte ptr ds:data_104e,0FFh
 		jz	loc_193			; Jump if zero
@@ -2320,7 +2316,7 @@ locloop_195:
 locloop_196:
 		push	cx
 		push	di
-		call	sub_13
+		call	physsub_check_state
 		pop	di
 		inc	di
 		inc	di
@@ -2337,7 +2333,7 @@ locloop_196:
 		pop	ds
 		pop	es
 		retn
-sub_21		endp
+physsub_func_21		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2403,14 +2399,14 @@ locloop_202:
 locloop_203:
 		push	cx
 		lodsb				; String [si] to al
-		call	sub_27
+		call	physsub_multiply_5
 		inc	di
 		inc	bl
 		pop	cx
 		loop	locloop_203		; Loop if cx > 0
 
 		add	si,4
-		call	sub_39
+		call	physsub_func_39
 		add	word ptr ds:data_63e,140h
 		pop	cx
 		loop	locloop_202		; Loop if cx > 0
@@ -2426,7 +2422,7 @@ loc_204:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_27		proc	near
+physsub_multiply_5		proc	near
 		cmp	byte ptr [di],0FFh
 		jne	loc_205			; Jump if not equal
 		retn
@@ -2466,15 +2462,15 @@ loc_206:
 		and	al,3
 		neg	al
 		add	al,3
-		call	sub_30
-		call	sub_28
+		call	physsub_func_30
+		call	physsub_func_28
 		pop	di
 		pop	si
 		mov	al,cs:data_76e
-		call	sub_30
+		call	physsub_func_30
 		inc	di
 		inc	si
-		call	sub_28
+		call	physsub_func_28
 		pop	bx
 		pop	si
 		pop	di
@@ -2483,7 +2479,7 @@ loc_206:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_28:
+physsub_func_28:
 		mov	cx,2
 
 locloop_207:
@@ -2504,40 +2500,40 @@ loc_208:
 		and	al,3
 		neg	al
 		add	al,3
-		call	sub_30
-		call	sub_29
+		call	physsub_func_30
+		call	physsub_get_value_2
 		pop	di
 		mov	al,cs:data_76e
-		call	sub_30
+		call	physsub_func_30
 		inc	di
-		call	sub_29
+		call	physsub_get_value_2
 		pop	bx
 		pop	si
 		pop	di
 		pop	ds
 		retn
-sub_27		endp
+physsub_multiply_5		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_29		proc	near
+physsub_get_value_2		proc	near
 		mov	al,cs:data_77e
 		not	al
 		and	es:[di],al
 		add	di,data_117e
 		and	es:[di],al
 		retn
-sub_29		endp
+physsub_get_value_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_30		proc	near
+physsub_func_30		proc	near
 		and	al,3
 		xor	ah,ah			; Zero register
 		push	ax
@@ -2556,7 +2552,7 @@ loc_210:
 		dec	ax
 		jnz	loc_209			; Jump if not zero
 		retn
-sub_30		endp
+physsub_func_30		endp
 
 			                        ;* No entry point to code
 		mov	al,byte ptr ds:[83h]
@@ -2569,18 +2565,18 @@ sub_30		endp
 		add	ah,ah
 		mov	ds:data_61e,al
 		mov	byte ptr ds:data_61e+1,ah
-		call	sub_38
+		call	physsub_scan_loop
 		mov	byte ptr ds:data_76e,0AAh
-		call	sub_31
+		call	physsub_func_31
 		mov	byte ptr ds:data_76e,0
-		call	sub_31
+		call	physsub_func_31
 		jmp	loc_243
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_31		proc	near
+physsub_func_31		proc	near
 		mov	al,ds:data_61e
 		dec	al
 		mov	bl,al
@@ -2591,7 +2587,7 @@ sub_31		proc	near
 		mov	bh,al
 		add	al,19h
 		mov	dh,al
-		call	sub_32
+		call	physsub_func_32
 		mov	al,ds:data_61e
 		sub	al,5
 		mov	bl,al
@@ -2602,7 +2598,7 @@ sub_31		proc	near
 		mov	bh,al
 		add	al,21h			; '!'
 		mov	dh,al
-		call	sub_32
+		call	physsub_func_32
 		mov	al,ds:data_61e
 		sub	al,9
 		mov	bl,al
@@ -2616,14 +2612,14 @@ sub_31		proc	near
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_32:
+physsub_func_32:
 		mov	cx,9
 
 locloop_211:
 		push	cx
 		push	dx
 		push	bx
-		call	sub_33
+		call	physsub_func_33
 		pop	bx
 		pop	dx
 		sub	bl,0Ch
@@ -2644,46 +2640,46 @@ loc_214:
 loc_215:
 		push	dx
 		push	bx
-		call	sub_37
+		call	physsub_multiply_6
 		pop	bx
 		pop	dx
 		pop	cx
 		loop	locloop_211		; Loop if cx > 0
 
 		retn
-sub_31		endp
+physsub_func_31		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_33		proc	near
+physsub_func_33		proc	near
 		mov	ax,0B800h
 		mov	es,ax
 		push	dx
 		push	bx
 		mov	dh,bh
-		call	sub_35
+		call	physsub_extract_bits
 		pop	bx
 		pop	dx
 		push	dx
 		push	bx
 		mov	bh,dh
-		call	sub_35
+		call	physsub_extract_bits
 		pop	bx
 		pop	dx
 		push	dx
 		push	bx
 		mov	dl,bl
-		call	sub_34
+		call	physsub_func_34
 		pop	bx
 		pop	dx
 		mov	bl,dl
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_34:
+physsub_func_34:
 		cmp	dh,bh
 		jae	loc_216			; Jump if above or =
 		xchg	dx,bx
@@ -2709,7 +2705,7 @@ loc_220:
 		inc	al
 		push	ax
 		mov	al,bh
-		call	sub_36
+		call	extract_bits_2
 		mov	al,bl
 		shr	al,1			; Shift w/zeros fill
 		shr	al,1			; Shift w/zeros fill
@@ -2748,14 +2744,14 @@ loc_226:
 		loop	locloop_225		; Loop if cx > 0
 
 		retn
-sub_33		endp
+physsub_func_33		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_35		proc	near
+physsub_extract_bits		proc	near
 		cmp	dl,bl
 		jae	loc_227			; Jump if above or =
 		xchg	dx,bx
@@ -2777,7 +2773,7 @@ loc_230:
 		mov	dl,0DEh
 loc_231:
 		mov	al,bh
-		call	sub_36
+		call	extract_bits_2
 		mov	al,bl
 		shr	al,1			; Shift w/zeros fill
 		shr	al,1			; Shift w/zeros fill
@@ -2860,14 +2856,14 @@ loc_241:
 		and	es:[di],dh
 		or	es:[di],al
 		retn
-sub_35		endp
+physsub_extract_bits		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_36		proc	near
+extract_bits_2		proc	near
 		shr	al,1			; Shift w/zeros fill
 		sbb	di,di
 		and	di,2000h
@@ -2876,14 +2872,14 @@ sub_36		proc	near
 		add	ax,23Ch
 		add	di,ax
 		retn
-sub_36		endp
+extract_bits_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_37		proc	near
+physsub_multiply_6		proc	near
 		mov	cl,ds:data_101e
 		shr	cl,1			; Shift w/zeros fill
 		inc	cl
@@ -2901,14 +2897,14 @@ loc_242:
 		jb	loc_242			; Jump if below
 		mov	byte ptr ds:data_97e,0
 		retn
-sub_37		endp
+physsub_multiply_6		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_38		proc	near
+physsub_scan_loop		proc	near
 loc_243:
 		mov	ax,0B800h
 		mov	es,ax
@@ -2947,7 +2943,7 @@ loc_247:
 		loop	locloop_244		; Loop if cx > 0
 
 		retn
-sub_38		endp
+physsub_scan_loop		endp
 
 			                        ;* No entry point to code
 		and	al,3Fh			; '?'
@@ -2988,14 +2984,14 @@ loc_248:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_39		proc	near
+physsub_func_39		proc	near
 		cmp	si,0E900h
 		jae	loc_249			; Jump if above or =
 		retn
 loc_249:
 		sub	si,900h
 		retn
-sub_39		endp
+physsub_func_39		endp
 
 			                        ;* No entry point to code
 		cmp	si,0E000h
@@ -3037,7 +3033,7 @@ locloop_253:
 		push	cx
 		lodsw				; String [si] to ax
 		not	ax
-		call	sub_40
+		call	physsub_process_loop_2
 		not	ax
 		and	ax,0AAAAh
 		stosw				; Store ax to es:[di]
@@ -3096,7 +3092,7 @@ loc_254:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_40		proc	near
+physsub_process_loop_2		proc	near
 		mov	dx,ax
 		xor	ax,ax			; Zero register
 		mov	cx,8
@@ -3116,7 +3112,7 @@ loc_256:
 		loop	locloop_255		; Loop if cx > 0
 
 		retn
-sub_40		endp
+physsub_process_loop_2		endp
 
 			                        ;* No entry point to code
 		mov	ds:data_76e,al
@@ -3132,7 +3128,7 @@ locloop_258:
 		push	cx
 		lodsb				; String [si] to al
 		push	si
-		call	sub_41
+		call	physsub_multiply_7
 		pop	si
 		add	word ptr ds:data_63e,2
 		pop	cx
@@ -3148,7 +3144,7 @@ locloop_258:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_41		proc	near
+physsub_multiply_7		proc	near
 		push	ds
 		mov	cl,10h
 		mul	cl			; ax = reg * al
@@ -3163,7 +3159,7 @@ sub_41		proc	near
 locloop_259:
 		push	cx
 		lodsw				; String [si] to ax
-		call	sub_42
+		call	physsub_process_loop_3
 		stosw				; Store ax to es:[di]
 		add	di,1FFEh
 		cmp	di,4000h
@@ -3175,14 +3171,14 @@ loc_260:
 
 		pop	ds
 		retn
-sub_41		endp
+physsub_multiply_7		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_42		proc	near
+physsub_process_loop_3		proc	near
 		mov	cx,8
 
 locloop_261:
@@ -3204,7 +3200,7 @@ locloop_261:
 
 		mov	ax,dx
 		retn
-sub_42		endp
+physsub_process_loop_3		endp
 
 			                        ;* No entry point to code
 		add	word ptr [bx-7Eh],9347h
@@ -3636,10 +3632,10 @@ locloop_279:
 		xchg	al,ah
 		not	ax
 		mov	cs:data_75e,ax
-		call	sub_43
+		call	physsub_process_loop_4
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
-		call	sub_44
+		call	physsub_scan_loop_2
 		mov	es:[bp],dx
 		inc	bp
 		inc	bp
@@ -3655,7 +3651,7 @@ locloop_279:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_43		proc	near
+physsub_process_loop_4		proc	near
 		mov	cx,8
 
 locloop_280:
@@ -3674,7 +3670,7 @@ locloop_280:
 		loop	locloop_280		; Loop if cx > 0
 
 		retn
-sub_43		endp
+physsub_process_loop_4		endp
 
 		db	0, 1, 2, 1, 1, 3
 		db	3, 1, 2, 3, 2, 2
@@ -3684,7 +3680,7 @@ sub_43		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_44		proc	near
+physsub_scan_loop_2		proc	near
 		mov	cx,8
 
 locloop_281:
@@ -3703,7 +3699,7 @@ loc_282:
 		loop	locloop_281		; Loop if cx > 0
 
 		retn
-sub_44		endp
+physsub_scan_loop_2		endp
 
 			                        ;* No entry point to code
 		push	ds

@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_17	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ENEMY_SPECIAL - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -126,7 +122,7 @@ start:
 		db	 00h,0C7h		;  Fixup - byte match
 		push	es
 		adc	bh,byte ptr ss:data_21+0Ah[bp+di]	; ('ll upon the Spirits and ')
-		call	sub_13
+		call	special_process_loop_2
 		mov	bx,0D60h
 		mov	cx,3637h
 		mov	al,0FFh
@@ -134,20 +130,20 @@ start:
 		mov	word ptr ds:data_137e,0BA67h
 		jmp	short loc_1
 			                        ;* No entry point to code
-		call	sub_1
+		call	special_load_chunk
 		mov	word ptr ds:data_106e,717h
-		call	sub_13
+		call	special_process_loop_2
 		mov	bx,0D60h
 		mov	cx,3637h
 		mov	al,0FFh
 		call	word ptr cs:data_59e
-		call	sub_16
+		call	special_func_16
 		mov	ds:data_137e,si
 loc_1:
 		call	word ptr cs:data_82e
 		cmp	al,0FFh
 		je	loc_2			; Jump if equal
-		call	sub_2
+		call	special_func_2
 		jmp	short loc_1
 loc_2:
 		jmp	word ptr cs:data_70e
@@ -158,7 +154,7 @@ zr2_17		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+special_load_chunk		proc	near
 		mov	es,ds:data_136e
 		mov	di,8000h
 		mov	si,0ACB0h
@@ -180,19 +176,19 @@ sub_1		proc	near
 		add	bx,bx
 		mov	si,ds:data_101e[bx]
 		jmp	word ptr cs:data_63e
-sub_1		endp
+special_load_chunk		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+special_func_2		proc	near
 		mov	bl,al
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr cs:data_87e[bx]	;*
-sub_2		endp
+special_func_2		endp
 
 			                        ;* No entry point to code
 		retf				; Return far
@@ -238,7 +234,7 @@ loc_5:
 		mov	word ptr ds:data_137e,0AE42h
 		retn
 			                        ;* No entry point to code
-		call	sub_12
+		call	special_func_12
 		mov	bl,ds:data_128e
 		dec	bl
 		xor	bh,bh			; Zero register
@@ -249,8 +245,8 @@ loc_5:
 		mov	word ptr ds:data_137e,0ADBFh
 		retn
 loc_6:
-		call	sub_12
-		call	sub_7
+		call	special_func_12
+		call	fill_buffer
 		mov	word ptr ds:data_137e,0ADBFh
 		jnc	loc_7			; Jump if carry=0
 		retn
@@ -259,21 +255,21 @@ loc_7:
 		retn
 			                        ;* No entry point to code
 		mov	byte ptr ds:data_108e,0FFh
-		call	sub_3
-		call	sub_6
+		call	special_scan_loop
+		call	special_func_6
 		mov	byte ptr ds:data_110e,0FFh
 		mov	byte ptr ds:data_111e,0FFh
 		mov	word ptr ds:data_137e,0AFDEh
 loc_8:
-		call	sub_6
+		call	special_func_6
 		call	word ptr cs:data_82e
 		cmp	al,4
 		je	loc_8			; Jump if equal
 		mov	byte ptr ds:data_112e,0FFh
-;*		call	sub_4			;*
+;*		call	special_func_4			;*
 		db	0E8h, 43h, 00h		;  Fixup - byte match
 		call	word ptr cs:data_82e
-		call	sub_5
+		call	special_check_state
 		add	ax,ax
 		mov	bx,ax
 		mov	ax,ds:data_102e[bx]
@@ -284,7 +280,7 @@ loc_8:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+special_scan_loop		proc	near
 		mov	si,data_89e
 		mov	byte ptr ds:data_111e,0FFh
 		mov	byte ptr ds:data_113e,0FFh
@@ -295,7 +291,7 @@ locloop_9:
 		mov	byte ptr ds:data_132e,0
 		lodsb				; String [si] to al
 		push	si
-		call	sub_14
+		call	special_multiply
 loc_10:
 		cmp	byte ptr ds:data_132e,19h
 		jb	loc_10			; Jump if below
@@ -305,7 +301,7 @@ loc_10:
 
 		mov	byte ptr ds:data_111e,0
 		retn
-sub_3		endp
+special_scan_loop		endp
 
 			                        ;* No entry point to code
 		add	[bx+di],al
@@ -319,7 +315,7 @@ locloop_11:
 		mov	al,[si]
 		dec	si
 		push	si
-		call	sub_14
+		call	special_multiply
 loc_12:
 		cmp	byte ptr ds:data_132e,19h
 		jb	loc_12			; Jump if below
@@ -335,7 +331,7 @@ loc_12:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+special_check_state		proc	near
 		xor	bx,bx			; Zero register
 		mov	bl,byte ptr ds:[8Dh]
 		cmp	bl,0Fh
@@ -379,7 +375,7 @@ loc_17:
 		mov	byte ptr ds:data_109e,0FFh
 		mov	ax,4
 		retn
-sub_5		endp
+special_check_state		endp
 
 			                        ;* No entry point to code
 		xor	al,[bx+si]
@@ -571,14 +567,14 @@ loc_ret_29:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+special_func_6		proc	near
 		mov	byte ptr ds:data_132e,0
 loc_30:
-		call	sub_15
+		call	special_func_15
 		cmp	byte ptr ds:data_132e,8Ch
 		jb	loc_30			; Jump if below
 		retn
-sub_6		endp
+special_func_6		endp
 
 			                        ;* No entry point to code
 		mov	word ptr ds:data_137e,0ADBFh
@@ -588,7 +584,7 @@ sub_6		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+fill_buffer		proc	near
 		push	cs
 		pop	es
 		mov	si,0A907h
@@ -650,13 +646,13 @@ loc_33:
 		xor	al,al			; Zero register
 		mov	si,0E001h
 		jcxz	loc_34			; Jump if cx=0
-		call	sub_8
+		call	special_process_loop
 loc_34:
 		mov	si,0E001h
 		mov	al,ds:data_129e
 		mov	ds:data_142e,al
 		mov	byte ptr ds:data_141e,5
-		call	sub_9
+		call	special_func_9
 		pushf				; Push flags
 		mov	bx,0D60h
 		mov	cx,3637h
@@ -693,7 +689,7 @@ loc_38:
 loc_39:
 		stosb				; Store al to es:[di]
 		jmp	short loc_37
-sub_7		endp
+fill_buffer		endp
 
 		db	 2Ah, 2Eh, 75h, 73h, 72h, 00h
 		db	'Input name:'
@@ -703,7 +699,7 @@ sub_7		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
+special_process_loop		proc	near
 		xor	ah,ah			; Zero register
 
 locloop_40:
@@ -731,14 +727,14 @@ locloop_40:
 		loop	locloop_40		; Loop if cx > 0
 
 		retn
-sub_8		endp
+special_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+special_func_9		proc	near
 		mov	byte ptr ds:data_147e,0FFh
 		mov	byte ptr ds:data_135e,0
 		mov	byte ptr ds:data_135e,0
@@ -751,9 +747,9 @@ sub_9		proc	near
 		jz	loc_41			; Jump if zero
 		call	word ptr cs:data_83e
 loc_41:
-		call	sub_11
+		call	special_func_11
 		xor	al,al			; Zero register
-		call	sub_10
+		call	special_func_10
 loc_42:
 		call	word ptr cs:data_84e
 		mov	byte ptr ds:data_132e,0
@@ -809,9 +805,9 @@ loc_46:
 		mov	cx,1010h
 		xor	al,al			; Zero register
 		call	word ptr cs:data_59e
-		call	sub_11
+		call	special_func_11
 		xor	al,al			; Zero register
-		call	sub_10
+		call	special_func_10
 		jmp	loc_42
 loc_47:
 		mov	cx,0A592h
@@ -835,7 +831,7 @@ loc_49:
 		inc	byte ptr ds:data_123e
 loc_50:
 		mov	ds:data_124e[bx],al
-		call	sub_11
+		call	special_func_11
 		mov	al,1
 		jmp	loc_67
 loc_51:
@@ -843,7 +839,7 @@ loc_51:
 		test	al,8
 		jz	loc_53			; Jump if zero
 		mov	al,1
-		call	sub_10
+		call	special_func_10
 loc_52:
 		int	61h			; ??INT Non-standard interrupt
 		test	al,8
@@ -854,7 +850,7 @@ loc_53:
 		test	al,4
 		jz	loc_55			; Jump if zero
 		mov	al,0FFh
-		call	sub_10
+		call	special_func_10
 loc_54:
 		int	61h			; ??INT Non-standard interrupt
 		test	al,4
@@ -975,7 +971,7 @@ loc_66:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_10:
+special_func_10:
 loc_67:
 		push	si
 		push	ax
@@ -1022,7 +1018,7 @@ loc_70:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_11:
+special_func_11:
 		push	si
 		mov	ax,ds:data_119e
 		shr	ax,1			; Shift w/zeros fill
@@ -1063,11 +1059,11 @@ loc_72:
 loc_73:
 		mov	byte ptr ds:data_125e,60h	; '`'
 		mov	al,0FFh
-		call	sub_10
-		call	sub_11
+		call	special_func_10
+		call	special_func_11
 		pop	si
 		retn
-sub_9		endp
+special_func_9		endp
 
 			                        ;* No entry point to code
 		push	cs
@@ -1166,19 +1162,19 @@ loc_77:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+special_func_12		proc	near
 		mov	bx,2717h
 		mov	cx,1D41h
 		xor	al,al			; Zero register
 		jmp	word ptr cs:data_59e
-sub_12		endp
+special_func_12		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+special_process_loop_2		proc	near
 		mov	si,data_94e
 		mov	bx,ds:data_106e
 		mov	cx,8
@@ -1203,7 +1199,7 @@ locloop_79:
 		loop	locloop_78		; Loop if cx > 0
 
 		retn
-sub_13		endp
+special_process_loop_2		endp
 
 		db	 00h, 01h, 02h, 03h, 04h, 05h
 		db	 06h, 07h, 08h, 09h, 0Ah, 0Bh
@@ -1220,7 +1216,7 @@ sub_13		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+special_multiply		proc	near
 		mov	cl,20h			; ' '
 		mul	cl			; ax = reg * al
 		mov	bx,ds:data_106e
@@ -1249,7 +1245,7 @@ locloop_81:
 		loop	locloop_80		; Loop if cx > 0
 
 		retn
-sub_14		endp
+special_multiply		endp
 
 			                        ;* No entry point to code
 		sbb	bl,[bp+di]
@@ -1301,7 +1297,7 @@ sub_14		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+special_func_15		proc	near
 		cmp	word ptr ds:data_140e,2
 		jae	loc_82			; Jump if above or =
 		retn
@@ -1333,7 +1329,7 @@ loc_84:
 		and	bl,7
 		xor	bh,bh			; Zero register
 		mov	al,ds:data_98e[bx]
-		call	sub_14
+		call	special_multiply
 		inc	byte ptr ds:data_114e
 loc_86:
 		and	byte ptr ds:data_114e,0Fh
@@ -1361,7 +1357,7 @@ loc_90:
 		mov	bx,ds:data_106e
 		add	bx,718h
 		jmp	word ptr cs:data_75e
-sub_15		endp
+special_func_15		endp
 
 		db	29h
 data_17		dw	672Ah			; Data table (indexed access)
@@ -1372,14 +1368,14 @@ data_17		dw	672Ah			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+special_func_16		proc	near
 		mov	si,0AD9Dh
 		mov	bl,ds:data_128e
 		dec	bl
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr ds:data_99e[bx]	;*
-sub_16		endp
+special_func_16		endp
 
 			                        ;* No entry point to code
 		sub	ds:data_100e[si],ch

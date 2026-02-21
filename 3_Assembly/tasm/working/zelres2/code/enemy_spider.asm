@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_09	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ENEMY_SPIDER - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -103,10 +99,10 @@ loc_4:
 		mov	es,dx
 		mov	di,0
 		mov	si,data_37e
-		call	sub_5
+		call	spider_func_5
 		mov	di,offset data_14
 		mov	si,data_43e
-		call	sub_5
+		call	spider_func_5
 		push	ds
 		mov	dx,cs
 		add	dx,1000h
@@ -115,7 +111,7 @@ loc_4:
 		mov	bp,0FC0h
 		mov	bx,0C1Eh
 		mov	cx,3848h
-		call	sub_6
+		call	spider_func_6
 		pop	ds
 		mov	byte ptr ds:data_34e,1Ch
 		mov	dx,cs
@@ -123,10 +119,10 @@ loc_4:
 		mov	es,dx
 		mov	di,0
 		mov	si,data_45e
-		call	sub_5
+		call	spider_func_5
 		mov	di,1C0h
 		mov	si,data_46e
-		call	sub_5
+		call	spider_func_5
 		push	ds
 		mov	dx,cs
 		add	dx,1000h
@@ -135,9 +131,9 @@ loc_4:
 		mov	bp,1C0h
 		mov	bx,0C0Eh
 		mov	cx,1C10h
-		call	sub_6
+		call	spider_func_6
 		pop	ds
-		call	sub_1
+		call	spider_func_1
 		retf				; Return far
 		db	0
 
@@ -147,12 +143,12 @@ zr2_09		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+spider_func_1		proc	near
 		xor	bx,bx			; Zero register
 		mov	bl,ds:data_30e
 		add	bx,bx
 		jmp	word ptr ds:data_31e[bx]	;*
-sub_1		endp
+spider_func_1		endp
 
 			                        ;* No entry point to code
 		mov	ax,data_21
@@ -299,11 +295,11 @@ loc_14:
 		db	 00h,0B0h, 8Eh,0C0h, 8Eh,0D8h
 		db	0BEh,0FDh, 04h,0B4h, 10h
 loc_15:
-		call	sub_2
+		call	copy_buffer
 		add	si,2000h
 		cmp	si,6000h
 		jb	loc_16			; Jump if below
-		call	sub_2
+		call	copy_buffer
 		add	si,data_3e
 loc_16:
 		dec	ah
@@ -381,7 +377,7 @@ loc_21:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+copy_buffer		proc	near
 		push	si
 		mov	di,si
 		add	di,1Ch
@@ -389,7 +385,7 @@ sub_2		proc	near
 		rep	movsw			; Rep when cx >0 Mov [si] to es:[di]
 		pop	si
 		retn
-sub_2		endp
+copy_buffer		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -419,16 +415,16 @@ locloop_23:
 locloop_24:
 		mov	dl,ds:data_47e[si]
 		mov	dh,ds:data_48e[si]
-		call	sub_3
+		call	spider_func_3
 		stosb				; Store al to es:[di]
 		mov	es:[di+6Fh],al
-		call	sub_3
+		call	spider_func_3
 		stosb				; Store al to es:[di]
 		mov	es:[di+6Fh],al
-		call	sub_3
+		call	spider_func_3
 		stosb				; Store al to es:[di]
 		mov	es:[di+6Fh],al
-		call	sub_3
+		call	spider_func_3
 		stosb				; Store al to es:[di]
 		mov	es:[di+6Fh],al
 		inc	si
@@ -445,7 +441,7 @@ locloop_24:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+spider_func_3		proc	near
 		xor	al,al			; Zero register
 		add	dh,dh
 		adc	al,al
@@ -458,7 +454,7 @@ sub_3		proc	near
 		adc	al,al
 		add	al,al
 		retn
-sub_3		endp
+spider_func_3		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -495,10 +491,10 @@ locloop_28:
 		push	cx
 		mov	dh,ds:data_48e[si]
 		mov	dl,ds:data_47e[si]
-		call	sub_4
+		call	spider_process_loop
 		mov	es:[di+38h],al
 		stosb				; Store al to es:[di]
-		call	sub_4
+		call	spider_process_loop
 		mov	es:[di+38h],al
 		stosb				; Store al to es:[di]
 		inc	si
@@ -520,7 +516,7 @@ loc_29:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+spider_process_loop		proc	near
 		xor	al,al			; Zero register
 		mov	cx,2
 
@@ -543,7 +539,7 @@ locloop_30:
 		loop	locloop_30		; Loop if cx > 0
 
 		retn
-sub_4		endp
+spider_process_loop		endp
 
 		db	 00h, 04h, 03h, 02h, 04h, 0Ch
 		db	 05h, 06h, 03h, 05h, 0Bh, 0Ah
@@ -553,7 +549,7 @@ sub_4		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+spider_func_5		proc	near
 		mov	bx,di
 loc_31:
 		lodsb				; String [si] to al
@@ -583,7 +579,7 @@ loc_35:
 		dec	ah
 		jnz	loc_35			; Jump if not zero
 		jmp	short loc_31
-sub_5		endp
+spider_func_5		endp
 
 		db	38h
 
@@ -591,14 +587,14 @@ sub_5		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+spider_func_6		proc	near
 		xor	ax,ax			; Zero register
 		mov	al,cs:data_30e
 		add	ax,ax
 		add	ax,36A5h
 		mov	di,ax
 		jmp	word ptr cs:[di]	;*
-sub_6		endp
+spider_func_6		endp
 
 			                        ;* No entry point to code
 		mov	cl,36h			; '6'
@@ -777,13 +773,13 @@ loc_47:
 		push	bx
 		mov	dl,[si]
 		mov	dh,ds:[bp+si]
-		call	sub_7
+		call	spider_func_7
 		stosb				; Store al to es:[di]
-		call	sub_7
+		call	spider_func_7
 		stosb				; Store al to es:[di]
-		call	sub_7
+		call	spider_func_7
 		stosb				; Store al to es:[di]
-		call	sub_7
+		call	spider_func_7
 		stosb				; Store al to es:[di]
 		inc	si
 		pop	bx
@@ -801,7 +797,7 @@ loc_47:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+spider_func_7		proc	near
 		xor	al,al			; Zero register
 		add	dh,dh
 		adc	al,al
@@ -814,7 +810,7 @@ sub_7		proc	near
 		add	dl,dl
 		adc	al,al
 		retn
-sub_7		endp
+spider_func_7		endp
 
 			                        ;* No entry point to code
 		mov	dh,bl
@@ -842,9 +838,9 @@ loc_49:
 		push	bx
 		mov	dh,ds:[bp+si]
 		mov	dl,[si]
-		call	sub_8
+		call	spider_process_loop_2
 		stosb				; Store al to es:[di]
-		call	sub_8
+		call	spider_process_loop_2
 		stosb				; Store al to es:[di]
 		inc	si
 		pop	bx
@@ -866,7 +862,7 @@ loc_50:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
+spider_process_loop_2		proc	near
 		xor	al,al			; Zero register
 		mov	cx,2
 
@@ -889,7 +885,7 @@ locloop_51:
 		loop	locloop_51		; Loop if cx > 0
 
 		retn
-sub_8		endp
+spider_process_loop_2		endp
 
 		db	 00h, 07h, 09h, 01h, 07h, 0Fh
 		db	 0Bh, 07h, 09h, 0Bh, 0Bh, 03h
@@ -1166,7 +1162,7 @@ data_12		dw	12FCh			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+spider_func_9		proc	near
 		db	 2Eh,0FAh, 22h, 2Bh,0E2h,0A2h
 		db	 32h,0E2h,0EAh,0E2h, 20h, 22h
 		db	0C3h,0A2h, 22h, 2Ah, 88h, 8Bh
@@ -1412,7 +1408,7 @@ loc_53:
 		cli				; Disable interrupts
 		inc	cx
 		jmp	short loc_53
-sub_9		endp
+spider_func_9		endp
 
 			                        ;* No entry point to code
 		mov	al,ds:data_62e

@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR1_09	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  IMAGE_DECODER_B - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -132,7 +128,7 @@ loc_3:
 		mov	si,ds:data_49e
 		cmp	byte ptr [si+1Dh],0FDh
 		jne	loc_4			; Jump if not equal
-		call	sub_7
+		call	decb_multiply
 loc_4:
 		mov	word ptr ds:data_19e,2C5Fh
 		mov	si,ds:data_49e
@@ -142,46 +138,46 @@ loc_4:
 		mov	di,0E000h
 		mov	byte ptr ds:data_20e,0
 loc_5:
-		call	sub_1
+		call	decb_scan_loop
 		xor	bl,bl			; Zero register
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_6			; Jump if zero
-		call	sub_4
+		call	decb_func_4
 loc_6:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_7			; Jump if zero
-		call	sub_4
+		call	decb_func_4
 loc_7:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_8			; Jump if zero
-		call	sub_4
+		call	decb_func_4
 loc_8:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_9			; Jump if zero
-		call	sub_3
+		call	decb_func_3
 loc_9:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_10			; Jump if zero
-		call	sub_3
+		call	decb_func_3
 loc_10:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_11			; Jump if zero
-		call	sub_2
+		call	decb_func_2
 loc_11:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_12			; Jump if zero
-		call	sub_3
+		call	decb_func_3
 loc_12:
 		inc	bl
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_13			; Jump if zero
-		call	sub_3
+		call	decb_func_3
 loc_13:
 		add	word ptr ds:data_19e,2
 		inc	byte ptr ds:data_20e
@@ -195,7 +191,7 @@ zr1_09		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+decb_scan_loop		proc	near
 		cmp	byte ptr ds:data_20e,1Bh
 		jne	loc_14			; Jump if not equal
 		retn
@@ -221,7 +217,7 @@ loc_15:
 locloop_16:
 		push	cx
 		push	di
-		call	sub_11
+		call	decb_scan_loop_2
 		pop	di
 		inc	di
 		inc	di
@@ -232,21 +228,21 @@ locloop_16:
 		pop	es
 		pop	di
 		retn
-sub_1		endp
+decb_scan_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+decb_func_2		proc	near
 		cmp	byte ptr [si-1],0FDh
 		jne	loc_17			; Jump if not equal
 		jmp	loc_41
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_3:
+decb_func_3:
 loc_17:
 		mov	al,[di-1]
 		mov	byte ptr [di-1],0FEh
@@ -339,7 +335,7 @@ loc_27:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_4:
+decb_func_4:
 		mov	al,[di-1]
 		mov	byte ptr [di-1],0FEh
 		inc	al
@@ -464,12 +460,12 @@ loc_39:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_5:
+decb_func_5:
 		mov	cx,6
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_6:
+decb_func_6:
 		push	cs
 		pop	es
 
@@ -512,29 +508,29 @@ loc_41:
 		xor	dh,dh			; Zero register
 		add	dx,word ptr cs:[80h]
 		mov	ds:data_24e,dx
-		call	sub_8
+		call	decb_func_8
 		mov	es:data_21e,al
 		cmp	byte ptr es:data_23e,0FDh
 		jne	loc_42			; Jump if not equal
 		inc	dx
-		call	sub_8
+		call	decb_func_8
 		mov	es:data_23e,al
 loc_42:
 		mov	si,3CAFh
 		mov	di,3EB3h
-		call	sub_5
+		call	decb_func_5
 		mov	si,cs:data_44e
 loc_43:
-		call	sub_14
+		call	decb_scan_loop_3
 		or	bl,bl			; Zero ?
 		jz	loc_44			; Jump if zero
 		push	si
 		push	bx
-		call	sub_13
+		call	decb_multiply_2
 		pop	bx
 		mov	es,cs:data_50e
 		mov	si,data_21e
-		call	sub_12
+		call	decb_get_value
 		pop	si
 loc_44:
 		add	si,8
@@ -564,7 +560,7 @@ loc_46:
 		mov	es,ax
 		inc	ch
 		jz	loc_47			; Jump if zero
-		call	sub_11
+		call	decb_scan_loop_2
 loc_47:
 		pop	di
 		pop	cx
@@ -575,7 +571,7 @@ loc_47:
 		inc	di
 		inc	cl
 		jz	loc_48			; Jump if zero
-		call	sub_11
+		call	decb_scan_loop_2
 loc_48:
 		pop	di
 		pop	es
@@ -589,14 +585,14 @@ loc_48:
 		pop	si
 		pop	ds
 		retn
-sub_2		endp
+decb_func_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+decb_multiply		proc	near
 		push	es
 		push	ds
 		mov	si,ds:data_49e
@@ -610,16 +606,16 @@ sub_7		proc	near
 		cmp	byte ptr ds:data_21e,0FDh
 		jne	loc_49			; Jump if not equal
 		inc	dx
-		call	sub_8
+		call	decb_func_8
 		mov	ds:data_21e,al
 loc_49:
 		mov	si,3CAFh
 		mov	di,3EB3h
 		mov	cx,3
-		call	sub_6
+		call	decb_func_6
 		mov	si,cs:data_44e
 loc_50:
-		call	sub_14
+		call	decb_scan_loop_3
 		or	bl,bl			; Zero ?
 		jz	loc_51			; Jump if zero
 		push	si
@@ -627,14 +623,14 @@ loc_50:
 		mov	al,3
 		mul	bl			; ax = reg * al
 		push	ax
-		call	sub_13
+		call	decb_multiply_2
 		pop	ax
 		add	di,ax
 		mov	bp,di
 		mov	es,cs:data_50e
 		mov	si,3CAFh
 		mov	di,3EB3h
-		call	sub_15
+		call	decb_multiply_3
 		pop	si
 loc_51:
 		add	si,8
@@ -645,7 +641,7 @@ loc_51:
 		mov	si,data_35e
 		mov	ax,0B000h
 		mov	es,ax
-		call	sub_11
+		call	decb_scan_loop_2
 		pop	ds
 		pop	es
 		mov	di,data_45e
@@ -654,39 +650,39 @@ loc_51:
 		stosb				; Store al to es:[di]
 		stosb				; Store al to es:[di]
 		retn
-sub_7		endp
+decb_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
-		call	sub_9
+decb_func_8		proc	near
+		call	decb_func_9
 		mov	al,[si+3]
 		cmp	al,0FDh
 		je	loc_52			; Jump if equal
 		retn
 loc_52:
 		add	si,8
-		call	sub_10
+		call	decb_func_10
 		mov	al,[si+3]
 		cmp	al,0FDh
 		je	loc_52			; Jump if equal
 		retn
-sub_8		endp
+decb_func_8		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+decb_func_9		proc	near
 		mov	si,ds:data_44e
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_10:
+decb_func_10:
 loc_53:
 		cmp	dx,[si]
 		jne	loc_54			; Jump if not equal
@@ -694,14 +690,14 @@ loc_53:
 loc_54:
 		add	si,8
 		jmp	short loc_53
-sub_9		endp
+decb_func_9		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_11		proc	near
+decb_scan_loop_2		proc	near
 		mov	cx,18h
 
 locloop_55:
@@ -716,28 +712,28 @@ loc_56:
 		loop	locloop_55		; Loop if cx > 0
 
 		retn
-sub_11		endp
+decb_scan_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+decb_get_value		proc	near
 		mov	bp,di
 		dec	bl
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		call	word ptr cs:data_13e[bx]	;*
 		retn
-sub_12		endp
+decb_get_value		endp
 
 			                        ;* No entry point to code
 		xchg	[si],dh
 ;*		jle	loc_58			;*Jump if < or =
 		db	 7Eh, 34h		;  Fixup - byte match
 		mov	di,3EB3h
-		call	sub_15
+		call	decb_multiply_3
 		jmp	short loc_61
 			                        ;* No entry point to code
 		add	si,3
@@ -748,7 +744,7 @@ sub_12		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+decb_multiply_2		proc	near
 		mov	al,[si+2]
 		mov	ch,al
 		and	al,7Fh
@@ -768,14 +764,14 @@ loc_57:
 		mul	cl			; ax = reg * al
 		add	di,ax
 		retn
-sub_13		endp
+decb_multiply_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+decb_scan_loop_3		proc	near
 		mov	cx,2
 		mov	dx,ds:data_24e
 
@@ -790,7 +786,7 @@ loc_60:
 
 		mov	bl,cl
 		retn
-sub_14		endp
+decb_scan_loop_3		endp
 
 			                        ;* No entry point to code
 		mov	bp,di
@@ -809,7 +805,7 @@ sub_14		endp
 		jmp	short loc_61
 			                        ;* No entry point to code
 		mov	di,3E53h
-		call	sub_15
+		call	decb_multiply_3
 		jmp	short loc_61
 			                        ;* No entry point to code
 		mov	di,data_34e
@@ -820,7 +816,7 @@ sub_14		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+decb_multiply_3		proc	near
 loc_61:
 		mov	cx,3
 
@@ -847,7 +843,7 @@ locloop_62:
 		mov	ds,cs:data_50e
 		push	cs
 		pop	es
-		call	sub_16
+		call	decb_process_loop
 		pop	bp
 		pop	es
 		pop	si
@@ -856,7 +852,7 @@ locloop_62:
 		loop	locloop_62		; Loop if cx > 0
 
 		retn
-sub_15		endp
+decb_multiply_3		endp
 
 			                        ;* No entry point to code
 		push	cs
@@ -879,7 +875,7 @@ locloop_63:
 		add	ax,2000h
 		mov	word ptr cs:data_29e+2,ax
 		mov	ds,cs:data_50e
-		call	sub_16
+		call	decb_process_loop
 		pop	si
 		pop	ds
 		pop	cx
@@ -891,7 +887,7 @@ locloop_63:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+decb_process_loop		proc	near
 		push	ds
 		push	si
 		push	di
@@ -918,7 +914,7 @@ locloop_65:
 		loop	locloop_65		; Loop if cx > 0
 
 		retn
-sub_16		endp
+decb_process_loop		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -929,11 +925,11 @@ sub_16		endp
 		mov	si,53F8h
 		mov	al,8
 loc_66:
-		call	sub_17
+		call	copy_buffer
 		add	si,2000h
 		cmp	si,6000h
 		jb	loc_67			; Jump if below
-		call	sub_17
+		call	copy_buffer
 		add	si,0A05Ah
 loc_67:
 		dec	al
@@ -941,11 +937,11 @@ loc_67:
 		mov	si,data_57e
 		mov	al,8
 loc_68:
-		call	sub_18
+		call	copy_buffer_2
 		add	si,2000h
 		cmp	si,data_59e
 		jb	loc_69			; Jump if below
-		call	sub_18
+		call	copy_buffer_2
 		add	si,data_62e
 loc_69:
 		dec	al
@@ -958,7 +954,7 @@ loc_69:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+copy_buffer		proc	near
 		push	si
 		mov	di,si
 		dec	si
@@ -970,14 +966,14 @@ sub_17		proc	near
 		movsb				; Mov [si] to es:[di]
 		pop	si
 		retn
-sub_17		endp
+copy_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+copy_buffer_2		proc	near
 		push	si
 		mov	di,si
 		sub	si,4
@@ -990,7 +986,7 @@ sub_18		proc	near
 		movsb				; Mov [si] to es:[di]
 		pop	si
 		retn
-sub_18		endp
+copy_buffer_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1001,11 +997,11 @@ sub_18		endp
 		mov	si,534h
 		mov	al,10h
 loc_70:
-		call	sub_19
+		call	copy_buffer_3
 		add	si,2000h
 		cmp	si,6000h
 		jb	loc_71			; Jump if below
-		call	sub_19
+		call	copy_buffer_3
 		add	si,data_62e
 loc_71:
 		dec	al
@@ -1018,7 +1014,7 @@ loc_71:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+copy_buffer_3		proc	near
 		push	si
 		mov	di,si
 		dec	si
@@ -1028,7 +1024,7 @@ sub_19		proc	near
 		movsb				; Mov [si] to es:[di]
 		pop	si
 		retn
-sub_19		endp
+copy_buffer_3		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1038,11 +1034,11 @@ sub_19		endp
 		mov	si,53C1h
 		mov	al,8
 loc_72:
-		call	sub_20
+		call	copy_buffer_4
 		add	si,2000h
 		cmp	si,6000h
 		jb	loc_73			; Jump if below
-		call	sub_20
+		call	copy_buffer_4
 		add	si,0A05Ah
 loc_73:
 		dec	al
@@ -1050,11 +1046,11 @@ loc_73:
 		mov	si,data_56e
 		mov	al,8
 loc_74:
-		call	sub_21
+		call	copy_buffer_5
 		add	si,2000h
 		cmp	si,data_59e
 		jb	loc_75			; Jump if below
-		call	sub_21
+		call	copy_buffer_5
 		add	si,data_62e
 loc_75:
 		dec	al
@@ -1066,7 +1062,7 @@ loc_75:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+copy_buffer_4		proc	near
 		push	si
 		mov	di,si
 		inc	si
@@ -1078,14 +1074,14 @@ sub_20		proc	near
 		movsb				; Mov [si] to es:[di]
 		pop	si
 		retn
-sub_20		endp
+copy_buffer_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_21		proc	near
+copy_buffer_5		proc	near
 		push	si
 		mov	di,si
 		add	si,4
@@ -1098,7 +1094,7 @@ sub_21		proc	near
 		movsb				; Mov [si] to es:[di]
 		pop	si
 		retn
-sub_21		endp
+copy_buffer_5		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1108,11 +1104,11 @@ sub_21		endp
 		mov	si,4FDh
 		mov	al,10h
 loc_76:
-		call	sub_22
+		call	copy_buffer_6
 		add	si,2000h
 		cmp	si,6000h
 		jb	loc_77			; Jump if below
-		call	sub_22
+		call	copy_buffer_6
 		add	si,data_62e
 loc_77:
 		dec	al
@@ -1124,7 +1120,7 @@ loc_77:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_22		proc	near
+copy_buffer_6		proc	near
 		push	si
 		mov	di,si
 		inc	si
@@ -1134,7 +1130,7 @@ sub_22		proc	near
 		movsb				; Mov [si] to es:[di]
 		pop	si
 		retn
-sub_22		endp
+copy_buffer_6		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1147,7 +1143,7 @@ sub_22		endp
 		mov	si,ax
 		add	si,8000h
 		add	bh,bh
-		call	sub_33
+		call	math_calc
 		mov	di,ax
 		mov	ds,cs:data_50e
 		mov	ax,0B000h
@@ -1174,7 +1170,7 @@ loc_79:
 		push	di
 		push	cs
 		pop	ds
-		call	sub_33
+		call	math_calc
 		mov	di,ax
 		mov	ax,0B000h
 		mov	es,ax
@@ -1244,7 +1240,7 @@ loc_83:
 		add	ax,ax
 		add	si,ax
 		mov	si,[si]
-		call	sub_23
+		call	decb_func_23
 		pop	ax
 		pop	di
 		test	byte ptr ds:data_51e,0FFh
@@ -1255,7 +1251,7 @@ loc_83:
 		add	di,ax
 		mov	dl,[di]
 		mov	ax,[di+1]
-		call	sub_25
+		call	decb_process_loop_2
 loc_84:
 		pop	di
 		pop	si
@@ -1265,7 +1261,7 @@ loc_84:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_23		proc	near
+decb_func_23		proc	near
 		push	cs
 		pop	es
 		mov	di,data_32e
@@ -1280,20 +1276,20 @@ loc_86:
 		push	ds
 		push	si
 		and	bl,3
-		call	sub_24
+		call	decb_func_24
 		pop	si
 		pop	ds
 		pop	bx
 		inc	bl
 		jmp	short loc_85
-sub_23		endp
+decb_func_23		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_24		proc	near
+decb_func_24		proc	near
 		sub	al,20h			; ' '
 		xor	ah,ah			; Zero register
 		shl	ax,1			; Shift w/zeros fill
@@ -1336,7 +1332,7 @@ loc_88:
 loc_89:
 		inc	di
 		retn
-sub_24		endp
+decb_func_24		endp
 
 			                        ;* No entry point to code
 		push	dx
@@ -1349,7 +1345,7 @@ sub_24		endp
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		pop	ax
 		pop	dx
-		call	sub_27
+		call	decb_process_loop_4
 		mov	di,3CEBh
 		mov	si,38D4h
 		mov	cx,7
@@ -1361,8 +1357,8 @@ sub_24		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_25		proc	near
-		call	sub_27
+decb_process_loop_2		proc	near
+		call	decb_process_loop_4
 		push	cs
 		pop	es
 		mov	di,data_32e
@@ -1377,7 +1373,7 @@ locloop_90:
 		push	di
 		lodsb				; String [si] to al
 		push	si
-		call	sub_26
+		call	decb_process_loop_3
 		pop	si
 		pop	di
 		pop	bx
@@ -1390,14 +1386,14 @@ locloop_90:
 		loop	locloop_90		; Loop if cx > 0
 
 		retn
-sub_25		endp
+decb_process_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_26		proc	near
+decb_process_loop_3		proc	near
 		inc	al
 		jnz	loc_91			; Jump if not zero
 		retn
@@ -1436,16 +1432,16 @@ loc_94:
 		loop	locloop_92		; Loop if cx > 0
 
 		retn
-sub_26		endp
+decb_process_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_27		proc	near
+decb_process_loop_4		proc	near
 		mov	di,38D4h
-		call	sub_28
+		call	decb_func_28
 		mov	cx,6
 
 locloop_95:
@@ -1458,7 +1454,7 @@ loc_96:
 		loop	locloop_95		; Loop if cx > 0
 
 		retn
-sub_27		endp
+decb_process_loop_4		endp
 
 		db	7 dup (0)
 
@@ -1466,38 +1462,38 @@ sub_27		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_28		proc	near
+decb_func_28		proc	near
 		mov	cl,0Fh
 		mov	bx,4240h
-		call	sub_29
+		call	decb_func_29
 		mov	cs:[di],dh
 		mov	cl,1
 		mov	bx,86A0h
-		call	sub_29
+		call	decb_func_29
 		mov	cs:[di+1],dh
 		xor	cl,cl			; Zero register
 		mov	bx,2710h
-		call	sub_29
+		call	decb_func_29
 		mov	cs:[di+2],dh
 		mov	bx,3E8h
-		call	sub_30
+		call	decb_func_30
 		mov	cs:[di+3],dh
 		mov	bx,64h
-		call	sub_30
+		call	decb_func_30
 		mov	cs:[di+4],dh
 		mov	bx,0Ah
-		call	sub_30
+		call	decb_func_30
 		mov	cs:[di+5],dh
 		mov	cs:[di+6],al
 		retn
-sub_28		endp
+decb_func_28		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_29		proc	near
+decb_func_29		proc	near
 		xor	dh,dh			; Zero register
 loc_97:
 		sub	dl,cl
@@ -1515,28 +1511,28 @@ loc_99:
 loc_100:
 		add	dl,cl
 		retn
-sub_29		endp
+decb_func_29		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_30		proc	near
+decb_func_30		proc	near
 		xor	dh,dh			; Zero register
 		div	bx			; ax,dx rem=dx:ax/reg
 		xchg	dx,ax
 		mov	dh,dl
 		xor	dl,dl			; Zero register
 		retn
-sub_30		endp
+decb_func_30		endp
 
 			                        ;* No entry point to code
 		push	ds
 		push	ax
 		add	bl,cl
 		dec	bl
-		call	sub_33
+		call	math_calc
 		mov	di,ax
 		mov	si,di
 		sub	si,2000h
@@ -1590,7 +1586,7 @@ loc_104:
 			                        ;* No entry point to code
 		push	ds
 		push	ax
-		call	sub_33
+		call	math_calc
 		mov	di,ax
 		mov	si,di
 		add	si,2000h
@@ -1730,13 +1726,13 @@ locloop_114:
 		mov	cs:data_27e,bx
 		not	ax
 		mov	cs:data_28e,ax
-		call	sub_31
+		call	decb_process_loop_5
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
 		push	es
 		push	di
 		les	di,dword ptr cs:data_29e	; Load seg:offset ptr
-		call	sub_32
+		call	decb_scan_loop_4
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
 		mov	cs:data_29e,di
@@ -1805,7 +1801,7 @@ locloop_117:
 		mov	cs:data_26e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_27e,ax
-		call	sub_31
+		call	decb_process_loop_5
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
 		mov	word ptr es:[bp],0
@@ -1826,10 +1822,10 @@ locloop_118:
 		mov	word ptr cs:data_27e,0
 		lodsw				; String [si] to ax
 		mov	cs:data_28e,ax
-		call	sub_31
+		call	decb_process_loop_5
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
-		call	sub_32
+		call	decb_scan_loop_4
 		mov	es:[bp],dx
 		inc	bp
 		inc	bp
@@ -1848,10 +1844,10 @@ locloop_120:
 		mov	word ptr cs:data_26e,0
 		lodsw				; String [si] to ax
 		mov	cs:data_27e,ax
-		call	sub_31
+		call	decb_process_loop_5
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
-		call	sub_32
+		call	decb_scan_loop_4
 		mov	es:[bp],dx
 		inc	bp
 		inc	bp
@@ -1870,10 +1866,10 @@ locloop_121:
 		mov	cs:data_26e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_27e,ax
-		call	sub_31
+		call	decb_process_loop_5
 		mov	ax,dx
 		stosw				; Store ax to es:[di]
-		call	sub_32
+		call	decb_scan_loop_4
 		mov	es:[bp],dx
 		inc	bp
 		inc	bp
@@ -1900,7 +1896,7 @@ locloop_122:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_31		proc	near
+decb_process_loop_5		proc	near
 		mov	cx,8
 
 locloop_123:
@@ -1923,7 +1919,7 @@ locloop_123:
 		loop	locloop_123		; Loop if cx > 0
 
 		retn
-sub_31		endp
+decb_process_loop_5		endp
 
 		db	0, 1, 0, 1, 1, 0
 		db	3, 2, 1, 3, 2, 3
@@ -1941,7 +1937,7 @@ sub_31		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_32		proc	near
+decb_scan_loop_4		proc	near
 		mov	cx,8
 
 locloop_124:
@@ -1960,14 +1956,14 @@ loc_125:
 		loop	locloop_124		; Loop if cx > 0
 
 		retn
-sub_32		endp
+decb_scan_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_33		proc	near
+math_calc		proc	near
 		xor	ax,ax			; Zero register
 		mov	al,bl
 		add	ax,1Ch
@@ -1986,7 +1982,7 @@ sub_33		proc	near
 		xor	bh,bh			; Zero register
 		add	ax,bx
 		retn
-sub_33		endp
+math_calc		endp
 
 		db	1127 dup (0)
 

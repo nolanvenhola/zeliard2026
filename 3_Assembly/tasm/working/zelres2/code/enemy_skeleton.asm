@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_10	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ENEMY_SKELETON - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -79,18 +75,18 @@ start:
 		call	word ptr cs:data_24e
 		mov	si,0A41Ah
 		call	word ptr cs:data_23e
-		call	sub_3
+		call	skel_process_loop
 		mov	bx,0D60h
 		mov	cx,3637h
 		mov	al,0FFh
 		call	word ptr cs:data_21e
-		call	sub_7
+		call	skel_func_7
 		mov	ds:data_47e,si
 loc_1:
 		call	word ptr cs:data_29e
 		cmp	al,0FFh
 		je	loc_2			; Jump if equal
-		call	sub_1
+		call	skel_func_1
 		jmp	short loc_1
 loc_2:
 		jmp	word ptr cs:data_26e
@@ -101,16 +97,16 @@ zr2_10		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+skel_func_1		proc	near
 		mov	bl,al
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr cs:data_30e[bx]	;*
-sub_1		endp
+skel_func_1		endp
 
 			                        ;* No entry point to code
 		in	al,0A0h			; port 0A0h ??I/O Non-standard
-;*		call	far ptr sub_8		;*
+;*		call	far ptr skel_func_8		;*
 		db	9Ah
 		dw	0D4A0h, 92A0h		;  Fixup - byte match
 		mov	al,ds:data_31e
@@ -140,7 +136,7 @@ locloop_3:
 		mov	byte ptr ds:data_51e,13h
 		mov	byte ptr ds:data_45e,0
 loc_4:
-		call	sub_5
+		call	skel_func_5
 		cmp	byte ptr ds:data_45e,0Fh
 		jb	loc_4			; Jump if below
 		pop	cx
@@ -150,7 +146,7 @@ loc_4:
 		retn
 		db	0C6h, 06h, 1Ah,0FFh, 00h
 loc_5:
-		call	sub_5
+		call	skel_func_5
 		cmp	byte ptr ds:data_45e,96h
 		jb	loc_5			; Jump if below
 		retn
@@ -162,8 +158,8 @@ locloop_6:
 		push	cx
 		lodsb				; String [si] to al
 		push	si
-		call	sub_4
-		call	sub_2
+		call	skel_process_loop_2
+		call	skel_func_2
 		pop	si
 		pop	cx
 		loop	locloop_6		; Loop if cx > 0
@@ -176,21 +172,21 @@ locloop_6:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+skel_func_2		proc	near
 		mov	byte ptr ds:data_45e,0
 loc_7:
-		call	sub_5
+		call	skel_func_5
 		cmp	byte ptr ds:data_45e,19h
 		jb	loc_7			; Jump if below
 		retn
-sub_2		endp
+skel_func_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+skel_process_loop		proc	near
 		mov	si,data_33e
 		mov	bx,0E17h
 		mov	cx,8
@@ -219,14 +215,14 @@ locloop_9:
 		retn
 loc_10:
 		mov	al,6
-sub_3		endp
+skel_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+skel_process_loop_2		proc	near
 		mov	bl,al
 		xor	bh,bh			; Zero register
 		add	bx,bx
@@ -254,7 +250,7 @@ locloop_12:
 		loop	locloop_11		; Loop if cx > 0
 
 		retn
-sub_4		endp
+skel_process_loop_2		endp
 
 		db	 00h, 01h, 02h, 03h, 3Eh, 3Fh
 		db	 40h, 41h, 18h, 19h, 1Ah, 1Bh
@@ -317,18 +313,18 @@ sub_4		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+skel_func_5		proc	near
 		cmp	word ptr ds:data_50e,4
 		jae	loc_13			; Jump if above or =
 		retn
 loc_13:
 		mov	word ptr ds:data_50e,0
-		call	sub_6
+		call	skel_func_6
 		jmp	short loc_18
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_6:
+skel_func_6:
 		test	byte ptr ds:data_43e,0FFh
 		jnz	loc_14			; Jump if not zero
 		retn
@@ -415,7 +411,7 @@ locloop_23:
 		loop	locloop_22		; Loop if cx > 0
 
 		retn
-sub_5		endp
+skel_func_5		endp
 
 			                        ;* No entry point to code
 		mov	ds:data_39e,al
@@ -434,7 +430,7 @@ sub_5		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+skel_func_7		proc	near
 		mov	si,0A42Fh
 		mov	al,byte ptr ds:[5]
 		or	al,byte ptr ds:[6]
@@ -453,7 +449,7 @@ loc_25:
 loc_26:
 		mov	si,0A6C1h
 		retn
-sub_7		endp
+skel_func_7		endp
 
 			                        ;* No entry point to code
 		add	[bp+di],dx

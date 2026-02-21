@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR2_16	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  BOSS_BEHAVIORS - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -71,13 +67,13 @@ start:
 		call	word ptr cs:data_23e
 		mov	si,0A2EBh
 		call	word ptr cs:data_22e
-		call	sub_1
+		call	boss_func_1
 		mov	word ptr ds:data_35e,0A2F6h
 loc_1:
 		call	word ptr cs:data_29e
 		cmp	al,0FFh
 		je	loc_2			; Jump if equal
-		call	sub_2
+		call	boss_func_2
 		jmp	short loc_1
 loc_2:
 		jmp	word ptr cs:data_26e
@@ -88,28 +84,28 @@ zr2_16		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+boss_func_1		proc	near
 loc_3:
-		call	sub_6
+		call	boss_process_loop
 		mov	bx,0D60h
 		mov	cx,3637h
 		mov	al,0FFh
 		call	word ptr cs:data_19e
 		mov	byte ptr ds:data_32e,0FFh
 		retn
-sub_1		endp
+boss_func_1		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+boss_func_2		proc	near
 		mov	bl,al
 		xor	bh,bh			; Zero register
 		add	bx,bx
 		jmp	word ptr cs:data_30e[bx]	;*
-sub_2		endp
+boss_func_2		endp
 
 		db	8Ah
 data_1		db	0A0h
@@ -152,18 +148,18 @@ data_8		dw	0A505h
 		db	 00h, 32h,0C0h
 loc_5:
 		push	ax
-		call	sub_5
-		call	sub_4
+		call	boss_multiply
+		call	boss_func_4
 		pop	ax
 		inc	al
 		cmp	al,4
 		jne	loc_5			; Jump if not equal
 		retn
 			                        ;* No entry point to code
-		call	sub_3
+		call	boss_func_3
 		call	word ptr cs:data_26e
-		call	sub_3
-		call	sub_3
+		call	boss_func_3
+		call	boss_func_3
 		mov	ax,data_6
 		mov	data_3,ax
 		call	word ptr cs:data_21e
@@ -183,35 +179,35 @@ loc_6:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_3		proc	near
+boss_func_3		proc	near
 		mov	byte ptr ds:data_33e,0
 loc_7:
-		call	sub_7
+		call	boss_scan_loop
 		cmp	byte ptr ds:data_33e,96h
 		jb	loc_7			; Jump if below
 		retn
-sub_3		endp
+boss_func_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_4		proc	near
+boss_func_4		proc	near
 		mov	byte ptr ds:data_33e,0
 loc_8:
-		call	sub_7
+		call	boss_scan_loop
 		cmp	byte ptr ds:data_33e,32h	; '2'
 		jb	loc_8			; Jump if below
 		retn
-sub_4		endp
+boss_func_4		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_5		proc	near
+boss_multiply		proc	near
 		mov	cl,14h
 		mul	cl			; ax = reg * al
 		add	ax,0A281h
@@ -239,14 +235,14 @@ locloop_10:
 		loop	locloop_9		; Loop if cx > 0
 
 		retn
-sub_5		endp
+boss_multiply		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_6		proc	near
+boss_process_loop		proc	near
 		mov	si,data_31e
 		mov	bx,717h
 		mov	cx,8
@@ -271,7 +267,7 @@ locloop_12:
 		loop	locloop_11		; Loop if cx > 0
 
 		retn
-sub_6		endp
+boss_process_loop		endp
 
 		db	 00h, 01h, 02h, 03h, 04h, 05h
 		db	 06h, 07h, 08h, 09h, 0Ah, 0Bh
@@ -288,7 +284,7 @@ sub_6		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_7		proc	near
+boss_scan_loop		proc	near
 		test	byte ptr ds:data_32e,0FFh
 		jnz	loc_13			; Jump if not zero
 		retn
@@ -328,7 +324,7 @@ locloop_16:
 		loop	locloop_15		; Loop if cx > 0
 
 		retn
-sub_7		endp
+boss_scan_loop		endp
 
 			                        ;* No entry point to code
 		sbb	[bp+si],bx

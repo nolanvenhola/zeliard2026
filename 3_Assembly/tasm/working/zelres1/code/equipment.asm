@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR1_02	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  EQUIPMENT - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -118,7 +114,7 @@ locloop_2:
 		mov	cs:data_76e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_2		; Loop if cx > 0
 
@@ -156,7 +152,7 @@ locloop_3:
 		mov	cs:data_74e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_3		; Loop if cx > 0
 
@@ -184,7 +180,7 @@ locloop_3:
 		pop	ds
 		pop	ax
 		mov	word ptr cs:data_81e,32AFh
-		call	sub_1
+		call	equip_func_1
 		pop	ds
 		retn
 			                        ;* No entry point to code
@@ -211,7 +207,7 @@ locloop_4:
 		mov	cs:data_75e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_74e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_4		; Loop if cx > 0
 
@@ -240,10 +236,10 @@ locloop_4:
 		mov	byte ptr cs:data_80e,0
 		or	al,al			; Zero ?
 		jnz	loc_5			; Jump if not zero
-		call	sub_1
+		call	equip_func_1
 loc_5:
 		mov	byte ptr cs:data_80e,0FFh
-		call	sub_1
+		call	equip_func_1
 		pop	ds
 		retn
 loc_6:
@@ -267,10 +263,10 @@ loc_6:
 		mov	byte ptr cs:data_80e,0
 		or	al,al			; Zero ?
 		jnz	loc_7			; Jump if not zero
-		call	sub_1
+		call	equip_func_1
 loc_7:
 		mov	byte ptr cs:data_80e,0FFh
-		call	sub_1
+		call	equip_func_1
 		pop	ds
 		retn
 
@@ -280,7 +276,7 @@ zr1_02		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+equip_func_1		proc	near
 		mov	byte ptr cs:data_78e,0
 		mov	ax,0B800h
 		mov	es,ax
@@ -339,7 +335,7 @@ loc_13:
 
 loc_ret_14:
 		retn
-sub_1		endp
+equip_func_1		endp
 
 			                        ;* No entry point to code
 		test	byte ptr cs:data_80e,0FFh
@@ -474,7 +470,7 @@ loc_24:
 locloop_25:
 		push	cx
 		lodsb				; String [si] to al
-		call	sub_2
+		call	equip_process_loop
 		mov	es:[di],dx
 		add	di,50h
 		pop	cx
@@ -490,7 +486,7 @@ loc_26:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+equip_process_loop		proc	near
 		mov	cx,8
 
 locloop_27:
@@ -504,7 +500,7 @@ locloop_27:
 		or	dx,bx
 		xchg	dh,dl
 		retn
-sub_2		endp
+equip_process_loop		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -619,7 +615,7 @@ locloop_32:
 		mov	cs:data_74e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_32		; Loop if cx > 0
 
@@ -746,7 +742,7 @@ loc_39:
 		mov	es,ax
 		mov	si,di
 		mov	di,bp
-		call	sub_3
+		call	copy_buffer
 		pop	si
 		pop	ds
 loc_40:
@@ -787,7 +783,7 @@ locloop_43:
 		mov	es,ax
 		mov	ds,cs:data_92e
 		mov	si,bp
-		call	sub_5
+		call	equip_multiply
 		pop	si
 		pop	ds
 loc_44:
@@ -815,7 +811,7 @@ locloop_46:
 		add	ax,3000h
 		mov	ds,ax
 		mov	si,bp
-		call	sub_4
+		call	copy_buffer_2
 		pop	si
 		pop	ds
 		pop	cx
@@ -839,7 +835,7 @@ loc_48:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+copy_buffer		proc	near
 		push	si
 		push	cx
 loc_49:
@@ -860,14 +856,14 @@ loc_50:
 		pop	cx
 		pop	si
 		retn
-sub_3		endp
+copy_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+copy_buffer_2		proc	near
 		push	di
 		push	cx
 loc_51:
@@ -888,14 +884,14 @@ loc_52:
 		pop	cx
 		pop	di
 		retn
-sub_4		endp
+copy_buffer_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+equip_multiply		proc	near
 		push	di
 		push	cx
 		mov	al,ch
@@ -916,7 +912,7 @@ locloop_54:
 		lodsb				; String [si] to al
 		mov	cs:data_73e,ax
 		push	bx
-		call	sub_18
+		call	equip_process_loop_5
 		pop	bx
 		or	es:[di],al
 		inc	di
@@ -934,7 +930,7 @@ loc_55:
 		pop	cx
 		pop	di
 		retn
-sub_5		endp
+equip_multiply		endp
 
 		db	 00h, 90h, 20h, 06h, 80h, 91h
 		db	 20h, 06h, 00h, 93h, 20h, 06h
@@ -958,7 +954,7 @@ locloop_56:
 		mov	cs:data_73e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_74e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_56		; Loop if cx > 0
 
@@ -989,7 +985,7 @@ locloop_57:
 		mov	cs:data_74e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_57		; Loop if cx > 0
 
@@ -1010,7 +1006,7 @@ locloop_59:
 		push	bx
 		push	ds
 		push	si
-		call	sub_6
+		call	equip_multiply_2
 		pop	si
 		pop	ds
 		pop	bx
@@ -1029,7 +1025,7 @@ locloop_59:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+equip_multiply_2		proc	near
 		mov	ds,cs:data_92e
 		mov	dx,cs
 		add	dx,2000h
@@ -1083,7 +1079,7 @@ locloop_63:
 		loop	locloop_62		; Loop if cx > 0
 
 		retn
-sub_6		endp
+equip_multiply_2		endp
 
 			                        ;* No entry point to code
 		mov	word ptr cs:data_76e,0
@@ -1138,7 +1134,7 @@ locloop_66:
 		mov	ax,ds:data_98e[si]
 		mov	cs:data_75e,ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		or	es:[di],ax
 		inc	di
 		inc	di
@@ -1159,7 +1155,7 @@ locloop_67:
 		xchg	ah,al
 		mov	cs:data_75e,ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		or	es:[di],ax
 		dec	di
 		dec	di
@@ -1179,7 +1175,7 @@ loc_68:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_69			; Jump if zero
-		call	sub_7
+		call	equip_func_7
 		add	di,0A0h
 		jmp	short loc_68
 loc_69:
@@ -1188,7 +1184,7 @@ loc_70:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_71			; Jump if zero
-		call	sub_7
+		call	equip_func_7
 		inc	di
 		jmp	short loc_70
 loc_71:
@@ -1197,7 +1193,7 @@ loc_72:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_73			; Jump if zero
-		call	sub_7
+		call	equip_func_7
 		add	di,0FF60h
 		jmp	short loc_72
 loc_73:
@@ -1206,7 +1202,7 @@ loc_74:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_75			; Jump if zero
-		call	sub_7
+		call	equip_func_7
 		dec	di
 		jmp	short loc_74
 loc_75:
@@ -1225,7 +1221,7 @@ loc_77:
 locloop_78:
 		push	cx
 		mov	al,18h
-		call	sub_7
+		call	equip_func_7
 		add	di,0A0h
 		pop	cx
 		loop	locloop_78		; Loop if cx > 0
@@ -1242,7 +1238,7 @@ loc_79:
 locloop_80:
 		push	cx
 		mov	al,18h
-		call	sub_7
+		call	equip_func_7
 		inc	di
 		pop	cx
 		loop	locloop_80		; Loop if cx > 0
@@ -1259,7 +1255,7 @@ loc_81:
 locloop_82:
 		push	cx
 		mov	al,18h
-		call	sub_7
+		call	equip_func_7
 		add	di,0FF60h
 		pop	cx
 		loop	locloop_82		; Loop if cx > 0
@@ -1276,7 +1272,7 @@ loc_83:
 locloop_84:
 		push	cx
 		mov	al,18h
-		call	sub_7
+		call	equip_func_7
 		dec	di
 		pop	cx
 		loop	locloop_84		; Loop if cx > 0
@@ -1291,7 +1287,7 @@ loc_85:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+equip_func_7		proc	near
 		push	si
 		push	di
 		dec	al
@@ -1335,7 +1331,7 @@ loc_88:
 		pop	di
 		pop	si
 		retn
-sub_7		endp
+equip_func_7		endp
 
 		db	 00h, 00h, 00h, 03h, 80h, 80h
 		db	 8Ah, 88h, 03h, 03h, 03h, 03h
@@ -1418,7 +1414,7 @@ loc_91:
 		mov	ax,[si]
 		mov	cs:data_75e,ax
 loc_92:
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		pop	si
 		inc	si
@@ -1450,7 +1446,7 @@ locloop_94:
 		push	cx
 		push	bx
 		push	si
-		call	sub_8
+		call	extract_bits
 		pop	si
 		pop	bx
 		pop	cx
@@ -1471,7 +1467,7 @@ loc_95:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
+extract_bits		proc	near
 		mov	al,cs:data_78e
 		add	al,10h
 		shr	al,1			; Shift w/zeros fill
@@ -1517,7 +1513,7 @@ loc_98:
 		xor	ax,ax			; Zero register
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_8		endp
+extract_bits		endp
 
 			                        ;* No entry point to code
 		mov	cs:data_78e,bl
@@ -1538,7 +1534,7 @@ sub_8		endp
 		sub	cx,5
 		push	cx
 		push	di
-		call	sub_9
+		call	fill_buffer
 		pop	di
 		inc	byte ptr cs:data_78e
 		add	di,2000h
@@ -1547,12 +1543,12 @@ sub_8		endp
 		add	di,data_89e
 loc_99:
 		mov	cx,2
-		call	sub_10
+		call	clear_buffer
 		pop	cx
 
 locloop_100:
 		push	cx
-		call	sub_11
+		call	equip_get_value
 		or	byte ptr es:[di],30h	; '0'
 		and	byte ptr es:[di],0F0h
 		or	byte ptr es:[bx+di-1],0Ch
@@ -1567,14 +1563,14 @@ loc_101:
 		loop	locloop_100		; Loop if cx > 0
 
 		mov	cx,1
-		call	sub_10
+		call	clear_buffer
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
-		call	sub_11
+fill_buffer		proc	near
+		call	equip_get_value
 		or	byte ptr es:[di],3Fh	; '?'
 		inc	di
 		mov	cx,bx
@@ -1583,19 +1579,19 @@ sub_9		proc	near
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		or	byte ptr es:[di],0FCh
 		retn
-sub_9		endp
+fill_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_10		proc	near
+clear_buffer		proc	near
 
 locloop_102:
 		push	cx
 		push	di
-		call	sub_11
+		call	equip_get_value
 		or	byte ptr es:[di],30h	; '0'
 		and	byte ptr es:[di],0F0h
 		inc	di
@@ -1616,17 +1612,17 @@ loc_103:
 		loop	locloop_102		; Loop if cx > 0
 
 		retn
-sub_10		endp
+clear_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_11		proc	near
+equip_get_value		proc	near
 		mov	word ptr es:[di-1],0
 		retn
-sub_11		endp
+equip_get_value		endp
 
 			                        ;* No entry point to code
 		push	bx
@@ -1669,10 +1665,10 @@ locloop_104:
 		mov	ds:data_84e,es
 		mov	di,69Ah
 		add	di,ds:data_83e
-		call	sub_14
+		call	equip_process_loop_4
 		mov	di,6BCh
 		add	di,ds:data_83e
-		call	sub_14
+		call	equip_process_loop_4
 		mov	ax,0B800h
 		mov	es,ax
 		mov	ds,cs:data_84e
@@ -1702,10 +1698,10 @@ loc_105:
 		jb	loc_106			; Jump if below
 		cmp	ax,71h
 		jae	loc_106			; Jump if above or =
-		call	sub_13
+		call	equip_process_loop_3
 		jmp	short loc_107
 loc_106:
-		call	sub_12
+		call	equip_process_loop_2
 loc_107:
 		pop	cx
 		push	cx
@@ -1731,10 +1727,10 @@ loc_107:
 		jb	loc_108			; Jump if below
 		cmp	ax,71h
 		jae	loc_108			; Jump if above or =
-		call	sub_13
+		call	equip_process_loop_3
 		jmp	short loc_109
 loc_108:
-		call	sub_12
+		call	equip_process_loop_2
 loc_109:
 		cmp	byte ptr cs:data_91e,4
 		jb	loc_109			; Jump if below
@@ -1753,7 +1749,7 @@ loc_111:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+equip_process_loop_2		proc	near
 		mov	cx,28h
 		mov	word ptr cs:data_76e,0
 
@@ -1764,19 +1760,19 @@ locloop_112:
 		mov	cs:data_74e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_112		; Loop if cx > 0
 
 		retn
-sub_12		endp
+equip_process_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+equip_process_loop_3		proc	near
 		mov	cx,0Bh
 		mov	word ptr cs:data_76e,0
 
@@ -1788,7 +1784,7 @@ locloop_113:
 		mov	cs:data_74e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosb				; Store al to es:[di]
 		loop	locloop_113		; Loop if cx > 0
 
@@ -1803,7 +1799,7 @@ locloop_114:
 		mov	cs:data_74e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_114		; Loop if cx > 0
 
@@ -1819,22 +1815,22 @@ locloop_115:
 		mov	cs:data_74e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosb				; Store al to es:[di]
 		loop	locloop_115		; Loop if cx > 0
 
 		retn
-sub_13		endp
+equip_process_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+equip_process_loop_4		proc	near
 		push	di
 		mov	ax,0FC3Fh
-		call	sub_15
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,5Bh
 
@@ -1845,12 +1841,12 @@ locloop_116:
 		loop	locloop_116		; Loop if cx > 0
 
 		mov	ax,0FC3Fh
-		call	sub_15
+		call	fill_buffer_2
 		pop	di
 		add	di,data_63e
 		push	di
 		mov	ax,0FD7Fh
-		call	sub_15
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,2Dh
 
@@ -1867,11 +1863,11 @@ locloop_117:
 		mov	byte ptr es:[di+19h],0Eh
 		add	di,50h
 		mov	ax,0FD7Fh
-		call	sub_15
+		call	fill_buffer_2
 		pop	di
 		add	di,data_63e
 		mov	ax,0FC3Fh
-		call	sub_15
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,5Bh
 
@@ -1882,16 +1878,16 @@ locloop_118:
 		loop	locloop_118		; Loop if cx > 0
 
 		mov	ax,0FC3Fh
-		call	sub_15
+		call	fill_buffer_2
 		retn
-sub_14		endp
+equip_process_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+fill_buffer_2		proc	near
 		stosb				; Store al to es:[di]
 		mov	al,0FFh
 		mov	cx,18h
@@ -1899,7 +1895,7 @@ sub_15		proc	near
 		mov	al,ah
 		stosb				; Store al to es:[di]
 		retn
-sub_15		endp
+fill_buffer_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1917,12 +1913,12 @@ locloop_119:
 		neg	ax
 		add	ax,39h
 		add	ax,ax
-		call	sub_16
+		call	extract_bits_2
 		pop	ax
 		push	ax
 		add	ax,ax
 		dec	ax
-		call	sub_16
+		call	extract_bits_2
 loc_120:
 		cmp	byte ptr cs:data_91e,4
 		jb	loc_120			; Jump if below
@@ -1936,7 +1932,7 @@ loc_120:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+extract_bits_2		proc	near
 		push	ax
 		mov	bl,al
 		mov	al,2Fh			; '/'
@@ -1972,7 +1968,7 @@ locloop_123:
 		mov	cs:data_74e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosb				; Store al to es:[di]
 		loop	locloop_123		; Loop if cx > 0
 
@@ -1989,7 +1985,7 @@ locloop_125:
 		mov	cs:data_74e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosb				; Store al to es:[di]
 		loop	locloop_125		; Loop if cx > 0
 
@@ -2000,12 +1996,12 @@ locloop_125:
 		mov	cs:data_74e,ax
 		lodsb				; String [si] to al
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		and	al,0FCh
 		and	byte ptr es:[di],3
 		or	es:[di],al
 		retn
-sub_16		endp
+extract_bits_2		endp
 
 data_15		db	1Eh			; Data table (indexed access)
 		db	 89h, 3Eh,0B0h, 4Ah, 8Ch, 06h
@@ -2020,12 +2016,12 @@ locloop_126:
 		neg	ax
 		add	ax,39h
 		add	ax,ax
-		call	sub_17
+		call	extract_bits_3
 		pop	ax
 		push	ax
 		add	ax,ax
 		dec	ax
-		call	sub_17
+		call	extract_bits_3
 loc_127:
 		cmp	byte ptr cs:data_91e,4
 		jb	loc_127			; Jump if below
@@ -2039,7 +2035,7 @@ loc_127:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+extract_bits_3		proc	near
 		push	ax
 		mov	bl,al
 		mov	al,2Fh			; '/'
@@ -2069,7 +2065,7 @@ locloop_128:
 		mov	cs:data_74e,ax
 		lodsw				; String [si] to ax
 		mov	cs:data_73e,ax
-		call	sub_18
+		call	equip_process_loop_5
 		stosw				; Store ax to es:[di]
 		loop	locloop_128		; Loop if cx > 0
 
@@ -2078,7 +2074,7 @@ loc_129:
 		xor	al,al			; Zero register
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		retn
-sub_17		endp
+extract_bits_3		endp
 
 			                        ;* No entry point to code
 		push	ax
@@ -2489,7 +2485,7 @@ data_53		dw	303h			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+equip_process_loop_5		proc	near
 		push	cx
 		push	si
 		mov	si,cs:data_72e
@@ -2521,7 +2517,7 @@ locloop_132:
 		pop	si
 		pop	cx
 		retn
-sub_18		endp
+equip_process_loop_5		endp
 
 			                        ;* No entry point to code
 		push	ds

@@ -1,65 +1,68 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZELIAD	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ZELIAD.EXE - Main Executable Loader
+;
+;  Reads RESOURCE.CFG, loads graphics/input/music drivers,
+;  initializes game state, sets video mode, then jumps to game.bin
+;
+;  Created:   16-Feb-26
+;  Passes:    9          Analysis Options on: none
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
 include  srmacros.inc
 
 
-; The following equates show data references outside the range of the program.
+; Game state variables (in loaded game.bin segment at 0xFF00+)
 
-data_1e		equ	0FF00h			;*
-data_2e		equ	0FF02h			;*
-data_3e		equ	0FF04h			;*
-data_4e		equ	0FF06h			;*
-data_5e		equ	0FF08h			;*
-data_6e		equ	0FF09h			;*
-data_7e		equ	0FF0Ah			;*
-data_8e		equ	0FF0Bh			;*
-data_9e		equ	0FF0Ch			;*
-data_10e	equ	0FF0Eh			;*
-data_11e	equ	0FF10h			;*
-data_12e	equ	0FF12h			;*
-data_13e	equ	0FF14h			;*
-data_14e	equ	0FF15h			;*
-data_15e	equ	0FF16h			;*
-data_16e	equ	0FF17h			;*
-data_17e	equ	0FF18h			;*
-data_18e	equ	0FF1Dh			;*
-data_19e	equ	0FF1Eh			;*
-data_20e	equ	0FF1Fh			;*
-data_21e	equ	0FF26h			;*
-data_22e	equ	0FF27h			;*
-data_23e	equ	0FF28h			;*
-data_24e	equ	0FF2Ch			;*
-data_25e	equ	0FF33h			;*
-data_26e	equ	0FF34h			;*
-data_27e	equ	0FF38h			;*
-data_28e	equ	0FF39h			;*
-data_29e	equ	0FF3Ah			;*
-data_30e	equ	0FF3Bh			;*
-data_31e	equ	0FF3Ch			;*
-data_32e	equ	0FF40h			;*
-data_33e	equ	0FF42h			;*
-data_34e	equ	0FF43h			;*
-data_35e	equ	0FF6Ch			;*
-data_36e	equ	0FF74h			;*
-data_37e	equ	0FF75h			;*
-data_38e	equ	0FF78h			;*
-data_39e	equ	0FF79h			;*
-data_40e	equ	0FF7Bh			;*
-PSP_cmd_size	equ	80h
-data_41e	equ	81h
-data_94e	equ	0
+gvar_chunk_load_fn	equ	0FF00h		; Chunk loader function pointer
+gvar_chunk_load_seg	equ	0FF02h		; Chunk loader code segment
+gvar_old_int08_ofs	equ	0FF04h		; Saved INT 08h offset
+gvar_old_int08_seg	equ	0FF06h		; Saved INT 08h segment
+gvar_timer_ticks	equ	0FF08h		; Timer tick counter (byte)
+gvar_key_released	equ	0FF09h		; Key released flag
+gvar_last_key		equ	0FF0Ah		; Last key scancode
+gvar_key_state		equ	0FF0Bh		; Current key state
+gvar_input_fn_ofs	equ	0FF0Ch		; Input handler function offset
+gvar_input_fn_seg	equ	0FF0Eh		; Input handler function segment
+gvar_gfx_fn_ofs		equ	0FF10h		; Graphics handler function offset
+gvar_gfx_fn_seg		equ	0FF12h		; Graphics handler function segment
+gvar_game_phase		equ	0FF14h		; Game phase/state
+gvar_skip_flag		equ	0FF15h		; Skip flag
+gvar_timer_flag		equ	0FF16h		; Timer flag
+gvar_timer_counter	equ	0FF17h		; Timer counter
+gvar_skip_input		equ	0FF18h		; Input skip flag (byte at 0xFF1D)
+gvar_state_a		equ	0FF1Dh		; Game state variable A
+gvar_state_b		equ	0FF1Eh		; Game state variable B
+gvar_state_c		equ	0FF1Fh		; Game state variable C
+gvar_enable_all		equ	0FF26h		; Enable all flag (0xFF=enabled)
+gvar_sound_flag		equ	0FF27h		; Sound enabled flag
+gvar_key_pressed	equ	0FF28h		; Key pressed scancode
+gvar_game_seg		equ	0FF2Ch		; Game data segment
+gvar_save_filename	equ	0FF33h		; Save file name (8 bytes)
+gvar_save_flag		equ	0FF34h		; Save file flag
+gvar_music_flag_a	equ	0FF38h		; Music state A
+gvar_music_flag_b	equ	0FF39h		; Music state B
+gvar_music_flag_c	equ	0FF3Ah		; Music state C
+gvar_music_flag_d	equ	0FF3Bh		; Music state D
+gvar_palette_flag	equ	0FF3Ch		; Palette state
+gvar_debug_mode		equ	0FF40h		; Debug mode flag
+gvar_debug_val		equ	0FF42h		; Debug value
+gvar_joystick_flag	equ	0FF43h		; Joystick enabled flag
+gvar_save_name_buf	equ	0FF6Ch		; Save file name buffer (8 bytes)
+gvar_volume_a		equ	0FF74h		; Volume/audio setting A
+gvar_volume_b		equ	0FF75h		; Volume/audio setting B
+gvar_old_int09_ofs	equ	0FF78h		; Saved INT 09h offset
+gvar_old_int09_seg	equ	0FF79h		; Saved INT 09h segment (word at +1)
+gvar_old_int61_ofs	equ	0FF7Bh		; Saved INT 61h offset
+PSP_cmd_size		equ	80h
+PSP_cmd_line		equ	81h
+zero_offset		equ	0
 
 ;------------------------------------------------------------  seg_a   ----
 
@@ -67,884 +70,917 @@ seg_a		segment	byte public
 		assume cs:seg_a  , ds:seg_a , ss:stack_seg_b
 
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
 ;
-;                       Program	Entry Point
+;  Program Entry Point
 ;
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-
+;  1. Check DOS version >= 2.0
+;  2. Parse RESOURCE.CFG (graphics mode, music driver, joystick, options)
+;  3. Allocate memory, load driver files
+;  4. Initialize game state variables
+;  5. Set video mode
+;  6. Jump to game.bin entry point
+;
+;==========================================================================
 
 zeliad		proc	far
 
 start:
-		cld				; Clear direction
+		cld
 		mov	ah,30h
-		int	21h			; DOS Services  ah=function 30h
-						;  get DOS version number ax
+		int	21h			; Get DOS version
 		cmp	al,2
-		jae	loc_6			; Jump if above or =
-		int	20h			; DOS program terminate
-loc_6:
+		jae	dos_version_ok
+		int	20h			; Exit if DOS < 2.0
+
+dos_version_ok:
 		mov	ax,seg_a
 		mov	ds,ax
-		call	sub_11
-		mov	dx,offset data_64	; ('RESOURCE.CFG')
+		call	parse_command_line
+		mov	dx,offset cfg_filename	; 'RESOURCE.CFG'
 		mov	ax,3D00h
-		int	21h			; DOS Services  ah=function 3Dh
-						;  open file, al=mode,name@ds:dx
-		jnc	loc_7			; Jump if carry=0
-		call	sub_9
+		int	21h			; Open RESOURCE.CFG for reading
+		jnc	cfg_opened
+		call	display_file_error
 		mov	ax,4C00h
-		int	21h			; DOS Services  ah=function 4Ch
-						;  terminate with al=return code
-loc_7:
-		mov	bx,ax
-		call	sub_2
-		jnc	loc_8			; Jump if carry=0
-		jmp	loc_41
-loc_8:
-		call	sub_3
-		call	sub_2
-		jnc	loc_9			; Jump if carry=0
-		jmp	loc_41
-loc_9:
-		call	sub_4
-		call	sub_2
-		jnc	loc_10			; Jump if carry=0
-		jmp	loc_41
-loc_10:
-		call	sub_5
-		call	sub_2
-		jnc	loc_11			; Jump if carry=0
-		jmp	loc_41
-loc_11:
-		call	sub_6			; Sub does not return here
+		int	21h			; Exit on error
+
+cfg_opened:
+		mov	bx,ax			; BX = file handle
+		call	read_config_line	; Read line 1: graphics mode
+		jnc	cfg_line1_ok
+		jmp	cfg_error
+
+cfg_line1_ok:
+		call	parse_graphics_mode
+		call	read_config_line	; Read line 2: music driver
+		jnc	cfg_line2_ok
+		jmp	cfg_error
+
+cfg_line2_ok:
+		call	parse_music_driver
+		call	read_config_line	; Read line 3: joystick driver
+		jnc	cfg_line3_ok
+		jmp	cfg_error
+
+cfg_line3_ok:
+		call	parse_joystick_name
+		call	read_config_line	; Read line 4: joystick enable
+		jnc	cfg_line4_ok
+		jmp	cfg_error
+
+cfg_line4_ok:
+		call	parse_joystick_enable	; Does not return on error
 		db	0B4h, 3Eh,0CDh, 21h,0BBh, 00h
 		db	 40h,0B4h, 48h,0CDh, 21h, 73h
 		db	 1Dh, 3Dh, 08h, 00h, 75h, 0Ch
 		db	0BAh,0FFh, 06h,0B4h, 09h,0CDh
 		db	 21h,0B8h, 00h, 4Ch,0CDh
 		db	21h
-loc_12:
-		mov	dx,offset data_55	; ('Memory error !!!')
+
+memory_error:
+		mov	dx,offset str_memory_error
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
+		int	21h			; Display "Memory error !!!"
 		mov	ax,4C00h
-		int	21h			; DOS Services  ah=function 4Ch
-						;  terminate with al=return code
-loc_13:
-		mov	word ptr data_73+2,ax
-		call	sub_1
-		mov	dx,offset data_54	; ('The Fantasy Action Game ')
+		int	21h			; Exit
+
+memory_allocated:
+		mov	word ptr game_entry_seg,ax
+		call	flush_keyboard
+		mov	dx,offset str_game_title
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
-		test	byte ptr cs:data_89,0FFh
-		jz	loc_14			; Jump if zero
-		mov	cs:data_84,sp
-		mov	cs:data_85,ss
+		int	21h			; Display game title/copyright
+
+		; Initialize music system if enabled
+		test	byte ptr cs:music_enabled,0FFh
+		jz	skip_music_init
+		mov	cs:saved_sp,sp
+		mov	cs:saved_ss,ss
 		mov	di,7EDh
-		mov	dx,offset data_65	; ('MTINIT.COM')
-		mov	bx,offset data_86
+		mov	dx,offset mtinit_filename
+		mov	bx,offset exec_param_block
 		mov	ax,4B00h
-		int	21h			; DOS Services  ah=function 4Bh
-						;  run progm @ds:dx, parm @es:bx
-		cli				; Disable interrupts
-		mov	sp,cs:data_84
-		mov	ss,cs:data_85
-		sti				; Enable interrupts
-		jnc	loc_14			; Jump if carry=0
-		call	sub_9
+		int	21h			; EXEC MTINIT.COM (music init)
+		cli
+		mov	sp,cs:saved_sp
+		mov	ss,cs:saved_ss
+		sti
+		jnc	skip_music_init
+		call	display_file_error
 		mov	ax,4C00h
-		int	21h			; DOS Services  ah=function 4Ch
-						;  terminate with al=return code
-loc_14:
+		int	21h			; Exit on music init error
+
+skip_music_init:
+		; Save original interrupt vectors
 		mov	ax,3508h
-		int	21h			; DOS Services  ah=function 35h
-						;  get intrpt vector al in es:bx
-		mov	data_75,bx
-		mov	word ptr data_75+2,es
+		int	21h			; Get INT 08h (timer)
+		mov	saved_int08_ofs,bx
+		mov	word ptr saved_int08_ofs+2,es
 		mov	ax,3509h
-		int	21h			; DOS Services  ah=function 35h
-						;  get intrpt vector al in es:bx
-		mov	data_77,bx
-		mov	word ptr data_77+2,es
+		int	21h			; Get INT 09h (keyboard)
+		mov	saved_int09_ofs,bx
+		mov	word ptr saved_int09_ofs+2,es
 		mov	ax,3560h
-		int	21h			; DOS Services  ah=function 35h
-						;  get intrpt vector al in es:bx
-		mov	data_79,bx
-		mov	word ptr data_79+2,es
+		int	21h			; Get INT 60h (game use)
+		mov	saved_int60_ofs,bx
+		mov	word ptr saved_int60_ofs+2,es
 		mov	ax,3561h
-		int	21h			; DOS Services  ah=function 35h
-						;  get intrpt vector al in es:bx
-		mov	data_81,bx
-		mov	data_82,es
-		mov	es,word ptr cs:data_73+2
-		mov	word ptr es:data_1e,2D9h
-		mov	es:data_2e,cs
-		lds	dx,dword ptr cs:data_75	; Load seg:offset ptr
-		mov	es:data_3e,dx
-		mov	es:data_4e,ds
-		lds	dx,dword ptr cs:data_77	; Load seg:offset ptr
-		mov	es:data_39e,dx
-		mov	es:data_40e,ds
-		mov	byte ptr es:data_15e,0
-		mov	byte ptr es:data_16e,0
-		mov	word ptr es:data_17e,0
-		mov	byte ptr es:data_18e,0
-		mov	byte ptr es:data_19e,0
-		mov	word ptr es:data_20e,0
-		mov	byte ptr es:data_21e,0FFh
-		mov	byte ptr es:data_6e,0FFh
-		mov	byte ptr es:data_22e,0
-		mov	byte ptr es:data_23e,0
-		mov	byte ptr es:data_8e,0
-		mov	byte ptr es:data_5e,0
-		mov	byte ptr es:data_37e,0
-		mov	byte ptr es:data_25e,5
-		mov	byte ptr es:data_26e,0
-		mov	byte ptr es:data_27e,0
-		mov	byte ptr es:data_28e,0
-		mov	byte ptr es:data_29e,0
-		mov	byte ptr es:data_34e,0
-		mov	byte ptr es:data_31e,0
-		mov	byte ptr es:data_30e,0
-		mov	byte ptr es:data_36e,0
-		mov	byte ptr es:data_32e,0
-		mov	byte ptr es:data_33e,0
-		mov	byte ptr es:data_38e,0
-		mov	al,cs:data_90
-		mov	es:data_7e,al
-		mov	al,cs:data_89
-		mov	es:data_14e,al
-		mov	di,data_35e
-		xor	al,al			; Zero register
+		int	21h			; Get INT 61h (game use)
+		mov	saved_int61_ofs,bx
+		mov	saved_int61_seg,es
+
+		; Initialize game state variables in game.bin segment
+		mov	es,word ptr cs:game_entry_seg
+		mov	word ptr es:gvar_chunk_load_fn,2D9h
+		mov	es:gvar_chunk_load_seg,cs
+		lds	dx,dword ptr cs:saved_int08_ofs
+		mov	es:gvar_old_int08_ofs,dx
+		mov	es:gvar_old_int08_seg,ds
+		lds	dx,dword ptr cs:saved_int09_ofs
+		mov	es:gvar_old_int09_ofs,dx
+		mov	es:gvar_old_int09_seg,ds
+		mov	byte ptr es:gvar_skip_flag,0
+		mov	byte ptr es:gvar_timer_flag,0
+		mov	word ptr es:gvar_timer_counter,0
+		mov	byte ptr es:gvar_skip_input,0
+		mov	byte ptr es:gvar_state_b,0
+		mov	word ptr es:gvar_state_c,0
+		mov	byte ptr es:gvar_enable_all,0FFh
+		mov	byte ptr es:gvar_key_released,0FFh
+		mov	byte ptr es:gvar_sound_flag,0
+		mov	byte ptr es:gvar_key_pressed,0
+		mov	byte ptr es:gvar_key_state,0
+		mov	byte ptr es:gvar_timer_ticks,0
+		mov	byte ptr es:gvar_volume_b,0
+		mov	byte ptr es:gvar_save_flag,5
+		mov	byte ptr es:gvar_save_flag+1,0
+		mov	byte ptr es:gvar_music_flag_a,0
+		mov	byte ptr es:gvar_music_flag_b,0
+		mov	byte ptr es:gvar_music_flag_c,0
+		mov	byte ptr es:gvar_music_flag_d,0
+		mov	byte ptr es:gvar_joystick_flag,0
+		mov	byte ptr es:gvar_palette_flag,0
+		mov	byte ptr es:gvar_music_flag_d+1,0
+		mov	byte ptr es:gvar_volume_a,0
+		mov	byte ptr es:gvar_debug_mode,0
+		mov	byte ptr es:gvar_debug_val,0
+		mov	byte ptr es:gvar_music_flag_a-2,0
+		mov	al,cs:joystick_enabled
+		mov	es:gvar_last_key,al
+		mov	al,cs:music_enabled
+		mov	es:gvar_game_phase,al
+
+		; Copy save filename to game state
+		mov	di,gvar_save_name_buf
+		xor	al,al
 		mov	cx,8
-		rep	stosb			; Rep when cx >0 Store al to es:[di]
+		rep	stosb			; Clear save name buffer
 		push	cs
 		pop	ds
-		mov	si,offset data_68
-		mov	di,data_35e
+		mov	si,offset cmdline_savefile
+		mov	di,gvar_save_name_buf
 		mov	cx,8
 
-locloop_15:
-		lodsb				; String [si] to al
+copy_save_name:
+		lodsb
 		cmp	al,2Eh			; '.'
-		je	loc_17			; Jump if equal
+		je	save_name_done
 		cmp	al,61h			; 'a'
-		jb	loc_16			; Jump if below
+		jb	not_lowercase
 		cmp	al,7Bh			; '{'
-		jae	loc_16			; Jump if above or =
-		and	al,5Fh			; '_'
-loc_16:
-		stosb				; Store al to es:[di]
-		loop	locloop_15		; Loop if cx > 0
+		jae	not_lowercase
+		and	al,5Fh			; Convert to uppercase
+not_lowercase:
+		stosb
+		loop	copy_save_name
 
-loc_17:
-		mov	al,cs:data_88
-		mov	es:data_13e,al
-		mov	ax,word ptr cs:data_73+2
+save_name_done:
+		mov	al,cs:graphics_mode
+		mov	es:gvar_game_phase,al
+		mov	ax,word ptr cs:game_entry_seg
 		add	ax,1000h
-		mov	es:data_24e,ax
+		mov	es:gvar_game_seg,ax
+
+		; Load driver files into memory
 		push	cs
 		pop	ds
-		mov	es,word ptr cs:data_73+2
+		mov	es,word ptr cs:game_entry_seg
+
+		; Load graphics mode driver (gm*.bin)
 		mov	di,85Ah
-		test	byte ptr data_83,0FFh
-		jz	loc_18			; Jump if zero
+		test	byte ptr has_savefile,0FFh
+		jz	load_gfx_driver
 		mov	di,867h
-loc_18:
-		call	sub_8
-		mov	es,word ptr cs:data_73+2
+load_gfx_driver:
+		call	load_driver_file
+
+		; Load input driver (stick.bin)
+		mov	es,word ptr cs:game_entry_seg
 		mov	di,806h
-		call	sub_8
-		mov	es,word ptr cs:data_73+2
+		call	load_driver_file
+
+		; Load game data (game.bin)
+		mov	es,word ptr cs:game_entry_seg
 		mov	di,84Fh
-		call	sub_8
-		mov	es,word ptr cs:data_73+2
-		xor	bx,bx			; Zero register
-		mov	bl,data_88
+		call	load_driver_file
+
+		; Load standard player driver (stdply.bin)
+		mov	es,word ptr cs:game_entry_seg
+		xor	bx,bx
+		mov	bl,graphics_mode
 		add	bx,bx
-		mov	di,data_66[bx]
-		call	sub_8
-		mov	ax,word ptr cs:data_73+2
+		mov	di,driver_offset_table[bx]
+		call	load_driver_file
+
+		; Load music interrupt handler
+		mov	ax,word ptr cs:game_entry_seg
 		add	ax,0FF0h
 		mov	es,ax
 		mov	di,889h
-		call	sub_8
-		mov	ax,word ptr cs:data_73+2
+		call	load_driver_file
+
+		; Load secondary music handler
+		mov	ax,word ptr cs:game_entry_seg
 		add	ax,0FF0h
 		mov	es,ax
 		mov	di,89Bh
-		call	sub_8
-		cli				; Disable interrupts
+		call	load_driver_file
+
+		; Install interrupt handlers
+		cli
 		push	cs
 		pop	ds
-		mov	dx,offset int_23h_entry
+		mov	dx,offset ctrl_c_handler
 		mov	ax,2523h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
-		mov	ds,word ptr cs:data_73+2
+		int	21h			; Set INT 23h (Ctrl+C = ignore)
+
+		mov	ds,word ptr cs:game_entry_seg
 ;*		mov	dx,offset loc_2		;*
 		db	0BAh, 03h, 01h
 		mov	ax,2508h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
+		int	21h			; Set INT 08h (timer handler)
 ;*		mov	dx,offset loc_1		;*
 		db	0BAh, 00h, 01h
 		mov	ax,2509h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
+		int	21h			; Set INT 09h (keyboard handler)
 ;*		mov	dx,offset loc_3		;*
 		db	0BAh, 06h, 01h
 		mov	ax,2524h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
+		int	21h			; Set INT 24h (critical error)
 ;*		mov	dx,offset loc_4		;*
 		db	0BAh, 09h, 01h
 		mov	ax,2561h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
-		mov	ax,word ptr cs:data_73+2
+		int	21h			; Set INT 61h (music handler)
+
+		; Set up function pointers in game state
+		mov	ax,word ptr cs:game_entry_seg
 		mov	es,ax
 		add	ax,0FF0h
 		mov	ds,ax
-		mov	word ptr es:data_9e,100h
-		mov	es:data_10e,ds
-		mov	word ptr es:data_11e,1100h
-		mov	es:data_12e,ds
+		mov	word ptr es:gvar_input_fn_ofs,100h
+		mov	es:gvar_input_fn_seg,ds
+		mov	word ptr es:gvar_gfx_fn_ofs,1100h
+		mov	es:gvar_gfx_fn_seg,ds
 ;*		mov	dx,offset loc_5		;*
 		db	0BAh, 03h, 01h
 		mov	ax,2560h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
-		mov	al,36h			; '6'
-		out	43h,al			; port 43h, 8253 timer control
+		int	21h			; Set INT 60h (game services)
+
+		; Set timer to ~65.5 Hz (18.2 Hz * 3.6 = game tick rate)
+		mov	al,36h
+		out	43h,al			; 8253 timer control
 		mov	al,0B1h
-		out	40h,al			; port 40h, 8253 timer 0 clock
+		out	40h,al			; Timer 0 low byte
 		mov	al,13h
-		out	40h,al			; port 40h, 8253 timer 0 clock
-		sti				; Enable interrupts
-		call	sub_10
-		mov	al,cs:data_83
-		cbw				; Convrt byte to word
-		jmp	dword ptr cs:data_73
-			                        ;* No entry point to code
+		out	40h,al			; Timer 0 high byte (0x13B1 = 5041)
+		sti
+
+		; Set video mode and jump to game
+		call	set_video_mode
+		mov	al,cs:has_savefile
+		cbw
+		jmp	dword ptr cs:game_entry_ofs	; Jump to game.bin!
+
+		;--- Return from game ---
+		                        ;* No entry point to code
 		push	ax
 		mov	ax,2
-		int	10h			; Video display   ah=functn 00h
-						;  set display mode in al
+		int	10h			; Reset video mode (text 80x25)
 		mov	ax,2
-		int	10h			; Video display   ah=functn 00h
-						;  set display mode in al
-		call	sub_1
+		int	10h
+		call	flush_keyboard
 		mov	ax,1
-		int	60h			; ??INT Non-standard interrupt
+		int	60h			; Shutdown game services
 		pop	ax
-		or	ax,ax			; Zero ?
-		jnz	loc_19			; Jump if not zero
+
+		; Display exit message based on return code
+		or	ax,ax
+		jnz	check_exit_error
 		push	cs
 		pop	ds
-		mov	dx,offset data_56	; ('Thank you for playing.')
+		mov	dx,offset str_thank_you
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
-		jmp	short loc_23
-loc_19:
+		int	21h			; "Thank you for playing."
+		jmp	short cleanup_and_exit
+
+check_exit_error:
 		cmp	ax,0FFFFh
-		jne	loc_20			; Jump if not equal
+		jne	check_disk_error
 		push	cs
 		pop	ds
-		mov	dx,offset data_60	; ('USER file nothing.')
+		mov	dx,offset str_user_file_error
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
-		jmp	short loc_23
-loc_20:
+		int	21h			; "USER file nothing."
+		jmp	short cleanup_and_exit
+
+check_disk_error:
 		push	ds
 		push	dx
 		mov	dx,775h
 		cmp	ax,2
-		je	loc_21			; Jump if equal
-		mov	dx,offset data_59	; ('DISK read Error!!')
-loc_21:
+		je	show_error_filename
+		mov	dx,offset str_disk_error
+show_error_filename:
 		push	cs
 		pop	ds
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
-		mov	dl,20h			; ' '
+		int	21h
+		mov	dl,20h
 		mov	ah,2
-		int	21h			; DOS Services  ah=function 02h
-						;  display char dl
-		mov	dl,3Ah			; ':'
+		int	21h			; Display space
+		mov	dl,3Ah
 		mov	ah,2
-		int	21h			; DOS Services  ah=function 02h
-						;  display char dl
-		mov	dl,20h			; ' '
+		int	21h			; Display colon
+		mov	dl,20h
 		mov	ah,2
-		int	21h			; DOS Services  ah=function 02h
-						;  display char dl
+		int	21h			; Display space
 		pop	di
 		pop	ds
-loc_22:
+
+print_error_name:
 		mov	dl,[di]
-		or	dl,dl			; Zero ?
-		jz	loc_23			; Jump if zero
+		or	dl,dl
+		jz	cleanup_and_exit
 		mov	ah,2
-		int	21h			; DOS Services  ah=function 02h
-						;  display char dl
+		int	21h
 		inc	di
-		jmp	short loc_22
-loc_23:
-		cli				; Disable interrupts
-		lds	dx,dword ptr cs:data_75	; Load seg:offset ptr
+		jmp	short print_error_name
+
+cleanup_and_exit:
+		; Restore original interrupt vectors
+		cli
+		lds	dx,dword ptr cs:saved_int08_ofs
 		mov	ax,2508h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
-		lds	dx,dword ptr cs:data_77	; Load seg:offset ptr
+		int	21h			; Restore INT 08h
+		lds	dx,dword ptr cs:saved_int09_ofs
 		mov	ax,2509h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
-		lds	dx,dword ptr cs:data_79	; Load seg:offset ptr
+		int	21h			; Restore INT 09h
+		lds	dx,dword ptr cs:saved_int60_ofs
 		mov	ax,2560h
-		int	21h			; DOS Services  ah=function 25h
-						;  set intrpt vector al to ds:dx
-		mov	al,36h			; '6'
-		out	43h,al			; port 43h, 8253 timer control
-		xor	al,al			; Zero register
-		out	40h,al			; port 40h, 8253 timer 0 clock
-		out	40h,al			; port 40h, 8253 timer 0 clock
-		sti				; Enable interrupts
+		int	21h			; Restore INT 60h
+
+		; Restore standard timer rate
+		mov	al,36h
+		out	43h,al
+		xor	al,al
+		out	40h,al			; Timer 0 = 0x0000 (65536 = 18.2 Hz)
+		out	40h,al
+		sti
+
+		; Free game memory and exit
 		mov	ax,seg_a
 		mov	ds,ax
-		mov	es,word ptr data_73+2
+		mov	es,word ptr game_entry_seg
 		mov	ah,49h
-		int	21h			; DOS Services  ah=function 49h
-						;  release memory block, es=seg
-		jnc	loc_24			; Jump if carry=0
-		mov	dx,offset data_55	; ('Memory error !!!')
+		int	21h			; Free memory block
+		jnc	exit_program
+		mov	dx,offset str_memory_error
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
-loc_24:
+		int	21h
+exit_program:
 		mov	ax,4C00h
-		int	21h			; DOS Services  ah=function 4Ch
-						;  terminate with al=return code
+		int	21h			; Exit to DOS
 
 zeliad		endp
 
-;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-;                              SUBROUTINE
-;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+;==========================================================================
+;  flush_keyboard - Drain all pending keystrokes from keyboard buffer
+;==========================================================================
+
+flush_keyboard	proc	near
 		push	dx
-loc_25:
+flush_loop:
 		mov	dl,0FFh
 		mov	ah,6
-		int	21h			; DOS Services  ah=function 06h
-						;  special char i/o, dl=subfunc
-		jnz	loc_25			; Jump if not zero
+		int	21h			; Direct console I/O (check key)
+		jnz	flush_loop		; Loop while keys available
 		pop	dx
 		retn
-sub_1		endp
+flush_keyboard	endp
 
 
-;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-;                              SUBROUTINE
-;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+;==========================================================================
+;  read_config_line - Read one line from RESOURCE.CFG
+;  Input:  BX = file handle
+;  Output: CF=1 if EOF, CF=0 if line read
+;          DS:SI points to parsed content, CX = length
+;==========================================================================
 
-sub_2		proc	near
+read_config_line proc	near
 		push	cs
 		pop	ds
-		mov	dx,offset data_92
-		mov	byte ptr data_91,0
-loc_26:
+		mov	dx,offset cfg_line_buffer
+		mov	byte ptr cfg_line_length,0
+
+skip_whitespace:
 		mov	cx,1
 		mov	ah,3Fh
-		int	21h			; DOS Services  ah=function 3Fh
-						;  read file, bx=file handle
-						;   cx=bytes to ds:dx buffer
-		or	ax,ax			; Zero ?
-		stc				; Set carry flag
-		jnz	loc_27			; Jump if not zero
+		int	21h			; Read 1 byte
+		or	ax,ax
+		stc				; Set CF (EOF)
+		jnz	got_char
 		retn
-loc_27:
+
+got_char:
 		mov	si,dx
-		cmp	byte ptr [si],20h	; ' '
-		jb	loc_26			; Jump if below
-loc_28:
-		inc	data_91
-		or	byte ptr [si],20h	; ' '
+		cmp	byte ptr [si],20h	; Skip control chars
+		jb	skip_whitespace
+
+read_next_char:
+		inc	cfg_line_length
+		or	byte ptr [si],20h	; Force lowercase
 		inc	dx
-loc_29:
+
+read_more:
 		mov	cx,1
 		mov	ah,3Fh
-		int	21h			; DOS Services  ah=function 3Fh
-						;  read file, bx=file handle
-						;   cx=bytes to ds:dx buffer
-		or	ax,ax			; Zero ?
-		jz	loc_30			; Jump if zero
+		int	21h			; Read 1 byte
+		or	ax,ax
+		jz	line_done
 		mov	si,dx
-		cmp	byte ptr [si],20h	; ' '
-		je	loc_29			; Jump if equal
-		jnc	loc_28			; Jump if carry=0
-loc_30:
-		clc				; Clear carry flag
+		cmp	byte ptr [si],20h	; Space = separator
+		je	read_more		; Skip spaces
+		jnc	read_next_char		; Continue if printable
+
+line_done:
+		clc				; Clear CF (success)
 		retn
-sub_2		endp
+read_config_line endp
 
 
-;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-;                              SUBROUTINE
-;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+;==========================================================================
+;  parse_graphics_mode - Parse graphics adapter name from config
+;  Matches: ega, cga, hgc, mcga, tga (3 or 4 char names)
+;  Sets graphics_mode to 0-5
+;==========================================================================
 
-sub_3		proc	near
+parse_graphics_mode proc near
 		push	cs
 		pop	es
-		call	sub_7
+		call	find_colon_in_line
 		dec	cx
 		cmp	cx,3
-		je	loc_34			; Jump if equal
+		je	try_3char_modes
 		cmp	cx,4
-		je	loc_31			; Jump if equal
-		jmp	loc_41
-loc_31:
-		mov	di,offset data_42
+		je	try_4char_modes
+		jmp	cfg_error
+
+try_4char_modes:
+		mov	di,offset mode_4char_table
 		mov	cx,2
 
-locloop_32:
+match_4char_loop:
 		push	cx
 		push	si
 		push	di
 		mov	cx,4
-		repe	cmpsb			; Rep zf=1+cx >0 Cmp [si] to es:[di]
+		repe	cmpsb
 		pop	di
 		pop	si
 		pop	cx
-		jz	loc_33			; Jump if zero
+		jz	found_4char_mode
 		add	di,5
-		loop	locloop_32		; Loop if cx > 0
+		loop	match_4char_loop
+		jmp	cfg_error
 
-		jmp	loc_41
-loc_33:
+found_4char_mode:
 		add	di,4
 		mov	al,es:[di]
-		mov	data_88,al
+		mov	graphics_mode,al
 		retn
-loc_34:
-		mov	di,offset data_43
+
+try_3char_modes:
+		mov	di,offset mode_3char_table
 		mov	cx,4
 
-locloop_35:
+match_3char_loop:
 		push	cx
 		push	si
 		push	di
 		mov	cx,3
-		repe	cmpsb			; Rep zf=1+cx >0 Cmp [si] to es:[di]
+		repe	cmpsb
 		pop	di
 		pop	si
 		pop	cx
-		jz	loc_36			; Jump if zero
+		jz	found_3char_mode
 		add	di,4
-		loop	locloop_35		; Loop if cx > 0
+		loop	match_3char_loop
+		jmp	cfg_error
 
-		jmp	loc_41
-loc_36:
+found_3char_mode:
 		add	di,3
 		mov	al,es:[di]
-		mov	data_88,al
+		mov	graphics_mode,al
 		retn
-data_42		db	63h
+
+; Mode lookup tables: name bytes followed by mode index
+; 4-char modes: "cga2"=2, "mcga"=4
+mode_4char_table db	63h
 		db	 67h, 61h, 32h, 02h, 6Dh, 63h
 		db	 67h, 61h, 04h
-data_43		db	63h
+; 3-char modes: "cga"=1, "ega"=0, "hgc"=3, "tga"=5
+mode_3char_table db	63h
 		db	 67h, 61h, 01h, 65h, 67h, 61h
 		db	 00h, 68h, 67h, 63h, 03h, 74h
 		db	 67h, 61h, 05h
 
-;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+;==========================================================================
+;  parse_music_driver - Parse music driver name from config line
+;  If name matches "mscmt.drv", enables music (music_enabled = 0xFF)
+;==========================================================================
 
-sub_4:
-		mov	byte ptr cs:data_89,0
+parse_music_driver:
+		mov	byte ptr cs:music_enabled,0
 		push	cs
 		pop	es
-		call	sub_7
+		call	find_colon_in_line
 		dec	cx
 		cmp	cx,0Fh
-		jb	loc_37			; Jump if below
+		jb	music_name_ok
 		mov	cx,0Fh
-loc_37:
-		mov	di,offset data_69
-		rep	movsb			; Rep when cx >0 Mov [si] to es:[di]
-		xor	al,al			; Zero register
-		stosb				; Store al to es:[di]
-		mov	di,offset data_69
-		mov	si,offset data_44	; ('mscmt.drv')
+music_name_ok:
+		mov	di,offset music_driver_name
+		rep	movsb
+		xor	al,al
+		stosb				; Null-terminate
+		mov	di,offset music_driver_name
+		mov	si,offset str_mscmt_drv
 		mov	cx,9
-		repe	cmpsb			; Rep zf=1+cx >0 Cmp [si] to es:[di]
-		jz	loc_38			; Jump if zero
+		repe	cmpsb
+		jz	music_is_mt32
 		retn
-loc_38:
-		mov	byte ptr data_89,0FFh
+music_is_mt32:
+		mov	byte ptr music_enabled,0FFh
 		retn
-data_44		db	'mscmt.drv'
 
-;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
+str_mscmt_drv	db	'mscmt.drv'
 
-sub_5:
+;==========================================================================
+;  parse_joystick_name - Parse joystick driver name from config
+;==========================================================================
+
+parse_joystick_name:
 		push	cs
 		pop	es
-		call	sub_7
+		call	find_colon_in_line
 		dec	cx
 		cmp	cx,0Fh
-		jb	loc_39			; Jump if below
+		jb	joy_name_ok
 		mov	cx,0Fh
-loc_39:
-		mov	di,offset data_71
-		rep	movsb			; Rep when cx >0 Mov [si] to es:[di]
-		xor	al,al			; Zero register
-		stosb				; Store al to es:[di]
+joy_name_ok:
+		mov	di,offset joystick_driver_name
+		rep	movsb
+		xor	al,al
+		stosb				; Null-terminate
 		retn
-;      Note: Subroutine does not return	to instruction after call
 
+;==========================================================================
+;  parse_joystick_enable - Parse "yes"/"no" from config
+;  Sets joystick_enabled flag. Jumps to cfg_error on bad input.
+;==========================================================================
 
-;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-
-sub_6:
+parse_joystick_enable:
 		push	cs
 		pop	es
-		call	sub_7
+		call	find_colon_in_line
 		dec	cx
 		cmp	cx,2
-		je	loc_40			; Jump if equal
+		je	try_no
 		cmp	cx,3
-		jne	loc_41			; Jump if not equal
-		mov	di,offset data_45
+		jne	cfg_error
+		mov	di,offset str_yes
 		mov	cx,3
-		repe	cmpsb			; Rep zf=1+cx >0 Cmp [si] to es:[di]
-		jnz	loc_41			; Jump if not zero
-		mov	byte ptr cs:data_90,0FFh
+		repe	cmpsb
+		jnz	cfg_error
+		mov	byte ptr cs:joystick_enabled,0FFh
 		retn
-loc_40:
-		mov	di,offset data_46
+try_no:
+		mov	di,offset str_no
 		mov	cx,2
-		repe	cmpsb			; Rep zf=1+cx >0 Cmp [si] to es:[di]
-		jnz	loc_41			; Jump if not zero
-		mov	byte ptr cs:data_90,0
+		repe	cmpsb
+		jnz	cfg_error
+		mov	byte ptr cs:joystick_enabled,0
 		retn
-data_45		db	79h
+
+str_yes		db	79h
 		db	 65h, 73h
-data_46		db	6Eh
+str_no		db	6Eh
 		db	6Fh
-loc_41:
+
+cfg_error:
 		mov	ah,3Eh
-		int	21h			; DOS Services  ah=function 3Eh
-						;  close file, bx=file handle
-		mov	dx,offset data_61	; ('Error in RESOURCE.CFG')
+		int	21h			; Close file
+		mov	dx,offset str_cfg_error
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
+		int	21h			; "Error in RESOURCE.CFG"
 		mov	ax,4C00h
-		int	21h			; DOS Services  ah=function 4Ch
-						;  terminate with al=return code
-sub_3		endp
+		int	21h			; Exit
+parse_graphics_mode endp
 
 
-;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-;                              SUBROUTINE
-;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+;==========================================================================
+;  find_colon_in_line - Find ':' delimiter in config line buffer
+;  Output: DS:SI points after colon, CX = remaining length
+;==========================================================================
 
-sub_7		proc	near
+find_colon_in_line proc	near
 		push	cs
 		pop	ds
-		mov	si,offset data_92
-		xor	cx,cx			; Zero register
-		mov	cl,data_91
+		mov	si,offset cfg_line_buffer
+		xor	cx,cx
+		mov	cl,cfg_line_length
 
-locloop_42:
-		lodsb				; String [si] to al
+scan_for_colon:
+		lodsb
 		cmp	al,3Ah			; ':'
-		jne	loc_43			; Jump if not equal
+		jne	next_colon_char
 		retn
-loc_43:
-		loop	locloop_42		; Loop if cx > 0
+next_colon_char:
+		loop	scan_for_colon
+		jmp	short cfg_error
+find_colon_in_line endp
 
-		jmp	short loc_41
-sub_7		endp
 
+;==========================================================================
+;  load_driver_file - Load a binary file into memory at ES:DI
+;  Input:  ES:DI points to {offset_word, filename_string}
+;  Output: File contents loaded at ES:[offset]
+;==========================================================================
 
-;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-;                              SUBROUTINE
-;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
-
-sub_8		proc	near
+load_driver_file proc	near
 		push	ds
 		push	es
 		push	di
 		mov	dx,di
-		add	dx,2
+		add	dx,2			; Skip past offset word to filename
 		mov	ax,3D00h
-		int	21h			; DOS Services  ah=function 3Dh
-						;  open file, al=mode,name@ds:dx
-		jc	loc_44			; Jump if carry Set
+		int	21h			; Open file for reading
+		jc	driver_load_error
 		mov	bx,ax
-		mov	dx,[di]
+		mov	dx,[di]			; Get load offset
 		mov	cx,0FFFFh
 		push	es
 		pop	ds
 		mov	ah,3Fh
-		int	21h			; DOS Services  ah=function 3Fh
-						;  read file, bx=file handle
-						;   cx=bytes to ds:dx buffer
-		jc	loc_44			; Jump if carry Set
+		int	21h			; Read entire file
+		jc	driver_load_error
 		mov	ah,3Eh
-		int	21h			; DOS Services  ah=function 3Eh
-						;  close file, bx=file handle
-		jc	loc_44			; Jump if carry Set
+		int	21h			; Close file
+		jc	driver_load_error
 		pop	di
 		pop	es
 		pop	ds
 		retn
-loc_44:
+
+driver_load_error:
 		pop	di
 		pop	es
 		pop	ds
-		call	sub_9
-		jmp	loc_23
-sub_8		endp
+		call	display_file_error
+		jmp	cleanup_and_exit
+load_driver_file endp
 
 
-;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-;                              SUBROUTINE
-;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+;==========================================================================
+;  display_file_error - Show "File Error from <filename>" message
+;  Input:  ES:DI = pointer to file entry (offset + name)
+;          AX = DOS error code
+;==========================================================================
 
-sub_9		proc	near
+display_file_error proc	near
 		push	ds
 		push	es
 		push	di
 		push	cs
 		pop	ds
 		push	ax
-		mov	dx,offset data_57	; ('File Error from ')
+		mov	dx,offset str_file_error
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
+		int	21h			; "File Error from "
 		pop	ax
 		pop	di
 		pop	es
 		pop	ds
 		push	ax
-		add	di,2
-loc_45:
+		add	di,2			; Skip to filename
+
+print_filename:
 		mov	dl,[di]
-		or	dl,dl			; Zero ?
-		jz	loc_46			; Jump if zero
+		or	dl,dl
+		jz	show_error_code
 		mov	ah,2
-		int	21h			; DOS Services  ah=function 02h
-						;  display char dl
+		int	21h
 		inc	di
-		jmp	short loc_45
-loc_46:
-		pop	bx
+		jmp	short print_filename
+
+show_error_code:
+		pop	bx			; BX = error code
 		push	cs
 		pop	ds
-		mov	dx,offset data_58	; ('     Error Type : ')
+		mov	dx,offset str_error_type
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
+		int	21h			; "     Error Type : "
 		mov	dx,775h
 		cmp	bx,2
-		je	loc_47			; Jump if equal
+		je	show_error_string
 		mov	dx,785h
 		cmp	bx,5
-		je	loc_47			; Jump if equal
-		shl	bx,1			; Shift w/zeros fill
-		mov	dl,data_62[bx]
+		je	show_error_string
+		shl	bx,1
+		mov	dl,hex_digits_hi[bx]
 		mov	ah,2
-		int	21h			; DOS Services  ah=function 02h
-						;  display char dl
-		mov	dl,byte ptr data_63[bx]	; ('00102030405060708090A0B0')
+		int	21h
+		mov	dl,byte ptr hex_digits_lo[bx]
 		mov	ah,2
-		int	21h			; DOS Services  ah=function 02h
-						;  display char dl
+		int	21h
 		mov	dl,48h			; 'H'
 		mov	ah,2
-		int	21h			; DOS Services  ah=function 02h
-						;  display char dl
+		int	21h
 		retn
-loc_47:
+
+show_error_string:
 		mov	ah,9
-		int	21h			; DOS Services  ah=function 09h
-						;  display char string at ds:dx
+		int	21h
 		retn
-sub_9		endp
+display_file_error endp
 
 
-;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-;                              SUBROUTINE
-;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+;==========================================================================
+;  set_video_mode - Initialize video hardware for selected graphics mode
+;  Uses graphics_mode index to select: EGA/CGA/HGC/MCGA/TGA
+;==========================================================================
 
-sub_10		proc	near
-		mov	bl,cs:data_88
-		xor	bh,bh			; Zero register
+set_video_mode	proc	near
+		mov	bl,cs:graphics_mode
+		xor	bh,bh
 		add	bx,bx
-		jmp	word ptr cs:data_47[bx]	;*6 entries
-data_47		dw	offset loc_48		; Data table (indexed access)
-data_48		dw	offset loc_49
-data_49		dw	offset loc_50
-data_50		dw	offset loc_53
-data_51		dw	offset loc_51
-data_52		dw	offset loc_52
+		jmp	word ptr cs:video_mode_table[bx]
 
-;ƒƒƒƒƒ Indexed Entry Point ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
+video_mode_table dw	offset set_mode_ega
+		dw	offset set_mode_cga
+		dw	offset set_mode_cga2
+		dw	offset set_mode_hgc
+		dw	offset set_mode_mcga
+		dw	offset set_mode_tga
 
-loc_48:
-		mov	ax,0Eh
-		int	10h			; Video display   ah=functn 00h
-						;  set display mode in al
+set_mode_ega:
+		mov	ax,0Eh			; EGA 640x200 16-color
+		int	10h
 		retn
 
-;ƒƒƒƒƒ Indexed Entry Point ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
-
-loc_49:
-		mov	ax,5
-		int	10h			; Video display   ah=functn 00h
-						;  set display mode in al
+set_mode_cga:
+		mov	ax,5			; CGA 320x200 4-color
+		int	10h
 		retn
 
-;ƒƒƒƒƒ Indexed Entry Point ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
-
-loc_50:
-		mov	ax,6
-		int	10h			; Video display   ah=functn 00h
-						;  set display mode in al
+set_mode_cga2:
+		mov	ax,6			; CGA 640x200 2-color
+		int	10h
 		retn
 
-;ƒƒƒƒƒ Indexed Entry Point ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
-
-loc_51:
-		mov	ax,13h
-		int	10h			; Video display   ah=functn 00h
-						;  set display mode in al
+set_mode_mcga:
+		mov	ax,13h			; MCGA/VGA 320x200 256-color
+		int	10h
 		retn
 
-;ƒƒƒƒƒ Indexed Entry Point ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
-
-loc_52:
-		mov	ax,9
-		int	10h			; Video display   ah=functn 00h
-						;  set display mode in al
+set_mode_tga:
+		mov	ax,9			; Tandy 320x200 16-color
+		int	10h
 		retn
 
-;ƒƒƒƒƒ Indexed Entry Point ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ
-
-loc_53:
+set_mode_hgc:
+		; Hercules graphics mode setup
 		push	cs
 		pop	ds
 		mov	dx,3B8h
 		mov	al,2
-		out	dx,al			; port 3B8h, MDA video control
+		out	dx,al			; MDA video control
 		mov	dx,3BFh
 		mov	al,1
-		out	dx,al			; port 3BFh, Hercules config
+		out	dx,al			; Hercules config register
 		mov	cx,0Ch
 		mov	ah,0
-		mov	si,offset data_53
+		mov	si,offset hgc_crt_params
 		mov	dx,3B4h
 
-locloop_54:
+hgc_init_loop:
 		mov	al,ah
-		out	dx,al			; port 3B4h, MDA/EGA reg index
-						;  al = 0, horiz char total
-		lodsb				; String [si] to al
+		out	dx,al			; CRT register index
+		lodsb
 		inc	dx
-		out	dx,al			; port 3B5h, MDA/EGA indxd data
+		out	dx,al			; CRT register data
 		dec	dx
 		inc	ah
-		loop	locloop_54		; Loop if cx > 0
+		loop	hgc_init_loop
 
-		mov	al,2Ah			; '*'
+		mov	al,2Ah
 		mov	dx,3B8h
-		out	dx,al			; port 3B8h, MDA video control
+		out	dx,al			; Enable graphics mode
 		mov	ax,0B000h
 		mov	es,ax
-		mov	di,data_94e
-		xor	ax,ax			; Zero register
+		mov	di,zero_offset
+		xor	ax,ax
 		mov	cx,4000h
-		rep	stosw			; Rep when cx >0 Store ax to es:[di]
+		rep	stosw			; Clear video memory
 		retn
-sub_10		endp
+set_video_mode	endp
 
-data_53		db	35h
+hgc_crt_params	db	35h
 		db	 2Dh, 2Eh, 07h, 5Bh, 02h, 57h
 		db	 57h, 02h, 03h, 00h, 00h
 
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;
-;                       External Entry Point
-;
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;  ctrl_c_handler - INT 23h handler (ignores Ctrl+C)
+;==========================================================================
 
-int_23h_entry	proc	far
-		iret				; Interrupt return
-int_23h_entry	endp
+ctrl_c_handler	proc	far
+		iret
+ctrl_c_handler	endp
 
 
-;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
-;                              SUBROUTINE
-;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
+;==========================================================================
+;  parse_command_line - Check PSP for command-line save file name
+;  If found, appends ".USR" extension and sets has_savefile flag
+;==========================================================================
 
-sub_11		proc	near
+parse_command_line proc	near
 		test	byte ptr es:PSP_cmd_size,0FFh
-		jnz	loc_55			; Jump if not zero
+		jnz	has_args
 		retn
-loc_55:
-		mov	di,offset data_68
-		xor	cx,cx			; Zero register
+
+has_args:
+		mov	di,offset cmdline_savefile
+		xor	cx,cx
 		mov	cl,es:PSP_cmd_size
-		mov	si,data_41e
+		mov	si,PSP_cmd_line
 
-locloop_56:
-		cmp	byte ptr es:[si],20h	; ' '
-		jne	loc_57			; Jump if not equal
+skip_leading_spaces:
+		cmp	byte ptr es:[si],20h
+		jne	found_arg_start
 		inc	si
-		loop	locloop_56		; Loop if cx > 0
-
+		loop	skip_leading_spaces
 		retn
-loc_57:
-		xor	ah,ah			; Zero register
 
-locloop_58:
+found_arg_start:
+		xor	ah,ah			; Flag: found non-space char
+
+copy_arg_chars:
 		mov	al,es:[si]
-		cmp	al,20h			; ' '
-		je	loc_59			; Jump if equal
-		cmp	al,0Dh
-		je	loc_59			; Jump if equal
-		mov	ah,0FFh
+		cmp	al,20h			; Space = end
+		je	next_arg_char
+		cmp	al,0Dh			; CR = end
+		je	next_arg_char
+		mov	ah,0FFh			; Mark as having content
 		mov	[di],al
 		inc	di
-loc_59:
-		inc	si
-		loop	locloop_58		; Loop if cx > 0
 
-		or	ah,ah			; Zero ?
-		jnz	loc_60			; Jump if not zero
+next_arg_char:
+		inc	si
+		loop	copy_arg_chars
+
+		or	ah,ah
+		jnz	set_savefile_flag
 		retn
-loc_60:
-		mov	byte ptr data_83,0FFh
+
+set_savefile_flag:
+		mov	byte ptr has_savefile,0FFh
 		mov	byte ptr [di],2Eh	; '.'
 		mov	byte ptr [di+1],55h	; 'U'
 		mov	byte ptr [di+2],53h	; 'S'
 		mov	byte ptr [di+3],52h	; 'R'
 		mov	byte ptr [di+4],0
 		retn
-sub_11		endp
+parse_command_line endp
 
-data_54		db	'The Fantasy Action Game ZELIARD '
+
+;==========================================================================
+;  String Constants
+;==========================================================================
+
+str_game_title	db	'The Fantasy Action Game ZELIARD '
 		db	'Version 1.208', 0Dh, 0Ah, 'Copyr'
 		db	'ight (C) 1987 ~ 1990 Game Arts C'
 		db	'o.,Ltd.', 0Dh, 0Ah, 'Copyright ('
@@ -955,23 +991,32 @@ data_54		db	'The Fantasy Action Game ZELIARD '
 		db	'Special mode !!', 0Dh, 0Ah, '$'
 		db	'Not enough memory to run ', 27h, 'Z'
 		db	'ELIARD', 27h, '.', 0Dh, 0Ah, '$'
-data_55		db	'Memory error !!!', 0Dh, 0Ah, '$'
-data_56		db	'Thank you for playing.', 0Dh, 0Ah
+str_memory_error db	'Memory error !!!', 0Dh, 0Ah, '$'
+str_thank_you	db	'Thank you for playing.', 0Dh, 0Ah
 		db	'$'
-data_57		db	'File Error from $'
-data_58		db	'     Error Type : $'
+str_file_error	db	'File Error from $'
+str_error_type	db	'     Error Type : $'
 		db	'File not found.$'
-data_59		db	'DISK read Error!!$'
-data_60		db	'USER file nothing.$'
-data_61		db	'Error in RESOURCE.CFG', 0Dh, 0Ah
+str_disk_error	db	'DISK read Error!!$'
+str_user_file_error db	'USER file nothing.$'
+str_cfg_error	db	'Error in RESOURCE.CFG', 0Dh, 0Ah
 		db	'$'
-data_62		db	30h			; Data table (indexed access)
-data_63		db	'00102030405060708090A0B0C0D0E0F'	; Data table (indexed access)
-data_64		db	'RESOURCE.CFG', 0
-data_65		db	'MTINIT.COM', 0
-data_66		dw	812h			; Data table (indexed access)
+
+;==========================================================================
+;  Data Tables
+;==========================================================================
+
+hex_digits_hi	db	30h			; '0'-'F' high nibble
+hex_digits_lo	db	'00102030405060708090A0B0C0D0E0F'
+
+cfg_filename	db	'RESOURCE.CFG', 0
+mtinit_filename	db	'MTINIT.COM', 0
+
+driver_offset_table dw	812h			; EGA driver offset
 		db	 1Eh, 08h, 1Eh, 08h, 2Ah, 08h
 		db	 36h, 08h, 43h, 08h, 00h, 01h
+
+		; Driver file entries: {load_offset, filename, 0}
 		db	'stick.bin'
 		db	0, 0
 		db	' gmega.bin'
@@ -988,24 +1033,34 @@ data_66		dw	812h			; Data table (indexed access)
 		db	0, 0, 0
 		db	'stdply.bin'
 		db	0, 0, 0
-data_68		db	0
+
+;==========================================================================
+;  Runtime Variables
+;==========================================================================
+
+cmdline_savefile db	0			; Command-line save file name
 		db	32 dup (0)
 		db	1
-data_69		db	0
+music_driver_name db	0			; Music driver filename
 		db	16 dup (0)
 		db	11h
-data_71		db	0
+joystick_driver_name db	0			; Joystick driver filename
 		db	15 dup (0)
-data_73		dw	0A000h, 0
-data_75		dw	0, 0
-data_77		dw	0, 0
-data_79		dw	0, 0
-data_81		dw	0
-data_82		dw	0			; segment storage
-data_83		db	0
-data_84		dw	0
-data_85		dw	0			; segment storage
-data_86		db	23h
+
+game_entry_ofs	dw	0A000h			; Game entry point offset
+game_entry_seg	dw	0			; Game entry point segment
+
+saved_int08_ofs	dw	0, 0			; Original INT 08h vector
+saved_int09_ofs	dw	0, 0			; Original INT 09h vector
+saved_int60_ofs	dw	0, 0			; Original INT 60h vector
+saved_int61_ofs	dw	0			; Original INT 61h offset
+saved_int61_seg	dw	0			; Original INT 61h segment
+
+has_savefile	db	0			; 0xFF if command-line save file
+saved_sp	dw	0			; Saved SP for EXEC
+saved_ss	dw	0			; Saved SS for EXEC
+
+exec_param_block db	23h			; EXEC parameter block
 		db	 29h,0D4h, 08h
 		dw	seg_a
 		db	0D7h, 08h
@@ -1014,11 +1069,12 @@ data_86		db	23h
 		dw	seg_a
 		db	 01h, 20h, 0Dh, 00h, 20h
 		db	14 dup (0)
-data_88		db	0
-data_89		db	0
-data_90		db	0
-data_91		db	0
-data_92		db	0
+
+graphics_mode	db	0			; 0=EGA 1=CGA 2=HGC 3=MCGA 4=TGA 5=?
+music_enabled	db	0			; 0xFF = music enabled
+joystick_enabled db	0			; 0xFF = joystick enabled
+cfg_line_length	db	0			; Current config line length
+cfg_line_buffer	db	0			; Config line read buffer
 		db	260 dup (0)
 
 seg_a		ends

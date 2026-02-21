@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_05	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ANIMATION_SYSTEM - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -137,11 +133,11 @@ start:
 		mov	word ptr ds:data_59e,41F8h
 		mov	si,ds:data_96e
 		sub	si,21h
-		call	sub_42
+		call	anim_func_42
 		xor	bx,bx			; Zero register
 		test	byte ptr [si],80h
 		jz	loc_2			; Jump if zero
-		call	sub_3
+		call	anim_func_3
 loc_2:
 		inc	si
 		mov	cx,6
@@ -150,26 +146,26 @@ locloop_4:
 		push	cx
 		test	byte ptr [si],80h
 		jz	loc_5			; Jump if zero
-		call	sub_4
+		call	anim_func_4
 loc_5:
 		inc	si
 loc_6:
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_7			; Jump if zero
-		call	sub_4
+		call	anim_func_4
 loc_7:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_8			; Jump if zero
-		call	sub_4
+		call	anim_func_4
 loc_8:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_9			; Jump if zero
-		call	sub_4
+		call	anim_func_4
 loc_9:
 		inc	si
 		inc	bx
@@ -178,36 +174,36 @@ loc_9:
 
 		test	byte ptr [si],80h
 		jz	loc_10			; Jump if zero
-		call	sub_4
+		call	anim_func_4
 loc_10:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_11			; Jump if zero
-		call	sub_4
+		call	anim_func_4
 loc_11:
 		inc	si
 		inc	bx
 		test	byte ptr [si],80h
 		jz	loc_12			; Jump if zero
-		call	sub_4
+		call	anim_func_4
 loc_12:
 		inc	si
 		test	byte ptr [si],80h
 		jz	loc_13			; Jump if zero
-		call	sub_5
+		call	anim_func_5
 loc_13:
 		mov	si,ds:data_96e
 		mov	di,data_89e
 		mov	byte ptr ds:data_62e,12h
 loc_14:
-		call	sub_22
+		call	anim_func_22
 		xor	bx,bx			; Zero register
 		add	si,3
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jns	loc_15			; Jump if not sign
-		call	sub_6
+		call	anim_func_6
 loc_15:
 		mov	cx,6
 
@@ -215,22 +211,22 @@ locloop_16:
 		push	cx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_17			; Jump if zero
-		call	sub_1
+		call	anim_func_1
 loc_17:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_18			; Jump if zero
-		call	sub_1
+		call	anim_func_1
 loc_18:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_19			; Jump if zero
-		call	sub_1
+		call	anim_func_1
 loc_19:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_20			; Jump if zero
-		call	sub_1
+		call	anim_func_1
 loc_20:
 		inc	bx
 		pop	cx
@@ -238,17 +234,17 @@ loc_20:
 
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_21			; Jump if zero
-		call	sub_1
+		call	anim_func_1
 loc_21:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_22			; Jump if zero
-		call	sub_1
+		call	anim_func_1
 loc_22:
 		inc	bx
 		cmpsb				; Cmp [si] to es:[di]
 		jz	loc_23			; Jump if zero
-		call	sub_1
+		call	anim_func_1
 loc_23:
 		inc	bx
 		lodsb				; String [si] to al
@@ -259,10 +255,10 @@ loc_23:
 loc_24:
 		cmp	al,es:[di-1]
 		je	loc_25			; Jump if equal
-		call	sub_1
+		call	anim_func_1
 loc_25:
 		add	si,4
-		call	sub_41
+		call	anim_func_41
 		add	word ptr ds:data_59e,140h
 		dec	byte ptr ds:data_62e
 		jnz	loc_14			; Jump if not zero
@@ -274,7 +270,7 @@ zr2_05		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+anim_func_1		proc	near
 		mov	al,[si-1]
 		or	al,al			; Zero ?
 		jns	loc_26			; Jump if not sign
@@ -293,7 +289,7 @@ loc_27:
 		add	dx,dx
 		add	dx,dx
 		add	dx,ds:data_59e
-		call	sub_2
+		call	anim_multiply
 loc_28:
 		mov	al,ds:data_87e
 		sub	al,5
@@ -311,12 +307,12 @@ loc_30:
 		call	word ptr ds:data_49e[bx]	;*
 		pop	bx
 		retn
-sub_1		endp
+anim_func_1		endp
 
 			                        ;* No entry point to code
 ;*		jp	loc_34			;*Jump if parity=1
 		db	 7Ah, 31h		;  Fixup - byte match
-;*		call	far ptr sub_50		;*
+;*		call	far ptr anim_func_50		;*
 		db	9Ah
 		dw	0D031h, 4E31h		;  Fixup - byte match
 		xor	cl,ss:data_110e[bp+si]
@@ -453,7 +449,7 @@ loc_44:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+anim_multiply		proc	near
 		push	es
 		push	ds
 		push	di
@@ -661,14 +657,14 @@ loc_71:
 		pop	ds
 		pop	es
 		retn
-sub_2		endp
+anim_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+anim_func_3		proc	near
 		cmp	byte ptr ds:data_89e,0FFh
 		jne	loc_72			; Jump if not equal
 		retn
@@ -682,31 +678,31 @@ loc_73:
 		mov	byte ptr ds:data_89e,0FFh
 		mov	cl,[si]
 		add	si,25h
-		call	sub_41
+		call	anim_func_41
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_74			; Jump if not sign
-		call	sub_17
+		call	anim_get_value
 loc_74:
 		push	ax
 		mov	al,cl
-		call	sub_18
+		call	anim_multiply_3
 		add	si,3
 		pop	ax
 		mov	ah,[si]
 		mov	dx,41F8h
-		call	sub_9
+		call	anim_func_9
 		pop	bx
 		pop	si
 		retn
-sub_3		endp
+anim_func_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+anim_func_4		proc	near
 		push	si
 		push	bx
 		mov	cx,bx
@@ -724,28 +720,28 @@ sub_4		proc	near
 		add	dx,41F8h
 		mov	cl,[si]
 		add	si,24h
-		call	sub_41
+		call	anim_func_41
 		mov	bx,data_77e
 		lodsw				; String [si] to ax
 		mov	[bx],ax
 		mov	al,cl
-		call	sub_18
+		call	anim_multiply_3
 		inc	si
 		inc	si
 		mov	di,data_77e
 		mov	bp,data_75e
-		call	sub_7
+		call	anim_func_7
 		pop	bx
 		pop	si
 		retn
-sub_4		endp
+anim_func_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+anim_func_5		proc	near
 		cmp	byte ptr ds:data_90e,0FFh
 		jne	loc_75			; Jump if not equal
 		retn
@@ -757,15 +753,15 @@ loc_76:
 		mov	byte ptr ds:data_90e,0FFh
 		mov	cl,[si]
 		add	si,24h
-		call	sub_41
+		call	anim_func_41
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_77			; Jump if not sign
-		call	sub_17
+		call	anim_get_value
 loc_77:
 		push	ax
 		mov	al,cl
-		call	sub_18
+		call	anim_multiply_3
 		add	si,2
 		pop	ax
 		mov	ah,[si]
@@ -774,7 +770,7 @@ loc_77:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_6:
+anim_func_6:
 		push	si
 		push	di
 		push	bx
@@ -789,10 +785,10 @@ sub_6:
 		mov	cl,[si-1]
 		mov	dl,[si]
 		add	si,24h
-		call	sub_41
+		call	anim_func_41
 		mov	dh,[si]
 		mov	al,cl
-		call	sub_18
+		call	anim_multiply_3
 		inc	si
 		mov	bx,dx
 		pop	dx
@@ -810,9 +806,9 @@ sub_6:
 		push	dx
 		or	al,al			; Zero ?
 		jns	loc_78			; Jump if not sign
-		call	sub_17
+		call	anim_get_value
 loc_78:
-		call	sub_9
+		call	anim_func_9
 		pop	dx
 		pop	si
 		pop	bx
@@ -831,9 +827,9 @@ loc_79:
 		mov	al,bh
 		or	al,al			; Zero ?
 		jns	loc_80			; Jump if not sign
-		call	sub_17
+		call	anim_get_value
 loc_80:
-		call	sub_9
+		call	anim_func_9
 loc_81:
 		pop	bx
 		pop	di
@@ -856,7 +852,7 @@ loc_82:
 		mov	al,[si]
 		mov	[bx+1],al
 		add	si,24h
-		call	sub_41
+		call	anim_func_41
 		mov	ax,[si-1]
 		mov	[bx+2],ax
 		pop	dx
@@ -869,20 +865,20 @@ loc_82:
 		add	dx,dx
 		add	dx,ds:data_59e
 		mov	al,cl
-		call	sub_18
+		call	anim_multiply_3
 		mov	di,data_77e
 		mov	[di],al
 		mov	bp,data_75e
-		call	sub_7
+		call	anim_func_7
 		cmp	byte ptr ds:data_62e,1
 		je	loc_83			; Jump if equal
 		add	dx,138h
-		call	sub_7
+		call	anim_func_7
 		test	byte ptr ds:data_98e,0FFh
 		jz	loc_83			; Jump if zero
 		test	byte ptr ds:data_95e,0FFh
 		jz	loc_83			; Jump if zero
-		call	sub_19
+		call	anim_check_state_2
 loc_83:
 		pop	bx
 		pop	di
@@ -902,10 +898,10 @@ loc_84:
 		mov	[bx+1],al
 		mov	cl,[si-1]
 		add	si,24h
-		call	sub_41
+		call	anim_func_41
 		mov	dl,[si-1]
 		mov	al,cl
-		call	sub_18
+		call	anim_multiply_3
 		mov	bl,al
 		mov	bh,dl
 		pop	dx
@@ -923,9 +919,9 @@ loc_84:
 		push	dx
 		or	al,al			; Zero ?
 		jns	loc_85			; Jump if not sign
-		call	sub_17
+		call	anim_get_value
 loc_85:
-		call	sub_9
+		call	anim_func_9
 		pop	dx
 		pop	si
 		pop	bx
@@ -944,9 +940,9 @@ loc_86:
 		mov	al,bh
 		or	al,al			; Zero ?
 		jns	loc_87			; Jump if not sign
-		call	sub_17
+		call	anim_get_value
 loc_87:
-		call	sub_9
+		call	anim_func_9
 loc_88:
 		pop	bx
 		pop	di
@@ -955,12 +951,12 @@ loc_88:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_7:
-		call	sub_8
+anim_func_7:
+		call	anim_func_8
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_8:
+anim_func_8:
 		cmp	byte ptr ds:[bp],0FFh
 		je	loc_90			; Jump if equal
 		cmp	byte ptr ds:[bp],0FCh
@@ -969,13 +965,13 @@ sub_8:
 		mov	al,[di]
 		or	al,al			; Zero ?
 		jns	loc_89			; Jump if not sign
-		call	sub_17
+		call	anim_get_value
 loc_89:
 		push	bp
 		push	si
 		push	di
 		push	dx
-		call	sub_9
+		call	anim_func_9
 		pop	dx
 		pop	di
 		pop	si
@@ -989,7 +985,7 @@ loc_90:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_9:
+anim_func_9:
 loc_91:
 		push	es
 		push	ds
@@ -1024,39 +1020,39 @@ loc_92:
 		js	loc_93			; Jump if sign=1
 		push	di
 		mov	di,5682h
-		call	sub_12
+		call	anim_process_loop
 		pop	di
 		mov	si,data_81e
 		push	cs
 		pop	ds
 		mov	ax,0B800h
 		mov	es,ax
-		call	sub_14
+		call	anim_check_state
 		pop	ds
 		pop	es
 		retn
 loc_93:
 		push	di
 		mov	di,data_81e
-		call	sub_10
+		call	anim_multiply_2
 		pop	di
 		mov	si,data_81e
 		push	cs
 		pop	ds
 		mov	ax,0B800h
 		mov	es,ax
-		call	sub_14
+		call	anim_check_state
 		pop	ds
 		pop	es
 		retn
-sub_5		endp
+anim_func_5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_10		proc	near
+anim_multiply_2		proc	near
 		push	bp
 		push	si
 		push	di
@@ -1065,7 +1061,7 @@ sub_10		proc	near
 		mul	cl			; ax = reg * al
 		add	ax,8030h
 		mov	si,ax
-		call	sub_15
+		call	copy_buffer
 		pop	di
 		pop	si
 		pop	bp
@@ -1073,23 +1069,23 @@ sub_10		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_11:
+anim_func_11:
 		mov	cx,8
 
 locloop_94:
 		push	cx
 		mov	dl,ds:[bp]
-		call	sub_48
+		call	anim_process_loop_5
 		and	es:[di],ax
 		push	dx
 		lodsw				; String [si] to ax
-		call	sub_13
+		call	extract_bits
 		or	es:[di],ax
 		pop	dx
-		call	sub_48
+		call	anim_process_loop_5
 		and	es:[di+2],ax
 		lodsw				; String [si] to ax
-		call	sub_13
+		call	extract_bits
 		or	es:[di+2],ax
 		inc	bp
 		add	di,4
@@ -1097,34 +1093,34 @@ locloop_94:
 		loop	locloop_94		; Loop if cx > 0
 
 		retn
-sub_10		endp
+anim_multiply_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+anim_process_loop		proc	near
 		mov	cx,8
 
 locloop_95:
 		lodsw				; String [si] to ax
-		call	sub_13
+		call	extract_bits
 		stosw				; Store ax to es:[di]
 		lodsw				; String [si] to ax
-		call	sub_13
+		call	extract_bits
 		stosw				; Store ax to es:[di]
 		loop	locloop_95		; Loop if cx > 0
 
 		retn
-sub_12		endp
+anim_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+extract_bits		proc	near
 		mov	bx,ax
 		shr	bh,1			; Shift w/zeros fill
 		shr	bh,1			; Shift w/zeros fill
@@ -1163,14 +1159,14 @@ sub_13		proc	near
 		or	dl,cs:[bx]
 		mov	ax,dx
 		retn
-sub_13		endp
+extract_bits		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+anim_check_state		proc	near
 		movsw				; Mov [si] to es:[di]
 		movsw				; Mov [si] to es:[di]
 		add	di,1FFCh
@@ -1223,49 +1219,49 @@ loc_102:
 		movsw				; Mov [si] to es:[di]
 		movsw				; Mov [si] to es:[di]
 		retn
-sub_14		endp
+anim_check_state		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+copy_buffer		proc	near
 		mov	cx,10h
 		rep	movsw			; Rep when cx >0 Mov [si] to es:[di]
 		retn
-sub_15		endp
+copy_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+fill_buffer		proc	near
 		xor	ax,ax			; Zero register
 		mov	cx,10h
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_16		endp
+fill_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+anim_get_value		proc	near
 		and	al,7Fh
 		mov	bx,data_91e
 		xlat				; al=[al+[bx]] table
 		retn
-sub_17		endp
+anim_get_value		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+anim_multiply_3		proc	near
 		and	al,7Fh
 		mov	bl,al
 		xor	bh,bh			; Zero register
@@ -1299,14 +1295,14 @@ loc_104:
 		mov	ds:data_65e,al
 		mov	al,cl
 		retn
-sub_18		endp
+anim_multiply_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+anim_check_state_2		proc	near
 		cmp	byte ptr ds:data_64e,10h
 		jb	loc_105			; Jump if below
 		retn
@@ -1369,7 +1365,7 @@ loc_113:
 		mov	al,0FFh
 		stosb				; Store al to es:[di]
 		retn
-sub_19		endp
+anim_check_state_2		endp
 
 			                        ;* No entry point to code
 		out	dx,al			; port 0, DMA-1 bas&add ch 0
@@ -1432,21 +1428,21 @@ loc_115:
 locloop_116:
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di],bp
 		or	es:[di],dx
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di+2],bp
 		or	es:[di+2],dx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di+4],bp
 		or	es:[di+4],dx
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di+6],bp
 		or	es:[di+6],dx
@@ -1583,7 +1579,7 @@ loc_125:
 		jz	loc_126			; Jump if zero
 		mov	al,[di]
 		push	si
-		call	sub_18
+		call	anim_multiply_3
 		inc	si
 		inc	si
 		inc	si
@@ -1595,7 +1591,7 @@ loc_126:
 		jz	loc_127			; Jump if zero
 		mov	al,[di+1]
 		push	si
-		call	sub_18
+		call	anim_multiply_3
 		inc	si
 		inc	si
 		mov	al,[si]
@@ -1606,7 +1602,7 @@ loc_127:
 		jz	loc_128			; Jump if zero
 		mov	al,[di+4]
 		push	si
-		call	sub_18
+		call	anim_multiply_3
 		inc	si
 		mov	al,[si]
 		pop	si
@@ -1614,7 +1610,7 @@ loc_127:
 loc_128:
 		mov	al,[di+5]
 		push	si
-		call	sub_18
+		call	anim_multiply_3
 		mov	cl,[si]
 		pop	si
 		mov	[si],al
@@ -1660,7 +1656,7 @@ loc_130:
 		mov	cl,9
 		mul	cl			; ax = reg * al
 		push	ax
-		call	sub_21
+		call	anim_func_21
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
 		pop	si
@@ -1686,7 +1682,7 @@ loc_133:
 		add	si,ax
 		jmp	short loc_137
 loc_134:
-		call	sub_21
+		call	anim_func_21
 		or	al,al			; Zero ?
 		jz	loc_136			; Jump if zero
 		dec	al
@@ -1723,12 +1719,12 @@ loc_137:
 		jz	loc_138			; Jump if zero
 		mov	cx,6
 		mov	byte ptr ds:data_63e,3
-		call	sub_20
+		call	anim_multiply_4
 		jmp	short loc_139
 loc_138:
 		mov	cx,9
 		mov	byte ptr ds:data_63e,0
-		call	sub_20
+		call	anim_multiply_4
 loc_139:
 		mov	si,610Eh
 		test	byte ptr ds:data_103e,0FFh
@@ -1775,7 +1771,7 @@ loc_143:
 loc_144:
 		mov	cx,9
 		mov	byte ptr ds:data_63e,0
-		call	sub_20
+		call	anim_multiply_4
 		test	byte ptr ds:[0E8h],0FFh
 		jz	loc_145			; Jump if zero
 		retn
@@ -1790,7 +1786,7 @@ loc_146:
 		mov	al,ds:data_102e
 		or	al,ds:data_103e
 		jz	loc_148			; Jump if zero
-		call	sub_21
+		call	anim_func_21
 		or	al,al			; Zero ?
 		jnz	loc_147			; Jump if not zero
 		retn
@@ -1812,7 +1808,7 @@ loc_148:
 		mov	cl,9
 		mul	cl			; ax = reg * al
 		push	ax
-		call	sub_21
+		call	anim_func_21
 		mov	cl,24h			; '$'
 		mul	cl			; ax = reg * al
 		pop	si
@@ -1840,7 +1836,7 @@ loc_151:
 loc_152:
 		test	byte ptr ds:[0C2h],1
 		jz	loc_154			; Jump if zero
-		call	sub_21
+		call	anim_func_21
 		or	al,al			; Zero ?
 		jz	loc_154			; Jump if zero
 		dec	al
@@ -1882,7 +1878,7 @@ loc_157:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+anim_multiply_4		proc	near
 
 locloop_158:
 		push	cx
@@ -1910,7 +1906,7 @@ locloop_158:
 		mul	cl			; ax = reg * al
 		add	ax,5562h
 		mov	di,ax
-		call	sub_11
+		call	anim_func_11
 		pop	di
 		pop	si
 		pop	ds
@@ -1922,14 +1918,14 @@ loc_159:
 		loop	locloop_158		; Loop if cx > 0
 
 		retn
-sub_20		endp
+anim_multiply_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_21		proc	near
+anim_func_21		proc	near
 		mov	al,byte ptr ds:[93h]
 		or	al,al			; Zero ?
 		jnz	loc_160			; Jump if not zero
@@ -1942,7 +1938,7 @@ loc_160:
 loc_161:
 		mov	al,2
 		retn
-sub_21		endp
+anim_func_21		endp
 
 loc_162:
 		mov	al,[si]
@@ -1966,13 +1962,13 @@ loc_162:
 		mul	cl			; ax = reg * al
 		add	ax,8030h
 		mov	si,ax
-		call	sub_15
+		call	copy_buffer
 		pop	di
 		pop	si
 		pop	ds
 		retn
 loc_163:
-		call	sub_16
+		call	fill_buffer
 		pop	di
 		pop	si
 		pop	ds
@@ -1985,7 +1981,7 @@ loc_164:
 		mov	al,[si]
 		or	al,al			; Zero ?
 		jns	loc_165			; Jump if not sign
-		call	sub_17
+		call	anim_get_value
 loc_165:
 		push	ax
 		mov	bl,ds:data_65e
@@ -2014,13 +2010,13 @@ loc_165:
 		or	al,al			; Zero ?
 		jz	loc_166			; Jump if zero
 		mov	cl,al
-		call	sub_10
+		call	anim_multiply_2
 		pop	di
 		pop	si
 		pop	ds
 		retn
 loc_166:
-		call	sub_12
+		call	anim_process_loop
 		pop	di
 		pop	si
 		pop	ds
@@ -2035,7 +2031,7 @@ loc_166:
 		add	ax,cx
 		add	ax,ds:data_96e
 		mov	si,ax
-		call	sub_41
+		call	anim_func_41
 		mov	di,data_77e
 		push	cs
 		pop	es
@@ -2045,7 +2041,7 @@ locloop_167:
 		movsw				; Mov [si] to es:[di]
 		movsb				; Mov [si] to es:[di]
 		add	si,21h
-		call	sub_41
+		call	anim_func_41
 		loop	locloop_167		; Loop if cx > 0
 
 		retn
@@ -2054,7 +2050,7 @@ locloop_167:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_22		proc	near
+anim_func_22		proc	near
 		mov	al,ds:data_62e
 		neg	al
 		add	al,12h
@@ -2065,7 +2061,7 @@ sub_22		proc	near
 		sub	al,2
 		cmp	al,cl
 		jne	loc_ret_168		; Jump if not equal
-		call	sub_28
+		call	anim_process_loop_2
 
 loc_ret_168:
 		retn
@@ -2077,7 +2073,7 @@ loc_169:
 		retn
 loc_170:
 		jnz	loc_171			; Jump if not zero
-		call	sub_23
+		call	anim_func_23
 		jmp	loc_205
 loc_171:
 		add	al,0Ah
@@ -2191,7 +2187,7 @@ loc_181:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_23:
+anim_func_23:
 		test	byte ptr ds:data_110e,0FFh
 		jnz	loc_182			; Jump if not zero
 		retn
@@ -2200,7 +2196,7 @@ loc_182:
 		push	di
 		push	si
 		push	bx
-		call	sub_25
+		call	anim_func_25
 		pop	bx
 		pop	si
 		pop	di
@@ -2210,7 +2206,7 @@ loc_182:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_24:
+anim_func_24:
 		push	ds
 		push	cs
 		pop	es
@@ -2237,7 +2233,7 @@ loc_184:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_25:
+anim_func_25:
 		mov	di,cs:data_68e
 		mov	ax,0B800h
 		mov	es,ax
@@ -2260,7 +2256,7 @@ loc_186:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_26:
+anim_func_26:
 		mov	al,byte ptr ds:[84h]
 		add	al,ds:data_70e
 		and	al,3Fh			; '?'
@@ -2273,7 +2269,7 @@ sub_26:
 		add	ax,cx
 		mov	si,ax
 		add	si,ds:data_96e
-		call	sub_41
+		call	anim_func_41
 		mov	cx,4
 
 locloop_187:
@@ -2292,7 +2288,7 @@ locloop_188:
 		loop	locloop_188		; Loop if cx > 0
 
 		add	si,20h
-		call	sub_41
+		call	anim_func_41
 		pop	cx
 		loop	locloop_187		; Loop if cx > 0
 
@@ -2308,8 +2304,8 @@ loc_190:
 		push	di
 		push	si
 		push	bx
-		call	sub_26
-		call	sub_24
+		call	anim_func_26
+		call	anim_func_24
 		xor	bx,bx			; Zero register
 		mov	bl,byte ptr cs:[92h]
 		dec	bl
@@ -2350,11 +2346,11 @@ locloop_194:
 		push	cx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di],bp
 		or	es:[di],dx
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di+2],bp
 		or	es:[di+2],dx
@@ -2382,14 +2378,14 @@ loc_196:
 		pop	ds
 		pop	es
 		retn
-sub_22		endp
+anim_func_22		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_27		proc	near
+anim_func_27		proc	near
 		xor	bp,bp			; Zero register
 		xor	dx,dx			; Zero register
 		xor	bx,bx			; Zero register
@@ -2454,7 +2450,7 @@ loc_204:
 		and	bh,0Fh
 		or	dh,bh
 		retn
-sub_27		endp
+anim_func_27		endp
 
 		db	 77h,0FFh, 33h,0BBh, 22h,0AAh
 		db	 77h,0FFh, 33h,0BBh, 88h,0EEh
@@ -2466,7 +2462,7 @@ sub_27		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_28		proc	near
+anim_process_loop_2		proc	near
 loc_205:
 		test	byte ptr ds:data_100e,0FFh
 		jz	loc_206			; Jump if zero
@@ -2492,7 +2488,7 @@ locloop_208:
 locloop_209:
 		push	cx
 		push	di
-		call	sub_14
+		call	anim_check_state
 		pop	di
 		add	di,4
 		pop	cx
@@ -2508,7 +2504,7 @@ locloop_209:
 		pop	ds
 		pop	es
 		retn
-sub_28		endp
+anim_process_loop_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2575,14 +2571,14 @@ locloop_217:
 locloop_218:
 		push	cx
 		lodsb				; String [si] to al
-		call	sub_29
+		call	anim_multiply_5
 		inc	di
 		inc	bl
 		pop	cx
 		loop	locloop_218		; Loop if cx > 0
 
 		add	si,4
-		call	sub_41
+		call	anim_func_41
 		add	word ptr ds:data_59e,140h
 		pop	cx
 		loop	locloop_217		; Loop if cx > 0
@@ -2598,7 +2594,7 @@ loc_219:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_29		proc	near
+anim_multiply_5		proc	near
 		cmp	byte ptr [di],0FFh
 		jne	loc_220			; Jump if not equal
 		retn
@@ -2639,15 +2635,15 @@ loc_221:
 		and	al,3
 		neg	al
 		add	al,3
-		call	sub_32
-		call	sub_30
+		call	anim_func_32
+		call	anim_func_30
 		pop	di
 		pop	si
 		mov	al,cs:data_72e
-		call	sub_32
+		call	anim_func_32
 		add	di,2
 		add	si,2
-		call	sub_30
+		call	anim_func_30
 		pop	bx
 		pop	si
 		pop	di
@@ -2656,7 +2652,7 @@ loc_221:
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_30:
+anim_func_30:
 		mov	cx,2
 
 locloop_222:
@@ -2677,40 +2673,40 @@ loc_223:
 		and	al,3
 		neg	al
 		add	al,3
-		call	sub_32
-		call	sub_31
+		call	anim_func_32
+		call	anim_get_value_2
 		pop	di
 		mov	al,cs:data_72e
-		call	sub_32
+		call	anim_func_32
 		add	di,2
-		call	sub_31
+		call	anim_get_value_2
 		pop	bx
 		pop	si
 		pop	di
 		pop	ds
 		retn
-sub_29		endp
+anim_multiply_5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_31		proc	near
+anim_get_value_2		proc	near
 		mov	ax,cs:data_70e
 		not	ax
 		and	es:[di],ax
 		add	di,data_113e
 		and	es:[di],ax
 		retn
-sub_31		endp
+anim_get_value_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_32		proc	near
+anim_func_32		proc	near
 		and	al,3
 		xor	ah,ah			; Zero register
 		push	ax
@@ -2730,7 +2726,7 @@ loc_225:
 		dec	ax
 		jnz	loc_224			; Jump if not zero
 		retn
-sub_32		endp
+anim_func_32		endp
 
 			                        ;* No entry point to code
 		mov	al,byte ptr ds:[83h]
@@ -2743,18 +2739,18 @@ sub_32		endp
 		add	ah,ah
 		mov	ds:data_57e,al
 		mov	byte ptr ds:data_57e+1,ah
-		call	sub_40
+		call	anim_scan_loop
 		mov	byte ptr ds:data_72e,0EEh
-		call	sub_33
+		call	anim_func_33
 		mov	byte ptr ds:data_72e,0
-		call	sub_33
+		call	anim_func_33
 		jmp	loc_252
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_33		proc	near
+anim_func_33		proc	near
 		mov	al,ds:data_57e
 		dec	al
 		mov	bl,al
@@ -2765,7 +2761,7 @@ sub_33		proc	near
 		mov	bh,al
 		add	al,19h
 		mov	dh,al
-		call	sub_34
+		call	anim_func_34
 		mov	al,ds:data_57e
 		sub	al,5
 		mov	bl,al
@@ -2776,7 +2772,7 @@ sub_33		proc	near
 		mov	bh,al
 		add	al,21h			; '!'
 		mov	dh,al
-		call	sub_34
+		call	anim_func_34
 		mov	al,ds:data_57e
 		sub	al,9
 		mov	bl,al
@@ -2790,14 +2786,14 @@ sub_33		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_34:
+anim_func_34:
 		mov	cx,9
 
 locloop_226:
 		push	cx
 		push	dx
 		push	bx
-		call	sub_35
+		call	anim_func_35
 		pop	bx
 		pop	dx
 		sub	bl,0Ch
@@ -2818,46 +2814,46 @@ loc_229:
 loc_230:
 		push	dx
 		push	bx
-		call	sub_39
+		call	anim_multiply_6
 		pop	bx
 		pop	dx
 		pop	cx
 		loop	locloop_226		; Loop if cx > 0
 
 		retn
-sub_33		endp
+anim_func_33		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_35		proc	near
+anim_func_35		proc	near
 		mov	ax,0B800h
 		mov	es,ax
 		push	dx
 		push	bx
 		mov	dh,bh
-		call	sub_37
+		call	anim_extract_bits
 		pop	bx
 		pop	dx
 		push	dx
 		push	bx
 		mov	bh,dh
-		call	sub_37
+		call	anim_extract_bits
 		pop	bx
 		pop	dx
 		push	dx
 		push	bx
 		mov	dl,bl
-		call	sub_36
+		call	anim_func_36
 		pop	bx
 		pop	dx
 		mov	bl,dl
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_36:
+anim_func_36:
 		cmp	dh,bh
 		jae	loc_231			; Jump if above or =
 		xchg	dx,bx
@@ -2883,7 +2879,7 @@ loc_235:
 		inc	al
 		push	ax
 		mov	al,bh
-		call	sub_38
+		call	extract_bits_2
 		mov	al,bl
 		shr	al,1			; Shift w/zeros fill
 		xor	ah,ah			; Zero register
@@ -2912,14 +2908,14 @@ loc_239:
 		loop	locloop_238		; Loop if cx > 0
 
 		retn
-sub_35		endp
+anim_func_35		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_37		proc	near
+anim_extract_bits		proc	near
 		cmp	dl,bl
 		jae	loc_240			; Jump if above or =
 		xchg	dx,bx
@@ -2941,7 +2937,7 @@ loc_243:
 		mov	dl,0DEh
 loc_244:
 		mov	al,bh
-		call	sub_38
+		call	extract_bits_2
 		mov	al,bl
 		shr	al,1			; Shift w/zeros fill
 		xor	ah,ah			; Zero register
@@ -3004,14 +3000,14 @@ loc_250:
 		and	es:[di],dh
 		or	es:[di],al
 		retn
-sub_37		endp
+anim_extract_bits		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_38		proc	near
+extract_bits_2		proc	near
 		push	bx
 		add	al,0Eh
 		mov	bh,al
@@ -3028,14 +3024,14 @@ sub_38		proc	near
 		add	di,ax
 		pop	bx
 		retn
-sub_38		endp
+extract_bits_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_39		proc	near
+anim_multiply_6		proc	near
 		mov	cl,ds:data_97e
 		shr	cl,1			; Shift w/zeros fill
 		inc	cl
@@ -3053,14 +3049,14 @@ loc_251:
 		jb	loc_251			; Jump if below
 		mov	byte ptr ds:data_93e,0
 		retn
-sub_39		endp
+anim_multiply_6		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_40		proc	near
+anim_scan_loop		proc	near
 loc_252:
 		mov	ax,0B800h
 		mov	es,ax
@@ -3099,7 +3095,7 @@ loc_256:
 		loop	locloop_253		; Loop if cx > 0
 
 		retn
-sub_40		endp
+anim_scan_loop		endp
 
 			                        ;* No entry point to code
 		and	al,3Fh			; '?'
@@ -3112,7 +3108,7 @@ sub_40		endp
 		add	bh,bh
 		add	bh,bh
 		add	bh,18h
-		call	sub_49
+		call	extract_bits_4
 		mov	di,ax
 		retn
 			                        ;* No entry point to code
@@ -3141,28 +3137,28 @@ loc_257:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_41		proc	near
+anim_func_41		proc	near
 		cmp	si,0E900h
 		jae	loc_258			; Jump if above or =
 		retn
 loc_258:
 		sub	si,900h
 		retn
-sub_41		endp
+anim_func_41		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_42		proc	near
+anim_func_42		proc	near
 		cmp	si,0E000h
 		jb	loc_259			; Jump if below
 		retn
 loc_259:
 		add	si,900h
 		retn
-sub_42		endp
+anim_func_42		endp
 
 			                        ;* No entry point to code
 		push	si
@@ -3198,9 +3194,9 @@ locloop_262:
 		push	cx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_27
+		call	anim_func_27
 		mov	es:[di],dx
-		call	sub_27
+		call	anim_func_27
 		mov	es:[di+2],dx
 		add	di,2000h
 		cmp	di,8000h
@@ -3262,7 +3258,7 @@ locloop_265:
 		push	cx
 		lodsb				; String [si] to al
 		push	si
-		call	sub_43
+		call	anim_multiply_7
 		pop	si
 		add	word ptr ds:data_59e,4
 		pop	cx
@@ -3278,7 +3274,7 @@ locloop_265:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_43		proc	near
+anim_multiply_7		proc	near
 		push	ds
 		mov	cl,20h			; ' '
 		mul	cl			; ax = reg * al
@@ -3293,10 +3289,10 @@ sub_43		proc	near
 locloop_266:
 		push	cx
 		lodsw				; String [si] to ax
-		call	sub_44
+		call	anim_process_loop_3
 		stosw				; Store ax to es:[di]
 		lodsw				; String [si] to ax
-		call	sub_44
+		call	anim_process_loop_3
 		stosw				; Store ax to es:[di]
 		add	di,1FFCh
 		cmp	di,8000h
@@ -3308,14 +3304,14 @@ loc_267:
 
 		pop	ds
 		retn
-sub_43		endp
+anim_multiply_7		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_44		proc	near
+anim_process_loop_3		proc	near
 		or	ax,ax			; Zero ?
 		jnz	loc_268			; Jump if not zero
 		retn
@@ -3347,7 +3343,7 @@ locloop_269:
 
 		mov	ax,dx
 		retn
-sub_44		endp
+anim_process_loop_3		endp
 
 			                        ;* No entry point to code
 		cmpsw				; Cmp [si] to es:[di]
@@ -3550,10 +3546,10 @@ loc_274:
 
 locloop_275:
 		lodsw				; String [si] to ax
-		call	sub_13
+		call	extract_bits
 		stosw				; Store ax to es:[di]
 		lodsw				; String [si] to ax
-		call	sub_13
+		call	extract_bits
 		stosw				; Store ax to es:[di]
 		add	di,1FFCh
 		cmp	di,8000h
@@ -3580,21 +3576,21 @@ loc_276:
 locloop_277:
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di],bp
 		or	es:[di],dx
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di+2],bp
 		or	es:[di+2],dx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di+4],bp
 		or	es:[di+4],dx
-		call	sub_27
+		call	anim_func_27
 		not	bp
 		and	es:[di+6],bp
 		or	es:[di+6],dx
@@ -3684,12 +3680,12 @@ locloop_281:
 		push	cx
 		lodsw				; String [si] to ax
 		xchg	ah,al
-		call	sub_27
+		call	anim_func_27
 		push	ax
-		call	sub_45
+		call	extract_bits_3
 		pop	ax
-		call	sub_27
-		call	sub_45
+		call	anim_func_27
+		call	extract_bits_3
 		pop	cx
 		loop	locloop_281		; Loop if cx > 0
 
@@ -3714,7 +3710,7 @@ loc_282:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_45		proc	near
+extract_bits_3		proc	near
 		push	dx
 		mov	cl,cs:data_73e
 		mov	ax,bp
@@ -3744,7 +3740,7 @@ sub_45		proc	near
 		inc	di
 		or	es:[di],ah
 		retn
-sub_45		endp
+extract_bits_3		endp
 
 		db	22 dup (0)
 		db	 10h, 00h, 00h, 10h, 60h, 00h
@@ -3862,15 +3858,15 @@ locloop_284:
 		or	ax,bx
 		not	ax
 		mov	cs:data_66e,ax
-		call	sub_46
+		call	anim_process_loop_4
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_46
+		call	anim_process_loop_4
 		mov	ax,dx
 		xchg	ah,al
 		stosw				; Store ax to es:[di]
-		call	sub_47
+		call	anim_scan_loop_2
 		mov	es:[bp],dl
 		inc	bp
 		pop	cx
@@ -3885,7 +3881,7 @@ locloop_284:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_46		proc	near
+anim_process_loop_4		proc	near
 		mov	cx,4
 
 locloop_285:
@@ -3900,14 +3896,14 @@ locloop_285:
 		loop	locloop_285		; Loop if cx > 0
 
 		retn
-sub_46		endp
+anim_process_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_47		proc	near
+anim_scan_loop_2		proc	near
 		mov	cx,8
 
 locloop_286:
@@ -3926,14 +3922,14 @@ loc_287:
 		loop	locloop_286		; Loop if cx > 0
 
 		retn
-sub_47		endp
+anim_scan_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_48		proc	near
+anim_process_loop_5		proc	near
 		mov	cx,4
 
 locloop_288:
@@ -3949,14 +3945,14 @@ locloop_288:
 
 		xchg	ah,al
 		retn
-sub_48		endp
+anim_process_loop_5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_49		proc	near
+extract_bits_4		proc	near
 		mov	dh,bl
 		ror	dh,1			; Rotate
 		ror	dh,1			; Rotate
@@ -3971,7 +3967,7 @@ sub_49		proc	near
 		xor	bh,bh			; Zero register
 		add	ax,bx
 		retn
-sub_49		endp
+extract_bits_4		endp
 
 		db	0DEh, 51h,0EEh, 51h,0FEh, 51h
 		db	 0Eh, 52h, 1Eh, 52h, 0Eh, 52h

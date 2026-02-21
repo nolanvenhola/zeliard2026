@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR2_01	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  COMBAT_UI - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -102,7 +98,7 @@ locloop_2:
 		pop	cx
 		loop	locloop_2		; Loop if cx > 0
 
-		call	sub_20
+		call	combat_func_20
 		push	cs
 		pop	es
 		mov	si,0BBh
@@ -141,12 +137,12 @@ loc_6:
 		inc	cl
 loc_7:
 		mov	ds:data_68e,cl
-		call	sub_11
-		call	sub_17
-		call	sub_13
-		call	sub_12
-		call	sub_14
-		call	sub_22
+		call	combat_func_11
+		call	combat_func_17
+		call	combat_process_loop_2
+		call	combat_process_loop
+		call	combat_func_14
+		call	combat_func_22
 		sbb	al,al
 		mov	ds:data_73e,al
 		xor	cl,cl			; Zero register
@@ -161,7 +157,7 @@ loc_7:
 		test	byte ptr ds:data_70e,0FFh
 		jnz	loc_9			; Jump if not zero
 loc_8:
-		call	sub_22
+		call	combat_func_22
 		jnc	loc_8			; Jump if carry=0
 		retn
 loc_9:
@@ -175,15 +171,15 @@ loc_10:
 		retf	0BBA0h
 			                        ;* No entry point to code
 		mov	ax,ds:data_53e
-		call	sub_20
+		call	combat_func_20
 		mov	al,2
-		call	sub_2
+		call	combat_func_2
 loc_11:
 		int	61h			; ??INT Non-standard interrupt
 		and	al,3
 		jnz	loc_11			; Jump if not zero
 loc_12:
-		call	sub_22
+		call	combat_func_22
 		jnc	loc_13			; Jump if carry=0
 		retn
 loc_13:
@@ -203,23 +199,23 @@ loc_14:
 		cmp	ah,al
 		jb	loc_12			; Jump if below
 		xor	al,al			; Zero register
-		call	sub_2
+		call	combat_func_2
 		inc	byte ptr ds:data_67e
 		mov	al,2
-		call	sub_2
+		call	combat_func_2
 		mov	byte ptr ds:data_82e,0Ch
-		call	sub_1
+		call	combat_func_1
 		jmp	short loc_12
 loc_15:
 		test	byte ptr ds:data_67e,0FFh
 		jz	loc_12			; Jump if zero
 		xor	al,al			; Zero register
-		call	sub_2
+		call	combat_func_2
 		dec	byte ptr ds:data_67e
 		mov	al,2
-		call	sub_2
+		call	combat_func_2
 		mov	byte ptr ds:data_82e,0Ch
-		call	sub_1
+		call	combat_func_1
 		jmp	short loc_12
 
 zr2_01		endp
@@ -228,7 +224,7 @@ zr2_01		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+combat_func_1		proc	near
 		mov	bx,data_75e
 		mov	al,ds:data_67e
 		xlat				; al=[al+[bx]] table
@@ -245,7 +241,7 @@ sub_1		proc	near
 		mov	bx,9Eh
 		mov	cl,12h
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h,0C7h, 08h		;  Fixup - byte match
 		mov	al,byte ptr ds:[9Dh]
 		mov	bx,37A4h
@@ -256,14 +252,14 @@ loc_16:
 		and	al,0Ch
 		jnz	loc_16			; Jump if not zero
 		retn
-sub_1		endp
+combat_func_1		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+combat_func_2		proc	near
 		mov	bh,ds:data_67e
 		xor	bl,bl			; Zero register
 		add	bx,bx
@@ -271,7 +267,7 @@ sub_2		proc	near
 		add	bx,bx
 		add	bx,0E1Ah
 		jmp	word ptr cs:data_42e
-sub_2		endp
+combat_func_2		endp
 
 loc_17:
 		mov	cl,1
@@ -286,18 +282,18 @@ loc_18:
 		mov	byte ptr ds:data_82e,0Dh
 		mov	ds:data_65e,cl
 		mov	al,5
-		call	sub_2
+		call	combat_func_2
 		jmp	loc_10
 			                        ;* No entry point to code
-		call	sub_20
+		call	combat_func_20
 		mov	al,2
-		call	sub_4
+		call	combat_func_4
 loc_19:
 		int	61h			; ??INT Non-standard interrupt
 		and	al,3
 		jnz	loc_19			; Jump if not zero
 loc_20:
-		call	sub_22
+		call	combat_func_22
 		jnc	loc_21			; Jump if carry=0
 		retn
 loc_21:
@@ -318,30 +314,30 @@ loc_22:
 		cmp	ah,al
 		jb	loc_20			; Jump if below
 		xor	al,al			; Zero register
-		call	sub_4
+		call	combat_func_4
 		inc	byte ptr ds:data_69e
 		mov	al,2
-		call	sub_4
+		call	combat_func_4
 		mov	byte ptr ds:data_82e,0Ch
-		call	sub_3
+		call	combat_func_3
 		jmp	short loc_20
 loc_23:
 		test	byte ptr ds:data_69e,0FFh
 		jz	loc_20			; Jump if zero
 		xor	al,al			; Zero register
-		call	sub_4
+		call	combat_func_4
 		dec	byte ptr ds:data_69e
 		mov	al,2
-		call	sub_4
+		call	combat_func_4
 		mov	byte ptr ds:data_82e,0Ch
-		call	sub_3
+		call	combat_func_3
 		jmp	short loc_20
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_3		proc	near
+combat_func_3		proc	near
 		mov	bx,data_76e
 		mov	al,ds:data_69e
 		xlat				; al=[al+[bx]] table
@@ -357,26 +353,26 @@ sub_3		proc	near
 		mov	bx,5Ch
 		mov	cl,43h			; 'C'
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h,0D6h, 07h		;  Fixup - byte match
 		mov	bx,5Ch
 		mov	cl,4Bh			; 'K'
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h,0CCh, 07h		;  Fixup - byte match
 loc_24:
 		int	61h			; ??INT Non-standard interrupt
 		and	al,0Ch
 		jnz	loc_24			; Jump if not zero
 		retn
-sub_3		endp
+combat_func_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_4		proc	near
+combat_func_4		proc	near
 		mov	bh,ds:data_69e
 		xor	bl,bl			; Zero register
 		mov	cx,bx
@@ -385,7 +381,7 @@ sub_4		proc	near
 		add	bx,cx
 		add	bx,0E53h
 		jmp	word ptr cs:data_42e
-sub_4		endp
+combat_func_4		endp
 
 loc_25:
 		test	ah,1
@@ -409,18 +405,18 @@ loc_29:
 loc_30:
 		mov	byte ptr ds:data_82e,0Dh
 		mov	al,5
-		call	sub_4
+		call	combat_func_4
 		jmp	loc_10
 			                        ;* No entry point to code
-		call	sub_20
+		call	combat_func_20
 		mov	al,2
-		call	sub_6
+		call	combat_func_6
 loc_31:
 		int	61h			; ??INT Non-standard interrupt
 		and	al,3
 		jnz	loc_31			; Jump if not zero
 loc_32:
-		call	sub_22
+		call	combat_func_22
 		jnc	loc_33			; Jump if carry=0
 		retn
 loc_33:
@@ -436,7 +432,7 @@ loc_35:
 		and	al,0Dh
 		jz	loc_32			; Jump if zero
 		push	ax
-		call	sub_10
+		call	combat_func_10
 		pop	ax
 		and	al,0Ch
 		jnz	loc_36			; Jump if not zero
@@ -451,30 +447,30 @@ loc_36:
 		cmp	ah,al
 		jb	loc_32			; Jump if below
 		xor	al,al			; Zero register
-		call	sub_6
+		call	combat_func_6
 		inc	byte ptr ds:data_72e
 		mov	al,2
-		call	sub_6
+		call	combat_func_6
 		mov	byte ptr ds:data_82e,0Ch
-		call	sub_5
+		call	combat_func_5
 		jmp	short loc_32
 loc_37:
 		test	byte ptr ds:data_72e,0FFh
 		jz	loc_32			; Jump if zero
 		xor	al,al			; Zero register
-		call	sub_6
+		call	combat_func_6
 		dec	byte ptr ds:data_72e
 		mov	al,2
-		call	sub_6
+		call	combat_func_6
 		mov	byte ptr ds:data_82e,0Ch
-		call	sub_5
+		call	combat_func_5
 		jmp	short loc_32
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_5		proc	near
+combat_func_5		proc	near
 		mov	bx,data_77e
 		mov	al,ds:data_72e
 		xlat				; al=[al+[bx]] table
@@ -490,26 +486,26 @@ sub_5		proc	near
 		mov	bx,54h
 		mov	cl,70h			; 'p'
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h,0C2h, 06h		;  Fixup - byte match
 		mov	bx,54h
 		mov	cl,78h			; 'x'
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h,0B8h, 06h		;  Fixup - byte match
 loc_38:
 		int	61h			; ??INT Non-standard interrupt
 		and	al,0Ch
 		jnz	loc_38			; Jump if not zero
 		retn
-sub_5		endp
+combat_func_5		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_6		proc	near
+combat_func_6		proc	near
 loc_39:
 		mov	bh,ds:data_72e
 		xor	bl,bl			; Zero register
@@ -519,7 +515,7 @@ loc_39:
 		add	bx,cx
 		add	bx,0E81h
 		jmp	word ptr cs:data_42e
-sub_6		endp
+combat_func_6		endp
 
 loc_40:
 		mov	cl,1
@@ -533,14 +529,14 @@ loc_41:
 		mov	ds:data_65e,cl
 		mov	byte ptr ds:data_82e,0Dh
 		mov	al,5
-		call	sub_6
+		call	combat_func_6
 		jmp	loc_10
 loc_42:
 		test	byte ptr ds:data_74e,0FFh
 		jz	loc_43			; Jump if zero
 		jmp	loc_32
 loc_43:
-		call	sub_9
+		call	combat_func_9
 		mov	bx,1B43h
 		mov	cx,1A24h
 		mov	al,0FFh
@@ -549,7 +545,7 @@ loc_43:
 		mov	bx,80h
 		mov	cl,4Ch			; 'L'
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h, 4Dh, 06h		;  Fixup - byte match
 		mov	al,byte ptr ds:[8Dh]
 		xor	ah,ah			; Zero register
@@ -557,25 +553,25 @@ loc_43:
 		mov	cx,2
 		mov	bl,6
 		mov	dx,2C4Ch
-		call	sub_19
+		call	combat_func_19
 		mov	si,0AAA8h
 		mov	bx,80h
 		mov	cl,56h			; 'V'
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h, 2Fh, 06h		;  Fixup - byte match
 		mov	ax,word ptr ds:[8Eh]
 		mov	cx,5
 		mov	bl,6
 		mov	dx,2856h
-		call	sub_19
+		call	combat_func_19
 		jmp	loc_32
 loc_44:
 		test	byte ptr ds:data_71e,0FFh
 		jnz	loc_45			; Jump if not zero
 		jmp	loc_32
 loc_45:
-		call	sub_10
+		call	combat_func_10
 		mov	ax,0A2C7h
 		push	ax
 		mov	ax,0A5B4h
@@ -592,7 +588,7 @@ loc_47:
 		cmp	ch,cl
 		jne	loc_46			; Jump if not equal
 		mov	byte ptr [bx-1],0
-		call	sub_11
+		call	combat_func_11
 		mov	al,ds:data_71e
 		mov	ds:data_81e,al
 		mov	bl,ds:data_71e
@@ -621,7 +617,7 @@ loc_48:
 		mov	al,byte ptr ds:[0B4h][bx]
 		mov	byte ptr ds:[0ABh][bx],al
 		call	word ptr cs:data_34e
-		call	sub_18
+		call	combat_func_18
 		jmp	loc_53
 			                        ;* No entry point to code
 		mov	byte ptr ds:data_82e,0Eh
@@ -632,12 +628,12 @@ loc_48:
 		mov	cx,7
 		rep	movsb			; Rep when cx >0 Mov [si] to es:[di]
 		call	word ptr cs:data_34e
-		call	sub_18
+		call	combat_func_18
 		jmp	loc_53
 			                        ;* No entry point to code
 		mov	byte ptr ds:data_82e,0Eh
 		inc	byte ptr ds:[0E4h]
-		call	sub_16
+		call	combat_func_16
 		jmp	loc_53
 			                        ;* No entry point to code
 		mov	byte ptr ds:data_82e,0Eh
@@ -696,9 +692,9 @@ loc_51:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_7		proc	near
+combat_func_7		proc	near
 		xor	al,al			; Zero register
-		call	sub_6
+		call	combat_func_6
 		mov	bx,0E83h
 		mov	cx,1E10h
 		xor	al,al			; Zero register
@@ -707,19 +703,19 @@ sub_7		proc	near
 		jnz	loc_52			; Jump if not zero
 		mov	byte ptr ds:data_70e,1
 loc_52:
-		call	sub_12
+		call	combat_process_loop
 		mov	al,2
 		jmp	loc_39
-sub_7		endp
+combat_func_7		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_8		proc	near
+combat_func_8		proc	near
 loc_53:
-		call	sub_9
+		call	combat_func_9
 		mov	bx,0F43h
 		mov	cx,3224h
 		mov	al,0FFh
@@ -728,7 +724,7 @@ loc_53:
 		mov	bx,44h
 		mov	cl,4Ch			; 'L'
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h, 34h, 04h		;  Fixup - byte match
 		mov	bl,ds:data_71e
 		dec	bl
@@ -739,7 +735,7 @@ loc_53:
 		mov	cl,56h			; 'V'
 		mov	ah,1
 ;*		jmp	loc_76			;*
-sub_8		endp
+combat_func_8		endp
 
 		db	0E9h, 1Ch, 04h		;  Fixup - byte match
 
@@ -747,7 +743,7 @@ sub_8		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_9		proc	near
+combat_func_9		proc	near
 		test	byte ptr ds:data_74e,0FFh
 		jz	loc_54			; Jump if zero
 		retn
@@ -757,14 +753,14 @@ loc_54:
 		xor	di,di			; Zero register
 		mov	cx,1C24h
 		jmp	word ptr cs:data_40e
-sub_9		endp
+combat_func_9		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_10		proc	near
+combat_func_10		proc	near
 		test	byte ptr ds:data_74e,0FFh
 		jnz	loc_55			; Jump if not zero
 		retn
@@ -774,14 +770,14 @@ loc_55:
 		xor	di,di			; Zero register
 		mov	cx,1C24h
 		jmp	word ptr cs:data_41e
-sub_10		endp
+combat_func_10		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_11		proc	near
+combat_func_11		proc	near
 		push	cs
 		pop	es
 		mov	si,0A6h
@@ -805,14 +801,14 @@ loc_57:
 loc_58:
 		mov	ds:data_70e,cl
 		retn
-sub_11		endp
+combat_func_11		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_12		proc	near
+combat_process_loop		proc	near
 		test	byte ptr ds:data_70e,0FFh
 		jz	loc_61			; Jump if zero
 		mov	cl,ds:data_70e
@@ -857,7 +853,7 @@ loc_61:
 		mov	si,0AA92h
 		mov	ah,1
 ;*		jmp	loc_76			;*
-sub_12		endp
+combat_process_loop		endp
 
 		db	0E9h, 5Ah, 03h		;  Fixup - byte match
 
@@ -865,7 +861,7 @@ sub_12		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_13		proc	near
+combat_process_loop_2		proc	near
 		test	byte ptr ds:data_68e,0FFh
 		jz	loc_63			; Jump if zero
 		mov	cl,ds:data_68e
@@ -911,7 +907,7 @@ locloop_62:
 		mov	bx,5Ch
 		mov	cl,43h			; 'C'
 		mov	ah,1
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h,0F0h, 02h		;  Fixup - byte match
 		mov	bx,5Ch
 		mov	cl,4Bh			; 'K'
@@ -928,7 +924,7 @@ loc_63:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_14:
+combat_func_14:
 		test	byte ptr ds:[92h],0FFh
 		jz	loc_64			; Jump if zero
 		mov	bx,174Dh
@@ -945,7 +941,7 @@ sub_14:
 		mov	bx,3456h
 		xor	cl,cl			; Zero register
 		call	word ptr cs:data_47e
-		call	sub_16
+		call	combat_func_16
 loc_64:
 		test	byte ptr ds:[93h],0FFh
 		jz	loc_65			; Jump if zero
@@ -963,7 +959,7 @@ loc_64:
 		mov	bx,3469h
 		xor	cl,cl			; Zero register
 		call	word ptr cs:data_47e
-		call	sub_15
+		call	combat_func_15
 loc_65:
 		test	byte ptr ds:[98h],0FFh
 		jz	loc_66			; Jump if zero
@@ -980,7 +976,7 @@ loc_65:
 		mov	cx,1
 		mov	bl,1
 		mov	dx,347Eh
-		call	sub_19
+		call	combat_func_19
 loc_66:
 		test	byte ptr ds:[99h],0FFh
 		jz	loc_67			; Jump if zero
@@ -997,7 +993,7 @@ loc_66:
 		mov	cx,1
 		mov	bl,1
 		mov	dx,407Eh
-		call	sub_19
+		call	combat_func_19
 loc_67:
 		mov	si,9Ah
 		mov	bx,3089h
@@ -1025,12 +1021,12 @@ loc_69:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_15:
+combat_func_15:
 		mov	ax,word ptr ds:[96h]
 		mov	dx,3469h
 		mov	cx,3
 		mov	bl,4
-		call	sub_19
+		call	combat_func_19
 		mov	bx,0CAh
 		mov	cl,69h			; 'i'
 		mov	al,28h			; '('
@@ -1044,7 +1040,7 @@ sub_15:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_16:
+combat_func_16:
 		test	byte ptr ds:[0E4h],0FFh
 		jnz	loc_70			; Jump if not zero
 		retn
@@ -1063,7 +1059,7 @@ loc_70:
 		mov	dx,3457h
 		mov	bl,1
 		mov	cx,1
-		call	sub_19
+		call	combat_func_19
 		mov	bx,0D4h
 		mov	cl,57h			; 'W'
 		mov	al,29h			; ')'
@@ -1072,7 +1068,7 @@ loc_70:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_17:
+combat_func_17:
 		test	byte ptr ds:data_66e,0FFh
 		jz	loc_72			; Jump if zero
 		mov	cl,ds:data_66e
@@ -1092,7 +1088,7 @@ locloop_71:
 		pop	cx
 		loop	locloop_71		; Loop if cx > 0
 
-		call	sub_18
+		call	combat_func_18
 		push	cs
 		pop	es
 		mov	di,data_75e
@@ -1131,7 +1127,7 @@ loc_72:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_18:
+combat_func_18:
 		mov	dx,0E2Eh
 		mov	si,data_75e
 		mov	cl,ds:data_66e
@@ -1160,7 +1156,7 @@ locloop_73:
 		xor	ah,ah			; Zero register
 		mov	bl,1
 		mov	cx,3
-		call	sub_19
+		call	combat_func_19
 		pop	dx
 		add	dx,9
 		push	dx
@@ -1182,7 +1178,7 @@ locloop_73:
 		xor	ah,ah			; Zero register
 		mov	bl,4
 		mov	cx,3
-		call	sub_19
+		call	combat_func_19
 		pop	dx
 		add	dx,400h
 		mov	cl,dl
@@ -1204,7 +1200,7 @@ locloop_73:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_19:
+combat_func_19:
 		push	bx
 		push	dx
 		push	cx
@@ -1224,7 +1220,7 @@ sub_19:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_20:
+combat_func_20:
 		mov	si,data_56e
 		mov	cx,4
 
@@ -1243,7 +1239,7 @@ locloop_74:
 		jne	loc_75			; Jump if not equal
 		mov	ah,2
 loc_75:
-;*		call	sub_21			;*
+;*		call	combat_func_21			;*
 		db	0E8h, 33h, 00h		;  Fixup - byte match
 		pop	cx
 		loop	locloop_74		; Loop if cx > 0
@@ -1316,7 +1312,7 @@ loc_78:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_22:
+combat_func_22:
 		call	word ptr cs:[110h]
 		call	word ptr cs:[112h]
 		call	word ptr cs:[114h]
@@ -1324,7 +1320,7 @@ sub_22:
 		call	word ptr cs:[118h]
 		test	byte ptr ds:data_73e,0FFh
 		jz	loc_81			; Jump if zero
-		call	sub_23
+		call	combat_func_23
 		cmc				; Complement carry
 		jc	loc_80			; Jump if carry Set
 		retn
@@ -1335,7 +1331,7 @@ loc_80:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_23:
+combat_func_23:
 loc_81:
 		test	word ptr ds:data_79e,1
 		stc				; Set carry flag
@@ -1344,7 +1340,7 @@ loc_81:
 loc_82:
 		clc				; Clear carry flag
 		retn
-sub_13		endp
+combat_process_loop_2		endp
 
 		db	 4Eh, 4Fh, 54h, 48h, 49h, 4Eh
 		db	 47h, 00h, 4Eh, 4Fh, 20h, 55h

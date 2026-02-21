@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ				ZR1_06	                                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛ      Created:   16-Feb-26		                                 ÛÛ
-;ÛÛ      Code type: zero start		                                 ÛÛ
-;ÛÛ      Passes:    9          Analysis	Options on: none                 ÛÛ
-;ÛÛ					                                 ÛÛ
-;ÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛÛ
+;==========================================================================
+;
+;  PLAYER_ADVANCED - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -238,7 +234,7 @@ loc_3:
 		push	cs
 		pop	ds
 loc_4:
-		call	sub_33
+		call	player_func_33
 		mov	byte ptr ds:[0E7h],0
 		test	byte ptr ds:[49h],0FFh
 		jz	loc_5			; Jump if zero
@@ -264,8 +260,8 @@ loc_6:
 		jnz	loc_7			; Jump if not zero
 		mov	byte ptr ds:data_104e,0FFh
 loc_7:
-		call	sub_24
-		call	sub_22
+		call	player_load_chunk
+		call	player_func_22
 		call	word ptr cs:data_68e
 		test	byte ptr ds:[49h],0FFh
 		jnz	loc_8			; Jump if not zero
@@ -281,7 +277,7 @@ loc_8:
 		sti				; Enable interrupts
 		push	cs
 		pop	ds
-		call	sub_25
+		call	player_func_25
 		xor	al,al			; Zero register
 		mov	ds:data_154e,al
 		mov	ds:data_155e,al
@@ -300,7 +296,7 @@ loc_8:
 		mov	ch,42h			; 'B'
 		call	word ptr cs:data_49e
 		call	word ptr cs:data_54e
-		call	sub_29
+		call	player_func_29
 		call	word ptr cs:data_50e
 		call	word ptr cs:data_51e
 		call	word ptr cs:data_55e
@@ -339,11 +335,11 @@ loc_11:
 		shl	ax,1			; Shift w/zeros fill
 		add	ax,0C017h
 		mov	ds:data_159e,ax
-		call	sub_27
+		call	player_func_27
 		test	byte ptr ds:[0E8h],0FFh
 		jz	loc_12			; Jump if zero
 		mov	byte ptr ds:[0E8h],0
-		call	sub_24
+		call	player_load_chunk
 		mov	bx,61FCh
 		push	bx
 		mov	bx,6EAFh
@@ -366,7 +362,7 @@ loc_12:
 		mov	di,data_146e
 		mov	cx,0E0h
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
-		call	sub_13
+		call	player_multiply_2
 		test	byte ptr ds:data_185e,0FFh
 		jz	loc_15			; Jump if zero
 		mov	word ptr ds:data_186e,6781h
@@ -379,7 +375,7 @@ loc_13:
 locloop_14:
 		push	cx
 		call	word ptr cs:data_107e
-		call	sub_13
+		call	player_multiply_2
 		pop	cx
 		loop	locloop_14		; Loop if cx > 0
 
@@ -395,13 +391,13 @@ loc_15:
 		int	60h			; ??INT Non-standard interrupt
 		pop	ds
 loc_16:
-		call	sub_13
-		call	sub_15
-		call	sub_30
-		call	sub_1
+		call	player_multiply_2
+		call	fill_buffer
+		call	player_func_30
+		call	player_func_1
 		test	byte ptr ds:data_109e,0FFh
 		jnz	loc_17			; Jump if not zero
-		call	sub_2
+		call	player_func_2
 loc_17:
 		mov	byte ptr ds:data_109e,0
 		mov	dx,61FCh
@@ -430,7 +426,7 @@ zr1_06		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_1		proc	near
+player_func_1		proc	near
 		test	byte ptr ds:data_154e,0FFh
 		jnz	loc_21			; Jump if not zero
 		retn
@@ -459,7 +455,7 @@ loc_21:
 		je	loc_22			; Jump if equal
 		retn
 loc_22:
-		call	sub_20
+		call	player_func_20
 		mov	al,[si+6]
 		and	al,0C0h
 		jz	loc_23			; Jump if zero
@@ -471,7 +467,7 @@ loc_23:
 		mov	byte ptr [si+5],7
 		or	byte ptr [si+2],80h
 		or	byte ptr [si+4],1
-		call	sub_3
+		call	player_func_3
 		pop	ax
 		mov	[si+5],ah
 		mov	[si+2],al
@@ -488,7 +484,7 @@ loc_24:
 		je	loc_25			; Jump if equal
 		retn
 loc_25:
-		call	sub_20
+		call	player_func_20
 		mov	al,[si+6]
 		and	al,0C0h
 		jz	loc_26			; Jump if zero
@@ -500,19 +496,19 @@ loc_26:
 		mov	byte ptr [si+5],7
 		and	byte ptr [si+2],7Fh
 		or	byte ptr [si+4],1
-		call	sub_3
+		call	player_func_3
 		pop	ax
 		mov	[si+5],ah
 		mov	[si+2],al
 		retn
-sub_1		endp
+player_func_1		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_2		proc	near
+player_func_2		proc	near
 		mov	bl,byte ptr ds:[83h]
 		add	bl,4
 		xor	bh,bh			; Zero register
@@ -531,7 +527,7 @@ sub_2		proc	near
 		je	loc_27			; Jump if equal
 		retn
 loc_27:
-		call	sub_20
+		call	player_func_20
 		test	byte ptr [si+2],80h
 		jnz	loc_28			; Jump if not zero
 		retn
@@ -550,7 +546,7 @@ loc_30:
 		je	loc_31			; Jump if equal
 		retn
 loc_31:
-		call	sub_20
+		call	player_func_20
 		test	byte ptr [si+2],80h
 		jz	loc_32			; Jump if zero
 		retn
@@ -565,14 +561,14 @@ loc_33:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_3:
+player_func_3:
 loc_34:
 		and	byte ptr [si+6],7Fh
 		mov	al,[si+7]
 		push	si
 		push	ax
 		mov	byte ptr ds:data_153e,28h	; '('
-		call	sub_14
+		call	player_func_14
 		mov	byte ptr ds:data_174e,1Eh
 		mov	ax,718h
 		test	byte ptr ds:[0C2h],1
@@ -586,7 +582,7 @@ loc_35:
 		mov	byte ptr ds:data_154e,0
 		pop	bx
 		mov	ax,ds:data_110e
-		call	sub_4
+		call	player_multiply
 		mov	ax,ds:data_188e
 		xor	di,di			; Zero register
 		mov	cx,1658h
@@ -603,20 +599,20 @@ loc_35:
 		mov	byte ptr ds:data_212e,0
 		mov	byte ptr ds:data_213e,0
 		retn
-sub_2		endp
+player_func_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_4		proc	near
+player_multiply		proc	near
 loc_36:
 		or	byte ptr ds:[0E7h],1
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_5:
+player_func_5:
 		mov	ds:data_112e,ax
 		mov	ds:data_111e,ax
 		xor	bh,bh			; Zero register
@@ -628,7 +624,7 @@ sub_5:
 		mov	byte ptr ds:data_116e,0
 		mov	byte ptr ds:data_118e,0
 		mov	ds:data_119e,si
-		call	sub_8
+		call	player_func_8
 		mov	al,cl
 		mov	ds:data_117e,al
 		cmp	al,8
@@ -734,7 +730,7 @@ loc_46:
 		jmp	loc_38
 loc_47:
 		mov	si,ds:data_195e
-		call	sub_7
+		call	player_func_7
 		mov	dl,ds:data_191e
 		xor	dh,dh			; Zero register
 		add	dx,cx
@@ -790,8 +786,8 @@ loc_52:
 loc_53:
 		push	cx
 		push	bx
-		call	sub_10
-		call	sub_13
+		call	math_calc
+		call	player_multiply_2
 		pop	bx
 		pop	cx
 		test	byte ptr ds:data_197e,0FFh
@@ -816,13 +812,13 @@ loc_54:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_6:
+player_func_6:
 loc_55:
 		mov	byte ptr ds:data_154e,0
 		mov	byte ptr ds:data_155e,0
 loc_56:
-		call	sub_10
-		call	sub_13
+		call	math_calc
+		call	player_multiply_2
 		test	byte ptr ds:data_212e,0FFh
 		jz	loc_57			; Jump if zero
 		retn
@@ -834,8 +830,8 @@ loc_58:
 		test	byte ptr ds:data_209e,0FFh
 		jnz	loc_56			; Jump if not zero
 loc_59:
-		call	sub_10
-		call	sub_13
+		call	math_calc
+		call	player_multiply_2
 		test	byte ptr ds:data_212e,0FFh
 		jz	loc_60			; Jump if zero
 		retn
@@ -850,7 +846,7 @@ loc_61:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_7:
+player_func_7:
 		xor	cx,cx			; Zero register
 loc_62:
 		lodsb				; String [si] to al
@@ -876,7 +872,7 @@ loc_65:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_8:
+player_func_8:
 		xor	cx,cx			; Zero register
 		xor	dx,dx			; Zero register
 loc_66:
@@ -902,7 +898,7 @@ loc_67:
 		push	cx
 		push	si
 		push	dx
-		call	sub_7
+		call	player_func_7
 		add	dx,cx
 		cmp	dx,0A8h
 		pop	dx
@@ -933,7 +929,7 @@ loc_71:
 		pop	bx
 		add	bx,103h
 		mov	ds:data_167e,bx
-		call	sub_47
+		call	player_func_47
 		mov	ax,ds:data_188e
 		mov	bl,0Dh
 		jnc	loc_72			; Jump if carry=0
@@ -944,7 +940,7 @@ loc_72:
 loc_73:
 		or	byte ptr ds:[34h],80h
 		mov	byte ptr ds:[9Ah],0FFh
-		call	sub_25
+		call	player_func_25
 		jmp	loc_55
 loc_74:
 		mov	byte ptr ds:data_197e,0FFh
@@ -952,7 +948,7 @@ loc_74:
 		mov	ax,word ptr ds:[7C50h]
 		jmp	loc_36
 loc_75:
-		call	sub_6
+		call	player_func_6
 		mov	bl,5
 		mov	ax,word ptr ds:[7C50h]
 		jmp	loc_36
@@ -967,7 +963,7 @@ loc_76:
 		pop	bx
 		add	bx,203h
 		mov	ds:data_218e,bx
-		call	sub_9
+		call	player_func_9
 		mov	ax,ds:data_188e
 		mov	bl,6
 		jnc	loc_77			; Jump if carry=0
@@ -990,26 +986,26 @@ loc_79:
 		jmp	short loc_79
 loc_80:
 		mov	byte ptr [si],5
-		call	sub_25
+		call	player_func_25
 		mov	ax,ds:data_110e
 		mov	bl,8
 		jmp	loc_36
-sub_4		endp
+player_multiply		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_9		proc	near
+player_func_9		proc	near
 		mov	byte ptr ds:data_216e,2
 		mov	byte ptr ds:data_217e,2
 		mov	cx,2
 		mov	si,6736h
-		call	sub_48
+		call	player_multiply_6
 		mov	byte ptr ds:data_219e,0
 		xor	bl,bl			; Zero register
-		call	sub_43
+		call	player_func_43
 		jnc	loc_81			; Jump if carry=0
 		mov	bl,1
 loc_81:
@@ -1019,7 +1015,7 @@ loc_81:
 loc_82:
 		stc				; Set carry flag
 		retn
-sub_9		endp
+player_func_9		endp
 
 		db	 54h, 61h, 6Bh, 65h, 00h, 4Eh
 		db	 6Fh, 20h, 54h, 61h, 6Bh, 65h
@@ -1029,7 +1025,7 @@ sub_9		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_10		proc	near
+math_calc		proc	near
 		mov	ax,ds:data_189e
 		sub	ah,6
 		mov	cx,ds:data_196e
@@ -1070,7 +1066,7 @@ locloop_85:
 		loop	locloop_84		; Loop if cx > 0
 
 		retn
-sub_10		endp
+math_calc		endp
 
 loc_86:
 		xor	bx,bx			; Zero register
@@ -1081,7 +1077,7 @@ loc_86:
 		add	bx,bx
 		add	bx,ds:data_159e
 		mov	al,[bx+7]
-		call	sub_11
+		call	player_scan_loop
 		jnz	loc_87			; Jump if not zero
 		retn
 loc_87:
@@ -1090,7 +1086,7 @@ loc_87:
 		add	bl,4
 		add	bx,word ptr ds:[80h]
 		dec	bx
-		call	sub_12
+		call	player_func_12
 		jz	loc_88			; Jump if zero
 		retn
 loc_88:
@@ -1125,7 +1121,7 @@ loc_92:
 		add	bx,bx
 		add	bx,ds:data_159e
 		mov	al,[bx+7]
-		call	sub_11
+		call	player_scan_loop
 		jnz	loc_93			; Jump if not zero
 		retn
 loc_93:
@@ -1134,7 +1130,7 @@ loc_93:
 		add	bl,4
 		add	bx,word ptr ds:[80h]
 		inc	bx
-		call	sub_12
+		call	player_func_12
 		jz	loc_94			; Jump if zero
 		retn
 loc_94:
@@ -1169,7 +1165,7 @@ loc_97:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_11		proc	near
+player_scan_loop		proc	near
 		mov	es,cs:data_160e
 		mov	si,es:data_2e
 		mov	cl,es:[si]
@@ -1190,14 +1186,14 @@ loc_100:
 		not	cl
 		or	cl,cl			; Zero ?
 		retn
-sub_11		endp
+player_scan_loop		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_12		proc	near
+player_func_12		proc	near
 		mov	si,ds:data_142e
 loc_101:
 		mov	ax,[si]
@@ -1213,21 +1209,21 @@ loc_102:
 loc_103:
 		add	si,8
 		jmp	short loc_101
-sub_12		endp
+player_func_12		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_13		proc	near
-		call	sub_26
+player_multiply_2		proc	near
+		call	player_func_26
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_14:
-		call	sub_18
-		call	sub_17
+player_func_14:
+		call	player_func_18
+		call	player_func_17
 		call	word ptr cs:data_69e
 		mov	cl,ds:data_161e
 		mov	al,4
@@ -1241,32 +1237,32 @@ loc_104:
 		call	word ptr cs:[118h]
 		call	word ptr cs:[11Eh]
 		jnc	loc_105			; Jump if carry=0
-		call	sub_49
+		call	clear_buffer
 loc_105:
 		pop	ax
 		cmp	ds:data_211e,al
 		jb	loc_104			; Jump if below
 		mov	byte ptr ds:data_211e,0
 		retn
-sub_13		endp
+player_multiply_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_15		proc	near
+fill_buffer		proc	near
 		test	word ptr ds:data_210e,1
 		jnz	loc_106			; Jump if not zero
 		retn
 loc_106:
 		mov	byte ptr ds:data_223e,0Bh
 		call	word ptr cs:data_48e
-		call	sub_16
+		call	player_process_loop
 		call	word ptr cs:data_134e
-		call	sub_16
+		call	player_process_loop
 		call	word ptr cs:data_48e
-		call	sub_23
+		call	player_func_23
 		call	word ptr cs:data_68e
 		push	cs
 		pop	es
@@ -1274,18 +1270,18 @@ loc_106:
 		mov	di,data_146e
 		mov	cx,0E0h
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
-		call	sub_14
+		call	player_func_14
 		mov	byte ptr ds:data_212e,0
 		mov	byte ptr ds:data_213e,0
 		retn
-sub_15		endp
+fill_buffer		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_16		proc	near
+player_process_loop		proc	near
 		mov	es,cs:data_160e
 		mov	di,data_3e
 		mov	si,data_206e
@@ -1298,14 +1294,14 @@ locloop_107:
 		loop	locloop_107		; Loop if cx > 0
 
 		retn
-sub_16		endp
+player_process_loop		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_17		proc	near
+player_func_17		proc	near
 		mov	al,byte ptr ds:[83h]
 		cmp	al,1Bh
 		jb	loc_108			; Jump if below
@@ -1329,14 +1325,14 @@ loc_108:
 		stosb				; Store al to es:[di]
 		stosb				; Store al to es:[di]
 		retn
-sub_17		endp
+player_func_17		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_18		proc	near
+player_func_18		proc	near
 		push	cs
 		pop	es
 		xor	ax,ax			; Zero register
@@ -1369,13 +1365,13 @@ locloop_109:
 		mov	al,[si]
 		cmp	al,0FDh
 		jne	loc_111			; Jump if not equal
-		call	sub_20
+		call	player_func_20
 loc_110:
 		mov	al,[si+3]
 		cmp	al,0FDh
 		jne	loc_111			; Jump if not equal
 		add	si,8
-		call	sub_21
+		call	player_func_21
 		jmp	short loc_110
 loc_111:
 		pop	si
@@ -1401,7 +1397,7 @@ loc_111:
 		stosb				; Store al to es:[di]
 		mov	si,ds:data_142e
 loc_112:
-		call	sub_19
+		call	player_scan_loop_2
 		or	al,al			; Zero ?
 		jz	loc_113			; Jump if zero
 		push	ax
@@ -1431,7 +1427,7 @@ loc_114:
 		add	si,ax
 		call	word ptr cs:data_76e
 		retn
-sub_18		endp
+player_func_18		endp
 
 		db	 00h, 02h, 04h, 01h, 03h, 05h
 		db	 06h, 08h, 0Ah, 07h, 09h, 0Bh
@@ -1448,7 +1444,7 @@ sub_18		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_19		proc	near
+player_scan_loop_2		proc	near
 		mov	cx,3
 		mov	dx,ds:data_108e
 		mov	di,data_132e
@@ -1467,19 +1463,19 @@ loc_116:
 
 		xor	al,al			; Zero register
 		retn
-sub_19		endp
+player_scan_loop_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_20		proc	near
+player_func_20		proc	near
 		mov	si,ds:data_142e
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_21:
+player_func_21:
 loc_117:
 		cmp	dx,[si]
 		jne	loc_118			; Jump if not equal
@@ -1487,32 +1483,32 @@ loc_117:
 loc_118:
 		add	si,8
 		jmp	short loc_117
-sub_20		endp
+player_func_20		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_22		proc	near
-		call	sub_32
+player_func_22		proc	near
+		call	player_func_32
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_23:
+player_func_23:
 		mov	al,ds:data_208e
 		push	ds
 		call	dword ptr ds:data_179e
 		pop	ds
 		retn
-sub_22		endp
+player_func_22		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_24		proc	near
+player_load_chunk		proc	near
 		mov	al,ds:data_105e
 		and	al,1
 		mov	cl,0Bh
@@ -1527,7 +1523,7 @@ sub_24		proc	near
 		mov	al,3
 		call	word ptr cs:[10Ch]
 		retn
-sub_24		endp
+player_load_chunk		endp
 
 			                        ;* No entry point to code
 		add	[bx+di],cx
@@ -1543,7 +1539,7 @@ sub_24		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_25		proc	near
+player_func_25		proc	near
 loc_119:
 		mov	si,ds:data_144e
 loc_120:
@@ -1576,15 +1572,15 @@ loc_123:
 		jmp	short loc_123
 loc_124:
 		jmp	short loc_120
-sub_25		endp
+player_func_25		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_26		proc	near
-		call	sub_28
+player_func_26		proc	near
+		call	player_func_28
 		mov	si,ds:data_142e
 		mov	dx,[si]
 ;*		cmp	dx,0FFFFh
@@ -1710,7 +1706,7 @@ loc_135:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_27:
+player_func_27:
 loc_136:
 		mov	si,ds:data_142e
 loc_137:
@@ -1728,14 +1724,14 @@ loc_138:
 		mov	[si+3],al
 		add	si,8
 		jmp	short loc_137
-sub_26		endp
+player_func_26		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_28		proc	near
+player_func_28		proc	near
 		mov	si,ds:data_142e
 loc_139:
 		mov	bx,[si]
@@ -1755,14 +1751,14 @@ loc_140:
 loc_141:
 		add	si,8
 		jmp	short loc_139
-sub_28		endp
+player_func_28		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_29		proc	near
+player_func_29		proc	near
 		mov	si,data_93e
 		call	word ptr cs:data_52e
 		mov	si,data_94e
@@ -1772,7 +1768,7 @@ sub_29		proc	near
 		mov	si,data_96e
 		call	word ptr cs:data_52e
 		retn
-sub_29		endp
+player_func_29		endp
 
 			                        ;* No entry point to code
 		push	cs
@@ -1803,13 +1799,13 @@ sub_29		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_30		proc	near
+player_func_30		proc	near
 		mov	al,ds:data_177e
 		inc	al
 		jnz	loc_145			; Jump if not zero
-		call	sub_28
+		call	player_func_28
 		mov	byte ptr ds:data_211e,28h	; '('
-		call	sub_14
+		call	player_func_14
 		mov	si,ds:data_207e
 loc_142:
 		test	byte ptr [si],1
@@ -1825,7 +1821,7 @@ loc_143:
 ;*		jmp	loc_160			;*
 		db	0E9h, 17h, 03h		;  Fixup - byte match
 loc_144:
-		call	sub_31
+		call	player_func_31
 		mov	byte ptr ds:[83h],1Ah
 		mov	ax,ds:data_137e
 		sub	ax,24h
@@ -1836,9 +1832,9 @@ loc_145:
 		je	loc_146			; Jump if equal
 		retn
 loc_146:
-		call	sub_28
+		call	player_func_28
 		mov	byte ptr ds:data_153e,28h	; '('
-		call	sub_14
+		call	player_func_14
 		mov	si,ds:data_139e
 loc_147:
 		test	byte ptr [si],1
@@ -1854,14 +1850,14 @@ loc_148:
 ;*		jmp	loc_160			;*
 		db	0E9h,0D9h, 02h		;  Fixup - byte match
 loc_149:
-		call	sub_31
+		call	player_func_31
 		mov	byte ptr ds:[83h],0
 		mov	word ptr ds:[80h],0
 		jmp	loc_8
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_31:
+player_func_31:
 		or	al,80h
 		mov	byte ptr ds:[0C4h],al
 		lodsw				; String [si] to ax
@@ -1893,7 +1889,7 @@ sub_31:
 		cmp	ah,ds:data_106e
 		je	loc_ret_150		; Jump if equal
 		mov	ds:data_106e,ah
-		call	sub_32
+		call	player_func_32
 
 loc_ret_150:
 		retn
@@ -1908,7 +1904,7 @@ loc_ret_150:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_32:
+player_func_32:
 		mov	al,0Bh
 		mul	byte ptr ds:data_106e	; ax = data * al
 		add	ax,6DCEh
@@ -1936,7 +1932,7 @@ sub_32:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_33:
+player_func_33:
 		mov	es,cs:data_160e
 		mov	si,6E1Eh
 		mov	di,6000h
@@ -1989,9 +1985,9 @@ loc_153:
 loc_154:
 		mov	byte ptr ds:[0E7h],4
 		push	si
-		call	sub_28
+		call	player_func_28
 		mov	byte ptr ds:data_153e,28h	; '('
-		call	sub_14
+		call	player_func_14
 		pop	si
 		mov	al,[si+2]
 		cmp	al,0FFh
@@ -2022,10 +2018,10 @@ loc_156:
 		call	word ptr cs:data_48e
 		mov	byte ptr ds:data_102e,0
 		call	word ptr cs:data_54e
-		call	sub_29
+		call	player_func_29
 		mov	si,ds:data_138e
 		call	word ptr cs:data_53e
-		call	sub_22
+		call	player_func_22
 		call	word ptr cs:data_68e
 		push	cs
 		pop	es
@@ -2033,9 +2029,9 @@ loc_156:
 		mov	di,data_146e
 		mov	cx,0E0h
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
-		call	sub_25
+		call	player_func_25
 		mov	byte ptr ds:data_153e,28h	; '('
-		call	sub_14
+		call	player_func_14
 		mov	byte ptr ds:data_154e,0
 		mov	byte ptr ds:data_155e,0
 		mov	byte ptr ds:[0E7h],1
@@ -2072,13 +2068,13 @@ loc_156:
 		db	0
 loc_157:
 		mov	byte ptr ds:[0E7h],4
-		call	sub_14
+		call	player_func_14
 		test	byte ptr ds:[45h],80h
 		jnz	loc_158			; Jump if not zero
 		mov	byte ptr ds:data_121e,0FFh
 		mov	ax,918h
 		xor	bl,bl			; Zero register
-		call	sub_5
+		call	player_func_5
 		mov	byte ptr ds:data_121e,0
 		or	byte ptr ds:[45h],80h
 loc_158:
@@ -2144,21 +2140,21 @@ loc_162:
 		mov	bx,6002h
 		xor	al,al			; Zero register
 		jmp	word ptr cs:[10Ch]
-sub_30		endp
+player_func_30		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_34		proc	near
+player_func_34		proc	near
 		push	si
 		push	di
 		call	word ptr cs:[110h]
 		call	word ptr cs:[112h]
 		call	word ptr cs:[11Eh]
 		jnc	loc_163			; Jump if carry=0
-		call	sub_49
+		call	clear_buffer
 loc_163:
 		pop	di
 		pop	si
@@ -2172,21 +2168,21 @@ loc_164:
 		pop	di
 		pop	si
 		retn
-sub_34		endp
+player_func_34		endp
 
 			                        ;* No entry point to code
 		mov	si,ds:data_162e
-		call	sub_39
+		call	player_check_state
 		mov	dl,ds:data_163e
 		xor	dh,dh			; Zero register
 		add	dx,cx
 		cmp	dx,0D0h
 		jb	loc_165			; Jump if below
-		call	sub_35
+		call	player_scan_loop_3
 loc_165:
 		mov	byte ptr ds:data_153e,0
 loc_166:
-		call	sub_34
+		call	player_func_34
 		cmp	byte ptr ds:data_211e,6
 		jb	loc_166			; Jump if below
 		mov	si,ds:data_215e
@@ -2235,7 +2231,7 @@ loc_175:
 		push	ax
 		cmp	byte ptr ds:data_163e,0D0h
 		jb	loc_176			; Jump if below
-		call	sub_35
+		call	player_scan_loop_3
 loc_176:
 		mov	bl,byte ptr ds:[0FF4Eh]
 		xor	bh,bh			; Zero register
@@ -2275,43 +2271,43 @@ loc_176:
 		jmp	loc_165
 loc_177:
 		mov	si,ds:data_215e
-		call	sub_39
+		call	player_check_state
 		mov	dl,byte ptr ds:[0FF4Eh]
 		xor	dh,dh			; Zero register
 		add	dx,cx
 		cmp	dx,0D0h
 		jb	loc_178			; Jump if below
-		call	sub_35
+		call	player_scan_loop_3
 loc_178:
 		jmp	loc_165
 loc_179:
-		call	sub_35
+		call	player_scan_loop_3
 		jmp	loc_165
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_35		proc	near
+player_scan_loop_3		proc	near
 		mov	byte ptr ds:data_163e,0
 		inc	byte ptr ds:data_113e
 		inc	byte ptr ds:data_164e
 		cmp	byte ptr ds:data_113e,4
 		jb	loc_181			; Jump if below
-		call	sub_40
+		call	player_check_state_2
 		push	cx
-		call	sub_36
+		call	player_func_36
 		pop	cx
 		cmp	cx,2
 		jb	loc_ret_180		; Jump if below
-		call	sub_37
+		call	player_func_37
 
 loc_ret_180:
 		retn
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_36:
+player_func_36:
 loc_181:
 		cmp	byte ptr ds:data_164e,5
 		jae	loc_182			; Jump if above or =
@@ -2322,7 +2318,7 @@ loc_182:
 
 locloop_183:
 		push	cx
-		call	sub_34
+		call	player_func_34
 		mov	bx,762h
 		mov	cx,1A32h
 		call	word ptr cs:data_60e
@@ -2330,43 +2326,43 @@ locloop_183:
 		loop	locloop_183		; Loop if cx > 0
 
 		retn
-sub_35		endp
+player_scan_loop_3		endp
 
 loc_184:
-		call	sub_37
+		call	player_func_37
 		jmp	loc_165
 loc_185:
-		call	sub_38
+		call	player_func_38
 		jmp	loc_165
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_37		proc	near
+player_func_37		proc	near
 		mov	bx,9Ch
 		mov	cl,8Bh
 		mov	ax,27Ch
 		call	word ptr cs:data_59e
-		call	sub_38
+		call	player_func_38
 		mov	bx,data_67e
 		mov	cx,20Ah
 		xor	al,al			; Zero register
 		call	word ptr cs:data_47e
 		mov	byte ptr ds:data_113e,0
 		retn
-sub_37		endp
+player_func_37		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_38		proc	near
+player_func_38		proc	near
 		mov	byte ptr ds:data_212e,0
 		mov	byte ptr ds:data_213e,0
 loc_186:
-		call	sub_34
+		call	player_func_34
 		mov	al,ds:data_212e
 		or	al,ds:data_213e
 		jz	loc_186			; Jump if zero
@@ -2374,7 +2370,7 @@ loc_186:
 		mov	byte ptr ds:data_213e,0
 		mov	byte ptr ds:data_223e,1Dh
 		retn
-sub_38		endp
+player_func_38		endp
 
 loc_187:
 		mov	byte ptr ds:data_163e,0
@@ -2390,7 +2386,7 @@ loc_187:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_39		proc	near
+player_check_state		proc	near
 		xor	cx,cx			; Zero register
 		xor	dx,dx			; Zero register
 loc_188:
@@ -2429,14 +2425,14 @@ loc_190:
 loc_191:
 		xor	cx,cx			; Zero register
 		retn
-sub_39		endp
+player_check_state		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_40		proc	near
+player_check_state_2		proc	near
 		mov	si,ds:data_162e
 		xor	cx,cx			; Zero register
 		xor	dx,dx			; Zero register
@@ -2476,7 +2472,7 @@ loc_195:
 		push	si
 		push	dx
 		push	dx
-		call	sub_39
+		call	player_check_state
 		pop	dx
 		add	dx,cx
 		cmp	dx,0D0h
@@ -2494,7 +2490,7 @@ loc_196:
 loc_197:
 		inc	cx
 		retn
-sub_40		endp
+player_check_state_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2502,19 +2498,19 @@ sub_40		endp
 		push	di
 		mov	bl,0Fh
 		mov	cx,4240h
-		call	sub_41
+		call	player_func_41
 		mov	bl,1
 		mov	cx,86A0h
-		call	sub_41
+		call	player_func_41
 		xor	bl,bl			; Zero register
 		mov	cx,2710h
-		call	sub_41
+		call	player_func_41
 		mov	cx,3E8h
-		call	sub_42
+		call	player_func_42
 		mov	cx,64h
-		call	sub_42
+		call	player_func_42
 		mov	cx,0Ah
-		call	sub_42
+		call	player_func_42
 		stosb				; Store al to es:[di]
 		mov	al,0FFh
 		stosb				; Store al to es:[di]
@@ -2550,7 +2546,7 @@ loc_201:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_41		proc	near
+player_func_41		proc	near
 		xor	dh,dh			; Zero register
 loc_202:
 		sub	dl,bl
@@ -2572,14 +2568,14 @@ loc_205:
 		stosb				; Store al to es:[di]
 		pop	ax
 		retn
-sub_41		endp
+player_func_41		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_42		proc	near
+player_func_42		proc	near
 		xor	dh,dh			; Zero register
 		div	cx			; ax,dx rem=dx:ax/reg
 		xchg	dx,ax
@@ -2590,21 +2586,21 @@ sub_42		proc	near
 		stosb				; Store al to es:[di]
 		pop	ax
 		retn
-sub_42		endp
+player_func_42		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_43		proc	near
+player_func_43		proc	near
 		mov	byte ptr ds:data_212e,0
 		mov	byte ptr ds:data_213e,0
 		push	bx
-		call	sub_44
+		call	player_multiply_3
 		pop	bx
 		push	bx
-		call	sub_34
+		call	player_func_34
 		pop	bx
 		mov	byte ptr ds:data_211e,0
 		test	byte ptr ds:data_213e,0FFh
@@ -2627,7 +2623,7 @@ loc_207:
 		or	bl,bl			; Zero ?
 		jz	loc_208			; Jump if zero
 		push	bx
-		call	sub_45
+		call	player_multiply_4
 		pop	bx
 		dec	bl
 		retn
@@ -2663,7 +2659,7 @@ locloop_210:
 		mov	ch,ds:data_221e
 		call	word ptr cs:data_81e
 loc_211:
-		call	sub_34
+		call	player_func_34
 		cmp	byte ptr ds:data_211e,4
 		jb	loc_211			; Jump if below
 		mov	byte ptr ds:data_211e,0
@@ -2684,7 +2680,7 @@ loc_213:
 		cmp	bl,al
 		jae	loc_214			; Jump if above or =
 		push	bx
-		call	sub_46
+		call	player_multiply_5
 		pop	bx
 		inc	bl
 		retn
@@ -2726,7 +2722,7 @@ locloop_216:
 		mov	ch,ds:data_221e
 		call	word ptr cs:data_82e
 loc_217:
-		call	sub_34
+		call	player_func_34
 		cmp	byte ptr ds:data_211e,4
 		jb	loc_217			; Jump if below
 		mov	byte ptr ds:data_211e,0
@@ -2737,28 +2733,28 @@ loc_217:
 		pop	si
 		pop	di
 		retn
-sub_43		endp
+player_func_43		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_44		proc	near
+player_multiply_3		proc	near
 		mov	al,0Ah
 		mul	bl			; ax = reg * al
 		add	ax,ds:data_218e
 		add	ax,100h
 		mov	bx,ax
 		jmp	word ptr cs:data_78e
-sub_44		endp
+player_multiply_3		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_45		proc	near
+player_multiply_4		proc	near
 		mov	al,0Ah
 		mul	bl			; ax = reg * al
 		add	ax,ds:data_218e
@@ -2773,7 +2769,7 @@ locloop_218:
 		push	bx
 		call	word ptr cs:data_78e
 loc_219:
-		call	sub_34
+		call	player_func_34
 		cmp	byte ptr ds:data_211e,4
 		jb	loc_219			; Jump if below
 		pop	bx
@@ -2781,14 +2777,14 @@ loc_219:
 		loop	locloop_218		; Loop if cx > 0
 
 		retn
-sub_45		endp
+player_multiply_4		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_46		proc	near
+player_multiply_5		proc	near
 		mov	al,0Ah
 		mul	bl			; ax = reg * al
 		add	ax,ds:data_218e
@@ -2803,7 +2799,7 @@ locloop_220:
 		push	bx
 		call	word ptr cs:data_78e
 loc_221:
-		call	sub_34
+		call	player_func_34
 		cmp	byte ptr ds:data_211e,4
 		jb	loc_221			; Jump if below
 		pop	bx
@@ -2811,14 +2807,14 @@ loc_221:
 		loop	locloop_220		; Loop if cx > 0
 
 		retn
-sub_46		endp
+player_multiply_5		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_47		proc	near
+player_func_47		proc	near
 		mov	al,ds:data_165e
 		mov	ah,ds:data_166e
 		push	ax
@@ -2828,10 +2824,10 @@ sub_47		proc	near
 		mov	byte ptr ds:data_166e,2
 		mov	cx,2
 		mov	si,7513h
-		call	sub_48
+		call	player_multiply_6
 		mov	byte ptr ds:data_168e,0
 		xor	bl,bl			; Zero register
-		call	sub_43
+		call	player_func_43
 		jnc	loc_222			; Jump if carry=0
 		mov	bl,1
 loc_222:
@@ -2846,7 +2842,7 @@ loc_222:
 loc_223:
 		stc				; Set carry flag
 		retn
-sub_47		endp
+player_func_47		endp
 
 		db	 59h, 65h, 73h, 00h, 4Eh, 6Fh
 		db	 00h
@@ -2855,7 +2851,7 @@ sub_47		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_48		proc	near
+player_multiply_6		proc	near
 		xor	dl,dl			; Zero register
 
 locloop_224:
@@ -2874,7 +2870,7 @@ locloop_224:
 		loop	locloop_224		; Loop if cx > 0
 
 		retn
-sub_48		endp
+player_multiply_6		endp
 
 		db	 32h,0E4h
 
@@ -2931,7 +2927,7 @@ loc_227:
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_49		proc	near
+clear_buffer		proc	near
 loc_228:
 		mov	cl,0FFh
 		mov	ax,3
@@ -2942,7 +2938,7 @@ loc_228:
 		mov	al,6
 		call	word ptr cs:[10Ch]
 		mov	byte ptr ds:data_169e,0
-		call	sub_50
+		call	copy_buffer
 		push	cs
 		pop	es
 		test	byte ptr cs:data_128e,0FFh
@@ -3009,7 +3005,7 @@ loc_234:
 		jz	loc_234			; Jump if zero
 		mov	byte ptr cs:data_154e,0
 		jmp	loc_228
-sub_49		endp
+clear_buffer		endp
 
 		db	'User File', 0Dh, 'Not Found'
 		db	0FFh, 00h, 00h
@@ -3022,7 +3018,7 @@ sub_49		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_50		proc	near
+copy_buffer		proc	near
 		mov	ax,cs
 		mov	es,ax
 		mov	ds,ax
@@ -3109,13 +3105,13 @@ loc_240:
 		xor	al,al			; Zero register
 		mov	si,0E001h
 		jcxz	loc_241			; Jump if cx=0
-		call	sub_53
+		call	player_process_loop_2
 loc_241:
 		mov	si,0E001h
 		mov	al,ds:data_146e
 		mov	ds:data_166e,al
 		mov	byte ptr ds:data_165e,5
-		call	sub_54
+		call	player_copy_buf
 		push	cs
 		pop	es
 		mov	di,data_172e
@@ -3146,7 +3142,7 @@ loc_245:
 loc_246:
 		mov	ax,0FFFFh
 		jmp	dword ptr cs:data_151e
-sub_50		endp
+copy_buffer		endp
 
 		db	 2Ah, 2Eh, 75h, 73h, 72h, 00h
 		db	'Input name:'
@@ -3158,7 +3154,7 @@ sub_50		endp
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_51		proc	near
+player_func_51		proc	near
 		mov	byte ptr cs:data_128e,0
 		push	cs
 		pop	es
@@ -3172,14 +3168,14 @@ loc_247:
 		mov	byte ptr cs:data_128e,0FFh
 		mov	byte ptr cs:data_123e,0
 		retn
-sub_51		endp
+player_func_51		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_52		proc	near
+fill_buffer_2		proc	near
 		test	byte ptr cs:data_128e,0FFh
 		jnz	loc_248			; Jump if not zero
 		retn
@@ -3193,14 +3189,14 @@ loc_248:
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		mov	byte ptr cs:data_124e,0
 		retn
-sub_52		endp
+fill_buffer_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_53		proc	near
+player_process_loop_2		proc	near
 		xor	ah,ah			; Zero register
 
 locloop_249:
@@ -3228,15 +3224,15 @@ locloop_249:
 		loop	locloop_249		; Loop if cx > 0
 
 		retn
-sub_53		endp
+player_process_loop_2		endp
 
 
 ;ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 ;                              SUBROUTINE
 ;ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 
-sub_54		proc	near
-		call	sub_51
+player_copy_buf		proc	near
+		call	player_func_51
 		mov	byte ptr ds:data_173e,0FFh
 		mov	byte ptr ds:data_158e,0
 		mov	byte ptr ds:data_154e,0
@@ -3248,9 +3244,9 @@ sub_54		proc	near
 		jz	loc_250			; Jump if zero
 		call	word ptr cs:data_88e
 loc_250:
-		call	sub_56
+		call	player_func_56
 		xor	al,al			; Zero register
-		call	sub_55
+		call	player_func_55
 loc_251:
 		mov	byte ptr ds:data_211e,0
 		test	word ptr cs:data_152e,1
@@ -3272,8 +3268,8 @@ locloop_252:
 		mov	cx,8
 		rep	movsb			; Rep when cx >0 Mov [si] to es:[di]
 		pop	si
-		call	sub_51
-		call	sub_56
+		call	player_func_51
+		call	player_func_56
 		mov	byte ptr ds:data_223e,1
 loc_253:
 		test	word ptr cs:data_152e,1
@@ -3318,7 +3314,7 @@ loc_257:
 		mov	al,ds:data_199e
 		mov	ds:data_200e,al
 		pop	si
-		call	sub_51
+		call	player_func_51
 		mov	byte ptr ds:data_212e,0
 		mov	ax,ds:data_201e
 		shr	ax,1			; Shift w/zeros fill
@@ -3328,9 +3324,9 @@ loc_257:
 		mov	cx,1010h
 		xor	al,al			; Zero register
 		call	word ptr cs:data_47e
-		call	sub_56
+		call	player_func_56
 		xor	al,al			; Zero register
-		call	sub_55
+		call	player_func_55
 		jmp	loc_251
 loc_258:
 		mov	cx,786Fh
@@ -3349,7 +3345,7 @@ loc_259:
 		jmp	loc_282
 loc_260:
 		push	ax
-		call	sub_52
+		call	fill_buffer_2
 		pop	ax
 		xor	bx,bx			; Zero register
 		mov	bl,ds:data_199e
@@ -3358,7 +3354,7 @@ loc_260:
 		inc	byte ptr ds:data_200e
 loc_261:
 		mov	ds:data_204e[bx],al
-		call	sub_56
+		call	player_func_56
 		mov	byte ptr ds:data_223e,1
 		mov	al,1
 		jmp	loc_278
@@ -3368,7 +3364,7 @@ loc_262:
 		jz	loc_264			; Jump if zero
 		mov	byte ptr ds:data_223e,1
 		mov	al,1
-		call	sub_55
+		call	player_func_55
 loc_263:
 		int	61h			; ??INT Non-standard interrupt
 		test	al,8
@@ -3380,7 +3376,7 @@ loc_264:
 		jz	loc_266			; Jump if zero
 		mov	byte ptr ds:data_223e,1
 		mov	al,0FFh
-		call	sub_55
+		call	player_func_55
 loc_265:
 		int	61h			; ??INT Non-standard interrupt
 		test	al,4
@@ -3499,7 +3495,7 @@ loc_277:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_55:
+player_func_55:
 loc_278:
 		push	si
 		push	ax
@@ -3546,7 +3542,7 @@ loc_281:
 
 ;ßßßß External Entry into Subroutine ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß
 
-sub_56:
+player_func_56:
 		push	si
 		mov	ax,ds:data_125e
 		shr	ax,1			; Shift w/zeros fill
@@ -3563,7 +3559,7 @@ sub_56:
 		pop	si
 		retn
 loc_282:
-		call	sub_52
+		call	fill_buffer_2
 		push	si
 		mov	bl,ds:data_123e
 		or	bl,bl			; Zero ?
@@ -3588,11 +3584,11 @@ loc_283:
 loc_284:
 		mov	byte ptr ds:data_130e,60h	; '`'
 		mov	al,0FFh
-		call	sub_55
-		call	sub_56
+		call	player_func_55
+		call	player_func_56
 		pop	si
 		retn
-sub_54		endp
+player_copy_buf		endp
 
 		db	0, 2, 2, 3, 1, 0
 		db	0, 2, 2, 3, 1, 1

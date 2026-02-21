@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR1_04	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  PLAYER_STATS - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -105,9 +101,9 @@ locloop_2:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_2		; Loop if cx > 0
 
@@ -148,9 +144,9 @@ locloop_3:
 		lodsw				; String [si] to ax
 		xchg	al,ah
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_3		; Loop if cx > 0
 
@@ -165,13 +161,13 @@ locloop_3:
 		push	ax
 		push	es
 		push	di
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	si
 		pop	ds
 		pop	ax
 		mov	word ptr cs:data_61e,32CAh
-		call	sub_1
+		call	stats_func_1
 		pop	ds
 		retn
 			                        ;* No entry point to code
@@ -208,9 +204,9 @@ locloop_4:
 		mov	cs:data_54e,bx
 		mov	cs:data_53e,ax
 		mov	cs:data_55e,cx
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		pop	cx
 		loop	locloop_4		; Loop if cx > 0
@@ -224,7 +220,7 @@ locloop_4:
 		push	ax
 		push	es
 		push	di
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	si
 		pop	ds
@@ -233,10 +229,10 @@ locloop_4:
 		mov	byte ptr cs:data_60e,0
 		or	al,al			; Zero ?
 		jnz	loc_5			; Jump if not zero
-		call	sub_1
+		call	stats_func_1
 loc_5:
 		mov	byte ptr cs:data_60e,0FFh
-		call	sub_1
+		call	stats_func_1
 		pop	ds
 		retn
 loc_6:
@@ -244,7 +240,7 @@ loc_6:
 		push	ax
 		push	es
 		push	di
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	si
 		pop	ds
@@ -253,10 +249,10 @@ loc_6:
 		mov	byte ptr cs:data_60e,0
 		or	al,al			; Zero ?
 		jnz	loc_7			; Jump if not zero
-		call	sub_1
+		call	stats_func_1
 loc_7:
 		mov	byte ptr cs:data_60e,0FFh
-		call	sub_1
+		call	stats_func_1
 		pop	ds
 		retn
 
@@ -266,7 +262,7 @@ zr1_04		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+stats_func_1		proc	near
 		mov	byte ptr cs:data_58e,0
 		mov	ax,0B800h
 		mov	es,ax
@@ -325,7 +321,7 @@ loc_13:
 
 loc_ret_14:
 		retn
-sub_1		endp
+stats_func_1		endp
 
 			                        ;* No entry point to code
 		test	byte ptr cs:data_60e,0FFh
@@ -490,9 +486,9 @@ loc_28:
 locloop_29:
 		push	cx
 		lodsb				; String [si] to al
-		call	sub_2
+		call	stats_func_2
 		mov	es:[di],dx
-		call	sub_2
+		call	stats_func_2
 		mov	es:[di+2],dx
 		add	di,0A0h
 		pop	cx
@@ -508,7 +504,7 @@ loc_30:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+stats_func_2		proc	near
 		add	al,al
 		sbb	ah,ah
 		and	ah,0F0h
@@ -524,7 +520,7 @@ sub_2		proc	near
 		and	dh,0Fh
 		or	dh,ah
 		retn
-sub_2		endp
+stats_func_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -557,7 +553,7 @@ sub_2		endp
 		rep	movsw			; Rep when cx >0 Mov [si] to es:[di]
 		pop	bx
 		push	bx
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	bx
 		mov	al,0A0h
@@ -634,9 +630,9 @@ locloop_35:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_35		; Loop if cx > 0
 
@@ -646,7 +642,7 @@ locloop_35:
 		pop	ds
 loc_36:
 		push	ds
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		mov	si,data_78e
 		push	es
@@ -731,7 +727,7 @@ loc_42:
 		add	al,[si+9]
 		mov	[si+3],al
 		mov	bl,al
-		call	sub_21
+		call	extract_bits_2
 		mov	[si+5],ax
 		mov	di,ax
 		mov	bp,[si+1]
@@ -744,7 +740,7 @@ loc_42:
 		mov	es,ax
 		mov	si,di
 		mov	di,bp
-		call	sub_3
+		call	copy_buffer
 		pop	si
 		pop	ds
 loc_43:
@@ -780,7 +776,7 @@ locloop_44:
 		mov	es,ax
 		mov	ds,cs:data_72e
 		mov	si,bp
-		call	sub_5
+		call	stats_multiply
 		pop	si
 		pop	ds
 loc_45:
@@ -808,7 +804,7 @@ locloop_47:
 		add	ax,3000h
 		mov	ds,ax
 		mov	si,bp
-		call	sub_4
+		call	copy_buffer_2
 		pop	si
 		pop	ds
 		pop	cx
@@ -832,7 +828,7 @@ loc_49:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+copy_buffer		proc	near
 		push	si
 		push	cx
 loc_50:
@@ -854,14 +850,14 @@ loc_51:
 		pop	cx
 		pop	si
 		retn
-sub_3		endp
+copy_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+copy_buffer_2		proc	near
 		push	di
 		push	cx
 loc_52:
@@ -883,14 +879,14 @@ loc_53:
 		pop	cx
 		pop	di
 		retn
-sub_4		endp
+copy_buffer_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+stats_multiply		proc	near
 		push	di
 		push	cx
 		mov	al,ch
@@ -912,7 +908,7 @@ locloop_55:
 		mov	cs:data_54e,ax
 		inc	si
 		push	bx
-		call	sub_19
+		call	stats_process_loop_4
 		pop	bx
 		or	es:[di],ax
 		inc	di
@@ -931,7 +927,7 @@ loc_56:
 		pop	cx
 		pop	di
 		retn
-sub_5		endp
+stats_multiply		endp
 
 		db	 00h, 90h, 20h, 06h, 80h, 91h
 		db	 20h, 06h, 00h, 93h, 20h, 06h
@@ -955,9 +951,9 @@ locloop_57:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_53e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_57		; Loop if cx > 0
 
@@ -983,9 +979,9 @@ locloop_58:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_58		; Loop if cx > 0
 
@@ -1038,7 +1034,7 @@ locloop_63:
 		push	bx
 		push	ds
 		push	si
-		call	sub_6
+		call	stats_multiply_2
 		pop	si
 		pop	ds
 		pop	bx
@@ -1057,7 +1053,7 @@ locloop_63:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+stats_multiply_2		proc	near
 		mov	ds,cs:data_72e
 		mov	dx,cs
 		add	dx,2000h
@@ -1111,7 +1107,7 @@ locloop_67:
 		loop	locloop_66		; Loop if cx > 0
 
 		retn
-sub_6		endp
+stats_multiply_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1150,7 +1146,7 @@ loc_69:
 		pop	ax
 		mov	bl,al
 		xor	bh,bh			; Zero register
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		mov	ax,0B800h
 		mov	es,ax
@@ -1173,13 +1169,13 @@ locloop_70:
 		or	ax,bx
 		not	ax
 		mov	cs:data_56e,ax
-		call	sub_20
+		call	stats_func_20
 		and	es:[di],ax
-		call	sub_19
+		call	stats_process_loop_4
 		or	es:[di],ax
-		call	sub_20
+		call	stats_func_20
 		and	es:[di+2],ax
-		call	sub_19
+		call	stats_process_loop_4
 		or	es:[di+2],ax
 		add	di,4
 		pop	cx
@@ -1208,13 +1204,13 @@ locloop_71:
 		or	ax,bx
 		not	ax
 		mov	cs:data_56e,ax
-		call	sub_20
+		call	stats_func_20
 		and	es:[di+2],ax
-		call	sub_19
+		call	stats_process_loop_4
 		or	es:[di+2],ax
-		call	sub_20
+		call	stats_func_20
 		and	es:[di],ax
-		call	sub_19
+		call	stats_process_loop_4
 		or	es:[di],ax
 		sub	di,4
 		pop	cx
@@ -1237,7 +1233,7 @@ loc_72:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_73			; Jump if zero
-		call	sub_7
+		call	stats_func_7
 		add	di,0A0h
 		jmp	short loc_72
 loc_73:
@@ -1246,7 +1242,7 @@ loc_74:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_75			; Jump if zero
-		call	sub_7
+		call	stats_func_7
 		inc	di
 		inc	di
 		jmp	short loc_74
@@ -1256,7 +1252,7 @@ loc_76:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_77			; Jump if zero
-		call	sub_7
+		call	stats_func_7
 		add	di,0FF60h
 		jmp	short loc_76
 loc_77:
@@ -1265,7 +1261,7 @@ loc_78:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_79			; Jump if zero
-		call	sub_7
+		call	stats_func_7
 		dec	di
 		dec	di
 		jmp	short loc_78
@@ -1285,7 +1281,7 @@ loc_81:
 locloop_82:
 		push	cx
 		mov	al,18h
-		call	sub_7
+		call	stats_func_7
 		add	di,0A0h
 		pop	cx
 		loop	locloop_82		; Loop if cx > 0
@@ -1302,7 +1298,7 @@ loc_83:
 locloop_84:
 		push	cx
 		mov	al,18h
-		call	sub_7
+		call	stats_func_7
 		inc	di
 		inc	di
 		pop	cx
@@ -1321,7 +1317,7 @@ loc_85:
 locloop_86:
 		push	cx
 		mov	al,18h
-		call	sub_7
+		call	stats_func_7
 		add	di,0FF60h
 		pop	cx
 		loop	locloop_86		; Loop if cx > 0
@@ -1338,7 +1334,7 @@ loc_87:
 locloop_88:
 		push	cx
 		mov	al,18h
-		call	sub_7
+		call	stats_func_7
 		dec	di
 		dec	di
 		pop	cx
@@ -1355,7 +1351,7 @@ loc_89:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+stats_func_7		proc	near
 		push	si
 		dec	al
 		xor	ah,ah			; Zero register
@@ -1366,8 +1362,8 @@ sub_7		proc	near
 		mov	si,ax
 		push	di
 		mov	bh,cs:data_57e
-		call	sub_8
-		call	sub_19
+		call	extract_bits
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		add	di,1FFEh
 		cmp	di,8000h
@@ -1376,8 +1372,8 @@ sub_7		proc	near
 loc_90:
 		mov	bh,cs:data_57e
 		ror	bh,1			; Rotate
-		call	sub_8
-		call	sub_19
+		call	extract_bits
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		add	di,1FFEh
 		cmp	di,8000h
@@ -1385,8 +1381,8 @@ loc_90:
 		add	di,80A0h
 loc_91:
 		mov	bh,cs:data_57e
-		call	sub_8
-		call	sub_19
+		call	extract_bits
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		add	di,1FFEh
 		cmp	di,8000h
@@ -1395,20 +1391,20 @@ loc_91:
 loc_92:
 		mov	bh,cs:data_57e
 		ror	bh,1			; Rotate
-		call	sub_8
-		call	sub_19
+		call	extract_bits
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		pop	di
 		pop	si
 		retn
-sub_7		endp
+stats_func_7		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
+extract_bits		proc	near
 		mov	word ptr ds:data_52e,0
 		mov	word ptr ds:data_55e,0
 		mov	ah,[si+4]
@@ -1432,7 +1428,7 @@ loc_94:
 loc_95:
 		or	ds:data_54e,ax
 		retn
-sub_8		endp
+extract_bits		endp
 
 		db	 00h, 00h, 00h, 03h, 80h, 80h
 		db	 85h, 84h, 03h, 03h, 03h, 03h
@@ -1518,9 +1514,9 @@ loc_98:
 		xchg	ah,al
 		mov	cs:data_54e,ax
 loc_99:
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		pop	si
 		inc	si
@@ -1552,7 +1548,7 @@ locloop_101:
 		push	cx
 		push	bx
 		push	si
-		call	sub_9
+		call	stats_multiply_3
 		pop	si
 		pop	bx
 		pop	cx
@@ -1573,12 +1569,12 @@ loc_102:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+stats_multiply_3		proc	near
 		push	bx
 		mov	bl,cs:data_58e
 		add	bl,10h
 		mov	bh,4
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	bx
 		cmp	cs:data_58e,bl
@@ -1620,11 +1616,11 @@ loc_105:
 		xor	ax,ax			; Zero register
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_9		endp
+stats_multiply_3		endp
 
 			                        ;* No entry point to code
 		mov	cs:data_58e,bl
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		mov	ax,0B800h
 		mov	es,ax
@@ -1636,7 +1632,7 @@ sub_9		endp
 		sub	cx,5
 		push	cx
 		push	di
-		call	sub_10
+		call	fill_buffer
 		pop	di
 		inc	byte ptr cs:data_58e
 		add	di,2000h
@@ -1645,12 +1641,12 @@ sub_9		endp
 		add	di,data_67e
 loc_106:
 		mov	cx,2
-		call	sub_11
+		call	clear_buffer
 		pop	cx
 
 locloop_107:
 		push	cx
-		call	sub_12
+		call	stats_get_value
 		or	byte ptr es:[di],0Fh
 		mov	byte ptr es:[di+1],0
 		or	byte ptr es:[bx+di+1],0F0h
@@ -1665,14 +1661,14 @@ loc_108:
 		loop	locloop_107		; Loop if cx > 0
 
 		mov	cx,1
-		call	sub_11
+		call	clear_buffer
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_10		proc	near
-		call	sub_12
+fill_buffer		proc	near
+		call	stats_get_value
 		or	byte ptr es:[di],0Fh
 		inc	di
 		mov	cx,bx
@@ -1680,19 +1676,19 @@ sub_10		proc	near
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		or	byte ptr es:[di],0F0h
 		retn
-sub_10		endp
+fill_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_11		proc	near
+clear_buffer		proc	near
 
 locloop_109:
 		push	cx
 		push	di
-		call	sub_12
+		call	stats_get_value
 		or	byte ptr es:[di],0Fh
 		inc	di
 		mov	cx,bx
@@ -1710,18 +1706,18 @@ loc_110:
 		loop	locloop_109		; Loop if cx > 0
 
 		retn
-sub_11		endp
+clear_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+stats_get_value		proc	near
 		mov	word ptr es:[di-3],4444h
 		mov	word ptr es:[di-1],4444h
 		retn
-sub_12		endp
+stats_get_value		endp
 
 			                        ;* No entry point to code
 		push	bx
@@ -1764,10 +1760,10 @@ locloop_111:
 		mov	ds:data_64e,es
 		mov	di,69Ah
 		add	di,ds:data_63e
-		call	sub_15
+		call	stats_process_loop_3
 		mov	di,offset data_4
 		add	di,ds:data_63e
-		call	sub_15
+		call	stats_process_loop_3
 		mov	ax,0B800h
 		mov	es,ax
 		mov	ds,cs:data_64e
@@ -1785,7 +1781,7 @@ locloop_112:
 		mul	bl			; ax = reg * al
 		push	ax
 		mov	bh,0
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	ax
 		add	ax,cs:data_63e
@@ -1795,10 +1791,10 @@ locloop_112:
 		jb	loc_113			; Jump if below
 		cmp	ax,71h
 		jae	loc_113			; Jump if above or =
-		call	sub_14
+		call	stats_process_loop_2
 		jmp	short loc_114
 loc_113:
-		call	sub_13
+		call	stats_process_loop
 loc_114:
 		pop	cx
 		push	cx
@@ -1811,7 +1807,7 @@ loc_114:
 		mul	bl			; ax = reg * al
 		push	ax
 		mov	bh,0
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	ax
 		add	ax,cs:data_63e
@@ -1821,10 +1817,10 @@ loc_114:
 		jb	loc_115			; Jump if below
 		cmp	ax,71h
 		jae	loc_115			; Jump if above or =
-		call	sub_14
+		call	stats_process_loop_2
 		jmp	short loc_116
 loc_115:
-		call	sub_13
+		call	stats_process_loop
 loc_116:
 		cmp	byte ptr cs:data_71e,4
 		jb	loc_116			; Jump if below
@@ -1838,7 +1834,7 @@ loc_116:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
+stats_process_loop		proc	near
 		mov	cx,28h
 		mov	word ptr cs:data_55e,0
 
@@ -1852,21 +1848,21 @@ locloop_117:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_117		; Loop if cx > 0
 
 		retn
-sub_13		endp
+stats_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+stats_process_loop_2		proc	near
 		mov	cx,0Bh
 		mov	word ptr cs:data_55e,0
 
@@ -1878,7 +1874,7 @@ locloop_118:
 		lodsb				; String [si] to al
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_118		; Loop if cx > 0
 
@@ -1896,9 +1892,9 @@ locloop_119:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_119		; Loop if cx > 0
 
@@ -1914,22 +1910,22 @@ locloop_120:
 		lodsb				; String [si] to al
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_120		; Loop if cx > 0
 
 		retn
-sub_14		endp
+stats_process_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+stats_process_loop_3		proc	near
 		push	di
 		mov	ax,0FC3Fh
-		call	sub_16
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,5Bh
 
@@ -1940,12 +1936,12 @@ locloop_121:
 		loop	locloop_121		; Loop if cx > 0
 
 		mov	ax,0FC3Fh
-		call	sub_16
+		call	fill_buffer_2
 		pop	di
 		add	di,data_41e
 		push	di
 		mov	ax,0FD7Fh
-		call	sub_16
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,2Dh
 
@@ -1962,11 +1958,11 @@ locloop_122:
 		mov	byte ptr es:[di+19h],0Eh
 		add	di,50h
 		mov	ax,0FD7Fh
-		call	sub_16
+		call	fill_buffer_2
 		pop	di
 		add	di,data_41e
 		mov	ax,0FC3Fh
-		call	sub_16
+		call	fill_buffer_2
 		add	di,36h
 		mov	cx,5Bh
 
@@ -1977,16 +1973,16 @@ locloop_123:
 		loop	locloop_123		; Loop if cx > 0
 
 		mov	ax,0FC3Fh
-		call	sub_16
+		call	fill_buffer_2
 		retn
-sub_15		endp
+stats_process_loop_3		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+fill_buffer_2		proc	near
 		stosb				; Store al to es:[di]
 		mov	al,0FFh
 		mov	cx,18h
@@ -1994,7 +1990,7 @@ sub_16		proc	near
 		mov	al,ah
 		stosb				; Store al to es:[di]
 		retn
-sub_16		endp
+fill_buffer_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2012,12 +2008,12 @@ locloop_124:
 		neg	ax
 		add	ax,39h
 		add	ax,ax
-		call	sub_17
+		call	stats_multiply_4
 		pop	ax
 		push	ax
 		add	ax,ax
 		dec	ax
-		call	sub_17
+		call	stats_multiply_4
 loc_125:
 		cmp	byte ptr cs:data_71e,4
 		jb	loc_125			; Jump if below
@@ -2031,7 +2027,7 @@ loc_125:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+stats_multiply_4		proc	near
 		push	ax
 		mov	bl,al
 		mov	al,2Fh			; '/'
@@ -2039,7 +2035,7 @@ sub_17		proc	near
 		add	ax,cs:data_63e
 		mov	si,ax
 		xor	bh,bh			; Zero register
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	ax
 		cmp	ax,14h
@@ -2064,7 +2060,7 @@ locloop_128:
 		lodsb				; String [si] to al
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_128		; Loop if cx > 0
 
@@ -2081,7 +2077,7 @@ locloop_130:
 		lodsb				; String [si] to al
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_130		; Loop if cx > 0
 
@@ -2092,12 +2088,12 @@ locloop_130:
 		lodsb				; String [si] to al
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		and	ax,0F0FFh
 		and	word ptr es:[di],0F00h
 		or	es:[di],ax
 		retn
-sub_17		endp
+stats_multiply_4		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2115,12 +2111,12 @@ locloop_131:
 		neg	ax
 		add	ax,39h
 		add	ax,ax
-		call	sub_18
+		call	stats_fill_buf
 		pop	ax
 		push	ax
 		add	ax,ax
 		dec	ax
-		call	sub_18
+		call	stats_fill_buf
 loc_132:
 		cmp	byte ptr cs:data_71e,4
 		jb	loc_132			; Jump if below
@@ -2134,7 +2130,7 @@ loc_132:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+stats_fill_buf		proc	near
 		push	ax
 		mov	bl,al
 		mov	al,2Fh			; '/'
@@ -2144,7 +2140,7 @@ sub_18		proc	near
 		mov	si,ax
 		add	bl,14h
 		mov	bh,21h			; '!'
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		pop	ax
 		cmp	ax,5Eh
@@ -2163,9 +2159,9 @@ locloop_133:
 		lodsw				; String [si] to ax
 		xchg	ah,al
 		mov	cs:data_52e,ax
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
-		call	sub_19
+		call	stats_process_loop_4
 		stosw				; Store ax to es:[di]
 		loop	locloop_133		; Loop if cx > 0
 
@@ -2174,11 +2170,11 @@ loc_134:
 		xor	ax,ax			; Zero register
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_18		endp
+stats_fill_buf		endp
 
 			                        ;* No entry point to code
 		push	ax
-		call	sub_21
+		call	extract_bits_2
 		mov	di,ax
 		mov	ax,0B800h
 		mov	es,ax
@@ -2540,7 +2536,7 @@ data_20		dw	706h			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+stats_process_loop_4		proc	near
 		push	cx
 		push	si
 		mov	si,cs:data_51e
@@ -2575,14 +2571,14 @@ locloop_137:
 		pop	si
 		pop	cx
 		retn
-sub_19		endp
+stats_process_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+stats_func_20		proc	near
 		rol	word ptr cs:data_56e,1	; Rotate
 		sbb	dl,dl
 		rol	word ptr cs:data_56e,1	; Rotate
@@ -2610,7 +2606,7 @@ sub_20		proc	near
 		and	ah,0Fh
 		or	ah,dl
 		retn
-sub_20		endp
+stats_func_20		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2657,7 +2653,7 @@ loc_139:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_21		proc	near
+extract_bits_2		proc	near
 		add	bh,bh
 		mov	dh,bl
 		ror	dh,1			; Rotate
@@ -2673,7 +2669,7 @@ sub_21		proc	near
 		xor	bh,bh			; Zero register
 		add	ax,bx
 		retn
-sub_21		endp
+extract_bits_2		endp
 
 		db	0C3h
 		db	1057 dup (0)

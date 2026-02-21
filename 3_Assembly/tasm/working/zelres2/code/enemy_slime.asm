@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR2_07	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  ENEMY_SLIME - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -191,14 +187,14 @@ zr2_07		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+slime_func_1		proc	near
 		xor	ax,ax			; Zero register
 		mov	al,ds:data_1e
 		add	ax,ax
 		add	ax,0DEh
 		mov	di,ax
 		jmp	word ptr [di]		;*
-sub_1		endp
+slime_func_1		endp
 
 ;*		jmp	far ptr loc_61		;*
 		db	0EAh
@@ -404,13 +400,13 @@ loc_18:
 		push	bx
 		mov	dh,ds:[bp+si]
 		mov	dl,[si]
-		call	sub_2
+		call	slime_func_2
 		stosb				; Store al to es:[di]
-		call	sub_2
+		call	slime_func_2
 		stosb				; Store al to es:[di]
-		call	sub_2
+		call	slime_func_2
 		stosb				; Store al to es:[di]
-		call	sub_2
+		call	slime_func_2
 		stosb				; Store al to es:[di]
 		inc	si
 		pop	bx
@@ -429,7 +425,7 @@ loc_18:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+slime_func_2		proc	near
 		add	dh,dh
 		adc	bl,bl
 		add	dl,dl
@@ -442,7 +438,7 @@ sub_2		proc	near
 		xor	bh,bh			; Zero register
 		mov	al,byte ptr ds:[2AEh][bx]
 		retn
-sub_2		endp
+slime_func_2		endp
 
 		db	 00h, 01h, 05h, 03h, 08h, 09h
 		db	 0Dh, 0Bh, 28h, 29h, 2Dh, 2Bh
@@ -461,9 +457,9 @@ loc_20:
 		push	bx
 		mov	dh,ds:[bp+si]
 		mov	dl,[si]
-		call	sub_3
+		call	slime_process_loop
 		stosb				; Store al to es:[di]
-		call	sub_3
+		call	slime_process_loop
 		stosb				; Store al to es:[di]
 		inc	si
 		pop	bx
@@ -486,7 +482,7 @@ loc_21:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+slime_process_loop		proc	near
 		xor	al,al			; Zero register
 		mov	cx,2
 
@@ -509,7 +505,7 @@ locloop_22:
 		loop	locloop_22		; Loop if cx > 0
 
 		retn
-sub_3		endp
+slime_process_loop		endp
 
 		db	 00h, 07h, 01h, 02h, 07h, 0Fh
 		db	 03h, 0Ah, 01h, 03h, 09h, 0Bh
@@ -519,14 +515,14 @@ sub_3		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+slime_func_4		proc	near
 		xor	ax,ax			; Zero register
 		mov	al,ds:data_1e
 		add	ax,ax
 		add	ax,35Ch
 		mov	di,ax
 		jmp	word ptr [di]		;*
-sub_4		endp
+slime_func_4		endp
 
 		db	 68h, 03h, 8Bh, 03h, 8Bh, 03h
 		db	 8Bh, 03h, 8Ch, 03h,0CFh, 03h
@@ -551,37 +547,37 @@ locloop_23:
 		mov	es,ax
 		mov	si,49Ah
 		mov	di,3AC8h
-		call	sub_5
+		call	slime_process_loop_2
 		mov	di,data_178e
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+slime_process_loop_2		proc	near
 		mov	cx,5
 
 locloop_24:
 		push	cx
 		push	di
 		lodsb				; String [si] to al
-		call	sub_6
+		call	slime_process_loop_3
 		lodsb				; String [si] to al
-		call	sub_6
+		call	slime_process_loop_3
 		pop	di
 		add	di,140h
 		pop	cx
 		loop	locloop_24		; Loop if cx > 0
 
 		retn
-sub_5		endp
+slime_process_loop_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+slime_process_loop_3		proc	near
 		mov	cx,4
 
 locloop_25:
@@ -599,14 +595,14 @@ locloop_25:
 		loop	locloop_25		; Loop if cx > 0
 
 		retn
-sub_6		endp
+slime_process_loop_3		endp
 
 			                        ;* No entry point to code
 		mov	ax,0B800h
 		mov	es,ax
 		mov	di,66E4h
 		mov	dh,0FFh
-		call	sub_7
+		call	slime_scan_loop
 		mov	di,data_179e
 		xor	dh,dh			; Zero register
 
@@ -614,7 +610,7 @@ sub_6		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+slime_scan_loop		proc	near
 		mov	cx,5
 
 locloop_26:
@@ -625,7 +621,7 @@ locloop_26:
 
 locloop_27:
 		mov	al,es:[di]
-		call	sub_8
+		call	extract_bits
 		stosb				; Store al to es:[di]
 		loop	locloop_27		; Loop if cx > 0
 
@@ -639,14 +635,14 @@ loc_28:
 		loop	locloop_26		; Loop if cx > 0
 
 		retn
-sub_7		endp
+slime_scan_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
+extract_bits		proc	near
 		test	dl,0FFh
 		jz	loc_29			; Jump if zero
 		retn
@@ -678,7 +674,7 @@ loc_31:
 		mov	al,ah
 		mov	dl,0FFh
 		retn
-sub_8		endp
+extract_bits		endp
 
 		db	 00h, 04h, 05h, 05h, 04h, 05h
 		db	 05h, 07h, 08h, 0Ch, 0Dh, 0Dh
@@ -1759,7 +1755,7 @@ data_61		db	88h			; Data table (indexed access)
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+slime_func_9		proc	near
 		out	dx,al			; port 1, DMA-1 bas&cnt ch 0
 ;*		and	byte ptr ds:data_87e[bx+si],0A8h
 		db	 82h,0A0h,0A8h, 3Ah,0A8h	;  Fixup - byte match
@@ -1770,7 +1766,7 @@ sub_9		proc	near
 		mov	al,ds:data_133e
 		adc	ss:data_99e[bp+si],cx
 		jmp	short $+0Ch
-sub_9		endp
+slime_func_9		endp
 
 			                        ;* No entry point to code
 		inc	cx

@@ -1,15 +1,11 @@
 
 PAGE  59,132
 
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
-;€€					                                 €€
-;€€				ZR1_01	                                 €€
-;€€					                                 €€
-;€€      Created:   16-Feb-26		                                 €€
-;€€      Code type: zero start		                                 €€
-;€€      Passes:    9          Analysis	Options on: none                 €€
-;€€					                                 €€
-;€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
+;==========================================================================
+;
+;  IMAGE_CONTROLLER - Code Module
+;
+;==========================================================================
 
 target		EQU   'T2'                      ; Target assembler: TASM-2.X
 
@@ -109,12 +105,12 @@ loc_1:
 		pop	ax
 		push	si
 		mov	bh,1
-		call	sub_4
+		call	imgctl_process_loop_2
 		pop	si
 		push	si
 		add	si,cs:data_28e
 		mov	bh,8
-		call	sub_4
+		call	imgctl_process_loop_2
 		pop	si
 		retn
 			                        ;* No entry point to code
@@ -129,7 +125,7 @@ loc_1:
 						;  al = 5, mode
 		mov	word ptr cs:data_29e,30C5h
 		pop	ax
-		call	sub_1
+		call	imgctl_multiply
 		mov	ax,3
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 3, data rotate
@@ -148,7 +144,7 @@ loc_1:
 		out	dx,ax			; port 0, DMA-1 bas&add ch 0
 		pop	ax
 		xor	bh,bh			; Zero register
-		call	sub_3
+		call	imgctl_process_loop
 loc_2:
 		push	ax
 		mov	ax,1003h
@@ -156,17 +152,17 @@ loc_2:
 		pop	ax
 		push	si
 		mov	bh,1
-		call	sub_4
+		call	imgctl_process_loop_2
 		pop	si
 		push	si
 		add	si,cs:data_28e
 		push	si
 		mov	bh,2
-		call	sub_4
+		call	imgctl_process_loop_2
 		pop	si
 		add	si,cs:data_28e
 		mov	bh,4
-		call	sub_4
+		call	imgctl_process_loop_2
 		pop	si
 		retn
 			                        ;* No entry point to code
@@ -180,7 +176,7 @@ loc_2:
 						;  al = 5, mode
 		mov	word ptr cs:data_29e,3121h
 		mov	al,0FFh
-		call	sub_1
+		call	imgctl_multiply
 		mov	ax,5
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 5, mode
@@ -202,7 +198,7 @@ loc_2:
 						;  al = 5, mode
 		mov	word ptr cs:data_29e,314Dh
 		xor	al,al			; Zero register
-		call	sub_1
+		call	imgctl_multiply
 		mov	ax,3
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 3, data rotate
@@ -290,7 +286,7 @@ zr1_01		endp
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_1		proc	near
+imgctl_multiply		proc	near
 		push	ds
 		push	ax
 		push	es
@@ -310,20 +306,20 @@ sub_1		proc	near
 		mov	byte ptr cs:data_27e,0
 		or	al,al			; Zero ?
 		jnz	loc_5			; Jump if not zero
-		call	sub_2
+		call	vga_operation
 loc_5:
 		mov	byte ptr cs:data_27e,0FFh
-		call	sub_2
+		call	vga_operation
 		pop	ds
 		retn
-sub_1		endp
+imgctl_multiply		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_2		proc	near
+vga_operation		proc	near
 		mov	byte ptr cs:data_25e,0
 		mov	ax,0A000h
 		mov	es,ax
@@ -369,14 +365,14 @@ loc_9:
 		dec	bp
 		jnz	loc_6			; Jump if not zero
 		retn
-sub_2		endp
+vga_operation		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_3		proc	near
+imgctl_process_loop		proc	near
 loc_10:
 		push	di
 		push	cx
@@ -400,14 +396,14 @@ locloop_11:
 		pop	cx
 		pop	di
 		retn
-sub_3		endp
+imgctl_process_loop		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_4		proc	near
+imgctl_process_loop_2		proc	near
 		push	di
 		push	cx
 		push	ax
@@ -431,7 +427,7 @@ locloop_12:
 		pop	cx
 		pop	di
 		retn
-sub_4		endp
+imgctl_process_loop_2		endp
 
 			                        ;* No entry point to code
 		and	byte ptr [bx+si],8
@@ -539,7 +535,7 @@ loc_19:
 		mov	cs:data_28e,ax
 		pop	si
 		pop	ds
-		call	sub_5
+		call	copy_vga_buffer
 		pop	ds
 		retn
 
@@ -547,7 +543,7 @@ loc_19:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_5		proc	near
+copy_vga_buffer		proc	near
 		mov	ax,0A000h
 		mov	es,ax
 		mov	dx,3C4h
@@ -594,7 +590,7 @@ locloop_20:
 		loop	locloop_20		; Loop if cx > 0
 
 		retn
-sub_5		endp
+copy_vga_buffer		endp
 
 			                        ;* No entry point to code
 		push	cs
@@ -686,13 +682,13 @@ loc_25:
 		mov	di,bp
 		mov	al,0
 		out	dx,al			; port 3CFh, EGA graphic func
-		call	sub_6
+		call	copy_buffer
 		mov	al,1
 		out	dx,al			; port 3CFh, EGA graphic func
-		call	sub_6
+		call	copy_buffer
 		mov	al,2
 		out	dx,al			; port 3CFh, EGA graphic func
-		call	sub_6
+		call	copy_buffer
 		pop	si
 		pop	ds
 loc_26:
@@ -718,7 +714,7 @@ locloop_29:
 		mov	ds:data_23e,al
 		inc	byte ptr ds:data_24e
 		xor	ax,ax			; Zero register
-		call	sub_24
+		call	vga_operation4
 		pop	si
 		test	byte ptr cs:[si],0FFh
 		jz	loc_30			; Jump if zero
@@ -751,7 +747,7 @@ locloop_29:
 		mov	ax,4
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 4, read map select
-		call	sub_8
+		call	imgctl_process_loop_3
 		mov	dx,3C4h
 		mov	ax,202h
 		out	dx,ax			; port 3C4h, EGA sequencr index
@@ -760,7 +756,7 @@ locloop_29:
 		mov	ax,104h
 		out	dx,ax			; port 3CEh, EGA graphic index
 						;  al = 4, read map select
-		call	sub_8
+		call	imgctl_process_loop_3
 		pop	si
 		pop	ds
 loc_30:
@@ -795,13 +791,13 @@ locloop_32:
 		inc	dx
 		mov	al,1
 		out	dx,al			; port 3C5h, EGA sequencr func
-		call	sub_7
+		call	copy_buffer_2
 		mov	al,2
 		out	dx,al			; port 3C5h, EGA sequencr func
-		call	sub_7
+		call	copy_buffer_2
 		mov	al,4
 		out	dx,al			; port 3C5h, EGA sequencr func
-		call	sub_7
+		call	copy_buffer_2
 		pop	si
 		pop	ds
 		pop	cx
@@ -826,7 +822,7 @@ loc_34:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_6		proc	near
+copy_buffer		proc	near
 		push	si
 		push	cx
 loc_35:
@@ -843,14 +839,14 @@ loc_35:
 		pop	cx
 		pop	si
 		retn
-sub_6		endp
+copy_buffer		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_7		proc	near
+copy_buffer_2		proc	near
 		push	di
 		push	cx
 loc_36:
@@ -867,14 +863,14 @@ loc_36:
 		pop	cx
 		pop	di
 		retn
-sub_7		endp
+copy_buffer_2		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_8		proc	near
+imgctl_process_loop_3		proc	near
 		push	di
 		push	cx
 loc_37:
@@ -897,7 +893,7 @@ locloop_38:
 		pop	cx
 		pop	di
 		retn
-sub_8		endp
+imgctl_process_loop_3		endp
 
 		db	 00h, 90h, 20h, 06h, 80h, 91h
 		db	 20h, 06h, 00h, 93h, 20h, 06h
@@ -952,10 +948,10 @@ locloop_39:
 		inc	dx
 		mov	al,1
 		out	dx,al			; port 3C5h, EGA sequencr func
-		call	sub_9
+		call	copy_buffer_3
 		mov	al,2
 		out	dx,al			; port 3C5h, EGA sequencr func
-		call	sub_9
+		call	copy_buffer_3
 		pop	ds
 		retn
 
@@ -963,7 +959,7 @@ locloop_39:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_9		proc	near
+copy_buffer_3		proc	near
 		push	di
 		mov	cx,20h
 
@@ -979,7 +975,7 @@ locloop_40:
 
 		pop	di
 		retn
-sub_9		endp
+copy_buffer_3		endp
 
 			                        ;* No entry point to code
 		mov	ax,0A000h
@@ -1018,7 +1014,7 @@ locloop_43:
 		push	bx
 		push	ds
 		push	si
-		call	sub_10
+		call	imgctl_multiply_2
 		pop	si
 		pop	ds
 		pop	bx
@@ -1037,7 +1033,7 @@ locloop_43:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_10		proc	near
+imgctl_multiply_2		proc	near
 		mov	ds,cs:data_40e
 		mov	dx,cs
 		add	dx,2000h
@@ -1091,7 +1087,7 @@ locloop_47:
 		loop	locloop_46		; Loop if cx > 0
 
 		retn
-sub_10		endp
+imgctl_multiply_2		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -1275,7 +1271,7 @@ loc_54:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_55			; Jump if zero
-		call	sub_11
+		call	imgctl_func_11
 		add	di,140h
 		jmp	short loc_54
 loc_55:
@@ -1284,7 +1280,7 @@ loc_56:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_57			; Jump if zero
-		call	sub_11
+		call	imgctl_func_11
 		inc	di
 		jmp	short loc_56
 loc_57:
@@ -1293,7 +1289,7 @@ loc_58:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_59			; Jump if zero
-		call	sub_11
+		call	imgctl_func_11
 		add	di,0FEC0h
 		jmp	short loc_58
 loc_59:
@@ -1302,7 +1298,7 @@ loc_60:
 		lodsb				; String [si] to al
 		or	al,al			; Zero ?
 		jz	loc_61			; Jump if zero
-		call	sub_11
+		call	imgctl_func_11
 		dec	di
 		jmp	short loc_60
 loc_61:
@@ -1319,7 +1315,7 @@ loc_62:
 locloop_63:
 		push	cx
 		mov	al,18h
-		call	sub_11
+		call	imgctl_func_11
 		add	di,140h
 		pop	cx
 		loop	locloop_63		; Loop if cx > 0
@@ -1334,7 +1330,7 @@ locloop_63:
 locloop_64:
 		push	cx
 		mov	al,18h
-		call	sub_11
+		call	imgctl_func_11
 		inc	di
 		pop	cx
 		loop	locloop_64		; Loop if cx > 0
@@ -1349,7 +1345,7 @@ locloop_64:
 locloop_65:
 		push	cx
 		mov	al,18h
-		call	sub_11
+		call	imgctl_func_11
 		add	di,0FEC0h
 		pop	cx
 		loop	locloop_65		; Loop if cx > 0
@@ -1364,7 +1360,7 @@ locloop_65:
 locloop_66:
 		push	cx
 		mov	al,18h
-		call	sub_11
+		call	imgctl_func_11
 		dec	di
 		pop	cx
 		loop	locloop_66		; Loop if cx > 0
@@ -1390,7 +1386,7 @@ loc_68:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_11		proc	near
+imgctl_func_11		proc	near
 		push	si
 		dec	al
 		xor	ah,ah			; Zero register
@@ -1476,7 +1472,7 @@ sub_11		proc	near
 		dec	dx
 		pop	si
 		retn
-sub_11		endp
+imgctl_func_11		endp
 
 		db	 00h, 00h, 00h, 03h, 80h, 80h
 		db	 85h, 84h, 03h, 03h, 03h, 03h
@@ -1549,7 +1545,7 @@ locloop_70:
 		push	cx
 		push	bx
 		push	si
-		call	sub_12
+		call	imgctl_multiply_3
 		pop	si
 		pop	bx
 		pop	cx
@@ -1570,7 +1566,7 @@ loc_71:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_12		proc	near
+imgctl_multiply_3		proc	near
 		mov	dx,3C4h
 		mov	al,2
 		out	dx,al			; port 3C4h, EGA sequencr index
@@ -1648,7 +1644,7 @@ loc_78:
 		xor	ax,ax			; Zero register
 		rep	stosw			; Rep when cx >0 Store ax to es:[di]
 		retn
-sub_12		endp
+imgctl_multiply_3		endp
 
 			                        ;* No entry point to code
 		mov	ax,50h
@@ -1681,17 +1677,17 @@ sub_12		endp
 		out	dx,al			; port 3CEh, EGA graphic index
 						;  al = 8, data bit mask
 		inc	dx
-		call	sub_13
+		call	imgctl_process_loop_4
 		pop	di
 		inc	byte ptr cs:data_25e
 		add	di,50h
 		mov	cx,2
-		call	sub_14
+		call	imgctl_process_loop_5
 		pop	cx
 
 locloop_79:
 		push	cx
-		call	sub_15
+		call	imgctl_func_15
 		mov	al,30h			; '0'
 		out	dx,al			; port 3CFh, EGA graphic func
 		mov	al,7
@@ -1714,8 +1710,8 @@ locloop_79:
 		loop	locloop_79		; Loop if cx > 0
 
 		mov	cx,1
-		call	sub_14
-		call	sub_13
+		call	imgctl_process_loop_5
+		call	imgctl_process_loop_4
 		dec	dx
 		mov	ax,5
 		out	dx,ax			; port 3CEh, EGA graphic index
@@ -1732,8 +1728,8 @@ locloop_79:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_13		proc	near
-		call	sub_15
+imgctl_process_loop_4		proc	near
+		call	imgctl_func_15
 		mov	al,3Fh			; '?'
 		out	dx,al			; port 3CFh, EGA graphic func
 		mov	al,7
@@ -1755,19 +1751,19 @@ locloop_80:
 		mov	al,7
 		xchg	es:[di],al
 		retn
-sub_13		endp
+imgctl_process_loop_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_14		proc	near
+imgctl_process_loop_5		proc	near
 
 locloop_81:
 		push	cx
 		push	di
-		call	sub_15
+		call	imgctl_func_15
 		mov	al,30h			; '0'
 		out	dx,al			; port 3CFh, EGA graphic func
 		mov	al,7
@@ -1803,14 +1799,14 @@ locloop_82:
 		loop	locloop_81		; Loop if cx > 0
 
 		retn
-sub_14		endp
+imgctl_process_loop_5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_15		proc	near
+imgctl_func_15		proc	near
 		mov	al,0FFh
 		out	dx,al			; port 3CFh, EGA graphic func
 		xor	al,al			; Zero register
@@ -1827,7 +1823,7 @@ sub_15		proc	near
 		mov	al,2
 		xchg	es:[di],al
 		retn
-sub_15		endp
+imgctl_func_15		endp
 
 			                        ;* No entry point to code
 		push	bx
@@ -1870,10 +1866,10 @@ locloop_83:
 		mov	ds:data_32e,es
 		mov	di,69Ah
 		add	di,ds:data_31e
-		call	sub_18
+		call	imgctl_process_loop_6
 		mov	di,6BCh
 		add	di,ds:data_31e
-		call	sub_18
+		call	imgctl_process_loop_6
 		mov	ax,0A000h
 		mov	es,ax
 		mov	ds,cs:data_32e
@@ -1901,10 +1897,10 @@ locloop_84:
 		jb	loc_85			; Jump if below
 		cmp	ax,71h
 		jae	loc_85			; Jump if above or =
-		call	sub_17
+		call	copy_buffer_5
 		jmp	short loc_86
 loc_85:
-		call	sub_16
+		call	copy_buffer_4
 loc_86:
 		pop	cx
 		push	cx
@@ -1922,10 +1918,10 @@ loc_86:
 		jb	loc_87			; Jump if below
 		cmp	ax,71h
 		jae	loc_87			; Jump if above or =
-		call	sub_17
+		call	copy_buffer_5
 		jmp	short loc_88
 loc_87:
-		call	sub_16
+		call	copy_buffer_4
 loc_88:
 		cmp	byte ptr cs:data_39e,4
 		jb	loc_88			; Jump if below
@@ -1939,7 +1935,7 @@ loc_88:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_16		proc	near
+copy_buffer_4		proc	near
 		push	si
 		push	di
 		mov	al,1
@@ -1963,14 +1959,14 @@ sub_16		proc	near
 		mov	cx,50h
 		rep	movsb			; Rep when cx >0 Mov [si] to es:[di]
 		retn
-sub_16		endp
+copy_buffer_4		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_17		proc	near
+copy_buffer_5		proc	near
 		push	si
 		push	di
 		mov	al,1
@@ -2018,17 +2014,17 @@ sub_17		proc	near
 		mov	cx,0Bh
 		rep	movsb			; Rep when cx >0 Mov [si] to es:[di]
 		retn
-sub_17		endp
+copy_buffer_5		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_18		proc	near
+imgctl_process_loop_6		proc	near
 		push	di
 		mov	ax,0FC3Fh
-		call	sub_19
+		call	fill_buffer
 		add	di,36h
 		mov	cx,5Bh
 
@@ -2039,12 +2035,12 @@ locloop_89:
 		loop	locloop_89		; Loop if cx > 0
 
 		mov	ax,0FC3Fh
-		call	sub_19
+		call	fill_buffer
 		pop	di
 		add	di,data_13e
 		push	di
 		mov	ax,0FD7Fh
-		call	sub_19
+		call	fill_buffer
 		add	di,36h
 		mov	cx,2Dh
 
@@ -2061,11 +2057,11 @@ locloop_90:
 		mov	byte ptr es:[di+19h],0Eh
 		add	di,50h
 		mov	ax,0FD7Fh
-		call	sub_19
+		call	fill_buffer
 		pop	di
 		add	di,data_13e
 		mov	ax,0FC3Fh
-		call	sub_19
+		call	fill_buffer
 		add	di,36h
 		mov	cx,5Bh
 
@@ -2076,16 +2072,16 @@ locloop_91:
 		loop	locloop_91		; Loop if cx > 0
 
 		mov	ax,0FC3Fh
-		call	sub_19
+		call	fill_buffer
 		retn
-sub_18		endp
+imgctl_process_loop_6		endp
 
 
 ;ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_19		proc	near
+fill_buffer		proc	near
 		stosb				; Store al to es:[di]
 		mov	al,0FFh
 		mov	cx,18h
@@ -2093,7 +2089,7 @@ sub_19		proc	near
 		mov	al,ah
 		stosb				; Store al to es:[di]
 		retn
-sub_19		endp
+fill_buffer		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2111,12 +2107,12 @@ locloop_92:
 		neg	ax
 		add	ax,39h
 		add	ax,ax
-		call	sub_20
+		call	vga_operation0
 		pop	ax
 		push	ax
 		add	ax,ax
 		dec	ax
-		call	sub_20
+		call	vga_operation0
 loc_93:
 		cmp	byte ptr cs:data_39e,4
 		jb	loc_93			; Jump if below
@@ -2130,7 +2126,7 @@ loc_93:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_20		proc	near
+vga_operation0		proc	near
 		push	ax
 		mov	bl,al
 		mov	al,2Fh			; '/'
@@ -2152,7 +2148,7 @@ sub_20		proc	near
 		push	ax
 		push	di
 		push	si
-		call	sub_21
+		call	vga_operation1
 		pop	si
 		pop	di
 		add	si,14EEh
@@ -2168,7 +2164,7 @@ sub_20		proc	near
 		push	ax
 		push	di
 		push	si
-		call	sub_21
+		call	vga_operation1
 		pop	si
 		pop	di
 		add	si,offset data_11
@@ -2184,7 +2180,7 @@ sub_20		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_21:
+vga_operation1:
 		cmp	ax,14h
 		jae	loc_94			; Jump if above or =
 		mov	cx,2Fh
@@ -2207,7 +2203,7 @@ loc_96:
 		and	byte ptr es:[di],3
 		or	es:[di],al
 		retn
-sub_20		endp
+vga_operation0		endp
 
 			                        ;* No entry point to code
 		push	ds
@@ -2230,12 +2226,12 @@ locloop_97:
 		neg	ax
 		add	ax,39h
 		add	ax,ax
-		call	sub_22
+		call	vga_operation2
 		pop	ax
 		push	ax
 		add	ax,ax
 		dec	ax
-		call	sub_22
+		call	vga_operation2
 loc_98:
 		cmp	byte ptr cs:data_39e,4
 		jb	loc_98			; Jump if below
@@ -2249,7 +2245,7 @@ loc_98:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_22		proc	near
+vga_operation2		proc	near
 		push	ax
 		mov	bl,al
 		mov	al,2Fh			; '/'
@@ -2267,7 +2263,7 @@ sub_22		proc	near
 		push	ax
 		push	di
 		push	si
-		call	sub_23
+		call	vga_operation3
 		pop	si
 		pop	di
 		add	si,14EEh
@@ -2277,7 +2273,7 @@ sub_22		proc	near
 		push	ax
 		push	di
 		push	si
-		call	sub_23
+		call	vga_operation3
 		pop	si
 		pop	di
 		add	si,offset data_11
@@ -2287,7 +2283,7 @@ sub_22		proc	near
 
 ;ﬂﬂﬂﬂ External Entry into Subroutine ﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂﬂ
 
-sub_23:
+vga_operation3:
 		cmp	ax,5Eh
 		mov	cx,2Fh
 		jnc	loc_99			; Jump if carry=0
@@ -2298,7 +2294,7 @@ loc_99:
 		xor	al,al			; Zero register
 		rep	stosb			; Rep when cx >0 Store al to es:[di]
 		retn
-sub_22		endp
+vga_operation2		endp
 
 			                        ;* No entry point to code
 		push	ax
@@ -2329,7 +2325,7 @@ locloop_100:
 ;                              SUBROUTINE
 ;‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹‹
 
-sub_24		proc	near
+vga_operation4		proc	near
 loc_101:
 		pushf				; Push flags
 		cli				; Disable interrupts
@@ -2362,7 +2358,7 @@ locloop_102:
 		out	dx,al			; port 3C0h, EGA attributes
 		popf				; Pop flags
 		retn
-sub_24		endp
+vga_operation4		endp
 
 		db	 00h, 03h, 09h, 3Fh, 00h, 1Bh
 		db	 36h, 3Fh, 38h, 07h, 24h, 2Dh
