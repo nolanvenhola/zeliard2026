@@ -28,18 +28,18 @@ class ZeliardGrpViewer:
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
 
     def setup_ui(self):
-        # 전체 툴바 컨테이너 (세로 방향 pack)
+        # Main toolbar container (vertical pack)
         self.main_toolbar = tk.Frame(self.root, padx=5, pady=5, relief=tk.RAISED, bd=1)
         self.main_toolbar.pack(side=tk.TOP, fill=tk.X)
 
-        # 첫 번째 줄 (파일, 파일정보)
+        # First row (file, file info)
         self.row1 = tk.Frame(self.main_toolbar)
         self.row1.pack(side=tk.TOP, fill=tk.X, pady=2)
 
         self.file_module = file_logic.FileModule(self.row1, self.load_file, self.save_file)
         self.info_module = info_logic.InfoModule(self.row1)
 
-        # 두 번째 줄 (오프셋, 편집, 보기)
+        # Second row (offset, edit, view)
         self.row2 = tk.Frame(self.main_toolbar)
         self.row2.pack(side=tk.TOP, fill=tk.X, pady=2)
 
@@ -47,11 +47,11 @@ class ZeliardGrpViewer:
         self.edit_module = edit_logic.EditModule(self.row2, self.undo, self.redo, self.add_empty_tile)
         self.view_module = view_logic.ViewModule(self.row2, self.render)
 
-        # 패널 드래그앤드롭 등록
+        # Register panels for drag and drop
         for mod in [self.file_module, self.info_module, self.offset_module, self.edit_module, self.view_module]:
             self.register_panel(mod.frame)
 
-        # 캔버스 및 스크롤바
+        # Canvas and scrollbars
         container = tk.Frame(self.root)
         container.pack(fill=tk.BOTH, expand=True)
 
@@ -81,7 +81,7 @@ class ZeliardGrpViewer:
 
     def on_p_drag_move(self, event, frame):
         idx = self.panels.index(frame)
-        # 같은 줄 안에서만 이동하도록 구현하거나, 줄을 무시하고 전체 순서만 바꿈
+        # Move within same row only, or swap overall order ignoring rows
         if event.x > 30 and idx < len(self.panels) - 1:
             self.swap_panels(idx, idx + 1)
         elif event.x < -30 and idx > 0:
@@ -89,16 +89,16 @@ class ZeliardGrpViewer:
 
     def swap_panels(self, i, j):
         self.panels[i], self.panels[j] = self.panels[j], self.panels[i]
-        # 모든 패널을 다 떼었다가 1단/2단 구조에 맞춰 재배치
+        # Detach all panels then rearrange into 2-row layout
         for p in self.panels: p.pack_forget()
 
-        # 현재 로직: 1~2번 패널은 row1에, 3~5번 패널은 row2에 재배치
+        # Panels 0-1 go in row1, panels 2-4 go in row2
         for idx, p in enumerate(self.panels):
             target_row = self.row1 if idx < 2 else self.row2
-            p.master = target_row  # 마스터 변경 (필요시)
+            p.master = target_row  # Update master frame if needed
             p.pack(side=tk.LEFT, padx=10)
 
-    # ... (나머지 process_data_to_tiles, render, on_click 등 함수는 이전과 동일)
+    # ... (remaining functions: process_data_to_tiles, render, on_click etc.)
 
     def process_data_to_tiles(self):
         if not self.raw_data: return
@@ -214,7 +214,7 @@ class ZeliardGrpViewer:
         self.root.bind("<Control-y>", lambda e: self.redo())
 
     def on_closing(self):
-        if self.is_modified and not messagebox.askyesno("종료", "수정된 내용들이(들) 있습니다. 저장 없이 종료할까요?"): return
+        if self.is_modified and not messagebox.askyesno("Quit", "There are unsaved changes. Quit without saving?"): return
         self.root.destroy()
 
 
