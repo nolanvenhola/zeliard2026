@@ -103,13 +103,13 @@ static const char *STR_0x171e = "ô»CëeCä\\DgCDFdCäfCäDhCGI"; // [ibm037]
 static const char *STR_0x191e = "Cavern of Tesoro"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_34 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr3_34(int16_t arg3)
 {
     int16_t in_AX;
     char in_CL;

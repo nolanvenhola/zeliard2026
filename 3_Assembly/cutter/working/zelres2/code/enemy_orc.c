@@ -10,12 +10,12 @@ static const char *STR_0x36e = "Brave Knight, you look fatigued from battle. Why
 static const char *STR_0x3ce = "/May God go with you."; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_14 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr2_14(int16_t arg3)
 {
     char cVar1;
     char in_AL;
@@ -43,19 +43,19 @@ void fcn.00000000(int16_t arg3)
     uStack0006 = 0x47;
     (**(code **)0x2010)();
     uStack0008 = 0x4a;
-    fcn.00000156();
+    orc_func_1();
     arg3_00 = 0xd60;
     uStack000a = 0x57;
     (**(code **)0x2000)();
     uStack000c = 0x5a;
-    fcn.0000028c();
+    orc_process_loop();
     *(undefined2 *)0xff4c = 0xa2a6;
     while( true ) {
         uStack000e = 99;
         cVar1 = (**(code **)0x6004)();
         if (cVar1 == -1) break;
         uStack000c = 0x6a;
-        fcn.00000071(arg3_00);
+        orc_func_3(arg3_00);
     }
     // WARNING: Could not recover jumptable at 0x0000006c. Too many branches
     // WARNING: Treating indirect jump as call
@@ -64,11 +64,11 @@ void fcn.00000000(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x156: fcn.00000156 */
+/* 0x156: orc_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00000156(void)
+void orc_func_1(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -94,11 +94,11 @@ void fcn.00000156(void)
 }
 
 /* ====================================================================== */
-/* 0x28c: fcn.0000028c */
+/* 0x28c: orc_process_loop */
 /* ====================================================================== */
 
 
-void fcn.0000028c(void)
+void orc_process_loop(void)
 {
     undefined2 unaff_DS;
     
@@ -109,12 +109,12 @@ void fcn.0000028c(void)
 }
 
 /* ====================================================================== */
-/* 0x71: fcn.00000071 */
+/* 0x71: orc_func_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000071(int16_t arg3)
+void orc_func_3(int16_t arg3)
 {
     uint8_t in_AL;
     
@@ -125,11 +125,11 @@ void fcn.00000071(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x1db: fcn.000001db */
+/* 0x1db: orc_func_5 */
 /* ====================================================================== */
 
 
-void fcn.000001db(void)
+void orc_func_5(void)
 {
     char *pcVar1;
     int16_t iVar2;

@@ -5,22 +5,22 @@
 static const char *STR_0x467 = "{¡¡uuaB{"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_03 */
 /* ====================================================================== */
 
 
-void fcn.00000000(void)
+void zr1_03(void)
 {
     return;
 }
 
 /* ====================================================================== */
-/* 0x1b8c: fcn.00001b8c */
+/* 0x1b8c: imgdec_func_1 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00001b8c(int16_t arg4, int16_t arg1)
+int16_t imgdec_func_1(int16_t arg4, int16_t arg1)
 {
     uint16_t uVar1;
     uint16_t uVar2;
@@ -58,12 +58,12 @@ int16_t fcn.00001b8c(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x1c30: fcn.00001c30 */
+/* 0x1c30: imgdec_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00001c30(int16_t arg3)
+int16_t imgdec_process_loop(int16_t arg3)
 {
     uint16_t uVar1;
     uint8_t uVar3;
@@ -77,12 +77,12 @@ int16_t fcn.00001c30(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x177: fcn.00000177 */
+/* 0x177: imgdec_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined fcn.00000177(int16_t arg4, int16_t arg3)
+undefined imgdec_process_loop_2(int16_t arg4, int16_t arg3)
 {
     char cVar1;
     undefined uVar4;
@@ -136,12 +136,12 @@ undefined fcn.00000177(int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x323: fcn.00000323 */
+/* 0x323: copy_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000323(int16_t arg3)
+void copy_buffer(int16_t arg3)
 {
     int16_t iVar1;
     
@@ -153,12 +153,12 @@ void fcn.00000323(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x3b9: fcn.000003b9 */
+/* 0x3b9: copy_buffer_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000003b9(int16_t arg3, int16_t arg1)
+void copy_buffer_2(int16_t arg3, int16_t arg1)
 {
     uint16_t *puVar1;
     uint16_t *puVar2;
@@ -183,12 +183,12 @@ void fcn.000003b9(int16_t arg3, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x5a1: fcn.000005a1 */
+/* 0x5a1: imgdec_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005a1(int16_t arg4)
+void imgdec_multiply(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -221,12 +221,12 @@ void fcn.000005a1(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x5f1: fcn.000005f1 */
+/* 0x5f1: imgdec_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005f1(int16_t arg4, int16_t arg1)
+void imgdec_process_loop_3(int16_t arg4, int16_t arg1)
 {
     int16_t arg1_00;
     char cVar1;
@@ -244,10 +244,10 @@ void fcn.000005f1(int16_t arg4, int16_t arg1)
     arg3 = arg1_00;
     do {
         uVar2 = uVar2 >> 8;
-        uVar4 = fcn.0000062a(uVar2, arg3, arg1_00, in_DX);
+        uVar4 = imgdec_func_9(uVar2, arg3, arg1_00, in_DX);
         uVar3 = unaff_DI + 0x2000;
         if (0x5fff < uVar3) {
-            uVar4 = fcn.0000062a(uVar2, arg3, (int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+            uVar4 = imgdec_func_9(uVar2, arg3, (int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
             uVar3 = unaff_DI + 0xc05a;
         }
         in_DX = (int16_t)((uint32_t)uVar4 >> 0x10);
@@ -260,12 +260,12 @@ void fcn.000005f1(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x5c2: fcn.000005c2 */
+/* 0x5c2: imgdec_multiply_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005c2(int16_t arg4)
+void imgdec_multiply_2(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -311,12 +311,12 @@ void fcn.000005c2(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x62a: fcn.0000062a */
+/* 0x62a: imgdec_func_9 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000062a(int16_t arg4, int16_t arg3, int16_t arg1, int16_t arg2)
+void imgdec_func_9(int16_t arg4, int16_t arg3, int16_t arg1, int16_t arg2)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -332,7 +332,7 @@ void fcn.0000062a(int16_t arg4, int16_t arg3, int16_t arg1, int16_t arg2)
         puVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
         *(uint16_t *)0x4c54 = (uint16_t)*puVar1;
-        uVar2 = fcn.00001b8c(arg4_00, *(uint16_t *)0x4c54);
+        uVar2 = imgdec_func_1(arg4_00, *(uint16_t *)0x4c54);
         *unaff_DI = *unaff_DI | uVar2;
         unaff_DI = unaff_DI + 1;
         arg4_00 = arg4_00 + -1;
@@ -342,12 +342,12 @@ void fcn.0000062a(int16_t arg4, int16_t arg3, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x722: fcn.00000722 */
+/* 0x722: imgdec_multiply_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000722(int16_t arg1, int16_t arg4, int16_t arg3)
+void imgdec_multiply_3(int16_t arg1, int16_t arg4, int16_t arg3)
 {
     undefined2 uVar1;
     uint16_t uVar2;
@@ -387,12 +387,12 @@ void fcn.00000722(int16_t arg1, int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x99b: fcn.0000099b */
+/* 0x99b: fill_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000099b(int16_t arg1)
+void fill_buffer(int16_t arg1)
 {
     int16_t iVar1;
     uint8_t uVar2;
@@ -433,12 +433,12 @@ void fcn.0000099b(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xc9a: fcn.00000c9a */
+/* 0xc9a: clear_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000c9a(int16_t arg3, int16_t arg1)
+void clear_buffer(int16_t arg3, int16_t arg1)
 {
     undefined *puVar1;
     undefined2 *puVar2;
@@ -453,7 +453,7 @@ void fcn.00000c9a(int16_t arg3, int16_t arg1)
     undefined2 unaff_DS;
     undefined2 in_stack_00000000;
     
-    puVar4 = (undefined2 *)fcn.00001c30(CONCAT11(4, *(uint8_t *)0x4c5d + 0x10));
+    puVar4 = (undefined2 *)imgdec_process_loop(CONCAT11(4, *(uint8_t *)0x4c5d + 0x10));
     uVar6 = (uint8_t)in_stack_00000000;
     if ((*(uint8_t *)0x4c5d < uVar6) || ((uint8_t)(uVar6 + *(char *)0x4c60) <= *(uint8_t *)0x4c5d)) {
         puVar8 = puVar4;
@@ -504,11 +504,11 @@ void fcn.00000c9a(int16_t arg3, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xdb8: fcn.00000db8 */
+/* 0xdb8: imgdec_get_value */
 /* ====================================================================== */
 
 
-void fcn.00000db8(void)
+void imgdec_get_value(void)
 {
     uint8_t *puVar1;
     int16_t iVar2;
@@ -518,7 +518,7 @@ void fcn.00000db8(void)
     undefined2 unaff_ES;
     int16_t in_stack_00000000;
     
-    fcn.00000e46();
+    imgdec_scan_loop();
     *unaff_DI = *unaff_DI | 0x3f;
     puVar3 = unaff_DI + 1;
     for (iVar2 = in_BX + -2; iVar2 != 0; iVar2 = iVar2 + -1) {
@@ -530,7 +530,7 @@ void fcn.00000db8(void)
     if ((uint8_t *)(in_stack_00000000 + 0x2000) < (uint8_t *)0x6000) {
         return;
     }
-    fcn.00000e46();
+    imgdec_scan_loop();
     puVar1 = (uint8_t *)(in_stack_00000000 + 0x2000);
     *puVar1 = *puVar1 | 0x3f;
     puVar3 = (uint8_t *)(in_stack_00000000 + 0x2001);
@@ -544,11 +544,11 @@ void fcn.00000db8(void)
 }
 
 /* ====================================================================== */
-/* 0xe46: fcn.00000e46 */
+/* 0xe46: imgdec_scan_loop */
 /* ====================================================================== */
 
 
-void fcn.00000e46(void)
+void imgdec_scan_loop(void)
 {
     int16_t unaff_DI;
     undefined2 unaff_ES;
@@ -558,12 +558,12 @@ void fcn.00000e46(void)
 }
 
 /* ====================================================================== */
-/* 0xdf0: fcn.00000df0 */
+/* 0xdf0: imgdec_scan_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000df0(int16_t arg4)
+void imgdec_scan_loop_2(int16_t arg4)
 {
     uint8_t *puVar1;
     int16_t iVar2;
@@ -574,7 +574,7 @@ void fcn.00000df0(int16_t arg4)
     int16_t in_stack_00000000;
     
     do {
-        fcn.00000e46(unaff_DI);
+        imgdec_scan_loop(unaff_DI);
         *unaff_DI = *unaff_DI | 0x30;
         *unaff_DI = *unaff_DI & 0xf0;
         for (iVar2 = in_BX + -2; unaff_DI = unaff_DI + 1, iVar2 != 0; iVar2 = iVar2 + -1) {
@@ -585,7 +585,7 @@ void fcn.00000df0(int16_t arg4)
         *(char *)0x4c5d = *(char *)0x4c5d + '\x01';
         unaff_DI = (uint8_t *)(arg4 + 0x2000);
         if ((uint8_t *)0x5fff < unaff_DI) {
-            fcn.00000e46(unaff_DI);
+            imgdec_scan_loop(unaff_DI);
             *unaff_DI = *unaff_DI | 0x30;
             *unaff_DI = *unaff_DI & 0xf0;
             puVar3 = (uint8_t *)(arg4 + 0x2001);
@@ -604,11 +604,11 @@ void fcn.00000df0(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x100f: fcn.0000100f */
+/* 0x100f: imgdec_process_loop_4 */
 /* ====================================================================== */
 
 
-void fcn.0000100f(int16_t param_1, undefined2 param_2, int16_t param_3)
+void imgdec_process_loop_4(int16_t param_1, undefined2 param_2, int16_t param_3)
 {
     int16_t iVar1;
     int16_t unaff_DI;
@@ -616,7 +616,7 @@ void fcn.0000100f(int16_t param_1, undefined2 param_2, int16_t param_3)
     undefined *puVar3;
     undefined2 unaff_ES;
     
-    fcn.00001094();
+    fill_buffer_2();
     puVar2 = (undefined *)(unaff_DI + 0x36);
     iVar1 = 0x5b;
     do {
@@ -625,8 +625,8 @@ void fcn.0000100f(int16_t param_1, undefined2 param_2, int16_t param_3)
         puVar2 = puVar2 + 0x50;
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
-    fcn.00001094();
-    fcn.00001094();
+    fill_buffer_2();
+    fill_buffer_2();
     iVar1 = 0x2d;
     puVar2 = (undefined *)(param_1 + 0x2ab6);
     do {
@@ -640,8 +640,8 @@ void fcn.0000100f(int16_t param_1, undefined2 param_2, int16_t param_3)
     } while (iVar1 != 0);
     puVar3[0xa0] = 0xb0;
     puVar3[0xb9] = 0xe;
-    fcn.00001094();
-    fcn.00001094();
+    fill_buffer_2();
+    fill_buffer_2();
     puVar2 = (undefined *)(param_3 + 0x2ab6);
     iVar1 = 0x5b;
     do {
@@ -650,16 +650,16 @@ void fcn.0000100f(int16_t param_1, undefined2 param_2, int16_t param_3)
         puVar2 = puVar2 + 0x50;
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
-    fcn.00001094();
+    fill_buffer_2();
     return;
 }
 
 /* ====================================================================== */
-/* 0x1094: fcn.00001094 */
+/* 0x1094: fill_buffer_2 */
 /* ====================================================================== */
 
 
-void fcn.00001094(void)
+void fill_buffer_2(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -681,12 +681,12 @@ void fcn.00001094(void)
 }
 
 /* ====================================================================== */
-/* 0xf76: fcn.00000f76 */
+/* 0xf76: imgdec_multiply_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f76(int16_t arg1, int16_t arg2)
+void imgdec_multiply_4(int16_t arg1, int16_t arg2)
 {
     int16_t *piVar1;
     int16_t *piVar2;
@@ -711,7 +711,7 @@ void fcn.00000f76(int16_t arg1, int16_t arg2)
         *(uint16_t *)0x4c58 = (uint16_t)puVar6[0x5500];
         *(uint16_t *)0x4c56 = (uint16_t)puVar6[0x2a80];
         *(uint16_t *)0x4c54 = (uint16_t)*puVar6;
-        uVar3 = fcn.00001b8c(iVar5, *(uint16_t *)0x4c54);
+        uVar3 = imgdec_func_1(iVar5, *(uint16_t *)0x4c54);
         *puVar8 = uVar3;
         if ((undefined *)0x5fff < puVar8 + 0x2000) {
             puVar8[0x2000] = uVar3;
@@ -729,7 +729,7 @@ void fcn.00000f76(int16_t arg1, int16_t arg2)
         *(int16_t *)0x4c58 = piVar7[0x2a80];
         *(int16_t *)0x4c56 = piVar7[0x1540];
         *(int16_t *)0x4c54 = *piVar7;
-        uVar4 = fcn.00001b8c(iVar5, *(int16_t *)0x4c54);
+        uVar4 = imgdec_func_1(iVar5, *(int16_t *)0x4c54);
         *puVar9 = uVar4;
         if ((undefined2 *)0x5fff < puVar9 + 0x1000) {
             puVar9[0x1000] = uVar4;
@@ -747,7 +747,7 @@ void fcn.00000f76(int16_t arg1, int16_t arg2)
         piVar1 = piVar7;
         piVar7 = (int16_t *)((int16_t)piVar7 + 1);
         *(uint16_t *)0x4c54 = (uint16_t)*(uint8_t *)piVar1;
-        uVar3 = fcn.00001b8c(iVar5, *(uint16_t *)0x4c54);
+        uVar3 = imgdec_func_1(iVar5, *(uint16_t *)0x4c54);
         *(undefined *)puVar10 = uVar3;
         if ((undefined2 *)0x5fff < puVar10 + 0x1000) {
             *(undefined *)(puVar10 + 0x1000) = uVar3;
@@ -759,12 +759,12 @@ void fcn.00000f76(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xf43: fcn.00000f43 */
+/* 0xf43: imgdec_multiply_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f43(int16_t arg2)
+void imgdec_multiply_5(int16_t arg2)
 {
     int16_t *piVar1;
     undefined2 uVar2;
@@ -782,7 +782,7 @@ void fcn.00000f43(int16_t arg2)
         piVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
         *(int16_t *)0x4c54 = *piVar1;
-        uVar2 = fcn.00001b8c(arg4, *(int16_t *)0x4c54);
+        uVar2 = imgdec_func_1(arg4, *(int16_t *)0x4c54);
         *unaff_DI = uVar2;
         if ((undefined2 *)0x5fff < unaff_DI + 0x1000) {
             unaff_DI[0x1000] = uVar2;
@@ -794,12 +794,12 @@ void fcn.00000f43(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x10de: fcn.000010de */
+/* 0x10de: imgdec_process_loop_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000010de(int16_t arg1)
+void imgdec_process_loop_5(int16_t arg1)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -813,7 +813,7 @@ void fcn.000010de(int16_t arg1)
     uint16_t in_stack_00000000;
     
     puVar3 = (uint8_t *)((arg1 & 0xffU) * 0x2f + *(int16_t *)0x4c62);
-    puVar4 = (uint8_t *)fcn.00001c30(arg1 & 0xff);
+    puVar4 = (uint8_t *)imgdec_process_loop(arg1 & 0xff);
     if (in_stack_00000000 < 0x14) {
         iVar5 = 0x2f;
     } else {
@@ -828,7 +828,7 @@ void fcn.000010de(int16_t arg1)
                     *(uint16_t *)0x4c58 = (uint16_t)puVar6[0x29dc];
                     *(uint16_t *)0x4c56 = (uint16_t)puVar6[0x14ee];
                     *(uint16_t *)0x4c54 = (uint16_t)*puVar6;
-                    uVar2 = fcn.00001b8c(iVar5, *(uint16_t *)0x4c54);
+                    uVar2 = imgdec_func_1(iVar5, *(uint16_t *)0x4c54);
                     puVar4 = puVar7 + 1;
                     *puVar7 = uVar2;
                     if ((uint8_t *)0x5fff < puVar7 + 0x2000) {
@@ -840,7 +840,7 @@ void fcn.000010de(int16_t arg1)
                 *(uint16_t *)0x4c58 = (uint16_t)puVar6[0x29dd];
                 *(uint16_t *)0x4c56 = (uint16_t)puVar6[0x14ef];
                 *(uint16_t *)0x4c54 = (uint16_t)puVar6[1];
-                uVar2 = fcn.00001b8c(0, *(uint16_t *)0x4c54);
+                uVar2 = imgdec_func_1(0, *(uint16_t *)0x4c54);
                 *puVar4 = *puVar4 & 3;
                 *puVar4 = *puVar4 | uVar2 & 0xfc;
                 puVar7 = puVar7 + 0x2000;
@@ -861,7 +861,7 @@ void fcn.000010de(int16_t arg1)
         puVar1 = puVar3;
         puVar3 = puVar3 + 1;
         *(uint16_t *)0x4c54 = (uint16_t)*puVar1;
-        uVar2 = fcn.00001b8c(iVar5, *(uint16_t *)0x4c54);
+        uVar2 = imgdec_func_1(iVar5, *(uint16_t *)0x4c54);
         *puVar4 = uVar2;
         if ((uint8_t *)0x5fff < puVar4 + 0x2000) {
             puVar4[0x2000] = uVar2;
@@ -873,12 +873,12 @@ void fcn.000010de(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x11e8: fcn.000011e8 */
+/* 0x11e8: math_calc */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000011e8(int16_t arg1)
+void math_calc(int16_t arg1)
 {
     int16_t *piVar1;
     undefined2 *puVar2;
@@ -893,7 +893,7 @@ void fcn.000011e8(int16_t arg1)
     uint16_t in_stack_00000000;
     
     piVar3 = (int16_t *)((arg1 & 0xffU) * 0x2f + 0x3cd + *(int16_t *)0x4c62);
-    iVar4 = fcn.00001c30((uint16_t)(uint8_t)((char)arg1 + 0x14));
+    iVar4 = imgdec_process_loop((uint16_t)(uint8_t)((char)arg1 + 0x14));
     puVar7 = (undefined2 *)(iVar4 + 0x21);
     iVar6 = 0x2f;
     puVar8 = puVar7;
@@ -907,7 +907,7 @@ void fcn.000011e8(int16_t arg1)
             piVar1 = piVar3;
             piVar3 = piVar3 + 1;
             *(int16_t *)0x4c54 = *piVar1;
-            uVar5 = fcn.00001b8c(iVar4, *(int16_t *)0x4c54);
+            uVar5 = imgdec_func_1(iVar4, *(int16_t *)0x4c54);
             puVar7 = puVar8 + 1;
             *puVar8 = uVar5;
             if ((undefined2 *)0x5fff < puVar8 + 0x1000) {

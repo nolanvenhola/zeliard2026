@@ -56,12 +56,12 @@ static const char *STR_0xdd6 = "Titanium"; // [ascii]
 static const char *STR_0xddf = "      Shield"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_01 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg1)
+void zr2_01(int16_t arg1)
 {
     char *pcVar1;
     char *pcVar2;
@@ -97,7 +97,7 @@ void fcn.00000000(int16_t arg1)
         arg1_00 = (**(code **)0x2000)(iVar7);
         iVar5 = iVar5 + -1;
     } while (iVar5 != 0);
-    fcn.000009d9(arg1_00);
+    combat_func_1(arg1_00);
     pcVar8 = (char *)0xbb;
     pcVar9 = (char *)0xae03;
     arg1._0_1_ = '\0';
@@ -136,17 +136,17 @@ void fcn.00000000(int16_t arg1)
     }
     arg4 = (uint16_t)uVar3;
     *(uint8_t *)0xadfc = uVar3;
-    iVar7 = fcn.00000647();
+    iVar7 = combat_func_2();
     uStack0002 = 0x7f;
-    iVar7 = fcn.000008b3(arg4, iVar7);
+    iVar7 = combat_func_3(arg4, iVar7);
     uStack0004 = 0x82;
-    iVar7 = fcn.000006d5(arg4, iVar7);
+    iVar7 = combat_func_4(arg4, iVar7);
     uStack0006 = 0x85;
-    fcn.0000066d(arg4, iVar7);
+    combat_func_5(arg4, iVar7);
     uStack0008 = 0x88;
-    fcn.00000756();
+    combat_func_7();
     uStack000a = 0x8b;
-    fcn.00000a5c();
+    combat_func_8();
     *(char *)0xae01 = -(char)arg1;
     uVar4 = 0;
     if ((*(char *)0xadfa == '\0') && (uVar4 = 1, *(char *)0xadfc == '\0')) {
@@ -158,7 +158,7 @@ void fcn.00000000(int16_t arg1)
         }
         do {
             uStack000c = 0xb5;
-            fcn.00000a5c();
+            combat_func_8();
         } while (!(bool)uVar10);
         return;
     }
@@ -171,12 +171,12 @@ code_r0x000000b8:
 }
 
 /* ====================================================================== */
-/* 0x9d9: fcn.000009d9 */
+/* 0x9d9: combat_func_1 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000009d9(int16_t arg1)
+void combat_func_1(int16_t arg1)
 {
     undefined uVar1;
     int16_t *piVar2;
@@ -198,18 +198,18 @@ void fcn.000009d9(int16_t arg1)
         if (*(char *)0xadf9 == (char)('\x04' - (char)iVar4)) {
             arg1_00 = CONCAT11(2, uVar1);
         }
-        fcn.00000a2f(*piVar2, CONCAT11((char)((uint16_t)iVar4 >> 8), uVar1), arg1_00);
+        combat_func_6(*piVar2, CONCAT11((char)((uint16_t)iVar4 >> 8), uVar1), arg1_00);
         iVar4 = in_stack_00000000 + -1;
     } while (iVar4 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0x647: fcn.00000647 */
+/* 0x647: combat_func_2 */
 /* ====================================================================== */
 
 
-void fcn.00000647(void)
+void combat_func_2(void)
 {
     char *pcVar1;
     char *pcVar2;
@@ -244,12 +244,12 @@ void fcn.00000647(void)
 }
 
 /* ====================================================================== */
-/* 0x8b3: fcn.000008b3 */
+/* 0x8b3: combat_func_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000008b3(int16_t arg4, int16_t arg1)
+void combat_func_3(int16_t arg4, int16_t arg1)
 {
     char *pcVar1;
     int16_t arg1_00;
@@ -309,12 +309,12 @@ void fcn.000008b3(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x6d5: fcn.000006d5 */
+/* 0x6d5: combat_func_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000006d5(int16_t arg4, int16_t arg1)
+void combat_func_4(int16_t arg4, int16_t arg1)
 {
     char *pcVar1;
     undefined uVar2;
@@ -357,7 +357,7 @@ void fcn.000006d5(int16_t arg4, int16_t arg1)
         uVar8 = (undefined)((uint16_t)uVar5 * 0x500 + 0xe53 >> 8);
         uVar2 = (**(code **)0x202e)();
         pcVar11 = *(char **)((uint16_t)*(uint8_t *)0x9e * 2 + -0x550d);
-        fcn.00000a2f(0x5c, CONCAT11(uVar8, 0x43), CONCAT11(1, uVar2));
+        combat_func_6(0x5c, CONCAT11(uVar8, 0x43), CONCAT11(1, uVar2));
         iVar10 = 0x5c;
         uVar7 = 0x4b;
         uVar3 = 0x100;
@@ -378,12 +378,12 @@ void fcn.000006d5(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x66d: fcn.0000066d */
+/* 0x66d: combat_func_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000066d(int16_t arg4, int16_t arg1)
+void combat_func_5(int16_t arg4, int16_t arg1)
 {
     char *pcVar1;
     char cVar3;
@@ -438,12 +438,12 @@ void fcn.0000066d(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xa2f: fcn.00000a2f */
+/* 0xa2f: combat_func_6 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000a2f(int16_t arg3, int16_t arg4, int16_t arg1)
+void combat_func_6(int16_t arg3, int16_t arg4, int16_t arg1)
 {
     char *pcVar1;
     char cVar2;
@@ -466,11 +466,11 @@ void fcn.00000a2f(int16_t arg3, int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x756: fcn.00000756 */
+/* 0x756: combat_func_7 */
 /* ====================================================================== */
 
 
-void fcn.00000756(void)
+void combat_func_7(void)
 {
     char *pcVar1;
     int16_t iVar2;
@@ -520,7 +520,7 @@ void fcn.00000756(void)
 }
 
 /* ====================================================================== */
-/* 0xa5c: fcn.00000a5c */
+/* 0xa5c: combat_func_8 */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x00000a7c: Changing call to branch
@@ -528,7 +528,7 @@ void fcn.00000756(void)
 // WARNING: Removing unreachable block (ram,0x00000a83)
 // WARNING: Removing unreachable block (ram,0x00000a82)
 
-void fcn.00000a5c(void)
+void combat_func_8(void)
 {
     undefined2 unaff_DS;
     
@@ -544,11 +544,11 @@ void fcn.00000a5c(void)
 }
 
 /* ====================================================================== */
-/* 0x110: fcn.00000110 */
+/* 0x110: combat_func_9 */
 /* ====================================================================== */
 
 
-void fcn.00000110(void)
+void combat_func_9(void)
 {
     code *pcVar1;
     uint8_t uVar2;
@@ -563,10 +563,10 @@ void fcn.00000110(void)
     uVar4 = CONCAT22(in_DX, in_AX);
     do {
         *(undefined *)0xff75 = 0xc;
-        fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+        combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
 code_r0x000000dc:
         do {
-            fcn.00000a5c();
+            combat_func_8();
             if ((bool)in_CF) {
                 return;
             }
@@ -583,7 +583,7 @@ code_r0x000000dc:
             }
             *(undefined *)0xff75 = 0xd;
             *(undefined *)0xadf9 = uVar3;
-            fcn.0000017f(in_BX);
+            combat_func_10(in_BX);
     // WARNING: Could not recover jumptable at 0x000000c4. Too many branches
     // WARNING: Treating indirect jump as call
             (**(code **)((uint16_t)*(uint8_t *)0xadf9 * 2 + -0x5f3c))();
@@ -593,30 +593,30 @@ code_r0x000000dc:
             in_CF = 0;
             if (*(char *)0xadfb != '\0') {
                 in_CF = 0;
-                fcn.0000017f(in_BX);
+                combat_func_10(in_BX);
                 *(char *)0xadfb = *(char *)0xadfb + -1;
-                uVar4 = fcn.0000017f(in_BX);
+                uVar4 = combat_func_10(in_BX);
                 *(undefined *)0xff75 = 0xc;
-                fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+                combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
             }
             goto code_r0x000000dc;
         }
         in_CF = (uint8_t)(*(char *)0xadfa - 1U) < (uint8_t)(*(char *)0xadfb + 1U);
         if ((bool)in_CF) goto code_r0x000000dc;
         in_CF = 0;
-        fcn.0000017f(in_BX);
+        combat_func_10(in_BX);
         *(char *)0xadfb = *(char *)0xadfb + '\x01';
-        uVar4 = fcn.0000017f(in_BX);
+        uVar4 = combat_func_10(in_BX);
     } while( true );
 }
 
 /* ====================================================================== */
-/* 0x17f: fcn.0000017f */
+/* 0x17f: combat_func_10 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000017f(int16_t arg3)
+void combat_func_10(int16_t arg3)
 {
     // WARNING: Could not recover jumptable at 0x0000018f. Too many branches
     // WARNING: Treating indirect jump as call
@@ -625,12 +625,12 @@ void fcn.0000017f(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x139: fcn.00000139 */
+/* 0x139: combat_func_11 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000139(int16_t arg1, int16_t arg2)
+void combat_func_11(int16_t arg1, int16_t arg2)
 {
     code *pcVar1;
     undefined uVar2;
@@ -643,7 +643,7 @@ void fcn.00000139(int16_t arg1, int16_t arg2)
     *(undefined *)0x9d = *(undefined *)(uint32_t)(*(uint8_t *)0xadfb + 0xae03);
     uVar4 = 0x10;
     uVar2 = (**(code **)0x2000)();
-    fcn.00000a2f(0x9e, CONCAT11(uVar4, 0x12), CONCAT11(1, uVar2));
+    combat_func_6(0x9e, CONCAT11(uVar4, 0x12), CONCAT11(1, uVar2));
     uStack0002 = 0x173;
     (**(code **)0x201e)();
     uStack0004 = 0x178;
@@ -656,12 +656,12 @@ void fcn.00000139(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xbc: fcn.000000bc */
+/* 0xbc: combat_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000000bc(int16_t arg3)
+void combat_process_loop(int16_t arg3)
 {
     undefined2 unaff_DS;
     
@@ -672,11 +672,11 @@ void fcn.000000bc(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x112: fcn.00000112 */
+/* 0x112: combat_process_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.00000110(void)
+void combat_func_9(void)
 {
     code *pcVar1;
     uint8_t uVar2;
@@ -691,10 +691,10 @@ void fcn.00000110(void)
     uVar4 = CONCAT22(in_DX, in_AX);
     do {
         *(undefined *)0xff75 = 0xc;
-        fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+        combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
 code_r0x000000dc:
         do {
-            fcn.00000a5c();
+            combat_func_8();
             if ((bool)in_CF) {
                 return;
             }
@@ -711,7 +711,7 @@ code_r0x000000dc:
             }
             *(undefined *)0xff75 = 0xd;
             *(undefined *)0xadf9 = uVar3;
-            fcn.0000017f(in_BX);
+            combat_func_10(in_BX);
     // WARNING: Could not recover jumptable at 0x000000c4. Too many branches
     // WARNING: Treating indirect jump as call
             (**(code **)((uint16_t)*(uint8_t *)0xadf9 * 2 + -0x5f3c))();
@@ -721,20 +721,20 @@ code_r0x000000dc:
             in_CF = 0;
             if (*(char *)0xadfb != '\0') {
                 in_CF = 0;
-                fcn.0000017f(in_BX);
+                combat_func_10(in_BX);
                 *(char *)0xadfb = *(char *)0xadfb + -1;
-                uVar4 = fcn.0000017f(in_BX);
+                uVar4 = combat_func_10(in_BX);
                 *(undefined *)0xff75 = 0xc;
-                fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+                combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
             }
             goto code_r0x000000dc;
         }
         in_CF = (uint8_t)(*(char *)0xadfa - 1U) < (uint8_t)(*(char *)0xadfb + 1U);
         if ((bool)in_CF) goto code_r0x000000dc;
         in_CF = 0;
-        fcn.0000017f(in_BX);
+        combat_func_10(in_BX);
         *(char *)0xadfb = *(char *)0xadfb + '\x01';
-        uVar4 = fcn.0000017f(in_BX);
+        uVar4 = combat_func_10(in_BX);
     } while( true );
 }
 
@@ -746,7 +746,7 @@ code_r0x000000dc:
 // 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000112(int16_t arg1, int16_t arg2, int16_t arg3)
+void combat_process_loop_2(int16_t arg1, int16_t arg2, int16_t arg3)
 {
     code *pcVar1;
     uint8_t uVar2;
@@ -767,7 +767,7 @@ void fcn.00000112(int16_t arg1, int16_t arg2, int16_t arg3)
     do {
         while( true ) {
             do {
-                fcn.00000a5c();
+                combat_func_8();
                 if ((bool)in_CF) {
                     return;
                 }
@@ -780,22 +780,22 @@ void fcn.00000112(int16_t arg1, int16_t arg2, int16_t arg3)
                 in_CF = (uint8_t)(*(char *)0xadfa - 1U) < (uint8_t)(*(char *)0xadfb + 1U);
                 if (!(bool)in_CF) {
                     in_CF = 0;
-                    fcn.0000017f(arg3);
+                    combat_func_10(arg3);
                     *(char *)0xadfb = *(char *)0xadfb + '\x01';
-                    uVar4 = fcn.0000017f(arg3);
+                    uVar4 = combat_func_10(arg3);
                     *(undefined *)0xff75 = 0xc;
 code_r0x00000115:
-                    fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+                    combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
                 }
             } else {
                 in_CF = 0;
                 if (*(char *)0xadfb != '\0') {
                     in_CF = 0;
-                    fcn.0000017f(arg3);
+                    combat_func_10(arg3);
                     *(char *)0xadfb = *(char *)0xadfb + -1;
-                    uVar4 = fcn.0000017f(arg3);
+                    uVar4 = combat_func_10(arg3);
                     *(undefined *)0xff75 = 0xc;
-                    fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+                    combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
                 }
             }
         }
@@ -806,7 +806,7 @@ code_r0x00000115:
     } while (*(char *)0xadfe == '\0');
     *(undefined *)0xff75 = 0xd;
     *(undefined *)0xadf9 = uVar3;
-    fcn.0000017f(arg3);
+    combat_func_10(arg3);
     // WARNING: Could not recover jumptable at 0x000000c4. Too many branches
     // WARNING: Treating indirect jump as call
     (**(code **)((uint16_t)*(uint8_t *)0xadf9 * 2 + -0x5f3c))();
@@ -818,7 +818,7 @@ code_r0x00000115:
 /* ====================================================================== */
 
 
-void fcn.00000110(void)
+void combat_func_9(void)
 {
     code *pcVar1;
     uint8_t uVar2;
@@ -833,10 +833,10 @@ void fcn.00000110(void)
     uVar4 = CONCAT22(in_DX, in_AX);
     do {
         *(undefined *)0xff75 = 0xc;
-        fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+        combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
 code_r0x000000dc:
         do {
-            fcn.00000a5c();
+            combat_func_8();
             if ((bool)in_CF) {
                 return;
             }
@@ -853,7 +853,7 @@ code_r0x000000dc:
             }
             *(undefined *)0xff75 = 0xd;
             *(undefined *)0xadf9 = uVar3;
-            fcn.0000017f(in_BX);
+            combat_func_10(in_BX);
     // WARNING: Could not recover jumptable at 0x000000c4. Too many branches
     // WARNING: Treating indirect jump as call
             (**(code **)((uint16_t)*(uint8_t *)0xadf9 * 2 + -0x5f3c))();
@@ -863,20 +863,20 @@ code_r0x000000dc:
             in_CF = 0;
             if (*(char *)0xadfb != '\0') {
                 in_CF = 0;
-                fcn.0000017f(in_BX);
+                combat_func_10(in_BX);
                 *(char *)0xadfb = *(char *)0xadfb + -1;
-                uVar4 = fcn.0000017f(in_BX);
+                uVar4 = combat_func_10(in_BX);
                 *(undefined *)0xff75 = 0xc;
-                fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+                combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
             }
             goto code_r0x000000dc;
         }
         in_CF = (uint8_t)(*(char *)0xadfa - 1U) < (uint8_t)(*(char *)0xadfb + 1U);
         if ((bool)in_CF) goto code_r0x000000dc;
         in_CF = 0;
-        fcn.0000017f(in_BX);
+        combat_func_10(in_BX);
         *(char *)0xadfb = *(char *)0xadfb + '\x01';
-        uVar4 = fcn.0000017f(in_BX);
+        uVar4 = combat_func_10(in_BX);
     } while( true );
 }
 
@@ -898,7 +898,7 @@ void fcn.00000118(void)
     do {
         while( true ) {
             do {
-                fcn.00000a5c();
+                combat_func_8();
                 if ((bool)in_CF) {
                     return;
                 }
@@ -911,21 +911,21 @@ void fcn.00000118(void)
                 in_CF = (uint8_t)(*(char *)0xadfa - 1U) < (uint8_t)(*(char *)0xadfb + 1U);
                 if (!(bool)in_CF) {
                     in_CF = 0;
-                    fcn.0000017f(in_BX);
+                    combat_func_10(in_BX);
                     *(char *)0xadfb = *(char *)0xadfb + '\x01';
-                    uVar4 = fcn.0000017f(in_BX);
+                    uVar4 = combat_func_10(in_BX);
                     *(undefined *)0xff75 = 0xc;
-                    fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+                    combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
                 }
             } else {
                 in_CF = 0;
                 if (*(char *)0xadfb != '\0') {
                     in_CF = 0;
-                    fcn.0000017f(in_BX);
+                    combat_func_10(in_BX);
                     *(char *)0xadfb = *(char *)0xadfb + -1;
-                    uVar4 = fcn.0000017f(in_BX);
+                    uVar4 = combat_func_10(in_BX);
                     *(undefined *)0xff75 = 0xc;
-                    fcn.00000139((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
+                    combat_func_11((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10));
                 }
             }
         }
@@ -936,7 +936,7 @@ void fcn.00000118(void)
     } while (*(char *)0xadfe == '\0');
     *(undefined *)0xff75 = 0xd;
     *(undefined *)0xadf9 = uVar3;
-    fcn.0000017f(in_BX);
+    combat_func_10(in_BX);
     // WARNING: Could not recover jumptable at 0x000000c4. Too many branches
     // WARNING: Treating indirect jump as call
     (**(code **)((uint16_t)*(uint8_t *)0xadf9 * 2 + -0x5f3c))();
@@ -977,9 +977,9 @@ void fcn.0000022c(int16_t arg1, int16_t arg2)
     uVar4 = 0x16;
     uVar2 = (**(code **)0x2000)();
     arg4 = CONCAT11(uVar4, 0x43);
-    uVar2 = fcn.00000a2f(0x5c, arg4, CONCAT11(1, uVar2));
+    uVar2 = combat_func_6(0x5c, arg4, CONCAT11(1, uVar2));
     uStack0002 = 0x263;
-    fcn.00000a2f(0x5c, CONCAT11((char)((uint16_t)arg4 >> 8), 0x4b), CONCAT11(1, uVar2));
+    combat_func_6(0x5c, CONCAT11((char)((uint16_t)arg4 >> 8), 0x4b), CONCAT11(1, uVar2));
     do {
         pcVar1 = (code *)swi(0x61);
         uVar3 = (*pcVar1)();
@@ -1040,9 +1040,9 @@ void fcn.00000340(int16_t arg1, int16_t arg2)
     uVar4 = 0x18;
     uVar2 = (**(code **)0x2000)();
     arg4 = CONCAT11(uVar4, 0x70);
-    uVar2 = fcn.00000a2f(0x54, arg4, CONCAT11(1, uVar2));
+    uVar2 = combat_func_6(0x54, arg4, CONCAT11(1, uVar2));
     uStack0002 = 0x377;
-    fcn.00000a2f(0x54, CONCAT11((char)((uint16_t)arg4 >> 8), 0x78), CONCAT11(1, uVar2));
+    combat_func_6(0x54, CONCAT11((char)((uint16_t)arg4 >> 8), 0x78), CONCAT11(1, uVar2));
     do {
         pcVar1 = (code *)swi(0x61);
         uVar3 = (*pcVar1)();
@@ -1168,7 +1168,7 @@ void fcn.000005de(void)
     fcn.00000613();
     uVar3 = 0x32;
     uVar2 = (**(code **)0x2000)();
-    fcn.00000a2f(0x44, CONCAT11(uVar3, 0x4c), CONCAT11(1, uVar2));
+    combat_func_6(0x44, CONCAT11(uVar3, 0x4c), CONCAT11(1, uVar2));
     pcVar4 = *(char **)((uint16_t)(uint8_t)(*(char *)0xadff - 1) * 2 + -0x549e);
     while (pcVar1 = pcVar4, pcVar4 = pcVar4 + 1, *pcVar1 != '\0') {
         (**(code **)0x2022)();
@@ -1197,7 +1197,7 @@ void fcn.000005b8(int16_t arg1)
         *(undefined *)0xadfe = 1;
     }
     uStack0002 = 0x5d9;
-    fcn.0000066d(arg4, arg1_00);
+    combat_func_5(arg4, arg1_00);
     // WARNING: Could not recover jumptable at 0x00000390. Too many branches
     // WARNING: Treating indirect jump as call
     (**(code **)0x202e)();

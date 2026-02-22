@@ -130,14 +130,14 @@ static const char *STR_0x17b9 = "cCãRgcDÃ"; // [ibm037]
 static const char *STR_0x18f0 = "Cavern of Corroer"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_31 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg1)
+void zr3_31(int16_t arg1)
 {
     int16_t in_AX;
     char in_CH;
@@ -157,7 +157,7 @@ void fcn.00000000(int16_t arg1)
                                                         (uVar1 + ((int16_t)&stack0x0000 - (uint16_t)in_CF & 0xff)))))) <
         0) {
         *(undefined2 *)(in_AX + -2) = 0x15;
-        fcn.000002ed();
+        trigger_func_1();
     // WARNING: Bad instruction - Truncating control flow here
         halt_baddata();
     }
@@ -166,11 +166,11 @@ void fcn.00000000(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x2ed: fcn.000002ed */
+/* 0x2ed: trigger_func_1 */
 /* ====================================================================== */
 
 
-void fcn.000002ed(void)
+void trigger_func_1(void)
 {
     return;
 }

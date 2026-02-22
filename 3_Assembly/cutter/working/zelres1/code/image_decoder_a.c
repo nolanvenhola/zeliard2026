@@ -23,7 +23,7 @@ static const char *STR_0x74b = "uuuu;aF"; // [ibm037]
 static const char *STR_0xb2b = "aG&{ßSKC"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_08 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
@@ -31,7 +31,7 @@ static const char *STR_0xb2b = "aG&{ßSKC"; // [ibm037]
 // 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg_2135h, short unsigned int arg3, int16_t arg1)
+void zr1_08(int16_t arg_2135h, short unsigned int arg3, int16_t arg1)
 {
     uint8_t *puVar1;
     undefined2 *puVar2;
@@ -89,11 +89,11 @@ code_r0x00000042:
 }
 
 /* ====================================================================== */
-/* 0x43a: fcn.0000043a */
+/* 0x43a: deca_scan_loop */
 /* ====================================================================== */
 
 
-void fcn.0000043a(undefined2 param_1, int16_t *param_2)
+void deca_scan_loop(undefined2 param_1, int16_t *param_2)
 {
     int16_t iVar1;
     int16_t in_AX;
@@ -107,22 +107,22 @@ void fcn.0000043a(undefined2 param_1, int16_t *param_2)
     *(undefined *)0x3d72 = *(undefined *)(iVar1 + 0x27);
     *(int16_t *)0x3d76 = *(int16_t *)0x80 + 3;
     if (*(char *)0x3d70 == -3) {
-        in_AX = fcn.000004b9();
+        in_AX = deca_get_value();
         *(undefined *)0x3d70 = (char)in_AX;
     }
-    fcn.00000359(3, in_AX);
+    deca_process_loop_2(3, in_AX);
     arg1 = *(int16_t **)0xc00f;
     do {
-        fcn.000005a6();
+        deca_process_loop();
         if (in_BL != 0) {
             in_BL = in_BL - 1;
-            fcn.00000580((uint16_t)in_BL * 3);
-            fcn.000005e6((int16_t)arg1);
+            deca_func_17((uint16_t)in_BL * 3);
+            deca_process_loop_3((int16_t)arg1);
             arg1 = param_2;
         }
         arg1 = arg1 + 4;
     } while (*arg1 != -1);
-    fcn.000004e0();
+    deca_multiply_2();
     *(undefined *)0xe005 = 0xff;
     *(undefined *)0xe006 = 0xff;
     *(undefined *)0xe007 = 0xff;
@@ -130,12 +130,12 @@ void fcn.0000043a(undefined2 param_1, int16_t *param_2)
 }
 
 /* ====================================================================== */
-/* 0xdf: fcn.000000df */
+/* 0xdf: deca_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000000df(int16_t arg1)
+void deca_multiply(int16_t arg1)
 {
     int16_t iVar1;
     int16_t unaff_SI;
@@ -151,7 +151,7 @@ void fcn.000000df(int16_t arg1)
     iVar2 = (uint8_t)(*(char *)0x83 * '\x02') + 0x127c;
     iVar1 = 2;
     do {
-        fcn.000004e0(iVar2);
+        deca_multiply_2(iVar2);
         iVar2 = iVar1 + 2;
         iVar1 = unaff_SI + -1;
     } while (iVar1 != 0);
@@ -159,11 +159,11 @@ void fcn.000000df(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x4e0: fcn.000004e0 */
+/* 0x4e0: deca_multiply_2 */
 /* ====================================================================== */
 
 
-void fcn.000004e0(void)
+void deca_multiply_2(void)
 {
     int16_t iVar1;
     undefined2 *unaff_SI;
@@ -224,12 +224,12 @@ void fcn.000004e0(void)
 }
 
 /* ====================================================================== */
-/* 0x27a: fcn.0000027a */
+/* 0x27a: deca_func_8 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000027a(int16_t arg3, int16_t arg2)
+void deca_func_8(int16_t arg3, int16_t arg2)
 {
     uint16_t *puVar1;
     uint16_t *puVar2;
@@ -407,12 +407,12 @@ void fcn.0000027a(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x124: fcn.00000124 */
+/* 0x124: deca_func_9 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000124(int16_t arg3, int16_t arg2)
+void deca_func_9(int16_t arg3, int16_t arg2)
 {
     char cVar1;
     undefined2 uVar2;
@@ -527,12 +527,12 @@ void fcn.00000124(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x11b: fcn.0000011b */
+/* 0x11b: deca_check_state */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000011b(int16_t arg3, int16_t arg2)
+void deca_check_state(int16_t arg3, int16_t arg2)
 {
     char cVar1;
     undefined2 uVar2;
@@ -557,31 +557,31 @@ void fcn.0000011b(int16_t arg3, int16_t arg2)
         *(undefined2 *)0x3d73 = *(undefined2 *)((int16_t)unaff_SI + 7);
         *(undefined *)0x3d75 = *(undefined *)((int16_t)unaff_SI + 9);
         *(int16_t *)0x3d76 = (uint16_t)(uint8_t)(*(char *)0x3d6f + 4) + *(int16_t *)0x80;
-        iVar4 = fcn.000004b9();
+        iVar4 = deca_get_value();
         *(undefined *)0x3d70 = (char)iVar4;
         if (*(char *)0x3d73 == -3) {
-            iVar4 = fcn.000004b9();
+            iVar4 = deca_get_value();
             *(undefined *)0x3d73 = (char)iVar4;
         }
-        fcn.00000356(iVar4);
+        deca_multiply_4(iVar4);
         arg3_00 = *(int16_t **)0xc00f;
         iVar4 = unaff_DS;
         do {
-            arg1 = fcn.000005a6();
+            arg1 = deca_process_loop();
             if ((char)arg3 != '\0') {
-                fcn.00000580(arg1);
+                deca_func_17(arg1);
                 iVar4 = 0x3d6;
-                fcn.0000055e((int16_t)arg3_00);
+                deca_func_18((int16_t)arg3_00);
                 arg3 = (int16_t)arg3_00;
                 arg3_00 = in_stack_00000002;
             }
             arg3_00 = arg3_00 + 4;
         } while (*arg3_00 != -1);
         if (*(char *)(iVar4 + -1) != -1) {
-            fcn.000004e0(*(int16_t *)0x3d6d + 0x640, CONCAT11(*(char *)(iVar4 + -1), *(undefined *)(iVar4 + 7)));
+            deca_multiply_2(*(int16_t *)0x3d6d + 0x640, CONCAT11(*(char *)(iVar4 + -1), *(undefined *)(iVar4 + 7)));
         }
         if ((*(char *)0x3d6f != '\x1b') && ((char)iVar4 != -1)) {
-            fcn.000004e0();
+            deca_multiply_2();
         }
         *(undefined *)((int16_t)in_stack_00000002 + -1) = 0xfe;
         *(undefined *)in_stack_00000002 = 0xff;
@@ -691,11 +691,11 @@ void fcn.0000011b(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x4b9: fcn.000004b9 */
+/* 0x4b9: deca_get_value */
 /* ====================================================================== */
 
 
-void fcn.000004b9(void)
+void deca_get_value(void)
 {
     char *pcVar1;
     int16_t in_DX;
@@ -705,13 +705,13 @@ void fcn.000004b9(void)
     int16_t unaff_SI;
     undefined2 unaff_DS;
     
-    fcn.000004d2(in_DX);
+    deca_multiply_3(in_DX);
     arg2 = extraout_DX;
     if (*(char *)(unaff_SI + 3) != -3) {
         return;
     }
     do {
-        fcn.000004d6(arg2);
+        deca_scan_loop_2(arg2);
         pcVar1 = (char *)(unaff_SI + 0xb);
         arg2 = extraout_DX_00;
         unaff_SI = unaff_SI + 8;
@@ -720,12 +720,12 @@ void fcn.000004b9(void)
 }
 
 /* ====================================================================== */
-/* 0x4d2: fcn.000004d2 */
+/* 0x4d2: deca_multiply_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000004d2(int16_t arg2)
+void deca_multiply_3(int16_t arg2)
 {
     int16_t *piVar1;
     undefined2 unaff_DS;
@@ -736,12 +736,12 @@ void fcn.000004d2(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x4d6: fcn.000004d6 */
+/* 0x4d6: deca_scan_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000004d6(short unsigned int arg2)
+void deca_scan_loop_2(short unsigned int arg2)
 {
     short unsigned int *unaff_SI;
     undefined2 unaff_DS;
@@ -752,12 +752,12 @@ void fcn.000004d6(short unsigned int arg2)
 }
 
 /* ====================================================================== */
-/* 0x356: fcn.00000356 */
+/* 0x356: deca_multiply_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000356(int16_t arg1)
+void deca_multiply_4(int16_t arg1)
 {
     uint8_t *puVar1;
     undefined2 *puVar2;
@@ -790,11 +790,11 @@ void fcn.00000356(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x5a6: fcn.000005a6 */
+/* 0x5a6: deca_process_loop */
 /* ====================================================================== */
 
 
-void fcn.000005a6(void)
+void deca_process_loop(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -814,12 +814,12 @@ void fcn.000005a6(void)
 }
 
 /* ====================================================================== */
-/* 0x580: fcn.00000580 */
+/* 0x580: deca_func_17 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-char fcn.00000580(int16_t arg1)
+char deca_func_17(int16_t arg1)
 {
     char cVar1;
     int16_t unaff_SI;
@@ -833,24 +833,24 @@ char fcn.00000580(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x55e: fcn.0000055e */
+/* 0x55e: deca_func_18 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000055e(int16_t arg3)
+void deca_func_18(int16_t arg3)
 {
     (**(code **)((uint16_t)(uint8_t)((char)arg3 - 1) * 2 + 0x3568))();
     return;
 }
 
 /* ====================================================================== */
-/* 0x359: fcn.00000359 */
+/* 0x359: deca_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000359(int16_t arg4, int16_t arg1)
+void deca_process_loop_2(int16_t arg4, int16_t arg1)
 {
     uint8_t *puVar1;
     undefined2 *puVar2;
@@ -881,12 +881,12 @@ void fcn.00000359(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x5e6: fcn.000005e6 */
+/* 0x5e6: deca_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005e6(int16_t arg1)
+void deca_process_loop_3(int16_t arg1)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -904,7 +904,7 @@ void fcn.000005e6(int16_t arg1)
         pcVar3 = unaff_SI + 1;
         *(int16_t *)0x3d80 = (uint16_t)(uint8_t)(*unaff_BP - 1) * 0x10 + 0x7000;
         *(undefined2 *)0x3d82 = 0x2000;
-        fcn.00000659(0x2000);
+        deca_process_loop_4(0x2000);
         puVar1 = (undefined *)(in_stack_00000000 + -1);
         unaff_BP = unaff_ES;
         unaff_SI = unaff_DS;
@@ -915,12 +915,12 @@ void fcn.000005e6(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x659: fcn.00000659 */
+/* 0x659: deca_process_loop_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000659(int16_t arg1)
+void deca_process_loop_4(int16_t arg1)
 {
     uint16_t *puVar1;
     uint32_t uVar2;
@@ -955,12 +955,12 @@ void fcn.00000659(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x89f: fcn.0000089f */
+/* 0x89f: deca_func_22 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000089f(int16_t arg3)
+void deca_func_22(int16_t arg3)
 {
     undefined2 in_AX;
     char *pcVar1;
@@ -973,7 +973,7 @@ void fcn.0000089f(int16_t arg3)
     while( true ) {
         if (*unaff_SI == '\0') break;
         pcVar2 = pcVar1;
-        in_AX = fcn.000008bc(CONCAT11((char)((uint16_t)in_AX >> 8), *unaff_SI), (uint16_t)pcVar1 & 0xff03);
+        in_AX = deca_func_23(CONCAT11((char)((uint16_t)in_AX >> 8), *unaff_SI), (uint16_t)pcVar1 & 0xff03);
         pcVar1 = (char *)CONCAT11((char)((uint16_t)in_stack_00000000 >> 8), (char)in_stack_00000000 + '\x01');
         unaff_SI = unaff_DS;
         unaff_DS = pcVar2;
@@ -982,12 +982,12 @@ void fcn.0000089f(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x8bc: fcn.000008bc */
+/* 0x8bc: deca_func_23 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000008bc(int16_t arg1, int16_t arg3)
+void deca_func_23(int16_t arg1, int16_t arg3)
 {
     undefined *puVar1;
     uint8_t uVar2;
@@ -1032,11 +1032,11 @@ void fcn.000008bc(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x92c: fcn.0000092c */
+/* 0x92c: deca_func_24 */
 /* ====================================================================== */
 
 
-void fcn.0000092c(int16_t param_1)
+void deca_func_24(int16_t param_1)
 {
     uint16_t uVar1;
     uint16_t uVar2;
@@ -1051,7 +1051,7 @@ void fcn.0000092c(int16_t param_1)
     uint32_t uVar8;
     
     uVar4 = (undefined)((uint16_t)in_BX >> 8);
-    uVar8 = fcn.0000099f();
+    uVar8 = deca_process_loop_5();
     uVar2 = 6;
     iVar3 = CONCAT11(uVar4, 1);
     puVar5 = (undefined *)0x39b4;
@@ -1070,17 +1070,17 @@ void fcn.0000092c(int16_t param_1)
 }
 
 /* ====================================================================== */
-/* 0x99f: fcn.0000099f */
+/* 0x99f: deca_process_loop_5 */
 /* ====================================================================== */
 
 
-void fcn.0000099f(void)
+void deca_process_loop_5(void)
 {
     int16_t iVar1;
     char *pcVar2;
     
     pcVar2 = (char *)0x39b3;
-    fcn.000009be();
+    deca_scan_loop_3();
     iVar1 = 6;
     do {
         if (*pcVar2 != '\0') {
@@ -1094,11 +1094,11 @@ void fcn.0000099f(void)
 }
 
 /* ====================================================================== */
-/* 0x9be: fcn.000009be */
+/* 0x9be: deca_scan_loop_3 */
 /* ====================================================================== */
 
 
-void fcn.000009be(void)
+void deca_scan_loop_3(void)
 {
     undefined uVar1;
     int16_t in_AX;

@@ -5,7 +5,7 @@
 static const char *STR_0x956 = "2A AN b"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x2: fcn.00000002 */
+/* 0x2: zr1_30 */
 /* ====================================================================== */
 
 // WARNING: Instruction at (ram,0x0000021a) overlaps instruction at (ram,0x00000219)
@@ -14,7 +14,7 @@ static const char *STR_0x956 = "2A AN b"; // [ibm037]
 // WARNING: Type propagation algorithm not settling
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000002(int16_t arg3, int16_t arg1)
+void zr1_30(int16_t arg3, int16_t arg1)
 {
     char **ppcVar1;
     char *pcVar2;

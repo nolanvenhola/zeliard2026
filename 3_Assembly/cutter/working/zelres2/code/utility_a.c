@@ -24,12 +24,12 @@ static const char *STR_0x7af = "The peace we dared not hope for has come. I\\ll 
 static const char *STR_0x823 = "Quickly, enter this chamber. The holy crystals will break the evil spell which has turned Princess Felicia to stone."; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_36 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr2_36(int16_t arg3)
 {
     char *pcVar1;
     char in_CH;

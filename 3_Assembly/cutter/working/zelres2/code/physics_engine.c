@@ -17,14 +17,14 @@ static const char *STR_0x182a = "muwyo+&)&"; // [ascii]
 static const char *STR_0x1847 = "vxz{12/-367<"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_04 */
 /* ====================================================================== */
 
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000000(short unsigned int arg3, short unsigned int arg1, int16_t arg2, int16_t arg4)
+void zr2_04(short unsigned int arg3, short unsigned int arg1, int16_t arg2, int16_t arg4)
 {
     char *pcVar1;
     undefined uVar2;
@@ -87,10 +87,10 @@ void fcn.00000000(short unsigned int arg3, short unsigned int arg1, int16_t arg2
         unaff_ES = uStack_2;
     }
     arg2 = *(int16_t *)0xff31;
-    fcn.00001540();
+    physics_func_1();
     iVar10 = 0;
     if ((*(uint8_t *)(arg2 + -0x21) & 0x80) != 0) {
-        fcn.00000327(0);
+        physics_multiply(0);
     }
     iVar7 = 6;
     puVar4 = (uint8_t *)(arg2 + -0x20);
@@ -98,72 +98,72 @@ void fcn.00000000(short unsigned int arg3, short unsigned int arg1, int16_t arg2
         puVar12 = puVar4;
         iStack0002 = iVar7;
         if ((*puVar12 & 0x80) != 0) {
-            fcn.00000364(iVar10);
+            physics_process_loop(iVar10);
         }
         iVar10 = iVar10 + 1;
         if ((puVar12[1] & 0x80) != 0) {
             iStack0002 = 0x71;
-            fcn.00000364(iVar10);
+            physics_process_loop(iVar10);
         }
         iVar10 = iVar10 + 1;
         if ((puVar12[2] & 0x80) != 0) {
             iStack0002 = 0x7b;
-            fcn.00000364(iVar10);
+            physics_process_loop(iVar10);
         }
         iVar10 = iVar10 + 1;
         if ((puVar12[3] & 0x80) != 0) {
             iStack0002 = 0x85;
-            fcn.00000364(iVar10);
+            physics_process_loop(iVar10);
         }
         iVar10 = iVar10 + 1;
         iVar7 = in_stack_00000004 + -1;
         puVar4 = puVar12 + 4;
     } while (iVar7 != 0);
     if ((puVar12[4] & 0x80) != 0) {
-        fcn.00000364(iVar10);
+        physics_process_loop(iVar10);
     }
     iVar10 = iVar10 + 1;
     if ((puVar12[5] & 0x80) != 0) {
         uStack0006 = 0x9c;
-        fcn.00000364(iVar10);
+        physics_process_loop(iVar10);
     }
     iVar10 = iVar10 + 1;
     if ((puVar12[6] & 0x80) != 0) {
         uStack0006 = 0xa6;
-        fcn.00000364(iVar10);
+        physics_process_loop(iVar10);
     }
     if ((puVar12[7] & 0x80) != 0) {
         uStack0006 = 0xaf;
-        fcn.000003a8();
+        physics_scan_loop();
     }
     pcVar13 = *(char **)0xff31;
     pcVar16 = (char *)0xe900;
     *(undefined *)0x4fea = 0x12;
     do {
         uStack0006 = 0xbe;
-        fcn.00000d9e(iVar10);
+        copy_buffer(iVar10);
         iVar10 = 0;
         pcVar8 = pcVar13 + 4;
         if (pcVar13[3] < '\0') {
-            fcn.000003e0(0);
+            physics_func_21(0);
         }
         do {
             pcVar11 = pcVar16;
             pcVar14 = pcVar8;
             if (*pcVar14 != *pcVar11) {
-                fcn.00000136(iVar10);
+                physics_multiply_5(iVar10);
             }
             iVar10 = iVar10 + 1;
             if (pcVar14[1] != pcVar11[1]) {
-                fcn.00000136(iVar10);
+                physics_multiply_5(iVar10);
             }
             iVar10 = iVar10 + 1;
             if (pcVar14[2] != pcVar11[2]) {
-                fcn.00000136(iVar10);
+                physics_multiply_5(iVar10);
             }
             iVar10 = iVar10 + 1;
             if (pcVar14[3] != pcVar11[3]) {
-                fcn.00000136(iVar10);
+                physics_multiply_5(iVar10);
             }
             iVar10 = iVar10 + 1;
             pcVar8 = pcVar14 + 4;
@@ -171,15 +171,15 @@ void fcn.00000000(short unsigned int arg3, short unsigned int arg1, int16_t arg2
         } while (in_stack_0000000c != (char *)0x1);
         if (pcVar14[4] != pcVar11[4]) {
             in_stack_0000000c = (char *)0xf4;
-            fcn.00000136(iVar10);
+            physics_multiply_5(iVar10);
         }
         iVar10 = iVar10 + 1;
         if (pcVar14[5] != pcVar11[5]) {
-            fcn.00000136(iVar10);
+            physics_multiply_5(iVar10);
         }
         iVar10 = iVar10 + 1;
         if (pcVar14[6] != pcVar11[6]) {
-            fcn.00000136(iVar10);
+            physics_multiply_5(iVar10);
         }
         iVar10 = iVar10 + 1;
         pcVar13 = pcVar14 + 8;
@@ -199,8 +199,8 @@ void fcn.00000000(short unsigned int arg3, short unsigned int arg1, int16_t arg2
             cVar6 = pcVar14[7];
             pcVar14 = pcVar14 + 0x2c;
             uStack0006 = 0x50b;
-            fcn.00001534();
-            cVar6 = fcn.000006df((int16_t)pcVar13, (int16_t)pcVar16, arg2, CONCAT11(extraout_AH, cVar6));
+            physics_func_3();
+            cVar6 = physics_func_5((int16_t)pcVar13, (int16_t)pcVar16, arg2, CONCAT11(extraout_AH, cVar6));
             pcVar9 = (char *)CONCAT11(extraout_DL, cVar6);
             pcVar8 = (char *)((int16_t)pcVar16 * 2 + *(int16_t *)0x4fe4);
             pcVar11 = pcVar9;
@@ -210,9 +210,9 @@ void fcn.00000000(short unsigned int arg3, short unsigned int arg1, int16_t arg2
                 pcVar16 = pcVar9;
                 if (cVar6 < '\0') {
                     uStack0006 = 0x53a;
-                    uVar17 = fcn.000006d8();
+                    uVar17 = physics_func_4();
                 }
-                fcn.000005a7((int16_t)uVar17, (int16_t)((uint32_t)uVar17 >> 0x10), (int16_t)pcVar16);
+                physics_multiply_2((int16_t)uVar17, (int16_t)((uint32_t)uVar17 >> 0x10), (int16_t)pcVar16);
                 pcVar8 = pcVar9;
                 pcVar11 = in_stack_00000010;
                 pcVar14 = pcVar13;
@@ -228,16 +228,16 @@ void fcn.00000000(short unsigned int arg3, short unsigned int arg1, int16_t arg2
             if (((*(char *)0x4fea != '\x01') && (*(char *)0x500a != -1)) && (*(char *)0x500a != -4)) {
                 uVar17 = CONCAT22(pcVar9, CONCAT11(pcVar14[2], (char)((uint16_t)pcVar11 >> 8)));
                 if ((int16_t)pcVar11 < 0) {
-                    uVar17 = fcn.000006d8();
+                    uVar17 = physics_func_4();
                 }
                 in_stack_00000010 = (char *)0x574;
-                fcn.000005a7((int16_t)uVar17, (int16_t)((uint32_t)uVar17 >> 0x10), (int16_t)pcVar11);
+                physics_multiply_2((int16_t)uVar17, (int16_t)((uint32_t)uVar17 >> 0x10), (int16_t)pcVar11);
             }
         } else if (pcVar14[7] != pcVar11[7]) {
-            fcn.00000136(iVar10);
+            physics_multiply_5(iVar10);
         }
         pcVar13 = pcVar13 + 4;
-        fcn.00001534();
+        physics_func_3();
         *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + 0x40b4;
         if (0x5fff < *(uint16_t *)0x4fe4) {
             *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + -0x5fa6;
@@ -249,11 +249,11 @@ void fcn.00000000(short unsigned int arg3, short unsigned int arg1, int16_t arg2
 }
 
 /* ====================================================================== */
-/* 0x1540: fcn.00001540 */
+/* 0x1540: physics_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00001540(void)
+void physics_func_1(void)
 {
     uint16_t unaff_SI;
     
@@ -264,13 +264,13 @@ void fcn.00001540(void)
 }
 
 /* ====================================================================== */
-/* 0x327: fcn.00000327 */
+/* 0x327: physics_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000327(int16_t arg3)
+void physics_multiply(int16_t arg3)
 {
     undefined extraout_AH;
     undefined uVar1;
@@ -288,23 +288,23 @@ void fcn.00000327(int16_t arg3)
     }
     *(undefined *)0xe900 = 0xff;
     uVar2 = *unaff_SI;
-    fcn.00001534(arg3);
+    physics_func_3(arg3);
     uVar1 = extraout_AH;
     if ((char)unaff_SI[0x25] < '\0') {
         uVar1 = 0;
-        fcn.000006d8();
+        physics_func_4();
     }
-    fcn.000006df(in_stack_00000002, in_stack_00000000, arg3, CONCAT11(uVar1, uVar2));
-    fcn.000005a7(CONCAT11(unaff_SI[0x28], (char)in_stack_00000000), 0x4fd, arg3);
+    physics_func_5(in_stack_00000002, in_stack_00000000, arg3, CONCAT11(uVar1, uVar2));
+    physics_multiply_2(CONCAT11(unaff_SI[0x28], (char)in_stack_00000000), 0x4fd, arg3);
     return;
 }
 
 /* ====================================================================== */
-/* 0x1534: fcn.00001534 */
+/* 0x1534: physics_func_3 */
 /* ====================================================================== */
 
 
-void fcn.00001534(void)
+void physics_func_3(void)
 {
     uint16_t unaff_SI;
     
@@ -315,11 +315,11 @@ void fcn.00001534(void)
 }
 
 /* ====================================================================== */
-/* 0x6d8: fcn.000006d8 */
+/* 0x6d8: physics_func_4 */
 /* ====================================================================== */
 
 
-undefined fcn.000006d8(void)
+undefined physics_func_4(void)
 {
     uint8_t in_AL;
     
@@ -327,13 +327,13 @@ undefined fcn.000006d8(void)
 }
 
 /* ====================================================================== */
-/* 0x6df: fcn.000006df */
+/* 0x6df: physics_func_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-undefined2 fcn.000006df(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t arg1)
+undefined2 physics_func_5(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t arg1)
 {
     undefined uVar1;
     uint8_t uVar2;
@@ -361,12 +361,12 @@ undefined2 fcn.000006df(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t ar
 }
 
 /* ====================================================================== */
-/* 0x5a7: fcn.000005a7 */
+/* 0x5a7: physics_multiply_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005a7(int16_t arg1, int16_t arg2, int16_t arg3)
+void physics_multiply_2(int16_t arg1, int16_t arg2, int16_t arg3)
 {
     char cVar1;
     uint8_t uVar2;
@@ -379,23 +379,23 @@ void fcn.000005a7(int16_t arg1, int16_t arg2, int16_t arg3)
     }
     *(undefined2 *)0x4fe2 = *(undefined2 *)((uint16_t)(uVar2 & 0x7f) * 2 + 0x4f86);
     if (-1 < (char)uVar2) {
-        fcn.00000649(arg2);
-        fcn.000006b1();
+        physics_func_32(arg2);
+        physics_multiply_4();
         return;
     }
-    fcn.0000061b(CONCAT11((char)((uint16_t)*(undefined2 *)0x4fe2 >> 8), cVar1));
-    fcn.000006b1();
+    physics_func_35(CONCAT11((char)((uint16_t)*(undefined2 *)0x4fe2 >> 8), cVar1));
+    physics_multiply_4();
     return;
 }
 
 /* ====================================================================== */
-/* 0x364: fcn.00000364 */
+/* 0x364: physics_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000364(int16_t arg3)
+void physics_process_loop(int16_t arg3)
 {
     undefined2 uVar1;
     undefined uVar2;
@@ -412,20 +412,20 @@ void fcn.00000364(int16_t arg3)
     *(undefined *)0x500a = 0;
     *(undefined *)(arg3 + -0x16ff) = 0xff;
     uVar2 = *unaff_SI;
-    fcn.00001534(arg3);
+    physics_func_3(arg3);
     uVar1 = *(undefined2 *)(unaff_SI + 0x24);
     *(undefined2 *)0x500d = uVar1;
-    fcn.000006df(in_stack_00000002, in_stack_00000000, 0x500d, CONCAT11((char)((uint16_t)uVar1 >> 8), uVar2));
-    fcn.0000057a();
+    physics_func_5(in_stack_00000002, in_stack_00000000, 0x500d, CONCAT11((char)((uint16_t)uVar1 >> 8), uVar2));
+    extract_bits();
     return;
 }
 
 /* ====================================================================== */
-/* 0x57a: fcn.0000057a */
+/* 0x57a: extract_bits */
 /* ====================================================================== */
 
 
-void fcn.0000057a(void)
+void extract_bits(void)
 {
     int16_t arg1;
     int16_t in_DX;
@@ -439,22 +439,22 @@ void fcn.0000057a(void)
     if ((*unaff_BP != -1) && (*unaff_BP != -4)) {
         arg1 = CONCAT11(*unaff_SI, *unaff_DI);
         if (*unaff_DI < '\0') {
-            uVar1 = fcn.000006d8(0x57d);
+            uVar1 = physics_func_4(0x57d);
             in_DX = (int16_t)((uint32_t)uVar1 >> 0x10);
             arg1 = (int16_t)uVar1;
         }
-        fcn.000005a7(arg1, in_DX, in_BX);
+        physics_multiply_2(arg1, in_DX, in_BX);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x3a8: fcn.000003a8 */
+/* 0x3a8: physics_scan_loop */
 /* ====================================================================== */
 
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.000003a8(undefined2 param_1, int16_t param_2, int16_t param_3)
+void physics_scan_loop(undefined2 param_1, int16_t param_2, int16_t param_3)
 {
     char cVar1;
     undefined extraout_AH;
@@ -473,13 +473,13 @@ void fcn.000003a8(undefined2 param_1, int16_t param_2, int16_t param_3)
     }
     *(undefined *)0xe91b = 0xff;
     uVar3 = *unaff_SI;
-    fcn.00001534();
+    physics_func_3();
     uVar2 = extraout_AH;
     if ((char)unaff_SI[0x24] < '\0') {
         uVar2 = 0;
-        fcn.000006d8();
+        physics_func_4();
     }
-    fcn.000006df(param_3, param_2, in_BX, CONCAT11(uVar2, uVar3));
+    physics_func_5(param_3, param_2, in_BX, CONCAT11(uVar2, uVar3));
     cVar1 = (char)param_2;
     uVar4 = *(uint8_t *)0x4fed;
     if ((cVar1 != '\0') && (-1 < cVar1)) {
@@ -487,23 +487,23 @@ void fcn.000003a8(undefined2 param_1, int16_t param_2, int16_t param_3)
     }
     *(undefined2 *)0x4fe2 = *(undefined2 *)((uint16_t)(uVar4 & 0x7f) * 2 + 0x4f86);
     if (-1 < (char)uVar4) {
-        fcn.00000649();
-        fcn.000006b1();
+        physics_func_32();
+        physics_multiply_4();
         return;
     }
-    fcn.0000061b(CONCAT11((char)((uint16_t)*(undefined2 *)0x4fe2 >> 8), cVar1));
-    fcn.000006b1();
+    physics_func_35(CONCAT11((char)((uint16_t)*(undefined2 *)0x4fe2 >> 8), cVar1));
+    physics_multiply_4();
     return;
 }
 
 /* ====================================================================== */
-/* 0xd9e: fcn.00000d9e */
+/* 0xd9e: copy_buffer */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x00000db7: Changing call to branch
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000d9e(int16_t arg3)
+void copy_buffer(int16_t arg3)
 {
     uint8_t *puVar1;
     uint16_t *puVar2;
@@ -540,9 +540,9 @@ void fcn.00000d9e(int16_t arg3)
             }
             if (*(char *)0xff43 != '\0') {
                 *(undefined *)0xff44 = 0xff;
-                fcn.00000f8f(CONCAT11((char)((uint16_t)in_AX >> 8), uVar5), 
+                physics_multiply_3(CONCAT11((char)((uint16_t)in_AX >> 8), uVar5), 
                              CONCAT11((char)((uint16_t)in_CX >> 8), uVar4));
-                fcn.00000f32();
+                physics_check_state();
                 uVar3 = *(undefined2 *)0xff2c;
                 iVar7 = 4;
                 puVar9 = *(uint8_t **)0x4ff1;
@@ -585,7 +585,7 @@ void fcn.00000d9e(int16_t arg3)
             }
             return;
         }
-        fcn.00000f19(arg3);
+        fill_buffer(arg3);
     }
     if (*(char *)0xff37 == '\0') {
         *(undefined *)0xff37 = 0xff;
@@ -595,7 +595,7 @@ void fcn.00000d9e(int16_t arg3)
             iVar8 = 3;
             do {
                 iVar6 = iVar8;
-                fcn.000006b1(uVar14, iVar8, iVar7, arg3);
+                physics_multiply_4(uVar14, iVar8, iVar7, arg3);
                 uVar14 = iVar6 + 2;
                 iVar8 = iVar7 + -1;
             } while (iVar8 != 0);
@@ -611,29 +611,29 @@ void fcn.00000d9e(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0xf19: fcn.00000f19 */
+/* 0xf19: fill_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f19(int16_t arg3)
+void fill_buffer(int16_t arg3)
 {
     undefined2 unaff_DS;
     
     if (*(char *)0xff44 == '\0') {
         return;
     }
-    fcn.00000f5b(arg3);
+    physics_get_value(arg3);
     *(undefined *)0xff44 = 0;
     return;
 }
 
 /* ====================================================================== */
-/* 0xf5b: fcn.00000f5b */
+/* 0xf5b: physics_get_value */
 /* ====================================================================== */
 
 
-void fcn.00000f5b(void)
+void physics_get_value(void)
 {
     int16_t iVar1;
     undefined2 *puVar2;
@@ -665,12 +665,12 @@ void fcn.00000f5b(void)
 }
 
 /* ====================================================================== */
-/* 0xf8f: fcn.00000f8f */
+/* 0xf8f: physics_multiply_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f8f(int16_t arg1, int16_t arg4)
+void physics_multiply_3(int16_t arg1, int16_t arg4)
 {
     int16_t iVar1;
     uint8_t *puVar2;
@@ -681,7 +681,7 @@ void fcn.00000f8f(int16_t arg1, int16_t arg4)
     puVar2 = (uint8_t *)
              ((uint16_t)(*(char *)0x84 + *(char *)0x4ff3 & 0x3f) * 0x24 +
               (uint16_t)(uint8_t)(*(char *)0x83 + *(char *)0x4ff4 + 4) + *(int16_t *)0xff31);
-    fcn.00001534();
+    physics_func_3();
     do {
         iVar1 = 4;
         do {
@@ -691,17 +691,17 @@ void fcn.00000f8f(int16_t arg1, int16_t arg4)
             puVar2 = puVar3 + 1;
         } while (iVar1 != 0);
         puVar2 = puVar3 + 0x21;
-        fcn.00001534();
+        physics_func_3();
     } while (in_stack_00000002 != 1);
     return;
 }
 
 /* ====================================================================== */
-/* 0xf32: fcn.00000f32 */
+/* 0xf32: physics_check_state */
 /* ====================================================================== */
 
 
-void fcn.00000f32(void)
+void physics_check_state(void)
 {
     int16_t iVar1;
     undefined2 *puVar2;
@@ -730,11 +730,11 @@ void fcn.00000f32(void)
 }
 
 /* ====================================================================== */
-/* 0x6b1: fcn.000006b1 */
+/* 0x6b1: physics_multiply_4 */
 /* ====================================================================== */
 
 
-void fcn.000006b1(void)
+void physics_multiply_4(void)
 {
     int16_t iVar1;
     undefined2 *unaff_SI;
@@ -759,13 +759,13 @@ void fcn.000006b1(void)
 }
 
 /* ====================================================================== */
-/* 0x3e0: fcn.000003e0 */
+/* 0x3e0: physics_func_21 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.000003e0(int16_t arg3)
+void physics_func_21(int16_t arg3)
 {
     undefined extraout_AH;
     undefined uVar1;
@@ -795,8 +795,8 @@ void fcn.000003e0(int16_t arg3)
     *(undefined *)0x500a = uVar1;
     uVar1 = unaff_SI[-1];
     arg_6h = unaff_SI;
-    fcn.00001534(arg3, arg3);
-    fcn.000006df((int16_t)arg_6h, (int16_t)unaff_DI, iVar4, CONCAT11(extraout_AH, uVar1));
+    physics_func_3(arg3, arg3);
+    physics_func_5((int16_t)arg_6h, (int16_t)unaff_DI, iVar4, CONCAT11(extraout_AH, uVar1));
     puVar5 = unaff_SI + 0x25;
     iVar2 = (int16_t)unaff_DI * 2 + *(int16_t *)0x4fe4;
     iVar4 = extraout_DX;
@@ -806,11 +806,11 @@ void fcn.000003e0(int16_t arg3)
         iVar7 = extraout_DX;
         if ((char)extraout_DX < '\0') {
             iVar7 = extraout_DX;
-            uVar6 = fcn.000006d8(iVar2, puVar5);
+            uVar6 = physics_func_4(iVar2, puVar5);
         }
         puVar5 = arg_6h;
         iVar2 = iVar7;
-        fcn.000005a7((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), iVar4);
+        physics_multiply_2((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), iVar4);
         iVar4 = in_stack_00000000;
     }
     uVar3 = iVar2 + 0x40b4;
@@ -820,21 +820,21 @@ void fcn.000003e0(int16_t arg3)
     if (((*(char *)0x4fea != '\x01') && (*(char *)0x500a != -1)) && (*(char *)0x500a != -4)) {
         uVar6 = CONCAT22(uVar3, CONCAT11(puVar5[2], (char)((uint16_t)iVar4 >> 8)));
         if (iVar4 < 0) {
-            uVar6 = fcn.000006d8();
+            uVar6 = physics_func_4();
         }
-        fcn.000005a7((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), iVar4);
+        physics_multiply_2((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), iVar4);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x136: fcn.00000136 */
+/* 0x136: physics_multiply_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000136(int16_t arg3)
+void physics_multiply_5(int16_t arg3)
 {
     char *pcVar1;
     undefined2 uVar2;
@@ -867,17 +867,17 @@ void fcn.00000136(int16_t arg3)
         arg3_00 = 0x500d;
         *(undefined *)0x500e = *unaff_SI;
         arg_4h = unaff_SI;
-        fcn.00001534(arg3);
+        physics_func_3(arg3);
         uVar2 = *(undefined2 *)(unaff_SI + 0x23);
         *(undefined2 *)(arg3_00 + 2) = uVar2;
         *(undefined *)0x4feb = (char)arg3;
         *(char *)0x4fec = '\x12' - *(char *)0x4fea;
-        uVar6 = fcn.000006df(in_stack_00000000, (int16_t)arg_4h, arg3_00, CONCAT11((char)((uint16_t)uVar2 >> 8), uVar6))
+        uVar6 = physics_func_5(in_stack_00000000, (int16_t)arg_4h, arg3_00, CONCAT11((char)((uint16_t)uVar2 >> 8), uVar6))
         ;
         *(undefined *)0x500d = uVar6;
-        fcn.0000057a();
-        if (((*(char *)0x4fea != '\x01') && (fcn.0000057a(), *(char *)0xff34 != '\0')) && (*(char *)0xff2f != '\0')) {
-            fcn.00000730();
+        extract_bits();
+        if (((*(char *)0x4fea != '\x01') && (extract_bits(), *(char *)0xff34 != '\0')) && (*(char *)0xff2f != '\0')) {
+            physics_multiply_6();
         }
         return;
     }
@@ -890,7 +890,7 @@ void fcn.00000136(int16_t arg3)
         *(undefined *)(unaff_DI + -1) = 0xfe;
         if (cVar3 != '\0') {
             *(char *)(unaff_DI + -1) = cVar4;
-            fcn.0000027e(arg3, arg3 * 2 + *(int16_t *)0x4fe4, CONCAT11((char)((uint16_t)in_AX >> 8), cVar4));
+            physics_func_23(arg3, arg3 * 2 + *(int16_t *)0x4fe4, CONCAT11((char)((uint16_t)in_AX >> 8), cVar4));
         }
     }
     uVar5 = *(uint8_t *)0xc012 - 5;
@@ -905,12 +905,12 @@ void fcn.00000136(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x27e: fcn.0000027e */
+/* 0x27e: physics_func_23 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000027e(int16_t arg3, int16_t arg2, int16_t arg1)
+void physics_func_23(int16_t arg3, int16_t arg2, int16_t arg1)
 {
     undefined2 uVar1;
     int16_t iVar2;
@@ -974,11 +974,11 @@ void fcn.0000027e(int16_t arg3, int16_t arg2, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x730: fcn.00000730 */
+/* 0x730: physics_multiply_6 */
 /* ====================================================================== */
 
 
-void fcn.00000730(void)
+void physics_multiply_6(void)
 {
     uint8_t uVar1;
     uint8_t *puVar2;
@@ -1026,7 +1026,7 @@ void fcn.00000730(void)
 }
 
 /* ====================================================================== */
-/* 0x11a: fcn.0000011a */
+/* 0x11a: physics_func_31 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
@@ -1056,7 +1056,7 @@ void fcn.00000118(int16_t arg3)
     char *in_stack_00000010;
     
     while( true ) {
-        fcn.00001534();
+        physics_func_3();
         *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + 0x40b4;
         if (0x5fff < *(uint16_t *)0x4fe4) {
             *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + -0x5fa6;
@@ -1064,29 +1064,29 @@ void fcn.00000118(int16_t arg3)
         pcVar1 = (char *)0x4fea;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000d9e(arg3);
+        copy_buffer(arg3);
         arg3 = 0;
         pcVar5 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000003e0(0);
+            physics_func_21(0);
         }
         do {
             pcVar3 = unaff_DI;
             pcVar6 = pcVar5;
             if (*pcVar6 != *pcVar3) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[1] != pcVar3[1]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[2] != pcVar3[2]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[3] != pcVar3[3]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             pcVar5 = pcVar6 + 4;
@@ -1094,15 +1094,15 @@ void fcn.00000118(int16_t arg3)
         } while (in_stack_00000006 != (char *)0x1);
         if (pcVar6[4] != pcVar3[4]) {
             in_stack_00000006 = (char *)0xf4;
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[5] != pcVar3[5]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[6] != pcVar3[6]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         pcVar5 = pcVar6 + 8;
@@ -1121,8 +1121,8 @@ void fcn.00000118(int16_t arg3)
             *(char *)0x500a = cVar2;
             cVar2 = pcVar6[7];
             pcVar6 = pcVar6 + 0x2c;
-            fcn.00001534();
-            cVar2 = fcn.000006df((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
+            physics_func_3();
+            cVar2 = physics_func_5((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar3 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x4fe4);
             arg3_01 = pcVar4;
@@ -1131,9 +1131,9 @@ void fcn.00000118(int16_t arg3)
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar6, cVar2));
                 pcVar6 = pcVar4;
                 if (cVar2 < '\0') {
-                    uVar7 = fcn.000006d8();
+                    uVar7 = physics_func_4();
                 }
-                fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
+                physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
                 pcVar3 = pcVar4;
                 arg3_01 = in_stack_0000000a;
                 pcVar6 = pcVar5;
@@ -1149,13 +1149,13 @@ void fcn.00000118(int16_t arg3)
             if (((*(char *)0x4fea != '\x01') && (*(char *)0x500a != -1)) && (*(char *)0x500a != -4)) {
                 uVar7 = CONCAT22(pcVar4, CONCAT11(pcVar6[2], (char)((uint16_t)arg3_01 >> 8)));
                 if ((int16_t)arg3_01 < 0) {
-                    uVar7 = fcn.000006d8();
+                    uVar7 = physics_func_4();
                 }
                 in_stack_0000000a = (char *)0x574;
-                fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
+                physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
             }
         } else if (pcVar6[7] != pcVar3[7]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         unaff_SI = pcVar5 + 4;
     }
@@ -1163,11 +1163,11 @@ void fcn.00000118(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x649: fcn.00000649 */
+/* 0x649: physics_func_32 */
 /* ====================================================================== */
 
 
-void fcn.00000649(void)
+void physics_func_32(void)
 {
     int16_t *piVar1;
     undefined2 *puVar2;
@@ -1183,7 +1183,7 @@ void fcn.00000649(void)
     do {
         piVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
-        uVar4 = fcn.00000654(*piVar1, in_DX);
+        uVar4 = physics_func_33(*piVar1, in_DX);
         in_DX = (int16_t)((uint32_t)uVar4 >> 0x10);
         puVar2 = unaff_DI;
         unaff_DI = unaff_DI + 1;
@@ -1194,12 +1194,12 @@ void fcn.00000649(void)
 }
 
 /* ====================================================================== */
-/* 0x654: fcn.00000654 */
+/* 0x654: physics_func_33 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined2 fcn.00000654(int16_t arg1, int16_t arg2)
+undefined2 physics_func_33(int16_t arg1, int16_t arg2)
 {
     return CONCAT11(*(char *)(((uint16_t)arg1 >> 0xc) + *(int16_t *)0x4fe2) << 4 |
                     *(uint8_t *)(((arg1 & 0xf0fU) >> 8) + *(int16_t *)0x4fe2), 
@@ -1208,12 +1208,12 @@ undefined2 fcn.00000654(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x61b: fcn.0000061b */
+/* 0x61b: physics_func_35 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000061b(int16_t arg1)
+void physics_func_35(int16_t arg1)
 {
     int16_t *piVar1;
     int16_t iVar2;
@@ -1226,14 +1226,14 @@ void fcn.0000061b(int16_t arg1)
     undefined4 uVar3;
     uint16_t *in_stack_00000000;
     
-    fcn.000006ca();
+    physics_extract_bits();
     iVar2 = 8;
     arg2 = extraout_DX;
     do {
         *unaff_SI = *unaff_SI & *in_stack_00000000;
         piVar1 = unaff_BP;
         unaff_BP = unaff_BP + 1;
-        uVar3 = fcn.00000654(*piVar1, arg2);
+        uVar3 = physics_func_33(*piVar1, arg2);
         arg2 = (int16_t)((uint32_t)uVar3 >> 0x10);
         *unaff_SI = *unaff_SI | (uint16_t)uVar3;
         in_stack_00000000 = in_stack_00000000 + 1;
@@ -1244,11 +1244,11 @@ void fcn.0000061b(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x6ca: fcn.000006ca */
+/* 0x6ca: physics_extract_bits */
 /* ====================================================================== */
 
 
-void fcn.000006ca(void)
+void physics_extract_bits(void)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -1269,12 +1269,12 @@ void fcn.000006ca(void)
 }
 
 /* ====================================================================== */
-/* 0xd6f: fcn.00000d6f */
+/* 0xd6f: physics_get_value_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000d6f(int16_t arg1, int16_t arg4)
+void physics_get_value_2(int16_t arg1, int16_t arg4)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -1285,7 +1285,7 @@ void fcn.00000d6f(int16_t arg1, int16_t arg4)
     
     puVar2 = (undefined2 *)
              ((uint16_t)*(uint8_t *)0x84 * 0x24 + (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0xff31);
-    fcn.00001534();
+    physics_func_3();
     puVar4 = (undefined2 *)0x500d;
     iVar3 = 3;
     do {
@@ -1294,19 +1294,19 @@ void fcn.00000d6f(int16_t arg1, int16_t arg4)
         puVar4 = (undefined2 *)((int16_t)puVar4 + 3);
         *(undefined *)puVar1 = *(undefined *)(puVar2 + 1);
         puVar2 = puVar2 + 0x12;
-        fcn.00001534();
+        physics_func_3();
         iVar3 = iVar3 + -1;
     } while (iVar3 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0x1e4a: fcn.00001e4a */
+/* 0x1e4a: physics_multiply_7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00001e4a(int16_t arg3)
+int16_t physics_multiply_7(int16_t arg3)
 {
     uint16_t uVar1;
     uint8_t uVar3;
@@ -1320,11 +1320,11 @@ int16_t fcn.00001e4a(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0xcc9: fcn.00000cc9 */
+/* 0xcc9: physics_scan_loop_2 */
 /* ====================================================================== */
 
 
-uint8_t fcn.00000cc9(void)
+uint8_t physics_scan_loop_2(void)
 {
     uint8_t uVar1;
     undefined2 unaff_DS;
@@ -1340,12 +1340,12 @@ uint8_t fcn.00000cc9(void)
 }
 
 /* ====================================================================== */
-/* 0xc87: fcn.00000c87 */
+/* 0xc87: physics_func_41 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000c87(int16_t arg4, int16_t arg1, int16_t arg2)
+void physics_func_41(int16_t arg4, int16_t arg1, int16_t arg2)
 {
     int16_t extraout_DX;
     char *unaff_SI;
@@ -1357,7 +1357,7 @@ void fcn.00000c87(int16_t arg4, int16_t arg1, int16_t arg2)
     do {
         pcVar1 = unaff_ES;
         if (*unaff_SI != '\0') {
-            fcn.00000631(arg2);
+            physics_func_42(arg2);
             arg2 = extraout_DX;
             unaff_SI = unaff_DS;
             pcVar1 = (char *)arg4;
@@ -1372,12 +1372,12 @@ void fcn.00000c87(int16_t arg4, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x631: fcn.00000631 */
+/* 0x631: physics_func_42 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000631(int16_t arg2)
+void physics_func_42(int16_t arg2)
 {
     int16_t *piVar1;
     int16_t iVar2;
@@ -1393,7 +1393,7 @@ void fcn.00000631(int16_t arg2)
         *unaff_DI = *unaff_DI & *unaff_BP;
         piVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
-        uVar3 = fcn.00000654(*piVar1, arg2);
+        uVar3 = physics_func_33(*piVar1, arg2);
         arg2 = (int16_t)((uint32_t)uVar3 >> 0x10);
         *unaff_DI = *unaff_DI | (uint16_t)uVar3;
         unaff_BP = unaff_BP + 1;
@@ -1404,11 +1404,11 @@ void fcn.00000631(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x6d0: fcn.000006d0 */
+/* 0x6d0: physics_multiply_8 */
 /* ====================================================================== */
 
 
-void fcn.000006d0(void)
+void physics_multiply_8(void)
 {
     undefined2 *puVar1;
     int16_t iVar2;
@@ -1424,12 +1424,12 @@ void fcn.000006d0(void)
 }
 
 /* ====================================================================== */
-/* 0x1156: fcn.00001156 */
+/* 0x1156: physics_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001156(int16_t arg3, int16_t arg1)
+void physics_process_loop_2(int16_t arg3, int16_t arg1)
 {
     uint16_t uVar1;
     int16_t iVar2;
@@ -1448,38 +1448,38 @@ void fcn.00001156(int16_t arg3, int16_t arg1)
     if ((char)arg1 != '\0') {
         uVar1 = CONCAT11((char)((uint16_t)(uint8_t)((char)arg1 - 1) * 0x10 + -0x7fd0 >> 8), *(undefined *)0x4ff7) &
                 0xff03;
-        iVar2 = fcn.00001258(CONCAT11((char)(uVar1 >> 8), '\x03' - (char)uVar1));
-        fcn.000011c4(iVar2);
-        iVar2 = fcn.00001258(CONCAT11(extraout_AH, *(undefined *)0x4ff7));
-        fcn.000011c4(iVar2);
+        iVar2 = physics_process_loop_3(CONCAT11((char)(uVar1 >> 8), '\x03' - (char)uVar1));
+        math_calc(iVar2);
+        iVar2 = physics_process_loop_3(CONCAT11(extraout_AH, *(undefined *)0x4ff7));
+        math_calc(iVar2);
         return;
     }
     uVar1 = CONCAT11((char)((uint16_t)arg1 >> 8), *(undefined *)0x4ff7) & 0xff03;
-    iVar2 = fcn.00001258(CONCAT11((char)(uVar1 >> 8), '\x03' - (char)uVar1));
-    fcn.0000121e(iVar2);
-    iVar2 = fcn.00001258(CONCAT11(extraout_AH_00, *(undefined *)0x4ff7));
-    fcn.0000121e(iVar2);
+    iVar2 = physics_process_loop_3(CONCAT11((char)(uVar1 >> 8), '\x03' - (char)uVar1));
+    physics_process_loop_4(iVar2);
+    iVar2 = physics_process_loop_3(CONCAT11(extraout_AH_00, *(undefined *)0x4ff7));
+    physics_process_loop_4(iVar2);
     return;
 }
 
 /* ====================================================================== */
-/* 0x1258: fcn.00001258 */
+/* 0x1258: physics_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-char fcn.00001258(int16_t arg1)
+char physics_process_loop_3(int16_t arg1)
 {
     return ((uint8_t)arg1 & 3) * '\x02';
 }
 
 /* ====================================================================== */
-/* 0x11c4: fcn.000011c4 */
+/* 0x11c4: math_calc */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000011c4(int16_t arg1)
+void math_calc(int16_t arg1)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -1494,7 +1494,7 @@ void fcn.000011c4(int16_t arg1)
     
     iVar4 = 2;
     do {
-        puVar3 = (uint8_t *)fcn.00001e4a(unaff_DI);
+        puVar3 = (uint8_t *)physics_multiply_7(unaff_DI);
         uVar2 = *unaff_SI & *(uint8_t *)0x4ff8;
         uVar5 = ~*(uint8_t *)0x4ff8;
         *puVar3 = *puVar3 & uVar5;
@@ -1513,12 +1513,12 @@ void fcn.000011c4(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x121e: fcn.0000121e */
+/* 0x121e: physics_process_loop_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000121e(int16_t arg1)
+void physics_process_loop_4(int16_t arg1)
 {
     uint8_t uVar1;
     uint8_t *puVar2;
@@ -1527,13 +1527,13 @@ void fcn.0000121e(int16_t arg1)
     int16_t in_stack_00000000;
     uint8_t in_stack_00000002;
     
-    puVar2 = (uint8_t *)fcn.00001e4a(unaff_DI);
+    puVar2 = (uint8_t *)physics_multiply_7(unaff_DI);
     uVar1 = ~*(uint8_t *)0x4ff8;
     *puVar2 = *puVar2 & uVar1;
     if ((uint8_t *)0x3fff < puVar2) {
         puVar2[0x2000] = puVar2[0x2000] & uVar1;
     }
-    puVar2 = (uint8_t *)fcn.00001e4a(in_stack_00000000 + 4);
+    puVar2 = (uint8_t *)physics_multiply_7(in_stack_00000000 + 4);
     *puVar2 = *puVar2 & in_stack_00000002;
     if ((uint8_t *)0x3fff < puVar2) {
         puVar2[0x2000] = puVar2[0x2000] & in_stack_00000002;
@@ -1542,11 +1542,11 @@ void fcn.0000121e(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x14ac: fcn.000014ac */
+/* 0x14ac: physics_scan_loop_3 */
 /* ====================================================================== */
 
 
-void fcn.000014ac(void)
+void physics_scan_loop_3(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -1743,10 +1743,10 @@ void fcn.00000110(int16_t arg1)
     pcStack_6 = in_BX;
     do {
         if (!(bool)in_ZF) {
-            fcn.00000136((int16_t)pcStack_6);
+            physics_multiply_5((int16_t)pcStack_6);
         }
         while( true ) {
-            fcn.00001534();
+            physics_func_3();
             *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + 0x40b4;
             if (0x5fff < *(uint16_t *)0x4fe4) {
                 *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + -0x5fa6;
@@ -1756,29 +1756,29 @@ void fcn.00000110(int16_t arg1)
             if (*pcVar1 == '\0') {
                 return;
             }
-            fcn.00000d9e((int16_t)pcStack_6);
+            copy_buffer((int16_t)pcStack_6);
             iVar4 = 0;
             pcVar6 = unaff_SI + 8;
             if (unaff_SI[7] < '\0') {
-                fcn.000003e0(0);
+                physics_func_21(0);
             }
             do {
                 pcVar8 = unaff_DI;
                 pcVar5 = pcVar6;
                 if (*pcVar5 != *pcVar8) {
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 iVar4 = iVar4 + 1;
                 if (pcVar5[1] != pcVar8[1]) {
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 iVar4 = iVar4 + 1;
                 if (pcVar5[2] != pcVar8[2]) {
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 iVar4 = iVar4 + 1;
                 if (pcVar5[3] != pcVar8[3]) {
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 iVar4 = iVar4 + 1;
                 pcVar6 = pcVar5 + 4;
@@ -1786,15 +1786,15 @@ void fcn.00000110(int16_t arg1)
             } while (in_stack_00000006 != 1);
             if (pcVar5[4] != pcVar8[4]) {
                 in_stack_00000006 = 0xf4;
-                fcn.00000136(iVar4);
+                physics_multiply_5(iVar4);
             }
             iVar4 = iVar4 + 1;
             if (pcVar5[5] != pcVar8[5]) {
-                fcn.00000136(iVar4);
+                physics_multiply_5(iVar4);
             }
             iVar4 = iVar4 + 1;
             if (pcVar5[6] != pcVar8[6]) {
-                fcn.00000136(iVar4);
+                physics_multiply_5(iVar4);
             }
             pcStack_6 = (char *)(iVar4 + 1);
             unaff_SI = pcVar5 + 8;
@@ -1814,9 +1814,9 @@ void fcn.00000110(int16_t arg1)
             cVar2 = pcVar5[7];
             pcVar5 = pcVar5 + 0x2c;
             pcStackY_a = (char *)0x50b;
-            fcn.00001534(pcStack_6);
+            physics_func_3(pcStack_6);
             pcVar8 = (char *)0x513;
-            cVar2 = fcn.000006df((int16_t)unaff_SI, (int16_t)unaff_DI, iVar4, CONCAT11(extraout_AH, cVar2));
+            cVar2 = physics_func_5((int16_t)unaff_SI, (int16_t)unaff_DI, iVar4, CONCAT11(extraout_AH, cVar2));
             arg3 = (char *)CONCAT11(extraout_DL, cVar2);
             iVar4 = (int16_t)unaff_DI * 2 + *(int16_t *)0x4fe4;
             pcVar6 = pcVar5;
@@ -1825,9 +1825,9 @@ void fcn.00000110(int16_t arg1)
                 unaff_DI = arg3;
                 if (cVar2 < '\0') {
                     pcStackY_a = (char *)0x53a;
-                    uVar7 = fcn.000006d8();
+                    uVar7 = physics_func_4();
                 }
-                fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3);
+                physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3);
                 arg3 = pcVar8;
                 iVar4 = iStackY_c;
                 pcVar6 = pcStackY_a;
@@ -1840,9 +1840,9 @@ void fcn.00000110(int16_t arg1)
             if (((*(char *)0x4fea != '\x01') && (*(char *)0x500a != -1)) && (*(char *)0x500a != -4)) {
                 uVar7 = CONCAT22(uVar3, CONCAT11(pcVar6[2], (char)((uint16_t)arg3 >> 8)));
                 if ((int16_t)arg3 < 0) {
-                    uVar7 = fcn.000006d8();
+                    uVar7 = physics_func_4();
                 }
-                fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3);
+                physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3);
             }
         }
         in_ZF = pcVar5[7] == pcVar8[7];
@@ -1879,11 +1879,11 @@ void fcn.00000112(int16_t arg1)
     char *pcVar10;
     
     do {
-        fcn.00000136((int16_t)in_BX);
+        physics_multiply_5((int16_t)in_BX);
         do {
             while( true ) {
                 pcVar8 = (char *)0x11b;
-                fcn.00001534();
+                physics_func_3();
                 *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + 0x40b4;
                 if (0x5fff < *(uint16_t *)0x4fe4) {
                     *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + -0x5fa6;
@@ -1893,29 +1893,29 @@ void fcn.00000112(int16_t arg1)
                 if (*pcVar1 == '\0') {
                     return;
                 }
-                fcn.00000d9e((int16_t)in_BX);
+                copy_buffer((int16_t)in_BX);
                 iVar4 = 0;
                 pcVar9 = unaff_SI + 8;
                 if (unaff_SI[7] < '\0') {
-                    fcn.000003e0(0);
+                    physics_func_21(0);
                 }
                 do {
                     pcVar5 = unaff_DI;
                     pcVar6 = pcVar9;
                     if (*pcVar6 != *pcVar5) {
-                        fcn.00000136(iVar4);
+                        physics_multiply_5(iVar4);
                     }
                     iVar4 = iVar4 + 1;
                     if (pcVar6[1] != pcVar5[1]) {
-                        fcn.00000136(iVar4);
+                        physics_multiply_5(iVar4);
                     }
                     iVar4 = iVar4 + 1;
                     if (pcVar6[2] != pcVar5[2]) {
-                        fcn.00000136(iVar4);
+                        physics_multiply_5(iVar4);
                     }
                     iVar4 = iVar4 + 1;
                     if (pcVar6[3] != pcVar5[3]) {
-                        fcn.00000136(iVar4);
+                        physics_multiply_5(iVar4);
                     }
                     iVar4 = iVar4 + 1;
                     pcVar9 = pcVar6 + 4;
@@ -1923,15 +1923,15 @@ void fcn.00000112(int16_t arg1)
                 } while (in_stack_00000008 != 1);
                 if (pcVar6[4] != pcVar5[4]) {
                     in_stack_00000008 = 0xf4;
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 iVar4 = iVar4 + 1;
                 if (pcVar6[5] != pcVar5[5]) {
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 iVar4 = iVar4 + 1;
                 if (pcVar6[6] != pcVar5[6]) {
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 in_BX = (char *)(iVar4 + 1);
                 unaff_SI = pcVar6 + 8;
@@ -1951,9 +1951,9 @@ void fcn.00000112(int16_t arg1)
                 cVar2 = pcVar6[7];
                 pcVar6 = pcVar6 + 0x2c;
                 iStackY_a = 0x50b;
-                fcn.00001534(in_BX, in_BX);
+                physics_func_3(in_BX, in_BX);
                 pcVar9 = (char *)0x513;
-                cVar2 = fcn.000006df((int16_t)unaff_SI, (int16_t)unaff_DI, iVar4, CONCAT11(extraout_AH, cVar2));
+                cVar2 = physics_func_5((int16_t)unaff_SI, (int16_t)unaff_DI, iVar4, CONCAT11(extraout_AH, cVar2));
                 pcVar5 = (char *)CONCAT11(extraout_DL, cVar2);
                 iVar4 = (int16_t)unaff_DI * 2 + *(int16_t *)0x4fe4;
                 in_BX = unaff_DI;
@@ -1963,11 +1963,11 @@ void fcn.00000112(int16_t arg1)
                     in_BX = pcVar5;
                     if (cVar2 < '\0') {
                         iStackY_a = 0x53a;
-                        uVar7 = fcn.000006d8();
+                        uVar7 = physics_func_4();
                         pcVar10 = pcVar6;
                     }
                     pcVar6 = pcVar9;
-                    fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
+                    physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
                     pcVar5 = pcVar10;
                     iVar4 = iStackY_a;
                 }
@@ -1980,9 +1980,9 @@ void fcn.00000112(int16_t arg1)
                 if (((*(char *)0x4fea != '\x01') && (*(char *)0x500a != -1)) && (*(char *)0x500a != -4)) {
                     uVar7 = CONCAT22(uVar3, CONCAT11(pcVar6[2], (char)((uint16_t)pcVar5 >> 8)));
                     if ((int16_t)pcVar5 < 0) {
-                        uVar7 = fcn.000006d8();
+                        uVar7 = physics_func_4();
                     }
-                    fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
+                    physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
                 }
             }
         } while (pcVar6[7] == pcVar5[7]);
@@ -2019,11 +2019,11 @@ void fcn.00000112(int16_t arg1)
     char *pcVar10;
     
     do {
-        fcn.00000136((int16_t)in_BX);
+        physics_multiply_5((int16_t)in_BX);
         do {
             while( true ) {
                 pcVar8 = (char *)0x11b;
-                fcn.00001534();
+                physics_func_3();
                 *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + 0x40b4;
                 if (0x5fff < *(uint16_t *)0x4fe4) {
                     *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + -0x5fa6;
@@ -2033,29 +2033,29 @@ void fcn.00000112(int16_t arg1)
                 if (*pcVar1 == '\0') {
                     return;
                 }
-                fcn.00000d9e((int16_t)in_BX);
+                copy_buffer((int16_t)in_BX);
                 iVar4 = 0;
                 pcVar9 = unaff_SI + 8;
                 if (unaff_SI[7] < '\0') {
-                    fcn.000003e0(0);
+                    physics_func_21(0);
                 }
                 do {
                     pcVar5 = unaff_DI;
                     pcVar6 = pcVar9;
                     if (*pcVar6 != *pcVar5) {
-                        fcn.00000136(iVar4);
+                        physics_multiply_5(iVar4);
                     }
                     iVar4 = iVar4 + 1;
                     if (pcVar6[1] != pcVar5[1]) {
-                        fcn.00000136(iVar4);
+                        physics_multiply_5(iVar4);
                     }
                     iVar4 = iVar4 + 1;
                     if (pcVar6[2] != pcVar5[2]) {
-                        fcn.00000136(iVar4);
+                        physics_multiply_5(iVar4);
                     }
                     iVar4 = iVar4 + 1;
                     if (pcVar6[3] != pcVar5[3]) {
-                        fcn.00000136(iVar4);
+                        physics_multiply_5(iVar4);
                     }
                     iVar4 = iVar4 + 1;
                     pcVar9 = pcVar6 + 4;
@@ -2063,15 +2063,15 @@ void fcn.00000112(int16_t arg1)
                 } while (in_stack_00000008 != 1);
                 if (pcVar6[4] != pcVar5[4]) {
                     in_stack_00000008 = 0xf4;
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 iVar4 = iVar4 + 1;
                 if (pcVar6[5] != pcVar5[5]) {
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 iVar4 = iVar4 + 1;
                 if (pcVar6[6] != pcVar5[6]) {
-                    fcn.00000136(iVar4);
+                    physics_multiply_5(iVar4);
                 }
                 in_BX = (char *)(iVar4 + 1);
                 unaff_SI = pcVar6 + 8;
@@ -2091,9 +2091,9 @@ void fcn.00000112(int16_t arg1)
                 cVar2 = pcVar6[7];
                 pcVar6 = pcVar6 + 0x2c;
                 iStackY_a = 0x50b;
-                fcn.00001534(in_BX, in_BX);
+                physics_func_3(in_BX, in_BX);
                 pcVar9 = (char *)0x513;
-                cVar2 = fcn.000006df((int16_t)unaff_SI, (int16_t)unaff_DI, iVar4, CONCAT11(extraout_AH, cVar2));
+                cVar2 = physics_func_5((int16_t)unaff_SI, (int16_t)unaff_DI, iVar4, CONCAT11(extraout_AH, cVar2));
                 pcVar5 = (char *)CONCAT11(extraout_DL, cVar2);
                 iVar4 = (int16_t)unaff_DI * 2 + *(int16_t *)0x4fe4;
                 in_BX = unaff_DI;
@@ -2103,11 +2103,11 @@ void fcn.00000112(int16_t arg1)
                     in_BX = pcVar5;
                     if (cVar2 < '\0') {
                         iStackY_a = 0x53a;
-                        uVar7 = fcn.000006d8();
+                        uVar7 = physics_func_4();
                         pcVar10 = pcVar6;
                     }
                     pcVar6 = pcVar9;
-                    fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
+                    physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
                     pcVar5 = pcVar10;
                     iVar4 = iStackY_a;
                 }
@@ -2120,9 +2120,9 @@ void fcn.00000112(int16_t arg1)
                 if (((*(char *)0x4fea != '\x01') && (*(char *)0x500a != -1)) && (*(char *)0x500a != -4)) {
                     uVar7 = CONCAT22(uVar3, CONCAT11(pcVar6[2], (char)((uint16_t)pcVar5 >> 8)));
                     if ((int16_t)pcVar5 < 0) {
-                        uVar7 = fcn.000006d8();
+                        uVar7 = physics_func_4();
                     }
-                    fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
+                    physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
                 }
             }
         } while (pcVar6[7] == pcVar5[7]);
@@ -2160,7 +2160,7 @@ void fcn.00000118(int16_t arg3)
     char *in_stack_00000010;
     
     while( true ) {
-        fcn.00001534();
+        physics_func_3();
         *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + 0x40b4;
         if (0x5fff < *(uint16_t *)0x4fe4) {
             *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + -0x5fa6;
@@ -2168,29 +2168,29 @@ void fcn.00000118(int16_t arg3)
         pcVar1 = (char *)0x4fea;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000d9e(arg3);
+        copy_buffer(arg3);
         arg3 = 0;
         pcVar5 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000003e0(0);
+            physics_func_21(0);
         }
         do {
             pcVar3 = unaff_DI;
             pcVar6 = pcVar5;
             if (*pcVar6 != *pcVar3) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[1] != pcVar3[1]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[2] != pcVar3[2]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[3] != pcVar3[3]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             pcVar5 = pcVar6 + 4;
@@ -2198,15 +2198,15 @@ void fcn.00000118(int16_t arg3)
         } while (in_stack_00000006 != (char *)0x1);
         if (pcVar6[4] != pcVar3[4]) {
             in_stack_00000006 = (char *)0xf4;
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[5] != pcVar3[5]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[6] != pcVar3[6]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         pcVar5 = pcVar6 + 8;
@@ -2225,8 +2225,8 @@ void fcn.00000118(int16_t arg3)
             *(char *)0x500a = cVar2;
             cVar2 = pcVar6[7];
             pcVar6 = pcVar6 + 0x2c;
-            fcn.00001534();
-            cVar2 = fcn.000006df((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
+            physics_func_3();
+            cVar2 = physics_func_5((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar3 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x4fe4);
             arg3_01 = pcVar4;
@@ -2235,9 +2235,9 @@ void fcn.00000118(int16_t arg3)
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar6, cVar2));
                 pcVar6 = pcVar4;
                 if (cVar2 < '\0') {
-                    uVar7 = fcn.000006d8();
+                    uVar7 = physics_func_4();
                 }
-                fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
+                physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
                 pcVar3 = pcVar4;
                 arg3_01 = in_stack_0000000a;
                 pcVar6 = pcVar5;
@@ -2253,13 +2253,13 @@ void fcn.00000118(int16_t arg3)
             if (((*(char *)0x4fea != '\x01') && (*(char *)0x500a != -1)) && (*(char *)0x500a != -4)) {
                 uVar7 = CONCAT22(pcVar4, CONCAT11(pcVar6[2], (char)((uint16_t)arg3_01 >> 8)));
                 if ((int16_t)arg3_01 < 0) {
-                    uVar7 = fcn.000006d8();
+                    uVar7 = physics_func_4();
                 }
                 in_stack_0000000a = (char *)0x574;
-                fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
+                physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
             }
         } else if (pcVar6[7] != pcVar3[7]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         unaff_SI = pcVar5 + 4;
     }
@@ -2297,7 +2297,7 @@ void fcn.00000118(int16_t arg3)
     char *in_stack_00000010;
     
     while( true ) {
-        fcn.00001534();
+        physics_func_3();
         *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + 0x40b4;
         if (0x5fff < *(uint16_t *)0x4fe4) {
             *(int16_t *)0x4fe4 = *(int16_t *)0x4fe4 + -0x5fa6;
@@ -2305,29 +2305,29 @@ void fcn.00000118(int16_t arg3)
         pcVar1 = (char *)0x4fea;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000d9e(arg3);
+        copy_buffer(arg3);
         arg3 = 0;
         pcVar5 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000003e0(0);
+            physics_func_21(0);
         }
         do {
             pcVar3 = unaff_DI;
             pcVar6 = pcVar5;
             if (*pcVar6 != *pcVar3) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[1] != pcVar3[1]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[2] != pcVar3[2]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[3] != pcVar3[3]) {
-                fcn.00000136(arg3);
+                physics_multiply_5(arg3);
             }
             arg3 = arg3 + 1;
             pcVar5 = pcVar6 + 4;
@@ -2335,15 +2335,15 @@ void fcn.00000118(int16_t arg3)
         } while (in_stack_00000006 != (char *)0x1);
         if (pcVar6[4] != pcVar3[4]) {
             in_stack_00000006 = (char *)0xf4;
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[5] != pcVar3[5]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[6] != pcVar3[6]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         arg3 = arg3 + 1;
         pcVar5 = pcVar6 + 8;
@@ -2362,8 +2362,8 @@ void fcn.00000118(int16_t arg3)
             *(char *)0x500a = cVar2;
             cVar2 = pcVar6[7];
             pcVar6 = pcVar6 + 0x2c;
-            fcn.00001534();
-            cVar2 = fcn.000006df((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
+            physics_func_3();
+            cVar2 = physics_func_5((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar3 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x4fe4);
             arg3_01 = pcVar4;
@@ -2372,9 +2372,9 @@ void fcn.00000118(int16_t arg3)
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar6, cVar2));
                 pcVar6 = pcVar4;
                 if (cVar2 < '\0') {
-                    uVar7 = fcn.000006d8();
+                    uVar7 = physics_func_4();
                 }
-                fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
+                physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
                 pcVar3 = pcVar4;
                 arg3_01 = in_stack_0000000a;
                 pcVar6 = pcVar5;
@@ -2390,13 +2390,13 @@ void fcn.00000118(int16_t arg3)
             if (((*(char *)0x4fea != '\x01') && (*(char *)0x500a != -1)) && (*(char *)0x500a != -4)) {
                 uVar7 = CONCAT22(pcVar4, CONCAT11(pcVar6[2], (char)((uint16_t)arg3_01 >> 8)));
                 if ((int16_t)arg3_01 < 0) {
-                    uVar7 = fcn.000006d8();
+                    uVar7 = physics_func_4();
                 }
                 in_stack_0000000a = (char *)0x574;
-                fcn.000005a7((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
+                physics_multiply_2((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
             }
         } else if (pcVar6[7] != pcVar3[7]) {
-            fcn.00000136(arg3);
+            physics_multiply_5(arg3);
         }
         unaff_SI = pcVar5 + 4;
     }
@@ -2500,7 +2500,7 @@ void fcn.000013a5(int16_t arg2)
 
 void fcn.0000146c(int16_t arg3, int16_t arg1)
 {
-    fcn.00001e4a(CONCAT11(0xc, (char)arg1 + '\x0e'));
+    physics_multiply_7(CONCAT11(0xc, (char)arg1 + '\x0e'));
     return;
 }
 

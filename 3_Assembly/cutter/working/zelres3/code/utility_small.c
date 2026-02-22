@@ -10,11 +10,11 @@ static const char *STR_0x1d3 = "EÃuý}JKCEôãô"; // [ibm037]
 static const char *STR_0x22f = "Cavern of Cementar"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_33 */
 /* ====================================================================== */
 
 
-undefined2 fcn.00000000(void)
+undefined2 zr3_33(void)
 {
     char in_BH;
     char *unaff_DI;

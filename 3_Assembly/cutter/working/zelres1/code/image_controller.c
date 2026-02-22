@@ -8,7 +8,7 @@ static const char *STR_0x2ec = "vcG+S³¬;cG"; // [ibm037]
 static const char *STR_0x3ca = "{¡¡uuaB "; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_01 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
@@ -16,7 +16,7 @@ static const char *STR_0x3ca = "{¡¡uuaB "; // [ibm037]
 // WARNING: Type propagation algorithm not settling
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00000000(int16_t arg_33h, int16_t arg4, int16_t arg3, int16_t arg2, int16_t arg1)
+undefined4 zr1_01(int16_t arg_33h, int16_t arg4, int16_t arg3, int16_t arg2, int16_t arg1)
 {
     uint8_t *puVar1;
     uint16_t *puVar2;
@@ -72,12 +72,12 @@ undefined4 fcn.00000000(int16_t arg_33h, int16_t arg4, int16_t arg3, int16_t arg
 }
 
 /* ====================================================================== */
-/* 0x1c5: fcn.000001c5 */
+/* 0x1c5: imgctl_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000001c5(int16_t arg1, int16_t arg3)
+void imgctl_multiply(int16_t arg1, int16_t arg3)
 {
     uint16_t in_CX;
     uint16_t arg3_00;
@@ -86,20 +86,20 @@ void fcn.000001c5(int16_t arg1, int16_t arg3)
     *(int16_t *)0x4214 = (in_CX >> 8) * (in_CX & 0xff);
     *(undefined *)0x4213 = 0;
     if ((char)arg1 == '\0') {
-        fcn.000001f9(in_CX, arg3_00);
+        vga_operation(in_CX, arg3_00);
     }
     *(undefined *)0x4213 = 0xff;
-    fcn.000001f9(in_CX, arg3_00);
+    vga_operation(in_CX, arg3_00);
     return;
 }
 
 /* ====================================================================== */
-/* 0x1f9: fcn.000001f9 */
+/* 0x1f9: vga_operation */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined fcn.000001f9(int16_t arg4, int16_t arg3)
+undefined vga_operation(int16_t arg4, int16_t arg3)
 {
     char cVar1;
     undefined uVar3;
@@ -135,12 +135,12 @@ undefined fcn.000001f9(int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x274: fcn.00000274 */
+/* 0x274: imgctl_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00000274(int16_t arg4, int16_t arg1, int16_t arg2)
+undefined4 imgctl_process_loop(int16_t arg4, int16_t arg1, int16_t arg2)
 {
     uint16_t uVar1;
     undefined in_BH;
@@ -161,12 +161,12 @@ undefined4 fcn.00000274(int16_t arg4, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x28f: fcn.0000028f */
+/* 0x28f: imgctl_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.0000028f(int16_t arg4, int16_t arg1, int16_t arg2)
+undefined4 imgctl_process_loop_2(int16_t arg4, int16_t arg1, int16_t arg2)
 {
     uint8_t *puVar1;
     uint16_t uVar2;
@@ -192,12 +192,12 @@ undefined4 fcn.0000028f(int16_t arg4, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x365: fcn.00000365 */
+/* 0x365: copy_vga_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00000365(int16_t arg4)
+undefined4 copy_vga_buffer(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -255,12 +255,12 @@ undefined4 fcn.00000365(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x56a: fcn.0000056a */
+/* 0x56a: copy_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000056a(int16_t arg4)
+void copy_buffer(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -289,12 +289,12 @@ void fcn.0000056a(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x1138: fcn.00001138 */
+/* 0x1138: copy_buffer_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00001138(int16_t arg1)
+undefined4 copy_buffer_2(int16_t arg1)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -320,12 +320,12 @@ undefined4 fcn.00001138(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x596: fcn.00000596 */
+/* 0x596: imgctl_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000596(int16_t arg4)
+void imgctl_process_loop_3(int16_t arg4)
 {
     uint8_t *puVar1;
     char cVar2;
@@ -354,12 +354,12 @@ void fcn.00000596(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x580: fcn.00000580 */
+/* 0x580: copy_buffer_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000580(int16_t arg4)
+void copy_buffer_3(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -388,11 +388,11 @@ void fcn.00000580(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x612: fcn.00000612 */
+/* 0x612: imgctl_multiply_2 */
 /* ====================================================================== */
 
 
-void fcn.00000612(void)
+void imgctl_multiply_2(void)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -421,11 +421,11 @@ void fcn.00000612(void)
 }
 
 /* ====================================================================== */
-/* 0x65f: fcn.0000065f */
+/* 0x65f: imgctl_func_11 */
 /* ====================================================================== */
 
 
-void fcn.0000065f(void)
+void imgctl_func_11(void)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -454,12 +454,12 @@ void fcn.0000065f(void)
 }
 
 /* ====================================================================== */
-/* 0x6bf: fcn.000006bf */
+/* 0x6bf: imgctl_multiply_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000006bf(int16_t arg1, int16_t arg4, int16_t arg3)
+void imgctl_multiply_3(int16_t arg1, int16_t arg4, int16_t arg3)
 {
     undefined2 uVar1;
     uint16_t uVar2;
@@ -499,12 +499,12 @@ void fcn.000006bf(int16_t arg1, int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x903: fcn.00000903 */
+/* 0x903: imgctl_process_loop_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00000903(int16_t arg1, int16_t arg2)
+undefined4 imgctl_process_loop_4(int16_t arg1, int16_t arg2)
 {
     undefined uVar1;
     int16_t iVar2;
@@ -570,12 +570,12 @@ undefined4 fcn.00000903(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xbd0: fcn.00000bd0 */
+/* 0xbd0: imgctl_process_loop_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00000bd0(int16_t arg1)
+undefined4 imgctl_process_loop_5(int16_t arg1)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -641,11 +641,11 @@ undefined4 fcn.00000bd0(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xd16: fcn.00000d16 */
+/* 0xd16: imgctl_func_15 */
 /* ====================================================================== */
 
 
-undefined fcn.00000d16(void)
+undefined imgctl_func_15(void)
 {
     undefined uVar1;
     undefined2 extraout_DX;
@@ -654,7 +654,7 @@ undefined fcn.00000d16(void)
     undefined *puVar2;
     undefined2 unaff_ES;
     
-    fcn.00000d7e();
+    copy_buffer_4();
     out(extraout_DX, 0x3f);
     LOCK();
     *unaff_DI = 7;
@@ -678,11 +678,11 @@ undefined fcn.00000d16(void)
 }
 
 /* ====================================================================== */
-/* 0xd7e: fcn.00000d7e */
+/* 0xd7e: copy_buffer_4 */
 /* ====================================================================== */
 
 
-undefined fcn.00000d7e(void)
+undefined copy_buffer_4(void)
 {
     undefined uVar1;
     undefined2 in_DX;
@@ -708,12 +708,12 @@ undefined fcn.00000d7e(void)
 }
 
 /* ====================================================================== */
-/* 0xd3b: fcn.00000d3b */
+/* 0xd3b: copy_buffer_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined fcn.00000d3b(int16_t arg4)
+undefined copy_buffer_5(int16_t arg4)
 {
     undefined uVar1;
     int16_t iVar2;
@@ -725,7 +725,7 @@ undefined fcn.00000d3b(int16_t arg4)
     int16_t in_stack_00000000;
     
     do {
-        fcn.00000d7e(unaff_DI);
+        copy_buffer_4(unaff_DI);
         out(extraout_DX, 0x30);
         LOCK();
         *unaff_DI = 7;
@@ -761,11 +761,11 @@ undefined fcn.00000d3b(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0xf24: fcn.00000f24 */
+/* 0xf24: imgctl_process_loop_6 */
 /* ====================================================================== */
 
 
-void fcn.00000f24(int16_t param_1, undefined2 param_2, int16_t param_3)
+void imgctl_process_loop_6(int16_t param_1, undefined2 param_2, int16_t param_3)
 {
     int16_t iVar1;
     int16_t unaff_DI;
@@ -773,7 +773,7 @@ void fcn.00000f24(int16_t param_1, undefined2 param_2, int16_t param_3)
     undefined *puVar3;
     undefined2 unaff_ES;
     
-    fcn.00000fa9();
+    fill_buffer();
     puVar2 = (undefined *)(unaff_DI + 0x36);
     iVar1 = 0x5b;
     do {
@@ -782,8 +782,8 @@ void fcn.00000f24(int16_t param_1, undefined2 param_2, int16_t param_3)
         puVar2 = puVar2 + 0x50;
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
-    fcn.00000fa9();
-    fcn.00000fa9();
+    fill_buffer();
+    fill_buffer();
     iVar1 = 0x2d;
     puVar2 = (undefined *)(param_1 + 0x2ab6);
     do {
@@ -797,8 +797,8 @@ void fcn.00000f24(int16_t param_1, undefined2 param_2, int16_t param_3)
     } while (iVar1 != 0);
     puVar3[0xa0] = 0xb0;
     puVar3[0xb9] = 0xe;
-    fcn.00000fa9();
-    fcn.00000fa9();
+    fill_buffer();
+    fill_buffer();
     puVar2 = (undefined *)(param_3 + 0x2ab6);
     iVar1 = 0x5b;
     do {
@@ -807,16 +807,16 @@ void fcn.00000f24(int16_t param_1, undefined2 param_2, int16_t param_3)
         puVar2 = puVar2 + 0x50;
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
-    fcn.00000fa9();
+    fill_buffer();
     return;
 }
 
 /* ====================================================================== */
-/* 0xfa9: fcn.00000fa9 */
+/* 0xfa9: fill_buffer */
 /* ====================================================================== */
 
 
-void fcn.00000fa9(void)
+void fill_buffer(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -838,11 +838,11 @@ void fcn.00000fa9(void)
 }
 
 /* ====================================================================== */
-/* 0xeb9: fcn.00000eb9 */
+/* 0xeb9: vga_operation0 */
 /* ====================================================================== */
 
 
-undefined fcn.00000eb9(void)
+undefined vga_operation0(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -942,11 +942,11 @@ undefined fcn.00000eb9(void)
 }
 
 /* ====================================================================== */
-/* 0xe90: fcn.00000e90 */
+/* 0xe90: vga_operation2 */
 /* ====================================================================== */
 
 
-undefined fcn.00000e90(void)
+undefined vga_operation2(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -992,14 +992,14 @@ undefined fcn.00000e90(void)
 }
 
 /* ====================================================================== */
-/* 0xff3: fcn.00000ff3 */
+/* 0xff3: vga_operation4 */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x00001019: Changing call to branch
 // WARNING: Removing unreachable block (ram,0x0000101c)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000ff3(int16_t arg1)
+void vga_operation4(int16_t arg1)
 {
     uint8_t *puVar1;
     uint8_t uVar2;

@@ -11,12 +11,12 @@ static const char *STR_0x716 = "456789BC@D>"; // [ascii]
 static const char *STR_0x722 = "?AEFXYZOPRTVQSUW"; // [ascii]
 
 /* ====================================================================== */
-/* 0x648: fcn.00000648 */
+/* 0x648: zr3_14 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000648(int16_t arg3)
+void zr3_14(int16_t arg3)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -38,11 +38,11 @@ void fcn.00000648(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x42d: fcn.0000042d */
+/* 0x42d: lvrender_func_1 */
 /* ====================================================================== */
 
 
-void fcn.0000042d(void)
+void lvrender_func_1(void)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -56,11 +56,11 @@ void fcn.0000042d(void)
 }
 
 /* ====================================================================== */
-/* 0x43f: fcn.0000043f */
+/* 0x43f: lvrender_get_value */
 /* ====================================================================== */
 
 
-void fcn.0000043f(void)
+void lvrender_get_value(void)
 {
     undefined2 unaff_DS;
     
@@ -72,12 +72,12 @@ void fcn.0000043f(void)
 }
 
 /* ====================================================================== */
-/* 0x5fe: fcn.000005fe */
+/* 0x5fe: lvrender_func_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005fe(int16_t arg3)
+void lvrender_func_3(int16_t arg3)
 {
     uint8_t uVar1;
     uint8_t uVar2;

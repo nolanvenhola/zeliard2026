@@ -158,13 +158,13 @@ static const char *STR_0x153a = "GEíDáHdCáGF«gDáG"; // [ibm037]
 static const char *STR_0x161c = "Cavern of Malicia\t"; // [ascii]
 
 /* ====================================================================== */
-/* 0x1: fcn.00000001 */
+/* 0x1: zr3_20 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000001(int16_t arg1, int16_t arg3)
+void zr3_20(int16_t arg1, int16_t arg3)
 {
     char in_CH;
     char in_DL;

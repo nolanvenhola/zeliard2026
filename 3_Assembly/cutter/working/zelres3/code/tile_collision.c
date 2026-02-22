@@ -13,7 +13,7 @@ static const char *STR_0x922 = "zØcba«ifgehdýþð±»a"; // [ibm037]
 static const char *STR_0x96f = "ØÈzÎz`z\"z°jklmnopqorªººæº¸ýzªzxzxz"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_16 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
@@ -22,7 +22,7 @@ static const char *STR_0x96f = "ØÈzÎz`z\"z°jklmnopqorªººæº¸ýzªzxzxz"
 // WARNING: Stack frame is not setup normally: Input value of stackpointer is not used
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg_6710h, int16_t arg_6fh, int16_t arg_10h, int16_t arg_c01h, int16_t arg1, int16_t arg3,
+void zr3_16(int16_t arg_6710h, int16_t arg_6fh, int16_t arg_10h, int16_t arg_c01h, int16_t arg1, int16_t arg3,
                  int16_t arg2)
 {
     uint8_t *puVar1;
@@ -276,7 +276,7 @@ code_r0x0000010a:
         puVar21 = (undefined *)((int16_t)puVar20 + -2);
         *(undefined2 *)((int16_t)puVar20 + -2) = 0x111;
         puVar27 = (undefined *)
-                  fcn.000001fa(*(int16_t *)((int16_t)puVar20 + 0xb3), *(int16_t *)((int16_t)puVar20 + 0xb5), in_DX, 
+                  tilecol_func_1(*(int16_t *)((int16_t)puVar20 + 0xb3), *(int16_t *)((int16_t)puVar20 + 0xb5), in_DX, 
                                (int16_t)in_BX);
         puVar22 = (undefined2 *)ZEXT24(puVar21 + 4);
         unaff_BP = unaff_BP + -1;
@@ -290,7 +290,7 @@ code_r0x0000010a:
 }
 
 /* ====================================================================== */
-/* 0x1fa: fcn.000001fa */
+/* 0x1fa: tilecol_func_1 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
@@ -299,7 +299,7 @@ code_r0x0000010a:
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000001fa(int16_t arg_b5h, int16_t arg_b7h, int16_t arg2, int16_t arg3)
+void tilecol_func_1(int16_t arg_b5h, int16_t arg_b7h, int16_t arg2, int16_t arg3)
 {
     char *pcVar1;
     uint8_t *puVar2;
@@ -400,12 +400,12 @@ code_r0x00000264:
 }
 
 /* ====================================================================== */
-/* 0x9b8: fcn.000009b8 */
+/* 0x9b8: tilecol_func_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000009b8(int16_t arg3)
+void tilecol_func_2(int16_t arg3)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -431,11 +431,11 @@ void fcn.000009b8(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x525: fcn.00000525 */
+/* 0x525: tilecol_multiply */
 /* ====================================================================== */
 
 
-void fcn.00000525(void)
+void tilecol_multiply(void)
 {
     undefined2 unaff_DS;
     
@@ -447,11 +447,11 @@ void fcn.00000525(void)
 }
 
 /* ====================================================================== */
-/* 0x536: fcn.00000536 */
+/* 0x536: tilecol_func_4 */
 /* ====================================================================== */
 
 
-void fcn.00000536(void)
+void tilecol_func_4(void)
 {
     undefined2 unaff_DS;
     

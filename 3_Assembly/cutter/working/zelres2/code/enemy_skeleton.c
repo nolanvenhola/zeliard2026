@@ -33,11 +33,11 @@ static const char *STR_0x6de = "you are a brave man. You have conquered Jashiin 
 static const char *STR_0x73f = "Now go quickly to the chamber of Princess Felicia. The&crystals will bring her back to life. "; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_10 */
 /* ====================================================================== */
 
 
-void fcn.00000000(undefined2 param_1)
+void zr2_10(undefined2 param_1)
 {
     char cVar1;
     char in_AL;
@@ -54,15 +54,15 @@ void fcn.00000000(undefined2 param_1)
     (**(code **)0x2002)();
     (**(code **)0x2012)();
     (**(code **)0x2010)();
-    fcn.00000118();
+    skel_func_1();
     arg3 = 0xd60;
     (**(code **)0x2000)();
-    fcn.000003ec();
+    skel_func_2();
     *(undefined2 *)0xff4c = 0xa41a;
     while( true ) {
         cVar1 = (**(code **)0x6004)();
         if (cVar1 == -1) break;
-        fcn.00000071(arg3);
+        skel_process_loop(arg3);
     }
     // WARNING: Could not recover jumptable at 0x0000006c. Too many branches
     // WARNING: Treating indirect jump as call
@@ -71,11 +71,11 @@ void fcn.00000000(undefined2 param_1)
 }
 
 /* ====================================================================== */
-/* 0x118: fcn.00000118 */
+/* 0x118: skel_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00000118(void)
+void skel_func_1(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -119,11 +119,11 @@ void fcn.00000118(void)
 }
 
 /* ====================================================================== */
-/* 0x3ec: fcn.000003ec */
+/* 0x3ec: skel_func_2 */
 /* ====================================================================== */
 
 
-void fcn.000003ec(void)
+void skel_func_2(void)
 {
     undefined2 unaff_DS;
     
@@ -140,12 +140,12 @@ void fcn.000003ec(void)
 }
 
 /* ====================================================================== */
-/* 0x71: fcn.00000071 */
+/* 0x71: skel_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000071(int16_t arg3)
+void skel_process_loop(int16_t arg3)
 {
     uint8_t in_AL;
     
@@ -156,11 +156,11 @@ void fcn.00000071(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x306: fcn.00000306 */
+/* 0x306: skel_process_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.00000306(void)
+void skel_process_loop_2(void)
 {
     int16_t in_AX;
     int16_t iVar1;
@@ -174,7 +174,7 @@ void fcn.00000306(void)
         return;
     }
     *(undefined2 *)0xff50 = 0;
-    fcn.00000319(in_AX);
+    skel_func_5(in_AX);
     if (*(char *)0xa79d == '\0') {
         return;
     }
@@ -202,12 +202,12 @@ void fcn.00000306(void)
 }
 
 /* ====================================================================== */
-/* 0x319: fcn.00000319 */
+/* 0x319: skel_func_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000319(int16_t arg1)
+void skel_func_5(int16_t arg1)
 {
     char cVar1;
     int16_t iVar2;
@@ -237,11 +237,11 @@ void fcn.00000319(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x11a: fcn.0000011a */
+/* 0x11a: skel_func_7 */
 /* ====================================================================== */
 
 
-void fcn.00000118(void)
+void skel_func_1(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -326,7 +326,7 @@ void fcn.00000108(void)
     
     *(undefined *)0xff1a = 0;
     do {
-        fcn.00000306();
+        skel_process_loop_2();
     } while (*(uint8_t *)0xff1a < 0x19);
     return;
 }

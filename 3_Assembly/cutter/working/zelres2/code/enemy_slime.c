@@ -16,12 +16,12 @@ static const char *STR_0x27a1 = "__________T"; // [ascii]
 static const char *STR_0x290a = "______________________________\\"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_07 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg_4aeh, int16_t arg1, int16_t arg3)
+void zr2_07(int16_t arg_4aeh, int16_t arg1, int16_t arg3)
 {
     char *pcVar1;
     undefined2 *puVar2;
@@ -49,36 +49,36 @@ void fcn.00000000(int16_t arg_4aeh, int16_t arg1, int16_t arg3)
     } while ('\0' < cVar3);
     pcVar1 = (char *)(CONCAT11((char)(in_AX >> 0xf), (char)in_AX + -0x74) + 0x4ae);
     *pcVar1 = *pcVar1 + (char)((uint16_t)in_BX >> 8);
-    fcn.00000458();
-    fcn.00000458();
-    fcn.000000d4();
+    slime_func_1();
+    slime_func_1();
+    slime_func_2();
     *(undefined *)0x497 = 0x10;
-    fcn.00000458();
-    fcn.00000458();
-    fcn.000000d4();
-    fcn.00000458();
-    fcn.00000458();
-    fcn.000000d4();
+    slime_func_1();
+    slime_func_1();
+    slime_func_2();
+    slime_func_1();
+    slime_func_1();
+    slime_func_2();
     *(undefined *)0x498 = 0xff;
     *(undefined *)0x497 = 0x50;
-    fcn.00000458();
+    slime_func_1();
     puVar5 = (undefined2 *)0x3286;
     for (iVar4 = 0x4b0; iVar4 != 0; iVar4 = iVar4 + -1) {
         puVar2 = puVar5;
         puVar5 = puVar5 + 1;
         *puVar2 = 0;
     }
-    fcn.000000d4();
-    fcn.00000352();
+    slime_func_2();
+    slime_process_loop();
     return;
 }
 
 /* ====================================================================== */
-/* 0x458: fcn.00000458 */
+/* 0x458: slime_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00000458(void)
+void slime_func_1(void)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -117,11 +117,11 @@ void fcn.00000458(void)
 }
 
 /* ====================================================================== */
-/* 0xd4: fcn.000000d4 */
+/* 0xd4: slime_func_2 */
 /* ====================================================================== */
 
 
-void fcn.000000d4(void)
+void slime_func_2(void)
 {
     undefined2 unaff_DS;
     
@@ -132,11 +132,11 @@ void fcn.000000d4(void)
 }
 
 /* ====================================================================== */
-/* 0x352: fcn.00000352 */
+/* 0x352: slime_process_loop */
 /* ====================================================================== */
 
 
-void fcn.00000352(void)
+void slime_process_loop(void)
 {
     undefined2 unaff_DS;
     
@@ -147,12 +147,12 @@ void fcn.00000352(void)
 }
 
 /* ====================================================================== */
-/* 0x298: fcn.00000298 */
+/* 0x298: slime_func_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined fcn.00000298(int16_t arg3)
+undefined slime_func_4(int16_t arg3)
 {
     uint8_t in_DL;
     uint8_t in_DH;
@@ -164,12 +164,12 @@ undefined fcn.00000298(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x319: fcn.00000319 */
+/* 0x319: slime_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint8_t fcn.00000319(int16_t arg3)
+uint8_t slime_process_loop_2(int16_t arg3)
 {
     uint8_t uVar1;
     uint8_t uVar2;
@@ -199,11 +199,11 @@ uint8_t fcn.00000319(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x384: fcn.00000384 */
+/* 0x384: slime_process_loop_3 */
 /* ====================================================================== */
 
 
-void fcn.00000384(void)
+void slime_process_loop_3(void)
 {
     undefined *puVar1;
     int16_t iVar2;
@@ -225,11 +225,11 @@ void fcn.00000384(void)
 }
 
 /* ====================================================================== */
-/* 0x3a1: fcn.000003a1 */
+/* 0x3a1: slime_scan_loop */
 /* ====================================================================== */
 
 
-void fcn.000003a1(int16_t param_1)
+void slime_scan_loop(int16_t param_1)
 {
     int16_t iVar1;
     int16_t unaff_DI;
@@ -237,8 +237,8 @@ void fcn.000003a1(int16_t param_1)
     
     iVar1 = 5;
     do {
-        fcn.000003b7(unaff_DI, iVar1);
-        fcn.000003b7();
+        extract_bits(unaff_DI, iVar1);
+        extract_bits();
         unaff_DI = in_stack_00000000 + 0x140;
         iVar1 = param_1 + -1;
     } while (iVar1 != 0);
@@ -246,11 +246,11 @@ void fcn.000003a1(int16_t param_1)
 }
 
 /* ====================================================================== */
-/* 0x3b7: fcn.000003b7 */
+/* 0x3b7: extract_bits */
 /* ====================================================================== */
 
 
-void fcn.000003b7(void)
+void extract_bits(void)
 {
     uint8_t uVar1;
     uint8_t in_AL;
@@ -272,11 +272,11 @@ void fcn.000003b7(void)
 }
 
 /* ====================================================================== */
-/* 0x3e5: fcn.000003e5 */
+/* 0x3e5: slime_func_9 */
 /* ====================================================================== */
 
 
-void fcn.000003e5(void)
+void slime_func_9(void)
 {
     undefined *puVar1;
     undefined uVar2;
@@ -356,8 +356,8 @@ void fcn.0000008e(void)
         unaff_DI = unaff_DI + 1;
         *puVar1 = 0;
     }
-    fcn.000000d4();
-    fcn.00000352();
+    slime_func_2();
+    slime_process_loop();
     return;
 }
 

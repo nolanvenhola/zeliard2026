@@ -36,12 +36,12 @@ static const char *STR_0x10f8 = "Sabre Oil"; // [ascii]
 static const char *STR_0x1102 = "Kioku Feather"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_15 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr2_15(int16_t arg3)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -75,7 +75,7 @@ void fcn.00000000(int16_t arg3)
     uStack0006 = 0x4c;
     iVar4 = (**(code **)0x2010)();
     uStack0008 = 0x4f;
-    fcn.00000090(iVar4);
+    wizard_process_loop(iVar4);
     puVar5 = *(undefined2 **)((uint8_t)((*(char *)0xc006 + -1) * '\x02') + 0xb10c);
     puVar6 = (undefined2 *)0xb1f6;
     for (iVar4 = 0xc; iVar4 != 0; iVar4 = iVar4 + -1) {
@@ -86,7 +86,7 @@ void fcn.00000000(int16_t arg3)
         *puVar2 = *puVar1;
     }
     uStack000a = 0x6a;
-    fcn.000005c3();
+    wizard_func_2();
     iVar4 = 0xd60;
     uStack000c = 0x77;
     (**(code **)0x2000)();
@@ -96,7 +96,7 @@ void fcn.00000000(int16_t arg3)
         cVar3 = (**(code **)0x6004)();
         if (cVar3 == -1) break;
         uStack000c = 0x89;
-        fcn.000000bc(iVar4);
+        wizard_process_loop_2(iVar4);
     }
     // WARNING: Could not recover jumptable at 0x0000008b. Too many branches
     // WARNING: Treating indirect jump as call
@@ -105,12 +105,12 @@ void fcn.00000000(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x90: fcn.00000090 */
+/* 0x90: wizard_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000090(int16_t arg1)
+void wizard_process_loop(int16_t arg1)
 {
     char *pcVar1;
     int16_t iVar2;
@@ -141,11 +141,11 @@ void fcn.00000090(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x5c3: fcn.000005c3 */
+/* 0x5c3: wizard_func_2 */
 /* ====================================================================== */
 
 
-void fcn.000005c3(void)
+void wizard_func_2(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -171,12 +171,12 @@ void fcn.000005c3(void)
 }
 
 /* ====================================================================== */
-/* 0xbc: fcn.000000bc */
+/* 0xbc: wizard_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000000bc(int16_t arg3)
+void wizard_process_loop_2(int16_t arg3)
 {
     uint8_t in_AL;
     
@@ -187,12 +187,12 @@ void fcn.000000bc(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x648: fcn.00000648 */
+/* 0x648: wizard_func_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000648(int16_t arg1)
+void wizard_func_4(int16_t arg1)
 {
     uint8_t uVar1;
     int16_t iVar2;
@@ -234,12 +234,12 @@ void fcn.00000648(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x70c: fcn.0000070c */
+/* 0x70c: wizard_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000070c(short unsigned int arg1)
+void wizard_process_loop_3(short unsigned int arg1)
 {
     int16_t *piVar1;
     int16_t arg1_00;
@@ -271,18 +271,18 @@ void fcn.0000070c(short unsigned int arg1)
             iVar2 = iVar2 + -1;
         } while (iVar2 != 0);
         do {
-            arg1_00 = fcn.00000648(arg1_00);
+            arg1_00 = wizard_func_4(arg1_00);
         } while (*(uint8_t *)0xff1a < 0x28);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x5b6: fcn.000005b6 */
+/* 0x5b6: wizard_multiply */
 /* ====================================================================== */
 
 
-void fcn.000005b6(void)
+void wizard_multiply(void)
 {
     // WARNING: Could not recover jumptable at 0x000005be. Too many branches
     // WARNING: Treating indirect jump as call
@@ -291,11 +291,11 @@ void fcn.000005b6(void)
 }
 
 /* ====================================================================== */
-/* 0x4a0: fcn.000004a0 */
+/* 0x4a0: wizard_scan_loop */
 /* ====================================================================== */
 
 
-void fcn.000004a0(void)
+void wizard_scan_loop(void)
 {
     char *pcVar1;
     char *pcVar2;

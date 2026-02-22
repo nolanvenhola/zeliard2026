@@ -14,12 +14,12 @@ static const char *STR_0x45b = "Please come back when you can afford it. "; // [
 static const char *STR_0x4b2 = "I trust you had a good night\\s sleep. We\\ll be looking forward to seeing you again./"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_16 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr2_16(int16_t arg3)
 {
     uint8_t uVar1;
     uint8_t uVar2;
@@ -52,14 +52,14 @@ void fcn.00000000(int16_t arg3)
     uStack0006 = 0x47;
     (**(code **)0x2010)();
     uStack0008 = 0x4a;
-    fcn.00000063();
+    boss_func_1();
     *(undefined2 *)0xff4c = 0xa2f6;
     while( true ) {
         uStack000a = 0x55;
         cVar3 = (**(code **)0x6004)();
         if (cVar3 == -1) break;
         uStack0008 = 0x5c;
-        fcn.00000079(in_BX);
+        boss_func_3(in_BX);
     }
     // WARNING: Could not recover jumptable at 0x0000005e. Too many branches
     // WARNING: Treating indirect jump as call
@@ -68,26 +68,26 @@ void fcn.00000000(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x63: fcn.00000063 */
+/* 0x63: boss_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00000063(void)
+void boss_func_1(void)
 {
     undefined2 unaff_DS;
     
-    fcn.000001ae();
+    boss_func_2();
     (**(code **)0x2000)();
     *(undefined *)0xa505 = 0xff;
     return;
 }
 
 /* ====================================================================== */
-/* 0x1ae: fcn.000001ae */
+/* 0x1ae: boss_func_2 */
 /* ====================================================================== */
 
 
-void fcn.000001ae(void)
+void boss_func_2(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -113,12 +113,12 @@ void fcn.000001ae(void)
 }
 
 /* ====================================================================== */
-/* 0x79: fcn.00000079 */
+/* 0x79: boss_func_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000079(int16_t arg3)
+void boss_func_3(int16_t arg3)
 {
     uint8_t in_AL;
     
@@ -129,12 +129,12 @@ void fcn.00000079(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x183: fcn.00000183 */
+/* 0x183: boss_func_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000183(int16_t arg1)
+void boss_func_4(int16_t arg1)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -160,29 +160,29 @@ void fcn.00000183(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x173: fcn.00000173 */
+/* 0x173: boss_multiply */
 /* ====================================================================== */
 
 
-void fcn.00000173(void)
+void boss_multiply(void)
 {
     int16_t in_AX;
     undefined2 unaff_DS;
     
     *(undefined *)0xff1a = 0;
     do {
-        in_AX = fcn.00000233(in_AX);
+        in_AX = boss_process_loop(in_AX);
     } while (*(uint8_t *)0xff1a < 0x32);
     return;
 }
 
 /* ====================================================================== */
-/* 0x233: fcn.00000233 */
+/* 0x233: boss_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000233(int16_t arg1)
+void boss_process_loop(int16_t arg1)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -217,12 +217,12 @@ void fcn.00000233(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x11a: fcn.0000011a */
+/* 0x11a: boss_scan_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000011a(int16_t arg1)
+void boss_scan_loop(int16_t arg1)
 {
     char cVar1;
     uint16_t arg1_00;
@@ -230,8 +230,8 @@ void fcn.0000011a(int16_t arg1)
     
     arg1_00 = arg1 + 0xa5U & 0xff00;
     do {
-        fcn.00000183(arg1_00);
-        fcn.00000173();
+        boss_func_4(arg1_00);
+        boss_multiply();
         cVar1 = (char)in_stack_00000002 + '\x01';
         arg1_00 = CONCAT11((char)((uint16_t)in_stack_00000002 >> 8), cVar1);
     } while (cVar1 != '\x04');
@@ -250,7 +250,7 @@ void fcn.00000163(int16_t arg1)
     
     *(undefined *)0xff1a = 0;
     do {
-        arg1 = fcn.00000233(arg1);
+        arg1 = boss_process_loop(arg1);
     } while (*(uint8_t *)0xff1a < 0x96);
     return;
 }

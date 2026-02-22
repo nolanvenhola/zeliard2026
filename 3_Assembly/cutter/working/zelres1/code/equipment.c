@@ -6,12 +6,12 @@ static const char *STR_0x473 = "{¡¡uuaB{"; // [ibm037]
 static const char *STR_0xcb0 = "aG&{ßSM¾"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_02 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg2, int16_t arg3, int16_t arg1)
+void zr1_02(int16_t arg2, int16_t arg3, int16_t arg1)
 {
     int16_t *piVar1;
     undefined2 *puVar2;
@@ -50,7 +50,7 @@ void fcn.00000000(int16_t arg2, int16_t arg3, int16_t arg1)
         piVar1 = unaff_DI;
         unaff_DI = unaff_DI + 1;
         *(int16_t *)0x4aa2 = *piVar1;
-        uVar4 = fcn.00001a01(arg4, *(int16_t *)0x4aa2);
+        uVar4 = equip_func_1(arg4, *(int16_t *)0x4aa2);
         puVar2 = puVar5;
         puVar5 = puVar5 + 1;
         *puVar2 = uVar4;
@@ -61,20 +61,20 @@ void fcn.00000000(int16_t arg2, int16_t arg3, int16_t arg1)
     *(undefined2 *)0x4aae = 0x3238;
     *(undefined *)0x4aad = 0;
     if (in_stack_00000008 == '\0') {
-        fcn.000001a4(in_stack_00000004, uVar3);
+        equip_process_loop(in_stack_00000004, uVar3);
     }
     *(undefined *)0x4aad = 0xff;
-    fcn.000001a4(in_stack_00000004, uVar3);
+    equip_process_loop(in_stack_00000004, uVar3);
     return;
 }
 
 /* ====================================================================== */
-/* 0x1a01: fcn.00001a01 */
+/* 0x1a01: equip_func_1 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00001a01(int16_t arg4, int16_t arg1)
+int16_t equip_func_1(int16_t arg4, int16_t arg1)
 {
     uint16_t uVar1;
     uint16_t uVar2;
@@ -112,12 +112,12 @@ int16_t fcn.00001a01(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x1a4: fcn.000001a4 */
+/* 0x1a4: equip_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined fcn.000001a4(int16_t arg4, int16_t arg3)
+undefined equip_process_loop(int16_t arg4, int16_t arg3)
 {
     char cVar1;
     undefined uVar3;
@@ -165,12 +165,12 @@ undefined fcn.000001a4(int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x32c: fcn.0000032c */
+/* 0x32c: copy_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000032c(int16_t arg3)
+void copy_buffer(int16_t arg3)
 {
     int16_t iVar1;
     
@@ -182,12 +182,12 @@ void fcn.0000032c(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x5ac: fcn.000005ac */
+/* 0x5ac: copy_buffer_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005ac(int16_t arg4)
+void copy_buffer_2(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -220,12 +220,12 @@ void fcn.000005ac(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x5ee: fcn.000005ee */
+/* 0x5ee: equip_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005ee(int16_t arg4, int16_t arg1, int16_t arg2)
+void equip_multiply(int16_t arg4, int16_t arg1, int16_t arg2)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -249,7 +249,7 @@ void fcn.000005ee(int16_t arg4, int16_t arg1, int16_t arg2)
             puVar1 = unaff_SI;
             unaff_SI = unaff_SI + 1;
             *(uint16_t *)0x4aa2 = (uint16_t)*puVar1;
-            uVar2 = fcn.00001a01(arg4_00, *(uint16_t *)0x4aa2);
+            uVar2 = equip_func_1(arg4_00, *(uint16_t *)0x4aa2);
             *unaff_DI = *unaff_DI | uVar2;
             unaff_DI = unaff_DI + 1;
             arg4_00 = arg4_00 - 1;
@@ -266,12 +266,12 @@ void fcn.000005ee(int16_t arg4, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x5cd: fcn.000005cd */
+/* 0x5cd: equip_multiply_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005cd(int16_t arg4)
+void equip_multiply_2(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -304,12 +304,12 @@ void fcn.000005cd(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x712: fcn.00000712 */
+/* 0x712: equip_func_7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000712(int16_t arg1, int16_t arg4, int16_t arg3)
+void equip_func_7(int16_t arg1, int16_t arg4, int16_t arg3)
 {
     undefined2 uVar1;
     uint16_t uVar2;
@@ -349,12 +349,12 @@ void fcn.00000712(int16_t arg1, int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x8e3: fcn.000008e3 */
+/* 0x8e3: extract_bits */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000008e3(int16_t arg1)
+void extract_bits(int16_t arg1)
 {
     int16_t iVar1;
     uint8_t *unaff_DI;
@@ -384,12 +384,12 @@ void fcn.000008e3(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xbd4: fcn.00000bd4 */
+/* 0xbd4: fill_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000bd4(int16_t arg1)
+void fill_buffer(int16_t arg1)
 {
     undefined *puVar1;
     undefined2 *puVar2;
@@ -432,11 +432,11 @@ void fcn.00000bd4(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xcbd: fcn.00000cbd */
+/* 0xcbd: clear_buffer */
 /* ====================================================================== */
 
 
-void fcn.00000cbd(void)
+void clear_buffer(void)
 {
     uint8_t *puVar1;
     int16_t in_BX;
@@ -444,7 +444,7 @@ void fcn.00000cbd(void)
     uint8_t *puVar2;
     undefined2 unaff_ES;
     
-    fcn.00000d0a();
+    equip_get_value();
     *unaff_DI = *unaff_DI | 0x3f;
     puVar2 = unaff_DI + 1;
     for (in_BX = in_BX + -2; in_BX != 0; in_BX = in_BX + -1) {
@@ -457,11 +457,11 @@ void fcn.00000cbd(void)
 }
 
 /* ====================================================================== */
-/* 0xd0a: fcn.00000d0a */
+/* 0xd0a: equip_get_value */
 /* ====================================================================== */
 
 
-void fcn.00000d0a(void)
+void equip_get_value(void)
 {
     int16_t unaff_DI;
     undefined2 unaff_ES;
@@ -471,12 +471,12 @@ void fcn.00000d0a(void)
 }
 
 /* ====================================================================== */
-/* 0xcd3: fcn.00000cd3 */
+/* 0xcd3: equip_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000cd3(int16_t arg4)
+void equip_process_loop_2(int16_t arg4)
 {
     int16_t iVar1;
     int16_t in_BX;
@@ -485,7 +485,7 @@ void fcn.00000cd3(int16_t arg4)
     int16_t in_stack_00000000;
     
     do {
-        fcn.00000d0a(unaff_DI);
+        equip_get_value(unaff_DI);
         *unaff_DI = *unaff_DI | 0x30;
         *unaff_DI = *unaff_DI & 0xf0;
         for (iVar1 = in_BX + -2; unaff_DI = unaff_DI + 1, iVar1 != 0; iVar1 = iVar1 + -1) {
@@ -504,11 +504,11 @@ void fcn.00000cd3(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0xeb2: fcn.00000eb2 */
+/* 0xeb2: equip_process_loop_3 */
 /* ====================================================================== */
 
 
-void fcn.00000eb2(int16_t param_1, undefined2 param_2, int16_t param_3)
+void equip_process_loop_3(int16_t param_1, undefined2 param_2, int16_t param_3)
 {
     int16_t iVar1;
     int16_t unaff_DI;
@@ -516,7 +516,7 @@ void fcn.00000eb2(int16_t param_1, undefined2 param_2, int16_t param_3)
     undefined *puVar3;
     undefined2 unaff_ES;
     
-    fcn.00000f37();
+    equip_process_loop_4();
     puVar2 = (undefined *)(unaff_DI + 0x36);
     iVar1 = 0x5b;
     do {
@@ -525,8 +525,8 @@ void fcn.00000eb2(int16_t param_1, undefined2 param_2, int16_t param_3)
         puVar2 = puVar2 + 0x50;
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
-    fcn.00000f37();
-    fcn.00000f37();
+    equip_process_loop_4();
+    equip_process_loop_4();
     iVar1 = 0x2d;
     puVar2 = (undefined *)(param_1 + 0x2ab6);
     do {
@@ -540,8 +540,8 @@ void fcn.00000eb2(int16_t param_1, undefined2 param_2, int16_t param_3)
     } while (iVar1 != 0);
     puVar3[0xa0] = 0xb0;
     puVar3[0xb9] = 0xe;
-    fcn.00000f37();
-    fcn.00000f37();
+    equip_process_loop_4();
+    equip_process_loop_4();
     puVar2 = (undefined *)(param_3 + 0x2ab6);
     iVar1 = 0x5b;
     do {
@@ -550,16 +550,16 @@ void fcn.00000eb2(int16_t param_1, undefined2 param_2, int16_t param_3)
         puVar2 = puVar2 + 0x50;
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
-    fcn.00000f37();
+    equip_process_loop_4();
     return;
 }
 
 /* ====================================================================== */
-/* 0xf37: fcn.00000f37 */
+/* 0xf37: equip_process_loop_4 */
 /* ====================================================================== */
 
 
-void fcn.00000f37(void)
+void equip_process_loop_4(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -581,12 +581,12 @@ void fcn.00000f37(void)
 }
 
 /* ====================================================================== */
-/* 0xe40: fcn.00000e40 */
+/* 0xe40: fill_buffer_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000e40(int16_t arg1, int16_t arg2)
+void fill_buffer_2(int16_t arg1, int16_t arg2)
 {
     int16_t *piVar1;
     undefined2 *puVar2;
@@ -612,7 +612,7 @@ void fcn.00000e40(int16_t arg1, int16_t arg2)
         *(uint16_t *)0x4aa6 = (uint16_t)puVar8[0x5500];
         *(uint16_t *)0x4aa4 = (uint16_t)puVar8[0x2a80];
         *(uint16_t *)0x4aa2 = (uint16_t)*puVar8;
-        uVar5 = fcn.00001a01(iVar7, *(uint16_t *)0x4aa2);
+        uVar5 = equip_func_1(iVar7, *(uint16_t *)0x4aa2);
         *puVar10 = uVar5;
         iVar7 = iVar7 + -1;
         unaff_SI = puVar8 + 1;
@@ -627,7 +627,7 @@ void fcn.00000e40(int16_t arg1, int16_t arg2)
         *(int16_t *)0x4aa6 = piVar9[0x2a80];
         *(int16_t *)0x4aa4 = piVar9[0x1540];
         *(int16_t *)0x4aa2 = *piVar9;
-        uVar6 = fcn.00001a01(iVar7, *(int16_t *)0x4aa2);
+        uVar6 = equip_func_1(iVar7, *(int16_t *)0x4aa2);
         *puVar11 = uVar6;
         iVar7 = iVar7 + -1;
         piVar3 = piVar9 + 1;
@@ -642,7 +642,7 @@ void fcn.00000e40(int16_t arg1, int16_t arg2)
         piVar1 = piVar9;
         piVar9 = (int16_t *)((int16_t)piVar9 + 1);
         *(uint16_t *)0x4aa2 = (uint16_t)*(uint8_t *)piVar1;
-        uVar5 = fcn.00001a01(iVar7, *(uint16_t *)0x4aa2);
+        uVar5 = equip_func_1(iVar7, *(uint16_t *)0x4aa2);
         puVar2 = puVar11;
         puVar11 = (undefined2 *)((int16_t)puVar11 + 1);
         *(undefined *)puVar2 = uVar5;
@@ -652,12 +652,12 @@ void fcn.00000e40(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xe1a: fcn.00000e1a */
+/* 0xe1a: extract_bits_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000e1a(int16_t arg2)
+void extract_bits_2(int16_t arg2)
 {
     int16_t *piVar1;
     undefined2 *puVar2;
@@ -676,7 +676,7 @@ void fcn.00000e1a(int16_t arg2)
         piVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
         *(int16_t *)0x4aa2 = *piVar1;
-        uVar3 = fcn.00001a01(arg4, *(int16_t *)0x4aa2);
+        uVar3 = equip_func_1(arg4, *(int16_t *)0x4aa2);
         puVar2 = unaff_DI;
         unaff_DI = unaff_DI + 1;
         *puVar2 = uVar3;
@@ -686,12 +686,12 @@ void fcn.00000e1a(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xf81: fcn.00000f81 */
+/* 0xf81: extract_bits_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f81(int16_t arg1, int16_t arg2)
+void extract_bits_3(int16_t arg1, int16_t arg2)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -717,7 +717,7 @@ void fcn.00000f81(int16_t arg1, int16_t arg2)
                     *(uint16_t *)0x4aa6 = (uint16_t)puVar5[0x29dc];
                     *(uint16_t *)0x4aa4 = (uint16_t)puVar5[0x14ee];
                     *(uint16_t *)0x4aa2 = (uint16_t)*puVar5;
-                    uVar2 = fcn.00001a01(iVar4, *(uint16_t *)0x4aa2);
+                    uVar2 = equip_func_1(iVar4, *(uint16_t *)0x4aa2);
                     puVar1 = puVar6;
                     puVar6 = puVar6 + 1;
                     *puVar1 = uVar2;
@@ -727,7 +727,7 @@ void fcn.00000f81(int16_t arg1, int16_t arg2)
                 *(uint16_t *)0x4aa6 = (uint16_t)puVar5[0x29dd];
                 *(uint16_t *)0x4aa4 = (uint16_t)puVar5[0x14ef];
                 *(uint16_t *)0x4aa2 = (uint16_t)puVar5[1];
-                uVar2 = fcn.00001a01(0, *(uint16_t *)0x4aa2);
+                uVar2 = equip_func_1(0, *(uint16_t *)0x4aa2);
                 *puVar6 = *puVar6 & 3;
                 *puVar6 = *puVar6 | uVar2 & 0xfc;
                 return;
@@ -742,7 +742,7 @@ void fcn.00000f81(int16_t arg1, int16_t arg2)
         puVar1 = puVar3;
         puVar3 = puVar3 + 1;
         *(uint16_t *)0x4aa2 = (uint16_t)*puVar1;
-        uVar2 = fcn.00001a01(iVar4, *(uint16_t *)0x4aa2);
+        uVar2 = equip_func_1(iVar4, *(uint16_t *)0x4aa2);
         puVar1 = puVar6;
         puVar6 = puVar6 + 1;
         *puVar1 = uVar2;
@@ -752,12 +752,12 @@ void fcn.00000f81(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x1066: fcn.00001066 */
+/* 0x1066: equip_process_loop_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001066(int16_t arg1, int16_t arg2)
+void equip_process_loop_5(int16_t arg1, int16_t arg2)
 {
     int16_t *piVar1;
     undefined2 *puVar2;
@@ -782,7 +782,7 @@ void fcn.00001066(int16_t arg1, int16_t arg2)
             piVar1 = piVar3;
             piVar3 = piVar3 + 1;
             *(int16_t *)0x4aa2 = *piVar1;
-            uVar4 = fcn.00001a01(iVar5, *(int16_t *)0x4aa2);
+            uVar4 = equip_func_1(iVar5, *(int16_t *)0x4aa2);
             puVar2 = puVar7;
             puVar7 = puVar7 + 1;
             *puVar2 = uVar4;

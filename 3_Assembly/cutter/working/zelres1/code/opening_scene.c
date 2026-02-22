@@ -89,7 +89,7 @@ static const char *STR_0x3619 = "maop.grp"; // [ascii]
 static const char *STR_0x3624 = "game.bin"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_00 */
 /* ====================================================================== */
 
 // WARNING (jumptable): Stack frame is not setup normally: Input value of stackpointer is not used
@@ -97,7 +97,7 @@ static const char *STR_0x3624 = "game.bin"; // [ascii]
 // WARNING: This function may have set the stack pointer
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr1_00(int16_t arg3)
 {
     code *pcVar1;
     int16_t *piVar2;
@@ -206,7 +206,7 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar8 + -2) = 0x2f;
     sVar4 = (*pcVar1)();
     puVar9[-1] = 0x3d;
-    fcn.00000de5(in_CX, sVar4);
+    scene_func_1(in_CX, sVar4);
     pcVar1 = *(code **)0x3008;
     *puVar9 = 0x45;
     (*pcVar1)();
@@ -228,7 +228,7 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar12 + -2) = 0x80;
     (*pcVar1)();
     puVar13[-1] = 0x8e;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x2042;
     *puVar13 = 0x93;
     (*pcVar1)();
@@ -243,7 +243,7 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar14 + -2) = 0xbc;
     (*pcVar1)();
     puVar15[-1] = 0xbf;
-    fcn.0000035c();
+    scene_func_4();
     pcVar1 = *(code **)0x3008;
     *puVar15 = 199;
     (*pcVar1)();
@@ -252,7 +252,7 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)((int16_t)puVar15 + -2) = 0xdc;
     (*pcVar1)();
     puVar16[-1] = 0xea;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar16 = 0xfd;
     (*pcVar1)();
@@ -267,9 +267,9 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar17 + -2) = 0x11a;
     (*pcVar1)();
     puVar18[-1] = 0x128;
-    fcn.00000d62();
+    scene_func_2();
     *puVar18 = 299;
-    fcn.00000e13();
+    scene_func_17();
     pcVar1 = *(code **)0x3006;
     puVar19 = puVar18 + 1;
     puVar18[1] = 0x136;
@@ -293,30 +293,30 @@ void fcn.00000000(int16_t arg3)
         (*pcVar1)();
         pcVar79 = *ppcVar22;
         *ppcVar22 = (char *)0x173;
-        fcn.000003af();
+        scene_multiply();
         ppcVar21 = ppcVar22 + 2;
     }
     *(undefined *)0xff1a = 0;
     ppcVar21[-1] = (char *)0x17f;
-    fcn.000003af();
+    scene_multiply();
     *ppcVar21 = (char *)0x185;
-    fcn.000002d5();
+    scene_process_loop_2();
     *(undefined *)0xff1a = 0;
     ppcVar21[1] = (char *)0x18f;
-    fcn.000003af();
+    scene_multiply();
     pcVar1 = *(code **)0x3014;
     puVar23 = ppcVar21 + 2;
     ppcVar21[2] = (char *)0x199;
     (*pcVar1)();
     *(undefined *)0xff1a = 0;
     puVar23[-1] = 0x1a3;
-    fcn.000003af();
+    scene_multiply();
     pcVar1 = *(code **)0x3014;
     *puVar23 = 0x1ad;
     (*pcVar1)();
     *(undefined *)0xff1a = 0;
     puVar23[-1] = 0x1b7;
-    fcn.000003af();
+    scene_multiply();
     iVar5 = 0x501e;
     pcVar1 = _int.00002000;
     *puVar23 = 0x1c4;
@@ -327,7 +327,7 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)((int16_t)puVar23 + -2) = 0x1d3;
     sVar4 = (*pcVar1)();
     puVar24[-1] = 0x1e1;
-    fcn.00000de5(iVar5, sVar4);
+    scene_func_1(iVar5, sVar4);
     *puVar24 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar24 = 0x1f0;
@@ -358,16 +358,16 @@ void fcn.00000000(int16_t arg3)
     *puVar29 = 0x23a;
     (*pcVar1)();
     puVar29[-1] = 0x23f;
-    fcn.000003af();
+    scene_multiply();
     iVar5 = 0x3180;
     pcVar1 = *(code **)0x3004;
     *puVar29 = 0x254;
     sVar4 = (*pcVar1)();
     *(undefined *)0xff1a = 0;
     puVar29[-1] = 0x267;
-    fcn.00000de5(iVar5, sVar4);
+    scene_func_1(iVar5, sVar4);
     *puVar29 = 0x26c;
-    fcn.000003af();
+    scene_multiply();
     iVar5 = 0x4170;
     pcVar1 = *(code **)0x301a;
     puVar30 = puVar29 + 1;
@@ -375,12 +375,12 @@ void fcn.00000000(int16_t arg3)
     sVar4 = (*pcVar1)();
     *(undefined *)0xff1a = 0;
     puVar30[-1] = 0x292;
-    fcn.00000de5(iVar5, sVar4);
+    scene_func_1(iVar5, sVar4);
     pcVar1 = *(code **)0x301c;
     *puVar30 = 0x29a;
     (*pcVar1)();
     *(undefined2 *)((int16_t)puVar30 + -2) = 0x29f;
-    fcn.000003af();
+    scene_multiply();
     puVar31 = (undefined *)((int16_t)puVar30 + 2);
     iVar5 = 199;
     iVar6 = 100;
@@ -398,7 +398,7 @@ void fcn.00000000(int16_t arg3)
         puVar32[-1] = 0x2ba;
         (*pcVar1)();
         *(undefined2 *)((int16_t)puVar33 + -2) = 0x2bf;
-        fcn.000003af();
+        scene_multiply();
         iVar5 = CONCAT11((char)((uint16_t)*(undefined2 *)((int16_t)puVar33 + 2) >> 8) + '\x02', 
                          (char)*(undefined2 *)((int16_t)puVar33 + 2) + -2);
         puVar31 = (undefined *)((int16_t)puVar33 + 6);
@@ -408,7 +408,7 @@ void fcn.00000000(int16_t arg3)
     do {
         puVar34 = puVar3;
         puVar34[-1] = 0x2cb;
-        iVar5 = fcn.000003d0(iVar5);
+        iVar5 = scene_check_state(iVar5);
         puVar3 = puVar34 + 1;
     } while (*(char *)0xff26 == '\0');
     *(undefined *)0xff24 = 8;
@@ -441,7 +441,7 @@ void fcn.00000000(int16_t arg3)
     *puVar37 = 0x455;
     (*pcVar1)();
     puVar37[-1] = 0x458;
-    fcn.0000049b(arg2);
+    scene_process_loop_4(arg2);
     *(undefined *)0xff24 = 8;
     pcVar1 = *(code **)0x2042;
     *puVar37 = 0x485;
@@ -461,13 +461,13 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar38 + -2) = 0x573;
     (*pcVar1)();
     puVar39[-1] = 0x583;
-    fcn.00000d62();
+    scene_func_2();
     *puVar39 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar39 = 0x592;
     (*pcVar1)();
     puVar39[-1] = 0x5a0;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar39 = 0x5b5;
     (*pcVar1)();
@@ -476,7 +476,7 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)((int16_t)puVar39 + -2) = 0x5c8;
     (*pcVar1)();
     puVar40[-1] = 0x5cb;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar40 = 0x5d3;
     (*pcVar1)();
@@ -490,9 +490,9 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar41 + -2) = 0x5f5;
     (*pcVar1)();
     puVar42[-1] = 0x603;
-    fcn.00000d62();
+    scene_func_2();
     *puVar42 = 0x606;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar43 = puVar42 + 1;
     puVar42[1] = 0x60d;
@@ -511,9 +511,9 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar45 + -2) = 0x637;
     (*pcVar1)();
     puVar46[-1] = 0x645;
-    fcn.00000d62();
+    scene_func_2();
     *puVar46 = 0x648;
-    fcn.00000a79();
+    scene_func_26();
     puVar46[1] = 0x64d;
     fcn.00000e93(CONCAT11(extraout_AH, 4));
     puVar46[2] = 0x65a;
@@ -523,17 +523,17 @@ void fcn.00000000(int16_t arg3)
     puVar46[3] = 0x66d;
     (*pcVar1)();
     puVar47[-1] = 0x670;
-    fcn.00000a79();
+    scene_func_26();
     *puVar47 = 0x673;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3022;
     puVar48 = puVar47 + 1;
     puVar47[1] = 0x68a;
     (*pcVar1)();
     puVar48[-1] = 0x68d;
-    fcn.00000a79();
+    scene_func_26();
     *puVar48 = 0x690;
-    fcn.00000a79();
+    scene_func_26();
     puVar48[1] = 0x695;
     fcn.00000e93(CONCAT11(extraout_AH_00, 2));
     pcVar1 = *(code **)0x3010;
@@ -555,12 +555,12 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)((int16_t)puVar50 + -2) = 0x6de;
     (*pcVar1)();
     puVar51[-1] = 0x6ec;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar51 = 0x6f7;
     (*pcVar1)();
     puVar51[-1] = 0x6fa;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar51 = 0x702;
     (*pcVar1)();
@@ -569,43 +569,43 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)((int16_t)puVar51 + -2) = 0x717;
     (*pcVar1)();
     puVar52[-1] = 0x71a;
-    fcn.00000a79();
+    scene_func_26();
     *puVar52 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar52 = 0x729;
     (*pcVar1)();
     puVar52[-1] = 0x737;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar52 = 0x74c;
     (*pcVar1)();
     puVar52[-1] = 0x74f;
-    fcn.00000a79();
+    scene_func_26();
     *puVar52 = 0x752;
-    fcn.00000a79();
+    scene_func_26();
     puVar52[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar53 = puVar52 + 1;
     puVar52[1] = 0x761;
     (*pcVar1)();
     puVar53[-1] = 0x76f;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3022;
     *puVar53 = 0x77f;
     (*pcVar1)();
     puVar53[-1] = 0x782;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     *puVar53 = 0x789;
     (*pcVar1)();
     puVar53[-1] = 0x78c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar53 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar53 = 0x79b;
     (*pcVar1)();
     puVar53[-1] = 0x7a9;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar53 = 0x7be;
     (*pcVar1)();
@@ -615,17 +615,17 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)((int16_t)puVar53 + -2) = 0x7cd;
     (*pcVar1)();
     puVar54[-1] = 0x7db;
-    fcn.00000d62();
+    scene_func_2();
     *puVar54 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar54 = 0x7ea;
     (*pcVar1)();
     puVar54[-1] = 0x7f8;
-    fcn.00000d62();
+    scene_func_2();
     *puVar54 = 0x7fb;
-    fcn.00000a79();
+    scene_func_26();
     puVar54[1] = 0x7fe;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar55 = puVar54 + 2;
     puVar54[2] = 0x805;
@@ -651,16 +651,16 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar59 + -2) = 0x849;
     (*pcVar1)();
     puVar60[-1] = 0x84c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar60 = 0x84f;
-    fcn.00000a79();
+    scene_func_26();
     puVar60[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar61 = puVar60 + 1;
     puVar60[1] = 0x85e;
     (*pcVar1)();
     puVar61[-1] = 0x86c;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3020;
     *puVar61 = 0x873;
     (*pcVar1)();
@@ -677,9 +677,9 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar63 + -2) = 0x896;
     (*pcVar1)();
     puVar64[-1] = 0x899;
-    fcn.00000a79();
+    scene_func_26();
     *puVar64 = 0x89c;
-    fcn.00000a79();
+    scene_func_26();
     puVar66 = puVar64 + 2;
     uVar7 = 0x1515;
     uVar80 = 0x315d;
@@ -714,9 +714,9 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar68 + -2) = 0x8ec;
     (*pcVar1)();
     puVar69[-1] = 0x8ef;
-    fcn.00000a79();
+    scene_func_26();
     *puVar69 = 0x8f2;
-    fcn.00000a79();
+    scene_func_26();
     puVar71 = puVar69 + 2;
     uVar7 = 0x2c15;
     uVar80 = 0x1a5d;
@@ -752,12 +752,12 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)(puVar73 + -2) = 0x937;
     (*pcVar1)();
     puVar74[-1] = 0x945;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar74 = 0x958;
     (*pcVar1)();
     puVar74[-1] = 0x95b;
-    fcn.00000a79();
+    scene_func_26();
     *puVar74 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar74 = 0x96a;
@@ -767,14 +767,14 @@ void fcn.00000000(int16_t arg3)
     *(undefined2 *)((int16_t)puVar74 + -2) = 0x977;
     (*pcVar1)();
     puVar75[-1] = 0x985;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar75 = 0x990;
     (*pcVar1)();
     puVar75[-1] = 0x99e;
     fcn.00000fb0(0x808);
     *puVar75 = 0x9ac;
-    fcn.00000d62();
+    scene_func_2();
     puVar75[1] = 0x9ba;
     fcn.00000f45();
     pcVar1 = *(code **)0x3004;
@@ -818,12 +818,12 @@ void fcn.00000000(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0xde5: fcn.00000de5 */
+/* 0xde5: scene_func_1 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000de5(int16_t arg4, short unsigned int arg1)
+void scene_func_1(int16_t arg4, short unsigned int arg1)
 {
     uint8_t uVar1;
     uint16_t *puVar2;
@@ -872,11 +872,11 @@ code_r0x00000dfe:
 }
 
 /* ====================================================================== */
-/* 0xd62: fcn.00000d62 */
+/* 0xd62: scene_func_2 */
 /* ====================================================================== */
 
 
-void fcn.00000d62(void)
+void scene_func_2(void)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -889,7 +889,7 @@ void fcn.00000d62(void)
     uint8_t *unaff_DI;
     undefined2 unaff_ES;
     
-    fcn.00000d67(in_AX);
+    scene_scan_loop(in_AX);
     uVar3 = 0;
     do {
         puVar1 = unaff_DI;
@@ -929,12 +929,12 @@ void fcn.00000d62(void)
 }
 
 /* ====================================================================== */
-/* 0xd67: fcn.00000d67 */
+/* 0xd67: scene_scan_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000d67(int16_t arg1)
+void scene_scan_loop(int16_t arg1)
 {
     int16_t *piVar1;
     undefined *puVar2;
@@ -983,11 +983,11 @@ code_r0x00000d84:
 }
 
 /* ====================================================================== */
-/* 0x35c: fcn.0000035c */
+/* 0x35c: scene_func_4 */
 /* ====================================================================== */
 
 
-void fcn.0000035c(void)
+void scene_func_4(void)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -1000,7 +1000,7 @@ void fcn.0000035c(void)
         do {
             uVar2 = 0x386;
             (**(code **)0x300e)();
-            fcn.000003af(uVar2);
+            scene_multiply(uVar2);
             iVar1 = iVar1 + -1;
         } while (iVar1 != 0);
     } while (*(char *)0x6fef != -1);
@@ -1008,21 +1008,21 @@ void fcn.0000035c(void)
     do {
         uVar2 = 0x3a6;
         (**(code **)0x300e)();
-        fcn.000003af(uVar2);
+        scene_multiply(uVar2);
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0x3af: fcn.000003af */
+/* 0x3af: scene_multiply */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: This function may have set the stack pointer
 
-void fcn.000003af(void)
+void scene_multiply(void)
 {
     code *pcVar1;
     int16_t *piVar2;
@@ -1083,7 +1083,7 @@ void fcn.000003af(void)
     undefined2 uVar49;
     
     while ((*(char *)0xff1d == '\0' && (*(char *)0xff29 != '\r'))) {
-        in_AX = fcn.000003d0(in_AX);
+        in_AX = scene_check_state(in_AX);
         if ((uint8_t)in_AX <= *(uint8_t *)0xff1a) {
             *(undefined *)0xff1a = 0;
             return;
@@ -1117,7 +1117,7 @@ void fcn.000003af(void)
     *puVar7 = 0x455;
     (*pcVar1)();
     puVar7[-1] = 0x458;
-    fcn.0000049b(arg2);
+    scene_process_loop_4(arg2);
     *(undefined *)0xff24 = 8;
     pcVar1 = *(code **)0x2042;
     *puVar7 = 0x485;
@@ -1137,13 +1137,13 @@ void fcn.000003af(void)
     *(undefined2 *)(puVar8 + -2) = 0x573;
     (*pcVar1)();
     puVar9[-1] = 0x583;
-    fcn.00000d62();
+    scene_func_2();
     *puVar9 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar9 = 0x592;
     (*pcVar1)();
     puVar9[-1] = 0x5a0;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar9 = 0x5b5;
     (*pcVar1)();
@@ -1152,7 +1152,7 @@ void fcn.000003af(void)
     *(undefined2 *)((int16_t)puVar9 + -2) = 0x5c8;
     (*pcVar1)();
     puVar10[-1] = 0x5cb;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar10 = 0x5d3;
     (*pcVar1)();
@@ -1166,9 +1166,9 @@ void fcn.000003af(void)
     *(undefined2 *)(puVar11 + -2) = 0x5f5;
     (*pcVar1)();
     puVar12[-1] = 0x603;
-    fcn.00000d62();
+    scene_func_2();
     *puVar12 = 0x606;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar13 = puVar12 + 1;
     puVar12[1] = 0x60d;
@@ -1187,9 +1187,9 @@ void fcn.000003af(void)
     *(undefined2 *)(puVar15 + -2) = 0x637;
     (*pcVar1)();
     puVar16[-1] = 0x645;
-    fcn.00000d62();
+    scene_func_2();
     *puVar16 = 0x648;
-    fcn.00000a79();
+    scene_func_26();
     puVar16[1] = 0x64d;
     fcn.00000e93(CONCAT11(extraout_AH, 4));
     puVar16[2] = 0x65a;
@@ -1199,17 +1199,17 @@ void fcn.000003af(void)
     puVar16[3] = 0x66d;
     (*pcVar1)();
     puVar17[-1] = 0x670;
-    fcn.00000a79();
+    scene_func_26();
     *puVar17 = 0x673;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3022;
     puVar18 = puVar17 + 1;
     puVar17[1] = 0x68a;
     (*pcVar1)();
     puVar18[-1] = 0x68d;
-    fcn.00000a79();
+    scene_func_26();
     *puVar18 = 0x690;
-    fcn.00000a79();
+    scene_func_26();
     puVar18[1] = 0x695;
     fcn.00000e93(CONCAT11(extraout_AH_00, 2));
     pcVar1 = *(code **)0x3010;
@@ -1231,12 +1231,12 @@ void fcn.000003af(void)
     *(undefined2 *)((int16_t)puVar20 + -2) = 0x6de;
     (*pcVar1)();
     puVar21[-1] = 0x6ec;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar21 = 0x6f7;
     (*pcVar1)();
     puVar21[-1] = 0x6fa;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar21 = 0x702;
     (*pcVar1)();
@@ -1245,43 +1245,43 @@ void fcn.000003af(void)
     *(undefined2 *)((int16_t)puVar21 + -2) = 0x717;
     (*pcVar1)();
     puVar22[-1] = 0x71a;
-    fcn.00000a79();
+    scene_func_26();
     *puVar22 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar22 = 0x729;
     (*pcVar1)();
     puVar22[-1] = 0x737;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar22 = 0x74c;
     (*pcVar1)();
     puVar22[-1] = 0x74f;
-    fcn.00000a79();
+    scene_func_26();
     *puVar22 = 0x752;
-    fcn.00000a79();
+    scene_func_26();
     puVar22[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar23 = puVar22 + 1;
     puVar22[1] = 0x761;
     (*pcVar1)();
     puVar23[-1] = 0x76f;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3022;
     *puVar23 = 0x77f;
     (*pcVar1)();
     puVar23[-1] = 0x782;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     *puVar23 = 0x789;
     (*pcVar1)();
     puVar23[-1] = 0x78c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar23 = 0x79b;
     (*pcVar1)();
     puVar23[-1] = 0x7a9;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar23 = 0x7be;
     (*pcVar1)();
@@ -1291,17 +1291,17 @@ void fcn.000003af(void)
     *(undefined2 *)((int16_t)puVar23 + -2) = 0x7cd;
     (*pcVar1)();
     puVar24[-1] = 0x7db;
-    fcn.00000d62();
+    scene_func_2();
     *puVar24 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar24 = 0x7ea;
     (*pcVar1)();
     puVar24[-1] = 0x7f8;
-    fcn.00000d62();
+    scene_func_2();
     *puVar24 = 0x7fb;
-    fcn.00000a79();
+    scene_func_26();
     puVar24[1] = 0x7fe;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar25 = puVar24 + 2;
     puVar24[2] = 0x805;
@@ -1327,16 +1327,16 @@ void fcn.000003af(void)
     *(undefined2 *)(puVar29 + -2) = 0x849;
     (*pcVar1)();
     puVar30[-1] = 0x84c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar30 = 0x84f;
-    fcn.00000a79();
+    scene_func_26();
     puVar30[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar31 = puVar30 + 1;
     puVar30[1] = 0x85e;
     (*pcVar1)();
     puVar31[-1] = 0x86c;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3020;
     *puVar31 = 0x873;
     (*pcVar1)();
@@ -1353,9 +1353,9 @@ void fcn.000003af(void)
     *(undefined2 *)(puVar33 + -2) = 0x896;
     (*pcVar1)();
     puVar34[-1] = 0x899;
-    fcn.00000a79();
+    scene_func_26();
     *puVar34 = 0x89c;
-    fcn.00000a79();
+    scene_func_26();
     puVar36 = puVar34 + 2;
     uVar4 = 0x1515;
     uVar49 = 0x315d;
@@ -1390,9 +1390,9 @@ void fcn.000003af(void)
     *(undefined2 *)(puVar38 + -2) = 0x8ec;
     (*pcVar1)();
     puVar39[-1] = 0x8ef;
-    fcn.00000a79();
+    scene_func_26();
     *puVar39 = 0x8f2;
-    fcn.00000a79();
+    scene_func_26();
     puVar41 = puVar39 + 2;
     uVar4 = 0x2c15;
     uVar49 = 0x1a5d;
@@ -1428,12 +1428,12 @@ void fcn.000003af(void)
     *(undefined2 *)(puVar43 + -2) = 0x937;
     (*pcVar1)();
     puVar44[-1] = 0x945;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar44 = 0x958;
     (*pcVar1)();
     puVar44[-1] = 0x95b;
-    fcn.00000a79();
+    scene_func_26();
     *puVar44 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar44 = 0x96a;
@@ -1443,14 +1443,14 @@ void fcn.000003af(void)
     *(undefined2 *)((int16_t)puVar44 + -2) = 0x977;
     (*pcVar1)();
     puVar45[-1] = 0x985;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar45 = 0x990;
     (*pcVar1)();
     puVar45[-1] = 0x99e;
     fcn.00000fb0(0x808);
     *puVar45 = 0x9ac;
-    fcn.00000d62();
+    scene_func_2();
     puVar45[1] = 0x9ba;
     fcn.00000f45();
     pcVar1 = *(code **)0x3004;
@@ -1494,12 +1494,12 @@ void fcn.000003af(void)
 }
 
 /* ====================================================================== */
-/* 0x3d0: fcn.000003d0 */
+/* 0x3d0: scene_check_state */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined2 fcn.000003d0(int16_t arg1)
+undefined2 scene_check_state(int16_t arg1)
 {
     undefined2 in_stack_00000004;
     
@@ -1511,14 +1511,14 @@ undefined2 fcn.000003d0(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x110: fcn.00000110 */
+/* 0x110: scene_scan_loop_2 */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: This function may have set the stack pointer
 
-void fcn.00000110(void)
+void scene_scan_loop_2(void)
 {
     code *pcVar1;
     int16_t *piVar2;
@@ -1582,8 +1582,8 @@ void fcn.00000110(void)
     undefined2 in_stack_0000002c;
     
     (**(code **)0x10c)();
-    fcn.00000d62();
-    fcn.00000e13();
+    scene_func_2();
+    scene_func_17();
     (**(code **)0x3006)();
     (**(code **)0x3008)();
     (**(code **)0x3004)();
@@ -1593,23 +1593,23 @@ void fcn.00000110(void)
         if (*pcStack0008 == '\0') break;
         pcStack0008 = (char *)0x16d;
         (**(code **)0x3014)();
-        fcn.000003af();
+        scene_multiply();
     }
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
-    fcn.000002d5();
+    scene_multiply();
+    scene_process_loop_2();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     (**(code **)0x3014)();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     (**(code **)0x3014)();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 0x501e;
     (*_int.00002000)();
     sVar3 = (**(code **)0x10c)();
-    fcn.00000de5(iVar4, sVar3);
+    scene_func_1(iVar4, sVar3);
     (**(code **)0x10c)();
     (**(code **)0x10c)();
     (**(code **)0x10c)();
@@ -1619,29 +1619,29 @@ void fcn.00000110(void)
     pcVar1 = (code *)swi(0x60);
     (*pcVar1)();
     (**(code **)0x3018)();
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 0x3180;
     sVar3 = (**(code **)0x3004)();
     *(undefined *)0xff1a = 0;
-    fcn.00000de5(iVar4, sVar3);
-    fcn.000003af();
+    scene_func_1(iVar4, sVar3);
+    scene_multiply();
     iVar4 = 0x4170;
     sVar3 = (**(code **)0x301a)();
     *(undefined *)0xff1a = 0;
-    fcn.00000de5(iVar4, sVar3);
+    scene_func_1(iVar4, sVar3);
     (**(code **)0x301c)();
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 100;
     do {
         *(undefined *)0xff1a = 0;
         (**(code **)0x301e)();
         (**(code **)0x301e)();
-        fcn.000003af();
+        scene_multiply();
         arg1 = 0x4b8;
         iVar4 = iVar4 + -1;
     } while (iVar4 != 0);
     do {
-        arg1 = fcn.000003d0(arg1);
+        arg1 = scene_check_state(arg1);
     } while (*(char *)0xff26 == '\0');
     *(undefined *)0xff24 = 8;
     (**(code **)0x3006)();
@@ -1671,7 +1671,7 @@ void fcn.00000110(void)
     *puVar8 = 0x455;
     (*pcVar1)();
     puVar8[-1] = 0x458;
-    fcn.0000049b(arg2);
+    scene_process_loop_4(arg2);
     *(undefined *)0xff24 = 8;
     pcVar1 = *(code **)0x2042;
     *puVar8 = 0x485;
@@ -1691,13 +1691,13 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar9 + -2) = 0x573;
     (*pcVar1)();
     puVar10[-1] = 0x583;
-    fcn.00000d62();
+    scene_func_2();
     *puVar10 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar10 = 0x592;
     (*pcVar1)();
     puVar10[-1] = 0x5a0;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar10 = 0x5b5;
     (*pcVar1)();
@@ -1706,7 +1706,7 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar10 + -2) = 0x5c8;
     (*pcVar1)();
     puVar11[-1] = 0x5cb;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar11 = 0x5d3;
     (*pcVar1)();
@@ -1720,9 +1720,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar12 + -2) = 0x5f5;
     (*pcVar1)();
     puVar13[-1] = 0x603;
-    fcn.00000d62();
+    scene_func_2();
     *puVar13 = 0x606;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar14 = puVar13 + 1;
     puVar13[1] = 0x60d;
@@ -1741,9 +1741,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar16 + -2) = 0x637;
     (*pcVar1)();
     puVar17[-1] = 0x645;
-    fcn.00000d62();
+    scene_func_2();
     *puVar17 = 0x648;
-    fcn.00000a79();
+    scene_func_26();
     puVar17[1] = 0x64d;
     fcn.00000e93(CONCAT11(extraout_AH, 4));
     puVar17[2] = 0x65a;
@@ -1753,17 +1753,17 @@ void fcn.00000110(void)
     puVar17[3] = 0x66d;
     (*pcVar1)();
     puVar18[-1] = 0x670;
-    fcn.00000a79();
+    scene_func_26();
     *puVar18 = 0x673;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3022;
     puVar19 = puVar18 + 1;
     puVar18[1] = 0x68a;
     (*pcVar1)();
     puVar19[-1] = 0x68d;
-    fcn.00000a79();
+    scene_func_26();
     *puVar19 = 0x690;
-    fcn.00000a79();
+    scene_func_26();
     puVar19[1] = 0x695;
     fcn.00000e93(CONCAT11(extraout_AH_00, 2));
     pcVar1 = *(code **)0x3010;
@@ -1785,12 +1785,12 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar21 + -2) = 0x6de;
     (*pcVar1)();
     puVar22[-1] = 0x6ec;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar22 = 0x6f7;
     (*pcVar1)();
     puVar22[-1] = 0x6fa;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar22 = 0x702;
     (*pcVar1)();
@@ -1799,43 +1799,43 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar22 + -2) = 0x717;
     (*pcVar1)();
     puVar23[-1] = 0x71a;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar23 = 0x729;
     (*pcVar1)();
     puVar23[-1] = 0x737;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar23 = 0x74c;
     (*pcVar1)();
     puVar23[-1] = 0x74f;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0x752;
-    fcn.00000a79();
+    scene_func_26();
     puVar23[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar24 = puVar23 + 1;
     puVar23[1] = 0x761;
     (*pcVar1)();
     puVar24[-1] = 0x76f;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3022;
     *puVar24 = 0x77f;
     (*pcVar1)();
     puVar24[-1] = 0x782;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     *puVar24 = 0x789;
     (*pcVar1)();
     puVar24[-1] = 0x78c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar24 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar24 = 0x79b;
     (*pcVar1)();
     puVar24[-1] = 0x7a9;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar24 = 0x7be;
     (*pcVar1)();
@@ -1845,17 +1845,17 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar24 + -2) = 0x7cd;
     (*pcVar1)();
     puVar25[-1] = 0x7db;
-    fcn.00000d62();
+    scene_func_2();
     *puVar25 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar25 = 0x7ea;
     (*pcVar1)();
     puVar25[-1] = 0x7f8;
-    fcn.00000d62();
+    scene_func_2();
     *puVar25 = 0x7fb;
-    fcn.00000a79();
+    scene_func_26();
     puVar25[1] = 0x7fe;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar26 = puVar25 + 2;
     puVar25[2] = 0x805;
@@ -1881,16 +1881,16 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar30 + -2) = 0x849;
     (*pcVar1)();
     puVar31[-1] = 0x84c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar31 = 0x84f;
-    fcn.00000a79();
+    scene_func_26();
     puVar31[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar32 = puVar31 + 1;
     puVar31[1] = 0x85e;
     (*pcVar1)();
     puVar32[-1] = 0x86c;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3020;
     *puVar32 = 0x873;
     (*pcVar1)();
@@ -1907,9 +1907,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar34 + -2) = 0x896;
     (*pcVar1)();
     puVar35[-1] = 0x899;
-    fcn.00000a79();
+    scene_func_26();
     *puVar35 = 0x89c;
-    fcn.00000a79();
+    scene_func_26();
     puVar37 = puVar35 + 2;
     uVar5 = 0x1515;
     uVar50 = 0x315d;
@@ -1944,9 +1944,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar39 + -2) = 0x8ec;
     (*pcVar1)();
     puVar40[-1] = 0x8ef;
-    fcn.00000a79();
+    scene_func_26();
     *puVar40 = 0x8f2;
-    fcn.00000a79();
+    scene_func_26();
     puVar42 = puVar40 + 2;
     uVar5 = 0x2c15;
     uVar50 = 0x1a5d;
@@ -1982,12 +1982,12 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar44 + -2) = 0x937;
     (*pcVar1)();
     puVar45[-1] = 0x945;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar45 = 0x958;
     (*pcVar1)();
     puVar45[-1] = 0x95b;
-    fcn.00000a79();
+    scene_func_26();
     *puVar45 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar45 = 0x96a;
@@ -1997,14 +1997,14 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar45 + -2) = 0x977;
     (*pcVar1)();
     puVar46[-1] = 0x985;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar46 = 0x990;
     (*pcVar1)();
     puVar46[-1] = 0x99e;
     fcn.00000fb0(0x808);
     *puVar46 = 0x9ac;
-    fcn.00000d62();
+    scene_func_2();
     puVar46[1] = 0x9ba;
     fcn.00000f45();
     pcVar1 = *(code **)0x3004;
@@ -2048,14 +2048,14 @@ void fcn.00000110(void)
 }
 
 /* ====================================================================== */
-/* 0x112: fcn.00000112 */
+/* 0x112: scene_process_loop */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: This function may have set the stack pointer
 
-void fcn.00000110(void)
+void scene_scan_loop_2(void)
 {
     code *pcVar1;
     int16_t *piVar2;
@@ -2119,8 +2119,8 @@ void fcn.00000110(void)
     undefined2 in_stack_0000002c;
     
     (**(code **)0x10c)();
-    fcn.00000d62();
-    fcn.00000e13();
+    scene_func_2();
+    scene_func_17();
     (**(code **)0x3006)();
     (**(code **)0x3008)();
     (**(code **)0x3004)();
@@ -2130,23 +2130,23 @@ void fcn.00000110(void)
         if (*pcStack0008 == '\0') break;
         pcStack0008 = (char *)0x16d;
         (**(code **)0x3014)();
-        fcn.000003af();
+        scene_multiply();
     }
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
-    fcn.000002d5();
+    scene_multiply();
+    scene_process_loop_2();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     (**(code **)0x3014)();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     (**(code **)0x3014)();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 0x501e;
     (*_int.00002000)();
     sVar3 = (**(code **)0x10c)();
-    fcn.00000de5(iVar4, sVar3);
+    scene_func_1(iVar4, sVar3);
     (**(code **)0x10c)();
     (**(code **)0x10c)();
     (**(code **)0x10c)();
@@ -2156,29 +2156,29 @@ void fcn.00000110(void)
     pcVar1 = (code *)swi(0x60);
     (*pcVar1)();
     (**(code **)0x3018)();
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 0x3180;
     sVar3 = (**(code **)0x3004)();
     *(undefined *)0xff1a = 0;
-    fcn.00000de5(iVar4, sVar3);
-    fcn.000003af();
+    scene_func_1(iVar4, sVar3);
+    scene_multiply();
     iVar4 = 0x4170;
     sVar3 = (**(code **)0x301a)();
     *(undefined *)0xff1a = 0;
-    fcn.00000de5(iVar4, sVar3);
+    scene_func_1(iVar4, sVar3);
     (**(code **)0x301c)();
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 100;
     do {
         *(undefined *)0xff1a = 0;
         (**(code **)0x301e)();
         (**(code **)0x301e)();
-        fcn.000003af();
+        scene_multiply();
         arg1 = 0x4b8;
         iVar4 = iVar4 + -1;
     } while (iVar4 != 0);
     do {
-        arg1 = fcn.000003d0(arg1);
+        arg1 = scene_check_state(arg1);
     } while (*(char *)0xff26 == '\0');
     *(undefined *)0xff24 = 8;
     (**(code **)0x3006)();
@@ -2208,7 +2208,7 @@ void fcn.00000110(void)
     *puVar8 = 0x455;
     (*pcVar1)();
     puVar8[-1] = 0x458;
-    fcn.0000049b(arg2);
+    scene_process_loop_4(arg2);
     *(undefined *)0xff24 = 8;
     pcVar1 = *(code **)0x2042;
     *puVar8 = 0x485;
@@ -2228,13 +2228,13 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar9 + -2) = 0x573;
     (*pcVar1)();
     puVar10[-1] = 0x583;
-    fcn.00000d62();
+    scene_func_2();
     *puVar10 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar10 = 0x592;
     (*pcVar1)();
     puVar10[-1] = 0x5a0;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar10 = 0x5b5;
     (*pcVar1)();
@@ -2243,7 +2243,7 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar10 + -2) = 0x5c8;
     (*pcVar1)();
     puVar11[-1] = 0x5cb;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar11 = 0x5d3;
     (*pcVar1)();
@@ -2257,9 +2257,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar12 + -2) = 0x5f5;
     (*pcVar1)();
     puVar13[-1] = 0x603;
-    fcn.00000d62();
+    scene_func_2();
     *puVar13 = 0x606;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar14 = puVar13 + 1;
     puVar13[1] = 0x60d;
@@ -2278,9 +2278,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar16 + -2) = 0x637;
     (*pcVar1)();
     puVar17[-1] = 0x645;
-    fcn.00000d62();
+    scene_func_2();
     *puVar17 = 0x648;
-    fcn.00000a79();
+    scene_func_26();
     puVar17[1] = 0x64d;
     fcn.00000e93(CONCAT11(extraout_AH, 4));
     puVar17[2] = 0x65a;
@@ -2290,17 +2290,17 @@ void fcn.00000110(void)
     puVar17[3] = 0x66d;
     (*pcVar1)();
     puVar18[-1] = 0x670;
-    fcn.00000a79();
+    scene_func_26();
     *puVar18 = 0x673;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3022;
     puVar19 = puVar18 + 1;
     puVar18[1] = 0x68a;
     (*pcVar1)();
     puVar19[-1] = 0x68d;
-    fcn.00000a79();
+    scene_func_26();
     *puVar19 = 0x690;
-    fcn.00000a79();
+    scene_func_26();
     puVar19[1] = 0x695;
     fcn.00000e93(CONCAT11(extraout_AH_00, 2));
     pcVar1 = *(code **)0x3010;
@@ -2322,12 +2322,12 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar21 + -2) = 0x6de;
     (*pcVar1)();
     puVar22[-1] = 0x6ec;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar22 = 0x6f7;
     (*pcVar1)();
     puVar22[-1] = 0x6fa;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar22 = 0x702;
     (*pcVar1)();
@@ -2336,43 +2336,43 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar22 + -2) = 0x717;
     (*pcVar1)();
     puVar23[-1] = 0x71a;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar23 = 0x729;
     (*pcVar1)();
     puVar23[-1] = 0x737;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar23 = 0x74c;
     (*pcVar1)();
     puVar23[-1] = 0x74f;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0x752;
-    fcn.00000a79();
+    scene_func_26();
     puVar23[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar24 = puVar23 + 1;
     puVar23[1] = 0x761;
     (*pcVar1)();
     puVar24[-1] = 0x76f;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3022;
     *puVar24 = 0x77f;
     (*pcVar1)();
     puVar24[-1] = 0x782;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     *puVar24 = 0x789;
     (*pcVar1)();
     puVar24[-1] = 0x78c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar24 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar24 = 0x79b;
     (*pcVar1)();
     puVar24[-1] = 0x7a9;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar24 = 0x7be;
     (*pcVar1)();
@@ -2382,17 +2382,17 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar24 + -2) = 0x7cd;
     (*pcVar1)();
     puVar25[-1] = 0x7db;
-    fcn.00000d62();
+    scene_func_2();
     *puVar25 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar25 = 0x7ea;
     (*pcVar1)();
     puVar25[-1] = 0x7f8;
-    fcn.00000d62();
+    scene_func_2();
     *puVar25 = 0x7fb;
-    fcn.00000a79();
+    scene_func_26();
     puVar25[1] = 0x7fe;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar26 = puVar25 + 2;
     puVar25[2] = 0x805;
@@ -2418,16 +2418,16 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar30 + -2) = 0x849;
     (*pcVar1)();
     puVar31[-1] = 0x84c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar31 = 0x84f;
-    fcn.00000a79();
+    scene_func_26();
     puVar31[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar32 = puVar31 + 1;
     puVar31[1] = 0x85e;
     (*pcVar1)();
     puVar32[-1] = 0x86c;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3020;
     *puVar32 = 0x873;
     (*pcVar1)();
@@ -2444,9 +2444,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar34 + -2) = 0x896;
     (*pcVar1)();
     puVar35[-1] = 0x899;
-    fcn.00000a79();
+    scene_func_26();
     *puVar35 = 0x89c;
-    fcn.00000a79();
+    scene_func_26();
     puVar37 = puVar35 + 2;
     uVar5 = 0x1515;
     uVar50 = 0x315d;
@@ -2481,9 +2481,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar39 + -2) = 0x8ec;
     (*pcVar1)();
     puVar40[-1] = 0x8ef;
-    fcn.00000a79();
+    scene_func_26();
     *puVar40 = 0x8f2;
-    fcn.00000a79();
+    scene_func_26();
     puVar42 = puVar40 + 2;
     uVar5 = 0x2c15;
     uVar50 = 0x1a5d;
@@ -2519,12 +2519,12 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar44 + -2) = 0x937;
     (*pcVar1)();
     puVar45[-1] = 0x945;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar45 = 0x958;
     (*pcVar1)();
     puVar45[-1] = 0x95b;
-    fcn.00000a79();
+    scene_func_26();
     *puVar45 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar45 = 0x96a;
@@ -2534,14 +2534,14 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar45 + -2) = 0x977;
     (*pcVar1)();
     puVar46[-1] = 0x985;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar46 = 0x990;
     (*pcVar1)();
     puVar46[-1] = 0x99e;
     fcn.00000fb0(0x808);
     *puVar46 = 0x9ac;
-    fcn.00000d62();
+    scene_func_2();
     puVar46[1] = 0x9ba;
     fcn.00000f45();
     pcVar1 = *(code **)0x3004;
@@ -2585,14 +2585,14 @@ void fcn.00000110(void)
 }
 
 /* ====================================================================== */
-/* 0x116: fcn.00000116 */
+/* 0x116: fill_buffer */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: This function may have set the stack pointer
 
-void fcn.00000110(void)
+void scene_scan_loop_2(void)
 {
     code *pcVar1;
     int16_t *piVar2;
@@ -2656,8 +2656,8 @@ void fcn.00000110(void)
     undefined2 in_stack_0000002c;
     
     (**(code **)0x10c)();
-    fcn.00000d62();
-    fcn.00000e13();
+    scene_func_2();
+    scene_func_17();
     (**(code **)0x3006)();
     (**(code **)0x3008)();
     (**(code **)0x3004)();
@@ -2667,23 +2667,23 @@ void fcn.00000110(void)
         if (*pcStack0008 == '\0') break;
         pcStack0008 = (char *)0x16d;
         (**(code **)0x3014)();
-        fcn.000003af();
+        scene_multiply();
     }
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
-    fcn.000002d5();
+    scene_multiply();
+    scene_process_loop_2();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     (**(code **)0x3014)();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     (**(code **)0x3014)();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 0x501e;
     (*_int.00002000)();
     sVar3 = (**(code **)0x10c)();
-    fcn.00000de5(iVar4, sVar3);
+    scene_func_1(iVar4, sVar3);
     (**(code **)0x10c)();
     (**(code **)0x10c)();
     (**(code **)0x10c)();
@@ -2693,29 +2693,29 @@ void fcn.00000110(void)
     pcVar1 = (code *)swi(0x60);
     (*pcVar1)();
     (**(code **)0x3018)();
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 0x3180;
     sVar3 = (**(code **)0x3004)();
     *(undefined *)0xff1a = 0;
-    fcn.00000de5(iVar4, sVar3);
-    fcn.000003af();
+    scene_func_1(iVar4, sVar3);
+    scene_multiply();
     iVar4 = 0x4170;
     sVar3 = (**(code **)0x301a)();
     *(undefined *)0xff1a = 0;
-    fcn.00000de5(iVar4, sVar3);
+    scene_func_1(iVar4, sVar3);
     (**(code **)0x301c)();
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 100;
     do {
         *(undefined *)0xff1a = 0;
         (**(code **)0x301e)();
         (**(code **)0x301e)();
-        fcn.000003af();
+        scene_multiply();
         arg1 = 0x4b8;
         iVar4 = iVar4 + -1;
     } while (iVar4 != 0);
     do {
-        arg1 = fcn.000003d0(arg1);
+        arg1 = scene_check_state(arg1);
     } while (*(char *)0xff26 == '\0');
     *(undefined *)0xff24 = 8;
     (**(code **)0x3006)();
@@ -2745,7 +2745,7 @@ void fcn.00000110(void)
     *puVar8 = 0x455;
     (*pcVar1)();
     puVar8[-1] = 0x458;
-    fcn.0000049b(arg2);
+    scene_process_loop_4(arg2);
     *(undefined *)0xff24 = 8;
     pcVar1 = *(code **)0x2042;
     *puVar8 = 0x485;
@@ -2765,13 +2765,13 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar9 + -2) = 0x573;
     (*pcVar1)();
     puVar10[-1] = 0x583;
-    fcn.00000d62();
+    scene_func_2();
     *puVar10 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar10 = 0x592;
     (*pcVar1)();
     puVar10[-1] = 0x5a0;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar10 = 0x5b5;
     (*pcVar1)();
@@ -2780,7 +2780,7 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar10 + -2) = 0x5c8;
     (*pcVar1)();
     puVar11[-1] = 0x5cb;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar11 = 0x5d3;
     (*pcVar1)();
@@ -2794,9 +2794,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar12 + -2) = 0x5f5;
     (*pcVar1)();
     puVar13[-1] = 0x603;
-    fcn.00000d62();
+    scene_func_2();
     *puVar13 = 0x606;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar14 = puVar13 + 1;
     puVar13[1] = 0x60d;
@@ -2815,9 +2815,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar16 + -2) = 0x637;
     (*pcVar1)();
     puVar17[-1] = 0x645;
-    fcn.00000d62();
+    scene_func_2();
     *puVar17 = 0x648;
-    fcn.00000a79();
+    scene_func_26();
     puVar17[1] = 0x64d;
     fcn.00000e93(CONCAT11(extraout_AH, 4));
     puVar17[2] = 0x65a;
@@ -2827,17 +2827,17 @@ void fcn.00000110(void)
     puVar17[3] = 0x66d;
     (*pcVar1)();
     puVar18[-1] = 0x670;
-    fcn.00000a79();
+    scene_func_26();
     *puVar18 = 0x673;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3022;
     puVar19 = puVar18 + 1;
     puVar18[1] = 0x68a;
     (*pcVar1)();
     puVar19[-1] = 0x68d;
-    fcn.00000a79();
+    scene_func_26();
     *puVar19 = 0x690;
-    fcn.00000a79();
+    scene_func_26();
     puVar19[1] = 0x695;
     fcn.00000e93(CONCAT11(extraout_AH_00, 2));
     pcVar1 = *(code **)0x3010;
@@ -2859,12 +2859,12 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar21 + -2) = 0x6de;
     (*pcVar1)();
     puVar22[-1] = 0x6ec;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar22 = 0x6f7;
     (*pcVar1)();
     puVar22[-1] = 0x6fa;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar22 = 0x702;
     (*pcVar1)();
@@ -2873,43 +2873,43 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar22 + -2) = 0x717;
     (*pcVar1)();
     puVar23[-1] = 0x71a;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar23 = 0x729;
     (*pcVar1)();
     puVar23[-1] = 0x737;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar23 = 0x74c;
     (*pcVar1)();
     puVar23[-1] = 0x74f;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0x752;
-    fcn.00000a79();
+    scene_func_26();
     puVar23[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar24 = puVar23 + 1;
     puVar23[1] = 0x761;
     (*pcVar1)();
     puVar24[-1] = 0x76f;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3022;
     *puVar24 = 0x77f;
     (*pcVar1)();
     puVar24[-1] = 0x782;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     *puVar24 = 0x789;
     (*pcVar1)();
     puVar24[-1] = 0x78c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar24 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar24 = 0x79b;
     (*pcVar1)();
     puVar24[-1] = 0x7a9;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar24 = 0x7be;
     (*pcVar1)();
@@ -2919,17 +2919,17 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar24 + -2) = 0x7cd;
     (*pcVar1)();
     puVar25[-1] = 0x7db;
-    fcn.00000d62();
+    scene_func_2();
     *puVar25 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar25 = 0x7ea;
     (*pcVar1)();
     puVar25[-1] = 0x7f8;
-    fcn.00000d62();
+    scene_func_2();
     *puVar25 = 0x7fb;
-    fcn.00000a79();
+    scene_func_26();
     puVar25[1] = 0x7fe;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar26 = puVar25 + 2;
     puVar25[2] = 0x805;
@@ -2955,16 +2955,16 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar30 + -2) = 0x849;
     (*pcVar1)();
     puVar31[-1] = 0x84c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar31 = 0x84f;
-    fcn.00000a79();
+    scene_func_26();
     puVar31[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar32 = puVar31 + 1;
     puVar31[1] = 0x85e;
     (*pcVar1)();
     puVar32[-1] = 0x86c;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3020;
     *puVar32 = 0x873;
     (*pcVar1)();
@@ -2981,9 +2981,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar34 + -2) = 0x896;
     (*pcVar1)();
     puVar35[-1] = 0x899;
-    fcn.00000a79();
+    scene_func_26();
     *puVar35 = 0x89c;
-    fcn.00000a79();
+    scene_func_26();
     puVar37 = puVar35 + 2;
     uVar5 = 0x1515;
     uVar50 = 0x315d;
@@ -3018,9 +3018,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar39 + -2) = 0x8ec;
     (*pcVar1)();
     puVar40[-1] = 0x8ef;
-    fcn.00000a79();
+    scene_func_26();
     *puVar40 = 0x8f2;
-    fcn.00000a79();
+    scene_func_26();
     puVar42 = puVar40 + 2;
     uVar5 = 0x2c15;
     uVar50 = 0x1a5d;
@@ -3056,12 +3056,12 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar44 + -2) = 0x937;
     (*pcVar1)();
     puVar45[-1] = 0x945;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar45 = 0x958;
     (*pcVar1)();
     puVar45[-1] = 0x95b;
-    fcn.00000a79();
+    scene_func_26();
     *puVar45 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar45 = 0x96a;
@@ -3071,14 +3071,14 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar45 + -2) = 0x977;
     (*pcVar1)();
     puVar46[-1] = 0x985;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar46 = 0x990;
     (*pcVar1)();
     puVar46[-1] = 0x99e;
     fcn.00000fb0(0x808);
     *puVar46 = 0x9ac;
-    fcn.00000d62();
+    scene_func_2();
     puVar46[1] = 0x9ba;
     fcn.00000f45();
     pcVar1 = *(code **)0x3004;
@@ -3122,14 +3122,14 @@ void fcn.00000110(void)
 }
 
 /* ====================================================================== */
-/* 0x118: fcn.00000118 */
+/* 0x118: fill_buffer_2 */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: This function may have set the stack pointer
 
-void fcn.00000110(void)
+void scene_scan_loop_2(void)
 {
     code *pcVar1;
     int16_t *piVar2;
@@ -3193,8 +3193,8 @@ void fcn.00000110(void)
     undefined2 in_stack_0000002c;
     
     (**(code **)0x10c)();
-    fcn.00000d62();
-    fcn.00000e13();
+    scene_func_2();
+    scene_func_17();
     (**(code **)0x3006)();
     (**(code **)0x3008)();
     (**(code **)0x3004)();
@@ -3204,23 +3204,23 @@ void fcn.00000110(void)
         if (*pcStack0008 == '\0') break;
         pcStack0008 = (char *)0x16d;
         (**(code **)0x3014)();
-        fcn.000003af();
+        scene_multiply();
     }
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
-    fcn.000002d5();
+    scene_multiply();
+    scene_process_loop_2();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     (**(code **)0x3014)();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     (**(code **)0x3014)();
     *(undefined *)0xff1a = 0;
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 0x501e;
     (*_int.00002000)();
     sVar3 = (**(code **)0x10c)();
-    fcn.00000de5(iVar4, sVar3);
+    scene_func_1(iVar4, sVar3);
     (**(code **)0x10c)();
     (**(code **)0x10c)();
     (**(code **)0x10c)();
@@ -3230,29 +3230,29 @@ void fcn.00000110(void)
     pcVar1 = (code *)swi(0x60);
     (*pcVar1)();
     (**(code **)0x3018)();
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 0x3180;
     sVar3 = (**(code **)0x3004)();
     *(undefined *)0xff1a = 0;
-    fcn.00000de5(iVar4, sVar3);
-    fcn.000003af();
+    scene_func_1(iVar4, sVar3);
+    scene_multiply();
     iVar4 = 0x4170;
     sVar3 = (**(code **)0x301a)();
     *(undefined *)0xff1a = 0;
-    fcn.00000de5(iVar4, sVar3);
+    scene_func_1(iVar4, sVar3);
     (**(code **)0x301c)();
-    fcn.000003af();
+    scene_multiply();
     iVar4 = 100;
     do {
         *(undefined *)0xff1a = 0;
         (**(code **)0x301e)();
         (**(code **)0x301e)();
-        fcn.000003af();
+        scene_multiply();
         arg1 = 0x4b8;
         iVar4 = iVar4 + -1;
     } while (iVar4 != 0);
     do {
-        arg1 = fcn.000003d0(arg1);
+        arg1 = scene_check_state(arg1);
     } while (*(char *)0xff26 == '\0');
     *(undefined *)0xff24 = 8;
     (**(code **)0x3006)();
@@ -3282,7 +3282,7 @@ void fcn.00000110(void)
     *puVar8 = 0x455;
     (*pcVar1)();
     puVar8[-1] = 0x458;
-    fcn.0000049b(arg2);
+    scene_process_loop_4(arg2);
     *(undefined *)0xff24 = 8;
     pcVar1 = *(code **)0x2042;
     *puVar8 = 0x485;
@@ -3302,13 +3302,13 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar9 + -2) = 0x573;
     (*pcVar1)();
     puVar10[-1] = 0x583;
-    fcn.00000d62();
+    scene_func_2();
     *puVar10 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar10 = 0x592;
     (*pcVar1)();
     puVar10[-1] = 0x5a0;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar10 = 0x5b5;
     (*pcVar1)();
@@ -3317,7 +3317,7 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar10 + -2) = 0x5c8;
     (*pcVar1)();
     puVar11[-1] = 0x5cb;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar11 = 0x5d3;
     (*pcVar1)();
@@ -3331,9 +3331,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar12 + -2) = 0x5f5;
     (*pcVar1)();
     puVar13[-1] = 0x603;
-    fcn.00000d62();
+    scene_func_2();
     *puVar13 = 0x606;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar14 = puVar13 + 1;
     puVar13[1] = 0x60d;
@@ -3352,9 +3352,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar16 + -2) = 0x637;
     (*pcVar1)();
     puVar17[-1] = 0x645;
-    fcn.00000d62();
+    scene_func_2();
     *puVar17 = 0x648;
-    fcn.00000a79();
+    scene_func_26();
     puVar17[1] = 0x64d;
     fcn.00000e93(CONCAT11(extraout_AH, 4));
     puVar17[2] = 0x65a;
@@ -3364,17 +3364,17 @@ void fcn.00000110(void)
     puVar17[3] = 0x66d;
     (*pcVar1)();
     puVar18[-1] = 0x670;
-    fcn.00000a79();
+    scene_func_26();
     *puVar18 = 0x673;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3022;
     puVar19 = puVar18 + 1;
     puVar18[1] = 0x68a;
     (*pcVar1)();
     puVar19[-1] = 0x68d;
-    fcn.00000a79();
+    scene_func_26();
     *puVar19 = 0x690;
-    fcn.00000a79();
+    scene_func_26();
     puVar19[1] = 0x695;
     fcn.00000e93(CONCAT11(extraout_AH_00, 2));
     pcVar1 = *(code **)0x3010;
@@ -3396,12 +3396,12 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar21 + -2) = 0x6de;
     (*pcVar1)();
     puVar22[-1] = 0x6ec;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar22 = 0x6f7;
     (*pcVar1)();
     puVar22[-1] = 0x6fa;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar22 = 0x702;
     (*pcVar1)();
@@ -3410,43 +3410,43 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar22 + -2) = 0x717;
     (*pcVar1)();
     puVar23[-1] = 0x71a;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar23 = 0x729;
     (*pcVar1)();
     puVar23[-1] = 0x737;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar23 = 0x74c;
     (*pcVar1)();
     puVar23[-1] = 0x74f;
-    fcn.00000a79();
+    scene_func_26();
     *puVar23 = 0x752;
-    fcn.00000a79();
+    scene_func_26();
     puVar23[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar24 = puVar23 + 1;
     puVar23[1] = 0x761;
     (*pcVar1)();
     puVar24[-1] = 0x76f;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3022;
     *puVar24 = 0x77f;
     (*pcVar1)();
     puVar24[-1] = 0x782;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     *puVar24 = 0x789;
     (*pcVar1)();
     puVar24[-1] = 0x78c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar24 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar24 = 0x79b;
     (*pcVar1)();
     puVar24[-1] = 0x7a9;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar24 = 0x7be;
     (*pcVar1)();
@@ -3456,17 +3456,17 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar24 + -2) = 0x7cd;
     (*pcVar1)();
     puVar25[-1] = 0x7db;
-    fcn.00000d62();
+    scene_func_2();
     *puVar25 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar25 = 0x7ea;
     (*pcVar1)();
     puVar25[-1] = 0x7f8;
-    fcn.00000d62();
+    scene_func_2();
     *puVar25 = 0x7fb;
-    fcn.00000a79();
+    scene_func_26();
     puVar25[1] = 0x7fe;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar26 = puVar25 + 2;
     puVar25[2] = 0x805;
@@ -3492,16 +3492,16 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar30 + -2) = 0x849;
     (*pcVar1)();
     puVar31[-1] = 0x84c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar31 = 0x84f;
-    fcn.00000a79();
+    scene_func_26();
     puVar31[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar32 = puVar31 + 1;
     puVar31[1] = 0x85e;
     (*pcVar1)();
     puVar32[-1] = 0x86c;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3020;
     *puVar32 = 0x873;
     (*pcVar1)();
@@ -3518,9 +3518,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar34 + -2) = 0x896;
     (*pcVar1)();
     puVar35[-1] = 0x899;
-    fcn.00000a79();
+    scene_func_26();
     *puVar35 = 0x89c;
-    fcn.00000a79();
+    scene_func_26();
     puVar37 = puVar35 + 2;
     uVar5 = 0x1515;
     uVar50 = 0x315d;
@@ -3555,9 +3555,9 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar39 + -2) = 0x8ec;
     (*pcVar1)();
     puVar40[-1] = 0x8ef;
-    fcn.00000a79();
+    scene_func_26();
     *puVar40 = 0x8f2;
-    fcn.00000a79();
+    scene_func_26();
     puVar42 = puVar40 + 2;
     uVar5 = 0x2c15;
     uVar50 = 0x1a5d;
@@ -3593,12 +3593,12 @@ void fcn.00000110(void)
     *(undefined2 *)(puVar44 + -2) = 0x937;
     (*pcVar1)();
     puVar45[-1] = 0x945;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar45 = 0x958;
     (*pcVar1)();
     puVar45[-1] = 0x95b;
-    fcn.00000a79();
+    scene_func_26();
     *puVar45 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar45 = 0x96a;
@@ -3608,14 +3608,14 @@ void fcn.00000110(void)
     *(undefined2 *)((int16_t)puVar45 + -2) = 0x977;
     (*pcVar1)();
     puVar46[-1] = 0x985;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar46 = 0x990;
     (*pcVar1)();
     puVar46[-1] = 0x99e;
     fcn.00000fb0(0x808);
     *puVar46 = 0x9ac;
-    fcn.00000d62();
+    scene_func_2();
     puVar46[1] = 0x9ba;
     fcn.00000f45();
     pcVar1 = *(code **)0x3004;
@@ -3659,11 +3659,11 @@ void fcn.00000110(void)
 }
 
 /* ====================================================================== */
-/* 0xe13: fcn.00000e13 */
+/* 0xe13: scene_func_17 */
 /* ====================================================================== */
 
 
-void fcn.00000e13(void)
+void scene_func_17(void)
 {
     undefined2 *puVar1;
     int16_t iVar2;
@@ -3677,36 +3677,36 @@ void fcn.00000e13(void)
         puVar3 = puVar3 + 1;
         *puVar1 = 0;
     }
-    fcn.00000e53();
-    uVar4 = fcn.00000e53();
-    fcn.00000e62((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10), 0x850);
+    scene_func_18();
+    uVar4 = scene_func_18();
+    scene_multiply_2((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10), 0x850);
     return;
 }
 
 /* ====================================================================== */
-/* 0xe53: fcn.00000e53 */
+/* 0xe53: scene_func_18 */
 /* ====================================================================== */
 
 
-void fcn.00000e53(void)
+void scene_func_18(void)
 {
     int16_t in_AX;
     int16_t arg1;
     int16_t in_CX;
     int16_t in_BX;
     
-    arg1 = fcn.00000e71(in_BX, in_CX, in_AX);
-    fcn.00000e71(in_BX, in_CX, arg1);
+    arg1 = copy_buffer(in_BX, in_CX, in_AX);
+    copy_buffer(in_BX, in_CX, arg1);
     return;
 }
 
 /* ====================================================================== */
-/* 0xe71: fcn.00000e71 */
+/* 0xe71: copy_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000e71(int16_t arg3, int16_t arg4, int16_t arg1)
+void copy_buffer(int16_t arg3, int16_t arg4, int16_t arg1)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -3737,27 +3737,27 @@ void fcn.00000e71(int16_t arg3, int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xe62: fcn.00000e62 */
+/* 0xe62: scene_multiply_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000e62(int16_t arg1, int16_t arg2, int16_t arg3)
+void scene_multiply_2(int16_t arg1, int16_t arg2, int16_t arg3)
 {
     int16_t arg1_00;
     int16_t in_CX;
     
-    arg1_00 = fcn.00000e71(arg3, in_CX, arg1);
-    fcn.00000e71(arg3, in_CX, arg1_00);
+    arg1_00 = copy_buffer(arg3, in_CX, arg1);
+    copy_buffer(arg3, in_CX, arg1_00);
     return;
 }
 
 /* ====================================================================== */
-/* 0x2d5: fcn.000002d5 */
+/* 0x2d5: scene_process_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.000002d5(void)
+void scene_process_loop_2(void)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -3778,18 +3778,18 @@ void fcn.000002d5(void)
             if (4 < uVar2) break;
             in_AX = (**(code **)0x3016)();
         }
-        fcn.00000301(CONCAT11((char)((uint16_t)in_AX >> 8), uVar2));
-        in_AX = fcn.000003af();
+        scene_process_loop_3(CONCAT11((char)((uint16_t)in_AX >> 8), uVar2));
+        in_AX = scene_multiply();
     } while( true );
 }
 
 /* ====================================================================== */
-/* 0x301: fcn.00000301 */
+/* 0x301: scene_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000301(int16_t arg1)
+void scene_process_loop_3(int16_t arg1)
 {
     char *unaff_SI;
     undefined2 unaff_DS;
@@ -3817,12 +3817,12 @@ void fcn.00000301(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x49b: fcn.0000049b */
+/* 0x49b: scene_process_loop_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000049b(int16_t arg2)
+void scene_process_loop_4(int16_t arg2)
 {
     undefined extraout_AH;
     undefined extraout_AH_00;
@@ -3837,21 +3837,21 @@ void fcn.0000049b(int16_t arg2)
         iVar1 = 10;
         do {
             (**(code **)0x300e)();
-            fcn.0000045a(CONCAT11(extraout_AH, 0x1c));
+            scene_process_loop_5(CONCAT11(extraout_AH, 0x1c));
             iVar1 = iVar1 + -1;
         } while (iVar1 != 0);
     } while (*(char *)(iVar2 + -1) != -1);
     iVar2 = 0x78;
     do {
         (**(code **)0x300e)();
-        fcn.0000045a(CONCAT11(extraout_AH_00, 0x1c));
+        scene_process_loop_5(CONCAT11(extraout_AH_00, 0x1c));
         iVar2 = iVar2 + -1;
     } while (iVar2 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0x45a: fcn.0000045a */
+/* 0x45a: scene_process_loop_5 */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
@@ -3859,7 +3859,7 @@ void fcn.0000049b(int16_t arg2)
 // WARNING: This function may have set the stack pointer
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000045a(int16_t arg1)
+void scene_process_loop_5(int16_t arg1)
 {
     code *pcVar1;
     int16_t *piVar2;
@@ -3915,7 +3915,7 @@ void fcn.0000045a(int16_t arg1)
     undefined2 unaff_DS;
     
     while ((*(char *)0xff1d == '\0' && (*(char *)0xff29 != '\r'))) {
-        arg1 = fcn.000003d0(arg1);
+        arg1 = scene_check_state(arg1);
         if ((uint8_t)arg1 <= *(uint8_t *)0xff1a) {
             *(undefined *)0xff1a = 0;
             return;
@@ -3938,13 +3938,13 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)(puVar6 + -2) = 0x573;
     (*pcVar1)();
     puVar7[-1] = 0x583;
-    fcn.00000d62();
+    scene_func_2();
     *puVar7 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar7 = 0x592;
     (*pcVar1)();
     puVar7[-1] = 0x5a0;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar7 = 0x5b5;
     (*pcVar1)();
@@ -3953,7 +3953,7 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)((int16_t)puVar7 + -2) = 0x5c8;
     (*pcVar1)();
     puVar8[-1] = 0x5cb;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar8 = 0x5d3;
     (*pcVar1)();
@@ -3967,9 +3967,9 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)(puVar9 + -2) = 0x5f5;
     (*pcVar1)();
     puVar10[-1] = 0x603;
-    fcn.00000d62();
+    scene_func_2();
     *puVar10 = 0x606;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar11 = puVar10 + 1;
     puVar10[1] = 0x60d;
@@ -3988,9 +3988,9 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)(puVar13 + -2) = 0x637;
     (*pcVar1)();
     puVar14[-1] = 0x645;
-    fcn.00000d62();
+    scene_func_2();
     *puVar14 = 0x648;
-    fcn.00000a79();
+    scene_func_26();
     puVar14[1] = 0x64d;
     fcn.00000e93(CONCAT11(extraout_AH, 4));
     puVar14[2] = 0x65a;
@@ -4000,17 +4000,17 @@ void fcn.0000045a(int16_t arg1)
     puVar14[3] = 0x66d;
     (*pcVar1)();
     puVar15[-1] = 0x670;
-    fcn.00000a79();
+    scene_func_26();
     *puVar15 = 0x673;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3022;
     puVar16 = puVar15 + 1;
     puVar15[1] = 0x68a;
     (*pcVar1)();
     puVar16[-1] = 0x68d;
-    fcn.00000a79();
+    scene_func_26();
     *puVar16 = 0x690;
-    fcn.00000a79();
+    scene_func_26();
     puVar16[1] = 0x695;
     fcn.00000e93(CONCAT11(extraout_AH_00, 2));
     pcVar1 = *(code **)0x3010;
@@ -4032,12 +4032,12 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)((int16_t)puVar18 + -2) = 0x6de;
     (*pcVar1)();
     puVar19[-1] = 0x6ec;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar19 = 0x6f7;
     (*pcVar1)();
     puVar19[-1] = 0x6fa;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3008;
     *puVar19 = 0x702;
     (*pcVar1)();
@@ -4046,43 +4046,43 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)((int16_t)puVar19 + -2) = 0x717;
     (*pcVar1)();
     puVar20[-1] = 0x71a;
-    fcn.00000a79();
+    scene_func_26();
     *puVar20 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar20 = 0x729;
     (*pcVar1)();
     puVar20[-1] = 0x737;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar20 = 0x74c;
     (*pcVar1)();
     puVar20[-1] = 0x74f;
-    fcn.00000a79();
+    scene_func_26();
     *puVar20 = 0x752;
-    fcn.00000a79();
+    scene_func_26();
     puVar20[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar21 = puVar20 + 1;
     puVar20[1] = 0x761;
     (*pcVar1)();
     puVar21[-1] = 0x76f;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3022;
     *puVar21 = 0x77f;
     (*pcVar1)();
     puVar21[-1] = 0x782;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     *puVar21 = 0x789;
     (*pcVar1)();
     puVar21[-1] = 0x78c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar21 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar21 = 0x79b;
     (*pcVar1)();
     puVar21[-1] = 0x7a9;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3004;
     *puVar21 = 0x7be;
     (*pcVar1)();
@@ -4092,17 +4092,17 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)((int16_t)puVar21 + -2) = 0x7cd;
     (*pcVar1)();
     puVar22[-1] = 0x7db;
-    fcn.00000d62();
+    scene_func_2();
     *puVar22 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar22 = 0x7ea;
     (*pcVar1)();
     puVar22[-1] = 0x7f8;
-    fcn.00000d62();
+    scene_func_2();
     *puVar22 = 0x7fb;
-    fcn.00000a79();
+    scene_func_26();
     puVar22[1] = 0x7fe;
-    fcn.00000a79();
+    scene_func_26();
     pcVar1 = *(code **)0x3020;
     puVar23 = puVar22 + 2;
     puVar22[2] = 0x805;
@@ -4128,16 +4128,16 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)(puVar27 + -2) = 0x849;
     (*pcVar1)();
     puVar28[-1] = 0x84c;
-    fcn.00000a79();
+    scene_func_26();
     *puVar28 = 0x84f;
-    fcn.00000a79();
+    scene_func_26();
     puVar28[1] = 0;
     pcVar1 = *(code **)0x10c;
     puVar29 = puVar28 + 1;
     puVar28[1] = 0x85e;
     (*pcVar1)();
     puVar29[-1] = 0x86c;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3020;
     *puVar29 = 0x873;
     (*pcVar1)();
@@ -4154,9 +4154,9 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)(puVar31 + -2) = 0x896;
     (*pcVar1)();
     puVar32[-1] = 0x899;
-    fcn.00000a79();
+    scene_func_26();
     *puVar32 = 0x89c;
-    fcn.00000a79();
+    scene_func_26();
     puVar34 = puVar32 + 2;
     uVar5 = 0x1515;
     uVar4 = 0x315d;
@@ -4191,9 +4191,9 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)(puVar36 + -2) = 0x8ec;
     (*pcVar1)();
     puVar37[-1] = 0x8ef;
-    fcn.00000a79();
+    scene_func_26();
     *puVar37 = 0x8f2;
-    fcn.00000a79();
+    scene_func_26();
     puVar39 = puVar37 + 2;
     uVar5 = 0x2c15;
     uVar4 = 0x1a5d;
@@ -4229,12 +4229,12 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)(puVar41 + -2) = 0x937;
     (*pcVar1)();
     puVar42[-1] = 0x945;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3010;
     *puVar42 = 0x958;
     (*pcVar1)();
     puVar42[-1] = 0x95b;
-    fcn.00000a79();
+    scene_func_26();
     *puVar42 = 0;
     pcVar1 = *(code **)0x10c;
     *puVar42 = 0x96a;
@@ -4244,14 +4244,14 @@ void fcn.0000045a(int16_t arg1)
     *(undefined2 *)((int16_t)puVar42 + -2) = 0x977;
     (*pcVar1)();
     puVar43[-1] = 0x985;
-    fcn.00000d62();
+    scene_func_2();
     pcVar1 = *(code **)0x3006;
     *puVar43 = 0x990;
     (*pcVar1)();
     puVar43[-1] = 0x99e;
     fcn.00000fb0(0x808);
     *puVar43 = 0x9ac;
-    fcn.00000d62();
+    scene_func_2();
     puVar43[1] = 0x9ba;
     fcn.00000f45();
     pcVar1 = *(code **)0x3004;
@@ -4295,11 +4295,11 @@ void fcn.0000045a(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xa79: fcn.00000a79 */
+/* 0xa79: scene_func_26 */
 /* ====================================================================== */
 
 
-void fcn.00000a79(void)
+void scene_func_26(void)
 {
     uint8_t *puVar1;
     undefined uVar2;

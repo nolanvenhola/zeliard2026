@@ -29,7 +29,7 @@ static const char *STR_0x1aab = "ßSH;¬Cî&~-@JYJY«8µ;@"; // [ibm037]
 static const char *STR_0x1b1c = ";Cî~-@JYJY«8«"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_06 */
 /* ====================================================================== */
 
 // WARNING: Instruction at (ram,0x00000022) overlaps instruction at (ram,0x00000021)
@@ -38,7 +38,7 @@ static const char *STR_0x1b1c = ";Cî~-@JYJY«8«"; // [ibm037]
 // WARNING: This function may have set the stack pointer
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr1_06(int16_t arg3)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -172,7 +172,7 @@ code_r0x00000030:
         *(undefined2 *)0x1ffe = 0;
         uVar15 = uStack_28;
 code_r0x00000051:
-        fcn.00000df3();
+        player_func_1();
         *(undefined *)0xe7 = 0;
 code_r0x00000059:
         unaff_DS = uVar15;
@@ -201,10 +201,10 @@ code_r0x00000081:
 code_r0x0000009b:
             uStack_22 = 0;
             uStack_1c = puVar10;
-            fcn.00000ab3(in_AX);
+            player_multiply(in_AX);
             uStack_21 = 0xa1;
             uStack_20 = 0;
-            fcn.00000aa6();
+            player_func_9();
             unaff_CS = 0;
             uStack_1f = 0xa6;
             uStack_1e = 0;
@@ -220,7 +220,7 @@ code_r0x0000009b:
         *(undefined2 *)0x1ffe = unaff_CS;
         uVar15 = *(undefined2 *)0x1ffe;
         *(undefined2 *)0x1ffe = 0xc5;
-        fcn.00000af1(in_AX);
+        player_scan_loop(in_AX);
         *(undefined *)0xff1d = 0;
         *(undefined *)0xff1e = 0;
         *(undefined *)0xe4 = 0;
@@ -232,7 +232,7 @@ code_r0x0000009b:
         arg3_00 = 0x481c;
         (**(code **)0x2004)();
         (**(code **)0x2012)();
-        fcn.00000c76();
+        player_func_12();
         (**(code **)0x2006)();
         (**(code **)0x2008)();
         uStack_28 = 0x10e;
@@ -262,12 +262,12 @@ code_r0x0000009b:
         *(int16_t *)0xff2a = (uint16_t)*(uint8_t *)0x80 * 8 + -0x3fe9;
         uStack_22 = 0x6f;
         uStack_21 = 1;
-        iVar7 = fcn.00000c2f();
+        iVar7 = player_multiply_2();
         if (*(char *)0xe8 != '\0') {
             *(undefined *)0xe8 = 0;
             uStack_20 = 0x7e;
             uStack_1f = 1;
-            fcn.00000ab3(iVar7);
+            player_multiply(iVar7);
             uStack_1e = 0xfc;
             uStack_1d = 0x61;
             uStack_20 = 0xaf;
@@ -294,7 +294,7 @@ code_r0x0000009b:
         }
         uStack_20 = 0xb8;
         uStack_1f = 1;
-        fcn.000008b0();
+        fill_buffer();
         if (*(char *)0x7c44 != '\0') {
             *(undefined2 *)0x7c47 = 0x6781;
             if ((*(uint8_t *)0xc2 & 1) == 0) {
@@ -309,7 +309,7 @@ code_r0x0000009b:
                 (**(code **)0x7c47)();
                 uStack_22 = 0xde;
                 uStack_21 = 1;
-                fcn.000008b0();
+                fill_buffer();
                 iVar7 = CONCAT11(uStack_1d, uStack_1e) + -1;
             } while (iVar7 != 0);
             uStack_1e = 0xe6;
@@ -326,17 +326,17 @@ code_r0x0000009b:
         }
         uStack_1e = 3;
         uStack_1d = 2;
-        fcn.000008b0();
+        fill_buffer();
         uStack_1c._0_1_ = 6;
         uStack_1c._1_1_ = 2;
-        fcn.000008f7();
+        player_process_loop();
         iStack_1a = 0x209;
-        fcn.00000cb9();
+        player_func_20();
         uStack_18 = 0x20c;
-        iVar7 = fcn.00000243(arg3_00);
+        iVar7 = player_func_22(arg3_00);
         if (*(char *)0x7c4b == '\0') {
             uStack_16 = 0x216;
-            fcn.000002f1(arg3_00, iVar7);
+            player_func_28(arg3_00, iVar7);
         }
         *(undefined *)0x7c4b = 0;
         iStack_14 = 0x61fc;
@@ -356,9 +356,9 @@ code_r0x0000009b:
         }
         *(undefined *)0xe7 = 4;
         iStack_14 = 0xe68;
-        fcn.00000c52();
+        fill_buffer_2();
         *(undefined *)0xff1a = 0x28;
-        fcn.000008b3();
+        player_scan_loop_2();
         uVar6 = *(uint8_t *)(unaff_SI + 1);
         if (uVar6 != 0xff) {
             if (uVar6 < 8) {
@@ -372,11 +372,11 @@ code_r0x0000009b:
                 (**(code **)0x2002)();
                 *(undefined *)0x7c42 = 0;
                 (**(code **)0x2012)();
-                fcn.00000c76();
+                player_func_12();
                 uStack0002 = 0xece;
                 (**(code **)0x2010)();
                 uStack0004 = 0xed1;
-                fcn.00000aa6();
+                player_func_9();
                 uStack0006 = 0xed6;
                 (**(code **)0x3002)();
                 puVar14 = (undefined *)0xe000;
@@ -386,10 +386,10 @@ code_r0x0000009b:
                     *puVar3 = 0xfe;
                 }
                 uStack0008 = 0xee5;
-                fcn.00000af1(CONCAT11(extraout_AH, 0xfe));
+                player_scan_loop(CONCAT11(extraout_AH, 0xfe));
                 *(undefined *)0xff1a = 0x28;
                 uStack000a = 0xeed;
-                fcn.000008b3();
+                player_scan_loop_2();
                 *(undefined *)0xff1d = 0;
                 *(undefined *)0xff1e = 0;
                 *(undefined *)0xe7 = 1;
@@ -417,11 +417,11 @@ code_r0x0000009b:
         }
         *(undefined *)0xe7 = 4;
         unaff_SI = (int16_t *)0xf83;
-        fcn.000008b3();
+        player_scan_loop_2();
         if ((*(uint8_t *)0x45 & 0x80) == 0) {
             *(undefined *)0x7c5c = 0xff;
             unaff_BP = 0xf97;
-            fcn.000003ce(0x918, uVar9 & 0xff00);
+            player_copy_buf(0x918, uVar9 & 0xff00);
             *(undefined *)0x7c5c = 0;
             *(uint8_t *)0x45 = *(uint8_t *)0x45 | 0x80;
         }
@@ -445,13 +445,13 @@ code_r0x0000009b:
             return;
         }
         bVar16 = (uint16_t)(uint8_t)(*(char *)0x83 + 6) * 8 + *(int16_t *)0xff2a == 0;
-        fcn.00000872();
+        player_multiply_3();
         if (bVar16) {
             return;
         }
         iVar7 = (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0x80 + 1;
         bVar16 = iVar7 == 0;
-        fcn.00000894(iVar7);
+        player_multiply_4(iVar7);
         if (!bVar16) {
             return;
         }
@@ -476,13 +476,13 @@ code_r0x0000009b:
         return;
     }
     bVar16 = (uint16_t)(uint8_t)(*(char *)0x83 + 3) * 8 + *(int16_t *)0xff2a == 0;
-    fcn.00000872();
+    player_multiply_3();
     if (bVar16) {
         return;
     }
     iVar7 = (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0x80 + -1;
     bVar16 = iVar7 == 0;
-    fcn.00000894(iVar7);
+    player_multiply_4(iVar7);
     if (!bVar16) {
         return;
     }
@@ -508,11 +508,11 @@ code_r0x0000009b:
 }
 
 /* ====================================================================== */
-/* 0xdf3: fcn.00000df3 */
+/* 0xdf3: player_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00000df3(void)
+void player_func_1(void)
 {
     (*_fcn.0000010c)();
     (**(code **)0x3026)();
@@ -520,7 +520,7 @@ void fcn.00000df3(void)
 }
 
 /* ====================================================================== */
-/* 0x10c: fcn.0000010c */
+/* 0x10c: player_func_2 */
 /* ====================================================================== */
 
 // WARNING: Instruction at (ram,0x00000022) overlaps instruction at (ram,0x00000021)
@@ -529,7 +529,7 @@ void fcn.00000df3(void)
 // WARNING: This function may have set the stack pointer
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr1_06(int16_t arg3)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -663,7 +663,7 @@ code_r0x00000030:
         *(undefined2 *)0x1ffe = 0;
         uVar15 = uStack_28;
 code_r0x00000051:
-        fcn.00000df3();
+        player_func_1();
         *(undefined *)0xe7 = 0;
 code_r0x00000059:
         unaff_DS = uVar15;
@@ -692,10 +692,10 @@ code_r0x00000081:
 code_r0x0000009b:
             uStack_22 = 0;
             uStack_1c = puVar10;
-            fcn.00000ab3(in_AX);
+            player_multiply(in_AX);
             uStack_21 = 0xa1;
             uStack_20 = 0;
-            fcn.00000aa6();
+            player_func_9();
             unaff_CS = 0;
             uStack_1f = 0xa6;
             uStack_1e = 0;
@@ -711,7 +711,7 @@ code_r0x0000009b:
         *(undefined2 *)0x1ffe = unaff_CS;
         uVar15 = *(undefined2 *)0x1ffe;
         *(undefined2 *)0x1ffe = 0xc5;
-        fcn.00000af1(in_AX);
+        player_scan_loop(in_AX);
         *(undefined *)0xff1d = 0;
         *(undefined *)0xff1e = 0;
         *(undefined *)0xe4 = 0;
@@ -723,7 +723,7 @@ code_r0x0000009b:
         arg3_00 = 0x481c;
         (**(code **)0x2004)();
         (**(code **)0x2012)();
-        fcn.00000c76();
+        player_func_12();
         (**(code **)0x2006)();
         (**(code **)0x2008)();
         uStack_28 = 0x10e;
@@ -753,12 +753,12 @@ code_r0x0000009b:
         *(int16_t *)0xff2a = (uint16_t)*(uint8_t *)0x80 * 8 + -0x3fe9;
         uStack_22 = 0x6f;
         uStack_21 = 1;
-        iVar7 = fcn.00000c2f();
+        iVar7 = player_multiply_2();
         if (*(char *)0xe8 != '\0') {
             *(undefined *)0xe8 = 0;
             uStack_20 = 0x7e;
             uStack_1f = 1;
-            fcn.00000ab3(iVar7);
+            player_multiply(iVar7);
             uStack_1e = 0xfc;
             uStack_1d = 0x61;
             uStack_20 = 0xaf;
@@ -785,7 +785,7 @@ code_r0x0000009b:
         }
         uStack_20 = 0xb8;
         uStack_1f = 1;
-        fcn.000008b0();
+        fill_buffer();
         if (*(char *)0x7c44 != '\0') {
             *(undefined2 *)0x7c47 = 0x6781;
             if ((*(uint8_t *)0xc2 & 1) == 0) {
@@ -800,7 +800,7 @@ code_r0x0000009b:
                 (**(code **)0x7c47)();
                 uStack_22 = 0xde;
                 uStack_21 = 1;
-                fcn.000008b0();
+                fill_buffer();
                 iVar7 = CONCAT11(uStack_1d, uStack_1e) + -1;
             } while (iVar7 != 0);
             uStack_1e = 0xe6;
@@ -817,17 +817,17 @@ code_r0x0000009b:
         }
         uStack_1e = 3;
         uStack_1d = 2;
-        fcn.000008b0();
+        fill_buffer();
         uStack_1c._0_1_ = 6;
         uStack_1c._1_1_ = 2;
-        fcn.000008f7();
+        player_process_loop();
         iStack_1a = 0x209;
-        fcn.00000cb9();
+        player_func_20();
         uStack_18 = 0x20c;
-        iVar7 = fcn.00000243(arg3_00);
+        iVar7 = player_func_22(arg3_00);
         if (*(char *)0x7c4b == '\0') {
             uStack_16 = 0x216;
-            fcn.000002f1(arg3_00, iVar7);
+            player_func_28(arg3_00, iVar7);
         }
         *(undefined *)0x7c4b = 0;
         iStack_14 = 0x61fc;
@@ -847,9 +847,9 @@ code_r0x0000009b:
         }
         *(undefined *)0xe7 = 4;
         iStack_14 = 0xe68;
-        fcn.00000c52();
+        fill_buffer_2();
         *(undefined *)0xff1a = 0x28;
-        fcn.000008b3();
+        player_scan_loop_2();
         uVar6 = *(uint8_t *)(unaff_SI + 1);
         if (uVar6 != 0xff) {
             if (uVar6 < 8) {
@@ -863,11 +863,11 @@ code_r0x0000009b:
                 (**(code **)0x2002)();
                 *(undefined *)0x7c42 = 0;
                 (**(code **)0x2012)();
-                fcn.00000c76();
+                player_func_12();
                 uStack0002 = 0xece;
                 (**(code **)0x2010)();
                 uStack0004 = 0xed1;
-                fcn.00000aa6();
+                player_func_9();
                 uStack0006 = 0xed6;
                 (**(code **)0x3002)();
                 puVar14 = (undefined *)0xe000;
@@ -877,10 +877,10 @@ code_r0x0000009b:
                     *puVar3 = 0xfe;
                 }
                 uStack0008 = 0xee5;
-                fcn.00000af1(CONCAT11(extraout_AH, 0xfe));
+                player_scan_loop(CONCAT11(extraout_AH, 0xfe));
                 *(undefined *)0xff1a = 0x28;
                 uStack000a = 0xeed;
-                fcn.000008b3();
+                player_scan_loop_2();
                 *(undefined *)0xff1d = 0;
                 *(undefined *)0xff1e = 0;
                 *(undefined *)0xe7 = 1;
@@ -908,11 +908,11 @@ code_r0x0000009b:
         }
         *(undefined *)0xe7 = 4;
         unaff_SI = (int16_t *)0xf83;
-        fcn.000008b3();
+        player_scan_loop_2();
         if ((*(uint8_t *)0x45 & 0x80) == 0) {
             *(undefined *)0x7c5c = 0xff;
             unaff_BP = 0xf97;
-            fcn.000003ce(0x918, uVar9 & 0xff00);
+            player_copy_buf(0x918, uVar9 & 0xff00);
             *(undefined *)0x7c5c = 0;
             *(uint8_t *)0x45 = *(uint8_t *)0x45 | 0x80;
         }
@@ -936,13 +936,13 @@ code_r0x0000009b:
             return;
         }
         bVar16 = (uint16_t)(uint8_t)(*(char *)0x83 + 6) * 8 + *(int16_t *)0xff2a == 0;
-        fcn.00000872();
+        player_multiply_3();
         if (bVar16) {
             return;
         }
         iVar7 = (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0x80 + 1;
         bVar16 = iVar7 == 0;
-        fcn.00000894(iVar7);
+        player_multiply_4(iVar7);
         if (!bVar16) {
             return;
         }
@@ -967,13 +967,13 @@ code_r0x0000009b:
         return;
     }
     bVar16 = (uint16_t)(uint8_t)(*(char *)0x83 + 3) * 8 + *(int16_t *)0xff2a == 0;
-    fcn.00000872();
+    player_multiply_3();
     if (bVar16) {
         return;
     }
     iVar7 = (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0x80 + -1;
     bVar16 = iVar7 == 0;
-    fcn.00000894(iVar7);
+    player_multiply_4(iVar7);
     if (!bVar16) {
         return;
     }
@@ -999,12 +999,12 @@ code_r0x0000009b:
 }
 
 /* ====================================================================== */
-/* 0xab3: fcn.00000ab3 */
+/* 0xab3: player_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000ab3(int16_t arg1)
+void player_multiply(int16_t arg1)
 {
     int16_t unaff_CS;
     undefined2 unaff_DS;
@@ -1015,27 +1015,27 @@ void fcn.00000ab3(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xaa6: fcn.00000aa6 */
+/* 0xaa6: player_func_9 */
 /* ====================================================================== */
 
 
-void fcn.00000aa6(void)
+void player_func_9(void)
 {
     int16_t in_AX;
     undefined2 unaff_DS;
     
-    fcn.00000da2(in_AX);
+    math_calc(in_AX);
     (**(code **)0x6ae9)();
     return;
 }
 
 /* ====================================================================== */
-/* 0xda2: fcn.00000da2 */
+/* 0xda2: math_calc */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000da2(int16_t arg1)
+void math_calc(int16_t arg1)
 {
     undefined2 uVar1;
     
@@ -1051,12 +1051,12 @@ void fcn.00000da2(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xaf1: fcn.00000af1 */
+/* 0xaf1: player_scan_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000af1(int16_t arg1)
+void player_scan_loop(int16_t arg1)
 {
     uint8_t *puVar1;
     undefined *puVar2;
@@ -1088,11 +1088,11 @@ void fcn.00000af1(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xc76: fcn.00000c76 */
+/* 0xc76: player_func_12 */
 /* ====================================================================== */
 
 
-void fcn.00000c76(void)
+void player_func_12(void)
 {
     (**(code **)0x200e)();
     (**(code **)0x200e)();
@@ -1102,11 +1102,11 @@ void fcn.00000c76(void)
 }
 
 /* ====================================================================== */
-/* 0xc2f: fcn.00000c2f */
+/* 0xc2f: player_multiply_2 */
 /* ====================================================================== */
 
 
-void fcn.00000c2f(void)
+void player_multiply_2(void)
 {
     undefined uVar1;
     int16_t iVar2;
@@ -1123,19 +1123,19 @@ void fcn.00000c2f(void)
 }
 
 /* ====================================================================== */
-/* 0x8b0: fcn.000008b0 */
+/* 0x8b0: fill_buffer */
 /* ====================================================================== */
 
 
-void fcn.000008b0(void)
+void fill_buffer(void)
 {
     int16_t arg1;
     undefined2 unaff_DS;
     undefined uVar1;
     
-    fcn.00000b20();
-    arg1 = fcn.00000979();
-    fcn.00000954(arg1);
+    player_multiply_5();
+    arg1 = player_func_47();
+    player_multiply_6(arg1);
     (**(code **)0x3004)();
     uVar1 = (char)((uint16_t)*(uint8_t *)0xff33 * 4 >> 8) != '\0';
     do {
@@ -1146,7 +1146,7 @@ void fcn.000008b0(void)
         (**(code **)0x118)();
         (**(code **)0x11e)();
         if ((bool)uVar1) {
-            fcn.00001596();
+            clear_buffer();
         }
         uVar1 = *(uint8_t *)0xff1a < 0xd1;
     } while ((bool)uVar1);
@@ -1155,11 +1155,11 @@ void fcn.000008b0(void)
 }
 
 /* ====================================================================== */
-/* 0x8f7: fcn.000008f7 */
+/* 0x8f7: player_process_loop */
 /* ====================================================================== */
 
 
-void fcn.000008f7(void)
+void player_process_loop(void)
 {
     undefined *puVar1;
     int16_t iVar2;
@@ -1171,11 +1171,11 @@ void fcn.000008f7(void)
     }
     *(undefined *)0xff75 = 0xb;
     (**(code **)0x2002)();
-    fcn.0000093c();
+    player_func_17();
     (**(code **)0xa002)();
-    fcn.0000093c();
+    player_func_17();
     (**(code **)0x2002)();
-    fcn.00000aa9();
+    player_func_18();
     (**(code **)0x3002)();
     puVar3 = (undefined *)0xe000;
     for (iVar2 = 0xe0; iVar2 != 0; iVar2 = iVar2 + -1) {
@@ -1183,18 +1183,18 @@ void fcn.000008f7(void)
         puVar3 = puVar3 + 1;
         *puVar1 = 0xfe;
     }
-    fcn.000008b3();
+    player_scan_loop_2();
     *(undefined *)0xff1d = 0;
     *(undefined *)0xff1e = 0;
     return;
 }
 
 /* ====================================================================== */
-/* 0x93c: fcn.0000093c */
+/* 0x93c: player_func_17 */
 /* ====================================================================== */
 
 
-void fcn.0000093c(void)
+void player_func_17(void)
 {
     undefined2 *puVar1;
     undefined2 uVar2;
@@ -1221,11 +1221,11 @@ void fcn.0000093c(void)
 }
 
 /* ====================================================================== */
-/* 0xaa9: fcn.00000aa9 */
+/* 0xaa9: player_func_18 */
 /* ====================================================================== */
 
 
-void fcn.00000aa9(void)
+void player_func_18(void)
 {
     undefined2 unaff_DS;
     
@@ -1234,18 +1234,18 @@ void fcn.00000aa9(void)
 }
 
 /* ====================================================================== */
-/* 0x8b3: fcn.000008b3 */
+/* 0x8b3: player_scan_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.000008b3(void)
+void player_scan_loop_2(void)
 {
     int16_t arg1;
     undefined2 unaff_DS;
     undefined uVar1;
     
-    arg1 = fcn.00000979();
-    fcn.00000954(arg1);
+    arg1 = player_func_47();
+    player_multiply_6(arg1);
     (**(code **)0x3004)();
     uVar1 = (char)((uint16_t)*(uint8_t *)0xff33 * 4 >> 8) != '\0';
     do {
@@ -1256,7 +1256,7 @@ void fcn.000008b3(void)
         (**(code **)0x118)();
         (**(code **)0x11e)();
         if ((bool)uVar1) {
-            fcn.00001596();
+            clear_buffer();
         }
         uVar1 = *(uint8_t *)0xff1a < 0xd1;
     } while ((bool)uVar1);
@@ -1265,14 +1265,14 @@ void fcn.000008b3(void)
 }
 
 /* ====================================================================== */
-/* 0xcb9: fcn.00000cb9 */
+/* 0xcb9: player_func_20 */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: This function may have set the stack pointer
 
-void fcn.00000cb9(undefined2 param_1, int16_t param_2)
+void player_func_20(undefined2 param_1, int16_t param_2)
 {
     undefined *puVar1;
     code *pcVar2;
@@ -1296,15 +1296,15 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
     undefined2 uVar15;
     
     if (*(char *)0x83 == -1) {
-        fcn.00000c52();
+        fill_buffer_2();
         *(undefined *)0xff1a = 0x28;
-        fcn.000008b3();
+        player_scan_loop_2();
         for (puVar11 = *(uint8_t **)0xc007; (*puVar11 & 1) == 0; puVar11 = puVar11 + 4) {
         }
         uVar4 = CONCAT11(*puVar11, puVar11[1]) & 0xfeff;
         if ((*puVar11 & 0xfe) != 0) goto code_r0x00000ffc;
         param_1 = 0xce8;
-        fcn.00000d34(uVar4);
+        player_process_loop_2(uVar4);
         *(undefined *)0x83 = 0x1a;
         iVar5 = *(int16_t *)0xc002 + -0x24;
         *(int16_t *)0x80 = iVar5;
@@ -1312,15 +1312,15 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
         if (*(char *)0x83 != '\x1b') {
             return;
         }
-        fcn.00000c52();
+        fill_buffer_2();
         *(undefined *)0xff1a = 0x28;
-        fcn.000008b3();
+        player_scan_loop_2();
         for (puVar11 = *(uint8_t **)0xc007; (*puVar11 & 1) != 0; puVar11 = puVar11 + 4) {
         }
         uVar4 = CONCAT11(*puVar11, puVar11[1]) & 0xfeff;
         if ((*puVar11 & 0xfe) != 0) goto code_r0x00000ffc;
         param_1 = 0xd26;
-        iVar5 = fcn.00000d34(uVar4);
+        iVar5 = player_process_loop_2(uVar4);
         *(undefined *)0x83 = 0;
         *(undefined2 *)0x80 = 0;
     }
@@ -1328,7 +1328,7 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
         *(undefined2 *)0x1ffe = unaff_CS;
         unaff_DS = *(undefined2 *)0x1ffe;
         *(undefined2 *)0x1ffe = 0xc5;
-        fcn.00000af1(iVar5);
+        player_scan_loop(iVar5);
         *(undefined *)0xff1d = 0;
         *(undefined *)0xff1e = 0;
         *(undefined *)0xe4 = 0;
@@ -1340,7 +1340,7 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
         arg3 = 0x481c;
         (**(code **)0x2004)();
         (**(code **)0x2012)();
-        fcn.00000c76();
+        player_func_12();
         (**(code **)0x2006)();
         (**(code **)0x2008)();
         (**(code **)0x2014)();
@@ -1363,10 +1363,10 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
         *(char *)0x7c46 = pcVar9[3];
         (**(code **)0x2010)();
         *(int16_t *)0xff2a = (uint16_t)*(uint8_t *)0x80 * 8 + -0x3fe9;
-        iVar5 = fcn.00000c2f();
+        iVar5 = player_multiply_2();
         if (*(char *)0xe8 != '\0') {
             *(undefined *)0xe8 = 0;
-            fcn.00000ab3(iVar5);
+            player_multiply(iVar5);
             (*_fcn.0000010c)(0x6eaf, 0x61fc);
             (**(code **)0x2040)();
             pcVar2 = (code *)swi(0x60);
@@ -1383,7 +1383,7 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
             puVar13 = puVar13 + 1;
             *puVar1 = 0xfe;
         }
-        fcn.000008b0();
+        fill_buffer();
         if (*(char *)0x7c44 != '\0') {
             *(undefined2 *)0x7c47 = 0x6781;
             if ((*(uint8_t *)0xc2 & 1) == 0) {
@@ -1393,7 +1393,7 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
             do {
                 uVar15 = 0x1db;
                 (**(code **)0x7c47)();
-                fcn.000008b0(uVar15);
+                fill_buffer(uVar15);
                 iVar5 = iVar5 + -1;
             } while (iVar5 != 0);
             (**(code **)0x7c47)();
@@ -1403,12 +1403,12 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
             pcVar2 = (code *)swi(0x60);
             (*pcVar2)();
         }
-        fcn.000008b0();
-        fcn.000008f7();
-        fcn.00000cb9();
-        iVar5 = fcn.00000243(arg3);
+        fill_buffer();
+        player_process_loop();
+        player_func_20();
+        iVar5 = player_func_22(arg3);
         if (*(char *)0x7c4b == '\0') {
-            fcn.000002f1(arg3, iVar5);
+            player_func_28(arg3, iVar5);
         }
         *(undefined *)0x7c4b = 0;
         pcVar2 = (code *)swi(0x61);
@@ -1421,13 +1421,13 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
                     return;
                 }
                 bVar14 = (uint16_t)(uint8_t)(*(char *)0x83 + 6) * 8 + *(int16_t *)0xff2a == 0;
-                fcn.00000872();
+                player_multiply_3();
                 if (bVar14) {
                     return;
                 }
                 iVar5 = (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0x80 + 1;
                 bVar14 = iVar5 == 0;
-                fcn.00000894(iVar5);
+                player_multiply_4(iVar5);
                 if (!bVar14) {
                     return;
                 }
@@ -1452,13 +1452,13 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
                 return;
             }
             bVar14 = (uint16_t)(uint8_t)(*(char *)0x83 + 3) * 8 + *(int16_t *)0xff2a == 0;
-            fcn.00000872();
+            player_multiply_3();
             if (bVar14) {
                 return;
             }
             iVar5 = (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0x80 + -1;
             bVar14 = iVar5 == 0;
-            fcn.00000894(iVar5);
+            player_multiply_4(iVar5);
             if (!bVar14) {
                 return;
             }
@@ -1494,18 +1494,18 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
             piVar12 = (int16_t *)((int16_t)piVar12 + 3);
         }
         *(undefined *)0xe7 = 4;
-        fcn.00000c52(piVar12);
+        fill_buffer_2(piVar12);
         *(undefined *)0xff1a = 0x28;
-        fcn.000008b3();
+        player_scan_loop_2();
         uVar3 = *(uint8_t *)(param_1 + 2);
         if (uVar3 != 0xff) break;
         *(undefined *)0xe7 = 4;
         param_1 = 0xf83;
-        fcn.000008b3();
+        player_scan_loop_2();
         if ((*(uint8_t *)0x45 & 0x80) == 0) {
             *(undefined *)0x7c5c = 0xff;
             param_2 = 0xf97;
-            fcn.000003ce(0x918, uVar4 & 0xff00);
+            player_copy_buf(0x918, uVar4 & 0xff00);
             *(undefined *)0x7c5c = 0;
             *(uint8_t *)0x45 = *(uint8_t *)0x45 | 0x80;
         }
@@ -1524,7 +1524,7 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
         *(undefined2 *)0x1ffe = 0;
         uVar15 = *(undefined2 *)0x1ffe;
         *(undefined2 *)0x1ffe = 0x54;
-        fcn.00000df3();
+        player_func_1();
         puVar7 = (undefined2 *)0x2000;
         *(undefined *)0xe7 = 0;
         if (*(char *)0x49 != '\0') {
@@ -1549,9 +1549,9 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
                 *(undefined *)0x7c44 = 0xff;
             }
             puVar7[-1] = 0x9e;
-            fcn.00000ab3(iVar5);
+            player_multiply(iVar5);
             *puVar7 = 0xa1;
-            fcn.00000aa6();
+            player_func_9();
             unaff_CS = 0;
             pcVar2 = *(code **)0x3002;
             puVar8 = puVar7 + 1;
@@ -1577,9 +1577,9 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
         (**(code **)0x2002)();
         *(undefined *)0x7c42 = 0;
         (**(code **)0x2012)();
-        fcn.00000c76();
+        player_func_12();
         (**(code **)0x2010)();
-        fcn.00000aa6();
+        player_func_9();
         (**(code **)0x3002)();
         puVar13 = (undefined *)0xe000;
         for (iVar5 = 0xe0; iVar5 != 0; iVar5 = iVar5 + -1) {
@@ -1587,9 +1587,9 @@ void fcn.00000cb9(undefined2 param_1, int16_t param_2)
             puVar13 = puVar13 + 1;
             *puVar1 = 0xfe;
         }
-        fcn.00000af1(CONCAT11(extraout_AH, 0xfe));
+        player_scan_loop(CONCAT11(extraout_AH, 0xfe));
         *(undefined *)0xff1a = 0x28;
-        fcn.000008b3();
+        player_scan_loop_2();
         *(undefined *)0xff1d = 0;
         *(undefined *)0xff1e = 0;
         *(undefined *)0xe7 = 1;
@@ -1617,12 +1617,12 @@ code_r0x00000ffc:
 }
 
 /* ====================================================================== */
-/* 0x243: fcn.00000243 */
+/* 0x243: player_func_22 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000243(short unsigned int arg3)
+void player_func_22(short unsigned int arg3)
 {
     undefined uVar1;
     undefined uVar2;
@@ -1647,7 +1647,7 @@ void fcn.00000243(short unsigned int arg3)
            (iVar5 = iVar4 + 3, *(char *)(iVar6 + 0x18) != -3)) {
             return;
         }
-        fcn.00000a98(iVar5);
+        player_load_chunk(iVar5);
         if ((*(uint8_t *)(unaff_SI + 6) & 0xc0) != 0) {
             return;
         }
@@ -1656,7 +1656,7 @@ void fcn.00000243(short unsigned int arg3)
         *(undefined *)(unaff_SI + 5) = 7;
         *(uint8_t *)(unaff_SI + 2) = *(uint8_t *)(unaff_SI + 2) | 0x80;
         *(uint8_t *)(unaff_SI + 4) = *(uint8_t *)(unaff_SI + 4) | 1;
-        fcn.0000035e(CONCAT11(uVar2, uVar1));
+        player_func_25(CONCAT11(uVar2, uVar1));
         *(undefined *)(unaff_SI + 5) = uVar3;
         *(undefined *)(unaff_SI + 2) = (char)in_stack_00000002;
         return;
@@ -1666,7 +1666,7 @@ void fcn.00000243(short unsigned int arg3)
        (iVar5 = iVar4 + -3, *(char *)(iVar6 + -0x18) != -3)) {
         return;
     }
-    fcn.00000a98(iVar5);
+    player_load_chunk(iVar5);
     if ((*(uint8_t *)(unaff_SI + 6) & 0xc0) != 0) {
         return;
     }
@@ -1675,19 +1675,19 @@ void fcn.00000243(short unsigned int arg3)
     *(undefined *)(unaff_SI + 5) = 7;
     *(uint8_t *)(unaff_SI + 2) = *(uint8_t *)(unaff_SI + 2) & 0x7f;
     *(uint8_t *)(unaff_SI + 4) = *(uint8_t *)(unaff_SI + 4) | 1;
-    fcn.0000035e(CONCAT11(uVar2, uVar1));
+    player_func_25(CONCAT11(uVar2, uVar1));
     *(undefined *)(unaff_SI + 5) = uVar3;
     *(undefined *)(unaff_SI + 2) = (char)in_stack_00000002;
     return;
 }
 
 /* ====================================================================== */
-/* 0xa98: fcn.00000a98 */
+/* 0xa98: player_load_chunk */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000a98(int16_t arg2)
+void player_load_chunk(int16_t arg2)
 {
     int16_t *piVar1;
     undefined2 unaff_DS;
@@ -1698,12 +1698,12 @@ void fcn.00000a98(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x35e: fcn.0000035e */
+/* 0x35e: player_func_25 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000035e(int16_t arg1)
+void player_func_25(int16_t arg1)
 {
     undefined *puVar1;
     undefined uVar2;
@@ -1718,7 +1718,7 @@ void fcn.0000035e(int16_t arg1)
     *(uint8_t *)(unaff_SI + 6) = *(uint8_t *)(unaff_SI + 6) & 0x7f;
     uVar2 = *(undefined *)(unaff_SI + 7);
     *(undefined *)0xff1a = 0x28;
-    fcn.000008b3(uVar2);
+    player_scan_loop_2(uVar2);
     *(undefined *)0xff75 = 0x1e;
     uVar3 = 0x718;
     if ((*(uint8_t *)0xc2 & 1) == 0) {
@@ -1727,7 +1727,7 @@ void fcn.0000035e(int16_t arg1)
     *(undefined2 *)0x7c4c = uVar3;
     (**(code **)0x2026)();
     *(undefined *)0xff1d = 0;
-    fcn.000003c9(*(int16_t *)0x7c4c, in_stack_00000000);
+    player_func_26(*(int16_t *)0x7c4c, in_stack_00000000);
     uStack0002 = 0x3a7;
     (**(code **)0x2028)();
     *(undefined *)0xff1d = 0;
@@ -1744,14 +1744,14 @@ void fcn.0000035e(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x3c9: fcn.000003c9 */
+/* 0x3c9: player_func_26 */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x000006a6: Changing call to branch
 // WARNING: Removing unreachable block (ram,0x000006a9)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000003c9(int16_t arg1, int16_t arg3)
+void player_func_26(int16_t arg1, int16_t arg3)
 {
     uint8_t *puVar1;
     undefined *puVar2;
@@ -1783,7 +1783,7 @@ code_r0x000003c9:
         *(undefined *)0x7c55 = 0;
         *(undefined *)0x7c57 = 0;
         *(undefined2 *)0x7c58 = uVar7;
-        fcn.0000060d((int16_t)puVar9);
+        player_func_29((int16_t)puVar9);
         *(uint8_t *)0x7c56 = uVar4;
         if (7 < uVar4) {
             uVar4 = 8;
@@ -1807,7 +1807,7 @@ code_r0x0000043b:
                                                  (char)*(undefined2 *)0x7c4c) + 0x193f);
             bVar12 = 0xfefc < uVar13;
             *(int16_t *)0xff54 = uVar13 + 0x103;
-            fcn.000014d7(iVar6);
+            player_scan_loop_3(iVar6);
             arg1 = *(int16_t *)0x7c4c;
             arg3 = 0xd;
             if (!bVar12) {
@@ -1818,7 +1818,7 @@ code_r0x0000043b:
         if (cVar5 == -0x7d) {
             *(uint8_t *)0x34 = *(uint8_t *)0x34 | 0x80;
             *(undefined *)0x9a = 0xff;
-            fcn.00000af1(iVar6);
+            player_scan_loop(iVar6);
             goto code_r0x000005a5;
         }
         if (cVar5 == -0x7b) {
@@ -1832,16 +1832,16 @@ code_r0x000005a5:
             *(undefined *)0xff1d = 0;
             *(undefined *)0xff1e = 0;
             while( true ) {
-                fcn.00000747();
-                fcn.000008b0();
+                player_func_34();
+                fill_buffer();
                 if (*(char *)0xff1d != '\0') {
                     return;
                 }
                 if (*(char *)0xff1e != '\0') break;
                 if (*(char *)0xff17 == '\0') {
                     while( true ) {
-                        fcn.00000747();
-                        fcn.000008b0();
+                        player_func_34();
+                        fill_buffer();
                         if (*(char *)0xff1d != '\0') {
                             return;
                         }
@@ -1889,7 +1889,7 @@ code_r0x000005a5:
             cVar5 = *(char *)(uVar13 + 0x7be2);
             in_CX = CONCAT11(uVar8, cVar5);
             *(char *)0x7c53 = *(char *)0x7c53 + cVar5;
-            if (((char)iVar6 == ' ') && (iVar6 = fcn.000005ea(uVar13), 0xa7 < (uint16_t)*(uint8_t *)0x7c53 + in_CX)) {
+            if (((char)iVar6 == ' ') && (iVar6 = player_func_30(uVar13), 0xa7 < (uint16_t)*(uint8_t *)0x7c53 + in_CX)) {
 code_r0x000004ea:
                 *(undefined *)0x7c53 = 0;
                 *(char *)0x7c54 = *(char *)0x7c54 + '\x01';
@@ -1910,8 +1910,8 @@ code_r0x000004ea:
                     *(undefined *)0xff1d = 0;
                     *(undefined *)0xff1e = 0;
                     do {
-                        fcn.00000747(uVar7);
-                        fcn.000008b0();
+                        player_func_34(uVar7);
+                        fill_buffer();
                         if ((*(char *)0x7c5c == '\0') && (*(char *)0xff1e != '\0')) {
                             return;
                         }
@@ -1932,7 +1932,7 @@ code_r0x000004ea:
                             + 0x1832);
         bVar12 = 0xfdfc < uVar13;
         *(int16_t *)0xff54 = uVar13 + 0x203;
-        fcn.00000712();
+        player_func_37();
         arg1 = *(int16_t *)0x7c4c;
         arg3 = 6;
         if (!bVar12) {
@@ -1944,7 +1944,7 @@ code_r0x000004ea:
                 for (pcVar10 = (char *)0xa1; *pcVar10 != '\0'; pcVar10 = pcVar10 + 1) {
                 }
                 *pcVar10 = '\x05';
-                fcn.00000af1(iVar6);
+                player_scan_loop(iVar6);
                 arg1 = *(int16_t *)0x7c4c;
                 arg3 = 8;
             }
@@ -1953,12 +1953,12 @@ code_r0x000004ea:
 }
 
 /* ====================================================================== */
-/* 0x2f1: fcn.000002f1 */
+/* 0x2f1: player_func_28 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000002f1(short unsigned int arg3, int16_t arg1)
+void player_func_28(short unsigned int arg3, int16_t arg1)
 {
     undefined *puVar1;
     undefined uVar2;
@@ -1980,7 +1980,7 @@ void fcn.000002f1(short unsigned int arg3, int16_t arg1)
         if (*(char *)(iVar6 + 0x10) != -3) {
             return;
         }
-        fcn.00000a98(iVar5 + 2);
+        player_load_chunk(iVar5 + 2);
         if ((*(uint8_t *)(unaff_SI + 2) & 0x80) == 0) {
             return;
         }
@@ -1994,7 +1994,7 @@ void fcn.000002f1(short unsigned int arg3, int16_t arg1)
         if (*(char *)(iVar6 + -0x10) != -3) {
             return;
         }
-        fcn.00000a98(iVar5 + -2);
+        player_load_chunk(iVar5 + -2);
         if ((*(uint8_t *)(unaff_SI + 2) & 0x80) != 0) {
             return;
         }
@@ -2008,7 +2008,7 @@ void fcn.000002f1(short unsigned int arg3, int16_t arg1)
     *(uint8_t *)(unaff_SI + 6) = *(uint8_t *)(unaff_SI + 6) & 0x7f;
     uVar2 = *(undefined *)(unaff_SI + 7);
     *(undefined *)0xff1a = 0x28;
-    fcn.000008b3(CONCAT11(uVar4, uVar2));
+    player_scan_loop_2(CONCAT11(uVar4, uVar2));
     *(undefined *)0xff75 = 0x1e;
     uVar3 = 0x718;
     if ((*(uint8_t *)0xc2 & 1) == 0) {
@@ -2017,7 +2017,7 @@ void fcn.000002f1(short unsigned int arg3, int16_t arg1)
     *(undefined2 *)0x7c4c = uVar3;
     (**(code **)0x2026)();
     *(undefined *)0xff1d = 0;
-    fcn.000003c9(*(int16_t *)0x7c4c, in_stack_00000002);
+    player_func_26(*(int16_t *)0x7c4c, in_stack_00000002);
     uStack0004 = 0x3a7;
     (**(code **)0x2028)();
     *(undefined *)0xff1d = 0;
@@ -2034,12 +2034,12 @@ void fcn.000002f1(short unsigned int arg3, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x60d: fcn.0000060d */
+/* 0x60d: player_func_29 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000060d(int16_t arg3)
+void player_func_29(int16_t arg3)
 {
     char *pcVar1;
     char cVar2;
@@ -2068,7 +2068,7 @@ void fcn.0000060d(int16_t arg3)
             pcVar6 = pcVar6 + *(uint8_t *)((uint8_t)(cVar2 - 0x20) + 0x7be2);
             if (cVar2 == ' ') {
                 pcVar5 = pcVar4;
-                fcn.000005ea((uint16_t)(uint8_t)(cVar2 - 0x20));
+                player_func_30((uint16_t)(uint8_t)(cVar2 - 0x20));
                 pcVar3 = in_stack_00000000;
                 pcVar6 = pcVar1;
                 unaff_SI = pcVar4;
@@ -2086,12 +2086,12 @@ void fcn.0000060d(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x5ea: fcn.000005ea */
+/* 0x5ea: player_func_30 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005ea(int16_t arg3)
+void player_func_30(int16_t arg3)
 {
     char *pcVar1;
     char cVar2;
@@ -2114,11 +2114,11 @@ void fcn.000005ea(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x747: fcn.00000747 */
+/* 0x747: player_func_34 */
 /* ====================================================================== */
 
 
-void fcn.00000747(void)
+void player_func_34(void)
 {
     uint8_t uVar1;
     int16_t iVar2;
@@ -2149,12 +2149,12 @@ void fcn.00000747(void)
 }
 
 /* ====================================================================== */
-/* 0x14d7: fcn.000014d7 */
+/* 0x14d7: player_scan_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000014d7(int16_t arg1)
+void player_scan_loop_3(int16_t arg1)
 {
     undefined uVar1;
     undefined uVar2;
@@ -2170,11 +2170,11 @@ void fcn.000014d7(int16_t arg1)
     uVar1 = *(undefined *)0xff56;
     *(undefined *)0xff52 = 2;
     *(undefined *)0xff53 = 2;
-    fcn.0000151e(2, in_DX, CONCAT11(uVar2, uVar1));
+    player_func_38(2, in_DX, CONCAT11(uVar2, uVar1));
     *(undefined *)0xff56 = 0;
     bVar4 = false;
     in_BX = in_BX & 0xff00;
-    fcn.00001348(in_BX);
+    player_check_state(in_BX);
     cVar3 = (char)in_BX;
     if (bVar4) {
         cVar3 = '\x01';
@@ -2189,11 +2189,11 @@ void fcn.000014d7(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x712: fcn.00000712 */
+/* 0x712: player_func_37 */
 /* ====================================================================== */
 
 
-void fcn.00000712(void)
+void player_func_37(void)
 {
     int16_t in_AX;
     int16_t in_DX;
@@ -2204,11 +2204,11 @@ void fcn.00000712(void)
     
     *(undefined *)0xff52 = 2;
     *(undefined *)0xff53 = 2;
-    fcn.0000151e(2, in_DX, in_AX);
+    player_func_38(2, in_DX, in_AX);
     *(undefined *)0xff56 = 0;
     bVar2 = false;
     in_BX = in_BX & 0xff00;
-    fcn.00001348(in_BX);
+    player_check_state(in_BX);
     cVar1 = (char)in_BX;
     if (bVar2) {
         cVar1 = '\x01';
@@ -2220,12 +2220,12 @@ void fcn.00000712(void)
 }
 
 /* ====================================================================== */
-/* 0x151e: fcn.0000151e */
+/* 0x151e: player_func_38 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000151e(int16_t arg4, int16_t arg2, int16_t arg1)
+void player_func_38(int16_t arg4, int16_t arg2, int16_t arg1)
 {
     char cVar1;
     
@@ -2239,14 +2239,14 @@ void fcn.0000151e(int16_t arg4, int16_t arg2, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x1348: fcn.00001348 */
+/* 0x1348: player_check_state */
 /* ====================================================================== */
 
 // WARNING: Removing unreachable block (ram,0x000013e9)
 // WARNING: Removing unreachable block (ram,0x00001469)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001348(int16_t arg3)
+void player_check_state(int16_t arg3)
 {
     code *pcVar1;
     int16_t in_AX;
@@ -2256,8 +2256,8 @@ void fcn.00001348(int16_t arg3)
     
     *(undefined *)0xff1d = 0;
     *(undefined *)0xff1e = 0;
-    fcn.0000146d(in_AX);
-    fcn.00001046();
+    player_check_state_2(in_AX);
+    player_func_41();
     *(undefined *)0xff1a = 0;
     if (*(char *)0xff1e != '\0') {
         return;
@@ -2280,18 +2280,18 @@ void fcn.00001348(int16_t arg3)
                 do {
                     (**(code **)0x3020)();
                     do {
-                        fcn.00001046();
+                        player_func_41();
                     } while (*(uint8_t *)0xff1a < 4);
                     *(undefined *)0xff1a = 0;
                 } while( true );
             }
             return;
         }
-        fcn.000014ab(CONCAT11((char)(uVar2 >> 8), *(char *)0xff52 - 1U));
+        player_func_43(CONCAT11((char)(uVar2 >> 8), *(char *)0xff52 - 1U));
         return;
     }
     if (in_stack_00000002 != 0) {
-        fcn.0000147f(uVar2);
+        player_func_42(uVar2);
         return;
     }
     if (*(char *)0xff56 != '\0') {
@@ -2300,7 +2300,7 @@ void fcn.00001348(int16_t arg3)
         do {
             (**(code **)0x301e)();
             do {
-                fcn.00001046();
+                player_func_41();
             } while (*(uint8_t *)0xff1a < 4);
             *(undefined *)0xff1a = 0;
         } while( true );
@@ -2309,12 +2309,12 @@ void fcn.00001348(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x146d: fcn.0000146d */
+/* 0x146d: player_check_state_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000146d(int16_t arg1)
+void player_check_state_2(int16_t arg1)
 {
     // WARNING: Could not recover jumptable at 0x0000147a. Too many branches
     // WARNING: Treating indirect jump as call
@@ -2323,11 +2323,11 @@ void fcn.0000146d(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x1046: fcn.00001046 */
+/* 0x1046: player_func_41 */
 /* ====================================================================== */
 
 
-void fcn.00001046(void)
+void player_func_41(void)
 {
     undefined2 unaff_DS;
     undefined in_CF;
@@ -2336,7 +2336,7 @@ void fcn.00001046(void)
     (**(code **)0x112)();
     (**(code **)0x11e)();
     if ((bool)in_CF) {
-        fcn.00001596();
+        clear_buffer();
     }
     if (*(char *)0x7c42 == '\0') {
         return;
@@ -2346,12 +2346,12 @@ void fcn.00001046(void)
 }
 
 /* ====================================================================== */
-/* 0x147f: fcn.0000147f */
+/* 0x147f: player_func_42 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000147f(int16_t arg1)
+void player_func_42(int16_t arg1)
 {
     int16_t iVar1;
     uint16_t in_BX;
@@ -2367,7 +2367,7 @@ void fcn.0000147f(int16_t arg1)
         iStackY_6 = 0x149c;
         (**(code **)0x3018)(iVar2);
         do {
-            fcn.00001046();
+            player_func_41();
         } while (*(uint8_t *)0xff1a < 4);
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
@@ -2375,12 +2375,12 @@ void fcn.0000147f(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x14ab: fcn.000014ab */
+/* 0x14ab: player_func_43 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000014ab(int16_t arg1)
+void player_func_43(int16_t arg1)
 {
     int16_t iVar1;
     uint16_t in_BX;
@@ -2396,7 +2396,7 @@ void fcn.000014ab(int16_t arg1)
         iStackY_6 = 0x14c8;
         (**(code **)0x3018)(iVar2);
         do {
-            fcn.00001046();
+            player_func_41();
         } while (*(uint8_t *)0xff1a < 4);
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
@@ -2404,11 +2404,11 @@ void fcn.000014ab(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x872: fcn.00000872 */
+/* 0x872: player_multiply_3 */
 /* ====================================================================== */
 
 
-void fcn.00000872(void)
+void player_multiply_3(void)
 {
     uint8_t in_AL;
     uint16_t uVar1;
@@ -2429,12 +2429,12 @@ void fcn.00000872(void)
 }
 
 /* ====================================================================== */
-/* 0x894: fcn.00000894 */
+/* 0x894: player_multiply_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000894(int16_t arg3)
+void player_multiply_4(int16_t arg3)
 {
     int16_t *piVar1;
     undefined2 unaff_DS;
@@ -2451,11 +2451,11 @@ void fcn.00000894(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0xb20: fcn.00000b20 */
+/* 0xb20: player_multiply_5 */
 /* ====================================================================== */
 
 
-void fcn.00000b20(void)
+void player_multiply_5(void)
 {
     undefined uVar1;
     int16_t iVar2;
@@ -2463,7 +2463,7 @@ void fcn.00000b20(void)
     int16_t *piVar3;
     undefined2 unaff_DS;
     
-    fcn.00000c52();
+    fill_buffer_2();
     for (piVar3 = *(int16_t **)0xc00f; *piVar3 != -1; piVar3 = piVar3 + 4) {
         (**(code **)((uint16_t)*(uint8_t *)((int16_t)piVar3 + 5) * 2 + 0x6b41))();
         *piVar3 = extraout_DX;
@@ -2478,11 +2478,11 @@ void fcn.00000b20(void)
 }
 
 /* ====================================================================== */
-/* 0x979: fcn.00000979 */
+/* 0x979: player_func_47 */
 /* ====================================================================== */
 
 
-void fcn.00000979(undefined *param_1)
+void player_func_47(undefined *param_1)
 {
     char cVar1;
     undefined2 *puVar2;
@@ -2509,10 +2509,10 @@ void fcn.00000979(undefined *param_1)
     do {
         cVar1 = *pcVar5;
         if (cVar1 == -3) {
-            fcn.00000a98((int16_t)arg2);
+            player_load_chunk((int16_t)arg2);
             arg2 = extraout_DX;
             for (; cVar1 = pcVar5[3], cVar1 == -3; pcVar5 = pcVar5 + 8) {
-                fcn.00000a9c((short unsigned int)arg2);
+                copy_buffer((short unsigned int)arg2);
                 arg2 = extraout_DX_00;
             }
         }
@@ -2528,7 +2528,7 @@ void fcn.00000979(undefined *param_1)
     *(undefined *)0x7c7c = param_1[8];
     piVar6 = *(int16_t **)0xc00f;
     do {
-        cVar1 = fcn.00000a7b();
+        cVar1 = player_func_51();
         if (cVar1 != '\0') {
             (**(code **)0x3014)();
             (**(code **)0x3010)();
@@ -2541,12 +2541,12 @@ void fcn.00000979(undefined *param_1)
 }
 
 /* ====================================================================== */
-/* 0x954: fcn.00000954 */
+/* 0x954: player_multiply_6 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000954(int16_t arg1)
+void player_multiply_6(int16_t arg1)
 {
     uint16_t uVar1;
     undefined2 unaff_CS;
@@ -2566,11 +2566,11 @@ void fcn.00000954(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x1596: fcn.00001596 */
+/* 0x1596: clear_buffer */
 /* ====================================================================== */
 
 
-void fcn.00001596(void)
+void clear_buffer(void)
 {
     char *pcVar1;
     undefined *puVar2;
@@ -2645,12 +2645,12 @@ void fcn.00001596(void)
 }
 
 /* ====================================================================== */
-/* 0xa9c: fcn.00000a9c */
+/* 0xa9c: copy_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000a9c(short unsigned int arg2)
+void copy_buffer(short unsigned int arg2)
 {
     short unsigned int *unaff_SI;
     undefined2 unaff_DS;
@@ -2661,11 +2661,11 @@ void fcn.00000a9c(short unsigned int arg2)
 }
 
 /* ====================================================================== */
-/* 0xa7b: fcn.00000a7b */
+/* 0xa7b: player_func_51 */
 /* ====================================================================== */
 
 
-undefined fcn.00000a7b(void)
+undefined player_func_51(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -2690,11 +2690,11 @@ undefined fcn.00000a7b(void)
 }
 
 /* ====================================================================== */
-/* 0xc52: fcn.00000c52 */
+/* 0xc52: fill_buffer_2 */
 /* ====================================================================== */
 
 
-void fcn.00000c52(void)
+void fill_buffer_2(void)
 {
     int16_t *piVar1;
     undefined2 unaff_DS;
@@ -2708,12 +2708,12 @@ void fcn.00000c52(void)
 }
 
 /* ====================================================================== */
-/* 0xd34: fcn.00000d34 */
+/* 0xd34: player_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000d34(int16_t arg1)
+void player_process_loop_2(int16_t arg1)
 {
     char cVar1;
     undefined2 *unaff_SI;
@@ -2728,20 +2728,20 @@ void fcn.00000d34(int16_t arg1)
     cVar1 = (char)((uint16_t)in_stack_00000004 >> 8);
     if (cVar1 != *(char *)0x7c46) {
         *(char *)0x7c46 = cVar1;
-        fcn.00000da2(in_stack_00000004);
+        math_calc(in_stack_00000004);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x3ce: fcn.000003ce */
+/* 0x3ce: player_copy_buf */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x000006a6: Changing call to branch
 // WARNING: Removing unreachable block (ram,0x000006a9)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000003ce(int16_t arg1, int16_t arg3)
+void player_copy_buf(int16_t arg1, int16_t arg3)
 {
     uint8_t *puVar1;
     undefined *puVar2;
@@ -2771,7 +2771,7 @@ code_r0x000003ce:
     *(undefined *)0x7c55 = 0;
     *(undefined *)0x7c57 = 0;
     *(undefined2 *)0x7c58 = uVar7;
-    fcn.0000060d((int16_t)puVar9);
+    player_func_29((int16_t)puVar9);
     *(uint8_t *)0x7c56 = uVar4;
     if (7 < uVar4) {
         uVar4 = 8;
@@ -2795,7 +2795,7 @@ code_r0x000003ce:
                                                  (char)*(undefined2 *)0x7c4c) + 0x193f);
             bVar12 = 0xfefc < uVar13;
             *(int16_t *)0xff54 = uVar13 + 0x103;
-            fcn.000014d7(iVar6);
+            player_scan_loop_3(iVar6);
             arg1 = *(int16_t *)0x7c4c;
             arg3 = 0xd;
             if (!bVar12) {
@@ -2806,7 +2806,7 @@ code_r0x000003ce:
         if (cVar5 == -0x7d) {
             *(uint8_t *)0x34 = *(uint8_t *)0x34 | 0x80;
             *(undefined *)0x9a = 0xff;
-            fcn.00000af1(iVar6);
+            player_scan_loop(iVar6);
             goto code_r0x000005a5;
         }
         if (cVar5 == -0x7b) {
@@ -2820,16 +2820,16 @@ code_r0x000005a5:
             *(undefined *)0xff1d = 0;
             *(undefined *)0xff1e = 0;
             while( true ) {
-                fcn.00000747();
-                fcn.000008b0();
+                player_func_34();
+                fill_buffer();
                 if (*(char *)0xff1d != '\0') {
                     return;
                 }
                 if (*(char *)0xff1e != '\0') break;
                 if (*(char *)0xff17 == '\0') {
                     while( true ) {
-                        fcn.00000747();
-                        fcn.000008b0();
+                        player_func_34();
+                        fill_buffer();
                         if (*(char *)0xff1d != '\0') {
                             return;
                         }
@@ -2877,7 +2877,7 @@ code_r0x000005a5:
         cVar5 = *(char *)(uVar13 + 0x7be2);
         in_CX = CONCAT11(uVar8, cVar5);
         *(char *)0x7c53 = *(char *)0x7c53 + cVar5;
-        if (((char)iVar6 == ' ') && (iVar6 = fcn.000005ea(uVar13), 0xa7 < (uint16_t)*(uint8_t *)0x7c53 + in_CX)) {
+        if (((char)iVar6 == ' ') && (iVar6 = player_func_30(uVar13), 0xa7 < (uint16_t)*(uint8_t *)0x7c53 + in_CX)) {
 code_r0x000004ea:
             *(undefined *)0x7c53 = 0;
             *(char *)0x7c54 = *(char *)0x7c54 + '\x01';
@@ -2898,8 +2898,8 @@ code_r0x000004ea:
                 *(undefined *)0xff1d = 0;
                 *(undefined *)0xff1e = 0;
                 do {
-                    fcn.00000747(uVar7);
-                    fcn.000008b0();
+                    player_func_34(uVar7);
+                    fill_buffer();
                     if ((*(char *)0x7c5c == '\0') && (*(char *)0xff1e != '\0')) {
                         return;
                     }
@@ -2919,7 +2919,7 @@ code_r0x000004ea:
                         0x1832);
     bVar12 = 0xfdfc < uVar13;
     *(int16_t *)0xff54 = uVar13 + 0x203;
-    fcn.00000712();
+    player_func_37();
     arg1 = *(int16_t *)0x7c4c;
     arg3 = 6;
     if (!bVar12) {
@@ -2931,7 +2931,7 @@ code_r0x000004ea:
             for (pcVar10 = (char *)0xa1; *pcVar10 != '\0'; pcVar10 = pcVar10 + 1) {
             }
             *pcVar10 = '\x05';
-            fcn.00000af1(iVar6);
+            player_scan_loop(iVar6);
             arg1 = *(int16_t *)0x7c4c;
             arg3 = 8;
         }
@@ -3005,7 +3005,7 @@ void fcn.0000116d(void)
     *(char *)0xff4f = *(char *)0xff4f + -1;
     iVar1 = 10;
     do {
-        fcn.00001046(iVar1);
+        player_func_41(iVar1);
         iVar1 = 0x11b0;
         (**(code **)0x2024)();
         iVar1 = iVar1 + -1;
@@ -3101,7 +3101,7 @@ void fcn.000011e3(void)
     *(undefined *)0xff1d = 0;
     *(undefined *)0xff1e = 0;
     do {
-        fcn.00001046();
+        player_func_41();
     } while ((*(uint8_t *)0xff1d | *(uint8_t *)0xff1e) == 0);
     *(undefined *)0xff1d = 0;
     *(undefined *)0xff1e = 0;

@@ -27,12 +27,12 @@ static const char *STR_0xb06 = "Are you the brave one? I&hope you have brought a
 static const char *STR_0xba1 = "Duke Garland, when you go into the caverns again, please try to bring back more almas. To supplement the protective power of the Spirits we must build a wall of almas. Unless we get more, Satono Town is in peril."; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_38 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 
-void fcn.00000000(void)
+void zr2_38(void)
 {
     // WARNING: Bad instruction - Truncating control flow here
     halt_baddata();

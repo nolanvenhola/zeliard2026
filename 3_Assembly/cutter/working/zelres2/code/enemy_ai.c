@@ -18,14 +18,14 @@ static const char *STR_0x1f8c = "}SSCq|y|½|H|Q|H|"; // [ibm037]
 static const char *STR_0x1fb4 = " \"$&0246"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_06 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000000(int16_t arg1, int16_t arg3, int16_t arg4)
+void zr2_06(int16_t arg1, int16_t arg3, int16_t arg4)
 {
     uint8_t *puVar1;
     char *pcVar2;
@@ -69,10 +69,10 @@ void fcn.00000000(int16_t arg1, int16_t arg3, int16_t arg4)
     *puVar1 = (char)*puVar1 >> 1;
     if ((bool)(uVar3 & 1)) {
         iVar9 = *(int16_t *)0xff31;
-        uVar16 = fcn.00001510();
+        uVar16 = ai_func_1();
         iVar8 = 0;
         if ((*(uint8_t *)(iVar9 + -0x21) & 0x80) != 0) {
-            uVar16 = fcn.0000032a(0);
+            uVar16 = vga_operation(0);
         }
         iVar6 = 6;
         puVar4 = (uint8_t *)(iVar9 + -0x20);
@@ -80,72 +80,72 @@ void fcn.00000000(int16_t arg1, int16_t arg3, int16_t arg4)
             puVar12 = puVar4;
             iStack0005 = iVar6;
             if ((*puVar12 & 0x80) != 0) {
-                uVar16 = fcn.00000367(iVar8);
+                uVar16 = ai_process_loop(iVar8);
             }
             iVar8 = iVar8 + 1;
             if ((puVar12[1] & 0x80) != 0) {
                 iStack0005 = 0x71;
-                uVar16 = fcn.00000367(iVar8);
+                uVar16 = ai_process_loop(iVar8);
             }
             iVar8 = iVar8 + 1;
             if ((puVar12[2] & 0x80) != 0) {
                 iStack0005 = 0x7b;
-                uVar16 = fcn.00000367(iVar8);
+                uVar16 = ai_process_loop(iVar8);
             }
             iVar8 = iVar8 + 1;
             if ((puVar12[3] & 0x80) != 0) {
                 iStack0005 = 0x85;
-                uVar16 = fcn.00000367(iVar8);
+                uVar16 = ai_process_loop(iVar8);
             }
             iVar8 = iVar8 + 1;
             iVar6 = in_stack_00000007 + -1;
             puVar4 = puVar12 + 4;
         } while (iVar6 != 0);
         if ((puVar12[4] & 0x80) != 0) {
-            uVar16 = fcn.00000367(iVar8);
+            uVar16 = ai_process_loop(iVar8);
         }
         iVar8 = iVar8 + 1;
         if ((puVar12[5] & 0x80) != 0) {
             uStack0009 = 0x9c;
-            uVar16 = fcn.00000367(iVar8);
+            uVar16 = ai_process_loop(iVar8);
         }
         iVar8 = iVar8 + 1;
         if ((puVar12[6] & 0x80) != 0) {
             uStack0009 = 0xa6;
-            uVar16 = fcn.00000367(iVar8);
+            uVar16 = ai_process_loop(iVar8);
         }
         if ((puVar12[7] & 0x80) != 0) {
             uStack0009 = 0xaf;
-            uVar16 = fcn.000003af((int16_t)uVar16, (int16_t)((uint32_t)uVar16 >> 0x10), iVar8);
+            uVar16 = ai_process_loop_3((int16_t)uVar16, (int16_t)((uint32_t)uVar16 >> 0x10), iVar8);
         }
         pcVar13 = *(char **)0xff31;
         pcVar15 = (char *)0xe900;
         *(undefined *)0x4ff1 = 0x12;
         do {
             uStack0009 = 0xbe;
-            fcn.00000dff(iVar8, (int16_t)uVar16, (int16_t)((uint32_t)uVar16 >> 0x10));
+            ai_func_15(iVar8, (int16_t)uVar16, (int16_t)((uint32_t)uVar16 >> 0x10));
             iVar8 = 0;
             pcVar7 = pcVar13 + 4;
             if (pcVar13[3] < '\0') {
-                fcn.000003e7(arg2, 0);
+                vga_operation2(arg2, 0);
             }
             do {
                 pcVar11 = pcVar15;
                 pcVar14 = pcVar7;
                 if (*pcVar14 != *pcVar11) {
-                    fcn.00000128(iVar8);
+                    vga_operation3(iVar8);
                 }
                 iVar8 = iVar8 + 1;
                 if (pcVar14[1] != pcVar11[1]) {
-                    fcn.00000128(iVar8);
+                    vga_operation3(iVar8);
                 }
                 iVar8 = iVar8 + 1;
                 if (pcVar14[2] != pcVar11[2]) {
-                    fcn.00000128(iVar8);
+                    vga_operation3(iVar8);
                 }
                 iVar8 = iVar8 + 1;
                 if (pcVar14[3] != pcVar11[3]) {
-                    fcn.00000128(iVar8);
+                    vga_operation3(iVar8);
                 }
                 iVar8 = iVar8 + 1;
                 pcVar7 = pcVar14 + 4;
@@ -153,15 +153,15 @@ void fcn.00000000(int16_t arg1, int16_t arg3, int16_t arg4)
             } while (in_stack_0000000f != (char *)0x1);
             if (pcVar14[4] != pcVar11[4]) {
                 in_stack_0000000f = (char *)0xf4;
-                fcn.00000128(iVar8);
+                vga_operation3(iVar8);
             }
             iVar8 = iVar8 + 1;
             if (pcVar14[5] != pcVar11[5]) {
-                fcn.00000128(iVar8);
+                vga_operation3(iVar8);
             }
             iVar8 = iVar8 + 1;
             if (pcVar14[6] != pcVar11[6]) {
-                fcn.00000128(iVar8);
+                vga_operation3(iVar8);
             }
             iVar8 = iVar8 + 1;
             pcVar13 = pcVar14 + 8;
@@ -181,8 +181,8 @@ void fcn.00000000(int16_t arg1, int16_t arg3, int16_t arg4)
                 cVar5 = pcVar14[7];
                 pcVar14 = pcVar14 + 0x2c;
                 uStack0009 = 0x506;
-                fcn.00001504();
-                cVar5 = fcn.000006dc((int16_t)pcVar13, (int16_t)pcVar15, iVar9, CONCAT11(extraout_AH, cVar5));
+                ai_func_3();
+                cVar5 = ai_func_5((int16_t)pcVar13, (int16_t)pcVar15, iVar9, CONCAT11(extraout_AH, cVar5));
                 pcVar10 = (char *)CONCAT11(extraout_DL, cVar5);
                 pcVar7 = (char *)((int16_t)pcVar15 * 8 + *(int16_t *)0x4feb);
                 pcVar11 = pcVar10;
@@ -192,9 +192,9 @@ void fcn.00000000(int16_t arg1, int16_t arg3, int16_t arg4)
                     pcVar15 = pcVar10;
                     if (cVar5 < '\0') {
                         uStack0009 = 0x539;
-                        uVar16 = fcn.000006d5();
+                        uVar16 = ai_func_4();
                     }
-                    fcn.0000059d((int16_t)uVar16, (int16_t)((uint32_t)uVar16 >> 0x10), (int16_t)pcVar15);
+                    ai_multiply((int16_t)uVar16, (int16_t)((uint32_t)uVar16 >> 0x10), (int16_t)pcVar15);
                     pcVar7 = pcVar10;
                     pcVar11 = in_stack_00000013;
                     pcVar14 = pcVar13;
@@ -206,16 +206,16 @@ void fcn.00000000(int16_t arg1, int16_t arg3, int16_t arg4)
                 if (((*(char *)0x4ff1 != '\x01') && (*(char *)0x5011 != -1)) && (*(char *)0x5011 != -4)) {
                     uVar16 = CONCAT22(pcVar7 + 0xa00, CONCAT11(pcVar14[2], (char)((uint16_t)pcVar11 >> 8)));
                     if ((int16_t)pcVar11 < 0) {
-                        uVar16 = fcn.000006d5();
+                        uVar16 = ai_func_4();
                     }
                     in_stack_00000013 = (char *)0x569;
-                    fcn.0000059d((int16_t)uVar16, (int16_t)((uint32_t)uVar16 >> 0x10), (int16_t)pcVar11);
+                    ai_multiply((int16_t)uVar16, (int16_t)((uint32_t)uVar16 >> 0x10), (int16_t)pcVar11);
                 }
             } else if (pcVar14[7] != pcVar11[7]) {
-                fcn.00000128(iVar8);
+                vga_operation3(iVar8);
             }
             pcVar13 = pcVar13 + 4;
-            uVar16 = fcn.00001504();
+            uVar16 = ai_func_3();
             *(int16_t *)0x4feb = *(int16_t *)0x4feb + 0xa00;
             pcVar2 = (char *)0x4ff1;
             *pcVar2 = *pcVar2 + -1;
@@ -227,11 +227,11 @@ void fcn.00000000(int16_t arg1, int16_t arg3, int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x1510: fcn.00001510 */
+/* 0x1510: ai_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00001510(void)
+void ai_func_1(void)
 {
     uint16_t unaff_SI;
     
@@ -242,13 +242,13 @@ void fcn.00001510(void)
 }
 
 /* ====================================================================== */
-/* 0x32a: fcn.0000032a */
+/* 0x32a: vga_operation */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.0000032a(int16_t arg3)
+void vga_operation(int16_t arg3)
 {
     undefined extraout_AH;
     undefined uVar1;
@@ -266,23 +266,23 @@ void fcn.0000032a(int16_t arg3)
     }
     *(undefined *)0xe900 = 0xff;
     uVar2 = *unaff_SI;
-    fcn.00001504(arg3);
+    ai_func_3(arg3);
     uVar1 = extraout_AH;
     if ((char)unaff_SI[0x25] < '\0') {
         uVar1 = 0;
-        fcn.000006d5();
+        ai_func_4();
     }
-    fcn.000006dc(in_stack_00000002, in_stack_00000000, arg3, CONCAT11(uVar1, uVar2));
-    fcn.0000059d(CONCAT11(unaff_SI[0x28], (char)in_stack_00000000), 0x11b0, arg3);
+    ai_func_5(in_stack_00000002, in_stack_00000000, arg3, CONCAT11(uVar1, uVar2));
+    ai_multiply(CONCAT11(unaff_SI[0x28], (char)in_stack_00000000), 0x11b0, arg3);
     return;
 }
 
 /* ====================================================================== */
-/* 0x1504: fcn.00001504 */
+/* 0x1504: ai_func_3 */
 /* ====================================================================== */
 
 
-void fcn.00001504(void)
+void ai_func_3(void)
 {
     uint16_t unaff_SI;
     
@@ -293,11 +293,11 @@ void fcn.00001504(void)
 }
 
 /* ====================================================================== */
-/* 0x6d5: fcn.000006d5 */
+/* 0x6d5: ai_func_4 */
 /* ====================================================================== */
 
 
-undefined fcn.000006d5(void)
+undefined ai_func_4(void)
 {
     uint8_t in_AL;
     
@@ -305,13 +305,13 @@ undefined fcn.000006d5(void)
 }
 
 /* ====================================================================== */
-/* 0x6dc: fcn.000006dc */
+/* 0x6dc: ai_func_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-undefined2 fcn.000006dc(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t arg1)
+undefined2 ai_func_5(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t arg1)
 {
     undefined uVar1;
     uint8_t uVar2;
@@ -339,12 +339,12 @@ undefined2 fcn.000006dc(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t ar
 }
 
 /* ====================================================================== */
-/* 0x59d: fcn.0000059d */
+/* 0x59d: ai_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000059d(int16_t arg1, int16_t arg2, int16_t arg3)
+void ai_multiply(int16_t arg1, int16_t arg2, int16_t arg3)
 {
     char cVar1;
     uint8_t uVar2;
@@ -357,23 +357,23 @@ void fcn.0000059d(int16_t arg1, int16_t arg2, int16_t arg3)
     }
     *(undefined2 *)0x4fe9 = *(undefined2 *)((uint16_t)(uVar2 & 0x7f) * 2 + 0x4f8c);
     if (-1 < (char)uVar2) {
-        fcn.00000655(arg2);
-        fcn.0000068e();
+        ai_func_34(arg2);
+        vga_operation1();
         return;
     }
-    fcn.00000614(CONCAT11((char)((uint16_t)*(undefined2 *)0x4fe9 >> 8), cVar1));
-    fcn.0000068e();
+    vga_operation_2(CONCAT11((char)((uint16_t)*(undefined2 *)0x4fe9 >> 8), cVar1));
+    vga_operation1();
     return;
 }
 
 /* ====================================================================== */
-/* 0x367: fcn.00000367 */
+/* 0x367: ai_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000367(int16_t arg3)
+void ai_process_loop(int16_t arg3)
 {
     undefined2 uVar1;
     undefined uVar2;
@@ -390,20 +390,20 @@ void fcn.00000367(int16_t arg3)
     *(undefined *)0x5011 = 0;
     *(undefined *)(arg3 + -0x16ff) = 0xff;
     uVar2 = *unaff_SI;
-    fcn.00001504(arg3);
+    ai_func_3(arg3);
     uVar1 = *(undefined2 *)(unaff_SI + 0x24);
     *(undefined2 *)0x5014 = uVar1;
-    fcn.000006dc(in_stack_00000002, in_stack_00000000, 0x5014, CONCAT11((char)((uint16_t)uVar1 >> 8), uVar2));
-    fcn.0000056f();
+    ai_func_5(in_stack_00000002, in_stack_00000000, 0x5014, CONCAT11((char)((uint16_t)uVar1 >> 8), uVar2));
+    ai_process_loop_2();
     return;
 }
 
 /* ====================================================================== */
-/* 0x56f: fcn.0000056f */
+/* 0x56f: ai_process_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.0000056f(void)
+void ai_process_loop_2(void)
 {
     int16_t arg1;
     int16_t in_DX;
@@ -417,23 +417,23 @@ void fcn.0000056f(void)
     if ((*unaff_BP != -1) && (*unaff_BP != -4)) {
         arg1 = CONCAT11(*unaff_SI, *unaff_DI);
         if (*unaff_DI < '\0') {
-            uVar1 = fcn.000006d5(0x572);
+            uVar1 = ai_func_4(0x572);
             in_DX = (int16_t)((uint32_t)uVar1 >> 0x10);
             arg1 = (int16_t)uVar1;
         }
-        fcn.0000059d(arg1, in_DX, in_BX);
+        ai_multiply(arg1, in_DX, in_BX);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x3af: fcn.000003af */
+/* 0x3af: ai_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.000003af(int16_t arg1, int16_t arg2, int16_t arg3)
+void ai_process_loop_3(int16_t arg1, int16_t arg2, int16_t arg3)
 {
     char cVar1;
     undefined extraout_AH;
@@ -453,13 +453,13 @@ void fcn.000003af(int16_t arg1, int16_t arg2, int16_t arg3)
     }
     *(undefined *)0xe91b = 0xff;
     uVar3 = *unaff_SI;
-    fcn.00001504();
+    ai_func_3();
     uVar2 = extraout_AH;
     if ((char)unaff_SI[0x24] < '\0') {
         uVar2 = 0;
-        fcn.000006d5();
+        ai_func_4();
     }
-    fcn.000006dc(in_stack_00000006, in_stack_00000004, arg3, CONCAT11(uVar2, uVar3));
+    ai_func_5(in_stack_00000006, in_stack_00000004, arg3, CONCAT11(uVar2, uVar3));
     cVar1 = (char)in_stack_00000004;
     uVar4 = *(uint8_t *)0x4ff4;
     if ((cVar1 != '\0') && (-1 < cVar1)) {
@@ -467,23 +467,23 @@ void fcn.000003af(int16_t arg1, int16_t arg2, int16_t arg3)
     }
     *(undefined2 *)0x4fe9 = *(undefined2 *)((uint16_t)(uVar4 & 0x7f) * 2 + 0x4f8c);
     if (-1 < (char)uVar4) {
-        fcn.00000655();
-        fcn.0000068e();
+        ai_func_34();
+        vga_operation1();
         return;
     }
-    fcn.00000614(CONCAT11((char)((uint16_t)*(undefined2 *)0x4fe9 >> 8), cVar1));
-    fcn.0000068e();
+    vga_operation_2(CONCAT11((char)((uint16_t)*(undefined2 *)0x4fe9 >> 8), cVar1));
+    vga_operation1();
     return;
 }
 
 /* ====================================================================== */
-/* 0xdff: fcn.00000dff */
+/* 0xdff: ai_func_15 */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x00000e18: Changing call to branch
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000dff(int16_t arg3, int16_t arg1, int16_t arg2)
+void ai_func_15(int16_t arg3, int16_t arg1, int16_t arg2)
 {
     uint8_t *puVar1;
     undefined2 *puVar2;
@@ -522,9 +522,9 @@ void fcn.00000dff(int16_t arg3, int16_t arg1, int16_t arg2)
             }
             if (*(char *)0xff43 != '\0') {
                 *(undefined *)0xff44 = 0xff;
-                fcn.00000f8a(CONCAT11((char)((uint16_t)arg1 >> 8), uVar5), CONCAT11((char)((uint16_t)in_CX >> 8), uVar4)
+                fill_buffer(CONCAT11((char)((uint16_t)arg1 >> 8), uVar5), CONCAT11((char)((uint16_t)in_CX >> 8), uVar4)
                             );
-                fcn.00000f46();
+                ai_get_value();
                 uVar3 = *(undefined2 *)0xff2c;
                 *(undefined2 *)0x4ff5 = *(undefined2 *)((uint16_t)(uint8_t)(*(char *)0x92 - 1) * 2 + 0x4086);
                 iVar10 = 4;
@@ -542,17 +542,17 @@ void fcn.00000dff(int16_t arg3, int16_t arg1, int16_t arg2)
                             do {
                                 puVar2 = puVar8;
                                 puVar8 = puVar8 + 1;
-                                uVar11 = fcn.00001096(CONCAT11((char)*puVar2, (char)((uint16_t)*puVar2 >> 8)));
+                                uVar11 = vga_operation0(CONCAT11((char)*puVar2, (char)((uint16_t)*puVar2 >> 8)));
                                 *puVar9 = *puVar9 & ~unaff_BP;
                                 *puVar9 = *puVar9 | (uint16_t)((uint32_t)uVar11 >> 0x10);
-                                uVar11 = fcn.00001096((int16_t)uVar11);
+                                uVar11 = vga_operation0((int16_t)uVar11);
                                 puVar9[1] = puVar9[1] & unaff_BP;
                                 puVar9[1] = puVar9[1] | (uint16_t)((uint32_t)uVar11 >> 0x10);
                                 puVar12 = (uint8_t *)0x105b;
-                                uVar11 = fcn.00001096((int16_t)uVar11);
+                                uVar11 = vga_operation0((int16_t)uVar11);
                                 puVar9[2] = puVar9[2] & ~unaff_BP;
                                 puVar9[2] = puVar9[2] | (uint16_t)((uint32_t)uVar11 >> 0x10);
-                                fcn.00001096((int16_t)uVar11);
+                                vga_operation0((int16_t)uVar11);
                                 puVar9[3] = puVar9[3] & unaff_BP;
                                 puVar9[3] = puVar9[3] | extraout_DX;
                                 puVar9 = puVar9 + 0xa0;
@@ -567,7 +567,7 @@ void fcn.00000dff(int16_t arg3, int16_t arg1, int16_t arg2)
             }
             return;
         }
-        fcn.00000f2d(arg3);
+        ai_process_loop_4(arg3);
     }
     if (*(char *)0xff37 == '\0') {
         *(undefined *)0xff37 = 0xff;
@@ -577,7 +577,7 @@ void fcn.00000dff(int16_t arg3, int16_t arg1, int16_t arg2)
             iVar7 = 3;
             do {
                 iVar13 = iVar7;
-                fcn.0000068e(iVar10, iVar7, iVar6, arg3);
+                vga_operation1(iVar10, iVar7, iVar6, arg3);
                 iVar10 = iVar13 + 8;
                 iVar7 = iVar6 + -1;
             } while (iVar7 != 0);
@@ -590,29 +590,29 @@ void fcn.00000dff(int16_t arg3, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xf2d: fcn.00000f2d */
+/* 0xf2d: ai_process_loop_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f2d(int16_t arg3)
+void ai_process_loop_4(int16_t arg3)
 {
     undefined2 unaff_DS;
     
     if (*(char *)0xff44 == '\0') {
         return;
     }
-    fcn.00000f68(arg3);
+    extract_bits(arg3);
     *(undefined *)0xff44 = 0;
     return;
 }
 
 /* ====================================================================== */
-/* 0xf68: fcn.00000f68 */
+/* 0xf68: extract_bits */
 /* ====================================================================== */
 
 
-void fcn.00000f68(void)
+void extract_bits(void)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -639,12 +639,12 @@ void fcn.00000f68(void)
 }
 
 /* ====================================================================== */
-/* 0xf8a: fcn.00000f8a */
+/* 0xf8a: fill_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f8a(int16_t arg1, int16_t arg4)
+void fill_buffer(int16_t arg1, int16_t arg4)
 {
     int16_t iVar1;
     uint8_t *puVar2;
@@ -655,7 +655,7 @@ void fcn.00000f8a(int16_t arg1, int16_t arg4)
     puVar2 = (uint8_t *)
              ((uint16_t)(*(char *)0x84 + *(char *)0x4ffb & 0x3f) * 0x24 +
               (uint16_t)(uint8_t)(*(char *)0x83 + *(char *)0x4ffc + 4) + *(int16_t *)0xff31);
-    fcn.00001504();
+    ai_func_3();
     do {
         iVar1 = 4;
         do {
@@ -665,17 +665,17 @@ void fcn.00000f8a(int16_t arg1, int16_t arg4)
             puVar2 = puVar3 + 1;
         } while (iVar1 != 0);
         puVar2 = puVar3 + 0x21;
-        fcn.00001504();
+        ai_func_3();
     } while (in_stack_00000002 != 1);
     return;
 }
 
 /* ====================================================================== */
-/* 0xf46: fcn.00000f46 */
+/* 0xf46: ai_get_value */
 /* ====================================================================== */
 
 
-void fcn.00000f46(void)
+void ai_get_value(void)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -702,12 +702,12 @@ void fcn.00000f46(void)
 }
 
 /* ====================================================================== */
-/* 0x1096: fcn.00001096 */
+/* 0x1096: vga_operation0 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00001096(int16_t arg1)
+undefined4 vga_operation0(int16_t arg1)
 {
     int16_t iVar1;
     uint16_t uVar2;
@@ -730,11 +730,11 @@ undefined4 fcn.00001096(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x68e: fcn.0000068e */
+/* 0x68e: vga_operation1 */
 /* ====================================================================== */
 
 
-void fcn.0000068e(void)
+void vga_operation1(void)
 {
     undefined2 *puVar1;
     int16_t iVar2;
@@ -758,13 +758,13 @@ void fcn.0000068e(void)
 }
 
 /* ====================================================================== */
-/* 0x3e7: fcn.000003e7 */
+/* 0x3e7: vga_operation2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.000003e7(int16_t arg2, int16_t arg3)
+void vga_operation2(int16_t arg2, int16_t arg3)
 {
     undefined extraout_AH;
     undefined uVar1;
@@ -793,8 +793,8 @@ void fcn.000003e7(int16_t arg2, int16_t arg3)
     *(undefined *)0x5011 = uVar1;
     uVar1 = unaff_SI[-1];
     arg_6h = unaff_SI;
-    fcn.00001504(arg3, arg3);
-    fcn.000006dc((int16_t)arg_6h, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, uVar1));
+    ai_func_3(arg3, arg3);
+    ai_func_5((int16_t)arg_6h, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, uVar1));
     puVar4 = unaff_SI + 0x25;
     iVar2 = (int16_t)unaff_DI * 8 + *(int16_t *)0x4feb;
     iVar3 = extraout_DX;
@@ -804,31 +804,31 @@ void fcn.000003e7(int16_t arg2, int16_t arg3)
         iVar6 = extraout_DX;
         if ((char)extraout_DX < '\0') {
             iVar6 = extraout_DX;
-            uVar5 = fcn.000006d5(iVar2, puVar4);
+            uVar5 = ai_func_4(iVar2, puVar4);
         }
         puVar4 = arg_6h;
         iVar2 = iVar6;
-        fcn.0000059d((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
+        ai_multiply((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
         iVar3 = in_stack_00000000;
     }
     if (((*(char *)0x4ff1 != '\x01') && (*(char *)0x5011 != -1)) && (*(char *)0x5011 != -4)) {
         uVar5 = CONCAT22(iVar2 + 0xa00, CONCAT11(puVar4[2], (char)((uint16_t)iVar3 >> 8)));
         if (iVar3 < 0) {
-            uVar5 = fcn.000006d5();
+            uVar5 = ai_func_4();
         }
-        fcn.0000059d((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
+        ai_multiply((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x128: fcn.00000128 */
+/* 0x128: vga_operation3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000128(int16_t arg3)
+void vga_operation3(int16_t arg3)
 {
     char *pcVar1;
     undefined2 uVar2;
@@ -861,18 +861,18 @@ void fcn.00000128(int16_t arg3)
         iVar7 = 0x5014;
         *(undefined *)0x5015 = *unaff_SI;
         arg_4h = unaff_SI;
-        fcn.00001504(arg3);
+        ai_func_3(arg3);
         uVar2 = *(undefined2 *)(unaff_SI + 0x23);
         *(undefined2 *)(iVar7 + 2) = uVar2;
         *(undefined *)0x4ff2 = (char)arg3;
         *(char *)0x4ff3 = '\x12' - *(char *)0x4ff1;
-        uVar6 = fcn.000006dc(in_stack_00000000, (int16_t)arg_4h, iVar7, CONCAT11((char)((uint16_t)uVar2 >> 8), uVar6));
+        uVar6 = ai_func_5(in_stack_00000000, (int16_t)arg_4h, iVar7, CONCAT11((char)((uint16_t)uVar2 >> 8), uVar6));
         *(undefined *)0x5014 = uVar6;
-        fcn.0000056f();
+        ai_process_loop_2();
         if (*(char *)0x4ff1 != '\x01') {
-            iVar7 = fcn.0000056f();
+            iVar7 = ai_process_loop_2();
             if ((*(char *)0xff34 != '\0') && (*(char *)0xff2f != '\0')) {
-                fcn.0000072d(iVar7);
+                vga_operation5(iVar7);
             }
         }
         return;
@@ -886,7 +886,7 @@ void fcn.00000128(int16_t arg3)
         *(undefined *)(unaff_DI + -1) = 0xfe;
         if (cVar3 != '\0') {
             *(char *)(unaff_DI + -1) = cVar4;
-            fcn.00000276(arg3, (uint16_t)(arg3 * 8 + *(int16_t *)0x4feb) >> 1, 
+            vga_operation4(arg3, (uint16_t)(arg3 * 8 + *(int16_t *)0x4feb) >> 1, 
                          CONCAT11((char)((uint16_t)in_AX >> 8), cVar4));
         }
     }
@@ -902,12 +902,12 @@ void fcn.00000128(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x276: fcn.00000276 */
+/* 0x276: vga_operation4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000276(int16_t arg3, int16_t arg2, int16_t arg1)
+void vga_operation4(int16_t arg3, int16_t arg2, int16_t arg1)
 {
     uint8_t uVar1;
     uint16_t *puVar2;
@@ -974,12 +974,12 @@ void fcn.00000276(int16_t arg3, int16_t arg2, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x72d: fcn.0000072d */
+/* 0x72d: vga_operation5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000072d(int16_t arg1)
+void vga_operation5(int16_t arg1)
 {
     uint8_t uVar1;
     uint8_t *puVar2;
@@ -1027,7 +1027,7 @@ void fcn.0000072d(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x11a: fcn.0000011a */
+/* 0x11a: ai_multiply_2 */
 /* ====================================================================== */
 
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
@@ -1054,34 +1054,34 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
     undefined4 uVar7;
     
     while( true ) {
-        uVar7 = fcn.00001504();
+        uVar7 = ai_func_3();
         *(int16_t *)0x4feb = *(int16_t *)0x4feb + 0xa00;
         pcVar1 = (char *)0x4ff1;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000dff(in_BX, (int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+        ai_func_15(in_BX, (int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
         in_BX = 0;
         pcVar5 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000003e7(arg2, 0);
+            vga_operation2(arg2, 0);
         }
         do {
             pcVar3 = unaff_DI;
             pcVar6 = pcVar5;
             if (*pcVar6 != *pcVar3) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar6[1] != pcVar3[1]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar6[2] != pcVar3[2]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar6[3] != pcVar3[3]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             pcVar5 = pcVar6 + 4;
@@ -1089,15 +1089,15 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
         } while (param_3 != (char *)0x1);
         if (pcVar6[4] != pcVar3[4]) {
             param_3 = (char *)0xf4;
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar6[5] != pcVar3[5]) {
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar6[6] != pcVar3[6]) {
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         pcVar5 = pcVar6 + 8;
@@ -1116,8 +1116,8 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             *(char *)0x5011 = cVar2;
             cVar2 = pcVar6[7];
             pcVar6 = pcVar6 + 0x2c;
-            fcn.00001504();
-            cVar2 = fcn.000006dc((int16_t)pcVar5, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
+            ai_func_3();
+            cVar2 = ai_func_5((int16_t)pcVar5, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar3 = (char *)((int16_t)unaff_DI * 8 + *(int16_t *)0x4feb);
             arg3_00 = pcVar4;
@@ -1126,9 +1126,9 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar6, cVar2));
                 pcVar6 = pcVar4;
                 if (cVar2 < '\0') {
-                    uVar7 = fcn.000006d5();
+                    uVar7 = ai_func_4();
                 }
-                fcn.0000059d((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
+                ai_multiply((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
                 pcVar3 = pcVar4;
                 arg3_00 = param_5;
                 pcVar6 = pcVar5;
@@ -1140,13 +1140,13 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             if (((*(char *)0x4ff1 != '\x01') && (*(char *)0x5011 != -1)) && (*(char *)0x5011 != -4)) {
                 uVar7 = CONCAT22(pcVar3 + 0xa00, CONCAT11(pcVar6[2], (char)((uint16_t)arg3_00 >> 8)));
                 if ((int16_t)arg3_00 < 0) {
-                    uVar7 = fcn.000006d5();
+                    uVar7 = ai_func_4();
                 }
                 param_5 = (char *)0x569;
-                fcn.0000059d((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
+                ai_multiply((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
             }
         } else if (pcVar6[7] != pcVar3[7]) {
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         unaff_SI = pcVar5 + 4;
     }
@@ -1154,29 +1154,29 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
 }
 
 /* ====================================================================== */
-/* 0x655: fcn.00000655 */
+/* 0x655: ai_func_34 */
 /* ====================================================================== */
 
 
-void fcn.00000655(int16_t param_1)
+void ai_func_34(int16_t param_1)
 {
     int16_t iVar1;
     
     iVar1 = 8;
     do {
-        fcn.00000665(iVar1);
-        fcn.00000665();
+        ai_multiply_3(iVar1);
+        ai_multiply_3();
         iVar1 = param_1 + -1;
     } while (iVar1 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0x665: fcn.00000665 */
+/* 0x665: ai_multiply_3 */
 /* ====================================================================== */
 
 
-void fcn.00000665(void)
+void ai_multiply_3(void)
 {
     int16_t in_AX;
     int16_t iVar1;
@@ -1186,7 +1186,7 @@ void fcn.00000665(void)
     
     iVar1 = 4;
     do {
-        in_AX = fcn.00000672(in_AX, in_BX);
+        in_AX = ai_func_36(in_AX, in_BX);
         *unaff_DI = (char)in_BX;
         unaff_DI = unaff_DI + 1;
         iVar1 = iVar1 + -1;
@@ -1195,23 +1195,23 @@ void fcn.00000665(void)
 }
 
 /* ====================================================================== */
-/* 0x672: fcn.00000672 */
+/* 0x672: ai_func_36 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00000672(int16_t arg1, int16_t arg3)
+int16_t ai_func_36(int16_t arg1, int16_t arg3)
 {
     return arg1 * 0x10;
 }
 
 /* ====================================================================== */
-/* 0x614: fcn.00000614 */
+/* 0x614: vga_operation_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000614(int16_t arg1)
+void vga_operation_2(int16_t arg1)
 {
     int16_t *piVar1;
     char in_CL;
@@ -1225,13 +1225,13 @@ void fcn.00000614(int16_t arg1)
     undefined *in_stack_00000000;
     int16_t in_stack_00000004;
     
-    fcn.0000069c((uint16_t)(uint8_t)(in_CL - 1) * 0x30 + -0x7fd0, in_BX);
+    ai_fill_buf((uint16_t)(uint8_t)(in_CL - 1) * 0x30 + -0x7fd0, in_BX);
     uVar2 = extraout_DX;
     do {
         piVar1 = unaff_BP + 1;
-        fcn.0000063f(*unaff_BP, CONCAT11((char)((uint16_t)uVar2 >> 8), *in_stack_00000000));
+        ai_multiply_4(*unaff_BP, CONCAT11((char)((uint16_t)uVar2 >> 8), *in_stack_00000000));
         unaff_BP = unaff_BP + 2;
-        fcn.0000063f(*piVar1, arg2);
+        ai_multiply_4(*piVar1, arg2);
         in_stack_00000000 = in_stack_00000000 + 1;
         uVar2 = extraout_DX_00;
     } while (in_stack_00000004 != 1);
@@ -1239,12 +1239,12 @@ void fcn.00000614(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x69c: fcn.0000069c */
+/* 0x69c: ai_fill_buf */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000069c(int16_t arg1, int16_t arg3)
+void ai_fill_buf(int16_t arg1, int16_t arg3)
 {
     uint8_t uVar1;
     uint16_t *puVar2;
@@ -1272,12 +1272,12 @@ void fcn.0000069c(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x63f: fcn.0000063f */
+/* 0x63f: ai_multiply_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000063f(int16_t arg1, int16_t arg2)
+void ai_multiply_4(int16_t arg1, int16_t arg2)
 {
     int16_t iVar1;
     uint8_t extraout_DH;
@@ -1288,7 +1288,7 @@ void fcn.0000063f(int16_t arg1, int16_t arg2)
     
     iVar1 = 4;
     do {
-        arg1 = fcn.00000672(arg1, in_BX);
+        arg1 = ai_func_36(arg1, in_BX);
         uVar2 = (uint8_t)in_BX | extraout_DH;
         in_BX = CONCAT11((char)((uint16_t)in_BX >> 8), uVar2);
         *unaff_DI = uVar2;
@@ -1299,12 +1299,12 @@ void fcn.0000063f(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xdd0: fcn.00000dd0 */
+/* 0xdd0: ai_multiply_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000dd0(int16_t arg1, int16_t arg4)
+void ai_multiply_5(int16_t arg1, int16_t arg4)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -1315,7 +1315,7 @@ void fcn.00000dd0(int16_t arg1, int16_t arg4)
     
     puVar2 = (undefined2 *)
              ((uint16_t)*(uint8_t *)0x84 * 0x24 + (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0xff31);
-    fcn.00001504();
+    ai_func_3();
     puVar4 = (undefined2 *)0x5014;
     iVar3 = 3;
     do {
@@ -1324,18 +1324,18 @@ void fcn.00000dd0(int16_t arg1, int16_t arg4)
         puVar4 = (undefined2 *)((int16_t)puVar4 + 3);
         *(undefined *)puVar1 = *(undefined *)(puVar2 + 1);
         puVar2 = puVar2 + 0x12;
-        fcn.00001504();
+        ai_func_3();
         iVar3 = iVar3 + -1;
     } while (iVar3 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0xd26: fcn.00000d26 */
+/* 0xd26: vga_operation_3 */
 /* ====================================================================== */
 
 
-uint8_t fcn.00000d26(void)
+uint8_t vga_operation_3(void)
 {
     uint8_t uVar1;
     undefined2 unaff_DS;
@@ -1351,12 +1351,12 @@ uint8_t fcn.00000d26(void)
 }
 
 /* ====================================================================== */
-/* 0xce0: fcn.00000ce0 */
+/* 0xce0: ai_func_44 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000ce0(int16_t arg4, int16_t arg1, int16_t arg2)
+void ai_func_44(int16_t arg4, int16_t arg1, int16_t arg2)
 {
     int16_t extraout_DX;
     char *unaff_SI;
@@ -1368,7 +1368,7 @@ void fcn.00000ce0(int16_t arg4, int16_t arg1, int16_t arg2)
     do {
         pcVar1 = unaff_ES;
         if (*unaff_SI != '\0') {
-            fcn.0000062a((uint16_t)*(uint8_t *)0x4ff2 * 0x40 + 0x511d, arg2);
+            ai_func_45((uint16_t)*(uint8_t *)0x4ff2 * 0x40 + 0x511d, arg2);
             arg2 = extraout_DX;
             unaff_SI = unaff_DS;
             pcVar1 = (char *)arg4;
@@ -1383,12 +1383,12 @@ void fcn.00000ce0(int16_t arg4, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x62a: fcn.0000062a */
+/* 0x62a: ai_func_45 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000062a(int16_t arg1, int16_t arg2)
+void ai_func_45(int16_t arg1, int16_t arg2)
 {
     int16_t *piVar1;
     int16_t arg2_00;
@@ -1400,9 +1400,9 @@ void fcn.0000062a(int16_t arg1, int16_t arg2)
     
     do {
         piVar1 = unaff_SI + 1;
-        fcn.0000063f(*unaff_SI, CONCAT11((char)((uint16_t)arg2 >> 8), *unaff_BP));
+        ai_multiply_4(*unaff_SI, CONCAT11((char)((uint16_t)arg2 >> 8), *unaff_BP));
         unaff_SI = unaff_SI + 2;
-        fcn.0000063f(*piVar1, arg2_00);
+        ai_multiply_4(*piVar1, arg2_00);
         unaff_BP = unaff_BP + 1;
         arg2 = extraout_DX;
     } while (in_stack_00000002 != 1);
@@ -1410,11 +1410,11 @@ void fcn.0000062a(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x6cd: fcn.000006cd */
+/* 0x6cd: vga_operation_4 */
 /* ====================================================================== */
 
 
-void fcn.000006cd(void)
+void vga_operation_4(void)
 {
     undefined2 *puVar1;
     int16_t iVar2;
@@ -1430,12 +1430,12 @@ void fcn.000006cd(void)
 }
 
 /* ====================================================================== */
-/* 0x11eb: fcn.000011eb */
+/* 0x11eb: extract_bits_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000011eb(int16_t arg3, int16_t arg1)
+void extract_bits_2(int16_t arg3, int16_t arg1)
 {
     uint16_t uVar1;
     int16_t iVar2;
@@ -1455,38 +1455,38 @@ void fcn.000011eb(int16_t arg3, int16_t arg1)
     arg3_00 = arg3 * 8 + *(int16_t *)0x4feb;
     if ((char)arg1 == '\0') {
         uVar1 = CONCAT11((char)((uint16_t)arg1 >> 8), *(undefined *)0x4fff) & 0xff03;
-        fcn.000012e6(CONCAT11((char)(uVar1 >> 8), '\x03' - (char)uVar1));
-        fcn.000012cd(arg3);
-        fcn.000012e6(CONCAT11(extraout_AH_00, *(undefined *)0x4fff));
-        fcn.000012cd();
+        ai_process_loop_5(CONCAT11((char)(uVar1 >> 8), '\x03' - (char)uVar1));
+        ai_scan_loop(arg3);
+        ai_process_loop_5(CONCAT11(extraout_AH_00, *(undefined *)0x4fff));
+        ai_scan_loop();
         return;
     }
     uVar1 = CONCAT11((char)((uint16_t)(uint8_t)((char)arg1 - 1) * 0x30 + -0x7fd0 >> 8), *(undefined *)0x4fff) & 0xff03;
-    iVar2 = fcn.000012e6(CONCAT11((char)(uVar1 >> 8), '\x03' - (char)uVar1));
-    fcn.0000125d(iVar2, arg3_00);
-    iVar2 = fcn.000012e6(CONCAT11(extraout_AH, *(undefined *)0x4fff));
-    fcn.0000125d(iVar2, arg3_00);
+    iVar2 = ai_process_loop_5(CONCAT11((char)(uVar1 >> 8), '\x03' - (char)uVar1));
+    ai_process_loop_6(iVar2, arg3_00);
+    iVar2 = ai_process_loop_5(CONCAT11(extraout_AH, *(undefined *)0x4fff));
+    ai_process_loop_6(iVar2, arg3_00);
     return;
 }
 
 /* ====================================================================== */
-/* 0x12e6: fcn.000012e6 */
+/* 0x12e6: ai_process_loop_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int32_t fcn.000012e6(int16_t arg1)
+int32_t ai_process_loop_5(int16_t arg1)
 {
     return (uint32_t)((uint8_t)arg1 & 3) * 0x140;
 }
 
 /* ====================================================================== */
-/* 0x125d: fcn.0000125d */
+/* 0x125d: ai_process_loop_6 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000125d(int16_t arg1, int16_t arg3)
+void ai_process_loop_6(int16_t arg1, int16_t arg3)
 {
     undefined uVar1;
     uint16_t uVar2;
@@ -1518,11 +1518,11 @@ void fcn.0000125d(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x12cd: fcn.000012cd */
+/* 0x12cd: ai_scan_loop */
 /* ====================================================================== */
 
 
-void fcn.000012cd(void)
+void ai_scan_loop(void)
 {
     uint16_t uVar1;
     uint16_t *unaff_DI;
@@ -1726,39 +1726,39 @@ void fcn.00000110(int16_t arg1)
     pcStack_6 = in_BX;
     do {
         if (!(bool)in_ZF) {
-            fcn.00000128((int16_t)pcStack_6);
+            vga_operation3((int16_t)pcStack_6);
         }
         while( true ) {
-            uVar6 = fcn.00001504();
+            uVar6 = ai_func_3();
             *(int16_t *)0x4feb = *(int16_t *)0x4feb + 0xa00;
             pcVar1 = (char *)0x4ff1;
             *pcVar1 = *pcVar1 + -1;
             if (*pcVar1 == '\0') {
                 return;
             }
-            fcn.00000dff((int16_t)pcStack_6, (int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10));
+            ai_func_15((int16_t)pcStack_6, (int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10));
             iVar3 = 0;
             pcVar5 = unaff_SI + 8;
             if (unaff_SI[7] < '\0') {
-                fcn.000003e7(arg2, 0);
+                vga_operation2(arg2, 0);
             }
             do {
                 pcVar7 = unaff_DI;
                 pcVar4 = pcVar5;
                 if (*pcVar4 != *pcVar7) {
-                    fcn.00000128(iVar3);
+                    vga_operation3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[1] != pcVar7[1]) {
-                    fcn.00000128(iVar3);
+                    vga_operation3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[2] != pcVar7[2]) {
-                    fcn.00000128(iVar3);
+                    vga_operation3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[3] != pcVar7[3]) {
-                    fcn.00000128(iVar3);
+                    vga_operation3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 pcVar5 = pcVar4 + 4;
@@ -1766,15 +1766,15 @@ void fcn.00000110(int16_t arg1)
             } while (in_stack_00000006 != 1);
             if (pcVar4[4] != pcVar7[4]) {
                 in_stack_00000006 = 0xf4;
-                fcn.00000128(iVar3);
+                vga_operation3(iVar3);
             }
             iVar3 = iVar3 + 1;
             if (pcVar4[5] != pcVar7[5]) {
-                fcn.00000128(iVar3);
+                vga_operation3(iVar3);
             }
             iVar3 = iVar3 + 1;
             if (pcVar4[6] != pcVar7[6]) {
-                fcn.00000128(iVar3);
+                vga_operation3(iVar3);
             }
             pcStack_6 = (char *)(iVar3 + 1);
             unaff_SI = pcVar4 + 8;
@@ -1794,9 +1794,9 @@ void fcn.00000110(int16_t arg1)
             cVar2 = pcVar4[7];
             pcVar4 = pcVar4 + 0x2c;
             pcStackY_a = (char *)0x506;
-            fcn.00001504(pcStack_6);
+            ai_func_3(pcStack_6);
             pcVar7 = (char *)0x50e;
-            cVar2 = fcn.000006dc((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
+            cVar2 = ai_func_5((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
             arg3 = (char *)CONCAT11(extraout_DL, cVar2);
             iVar3 = (int16_t)unaff_DI * 8 + *(int16_t *)0x4feb;
             pcVar5 = pcVar4;
@@ -1805,9 +1805,9 @@ void fcn.00000110(int16_t arg1)
                 unaff_DI = arg3;
                 if (cVar2 < '\0') {
                     pcStackY_a = (char *)0x539;
-                    uVar6 = fcn.000006d5();
+                    uVar6 = ai_func_4();
                 }
-                fcn.0000059d((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
+                ai_multiply((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
                 arg3 = pcVar7;
                 iVar3 = iStackY_c;
                 pcVar5 = pcStackY_a;
@@ -1816,9 +1816,9 @@ void fcn.00000110(int16_t arg1)
             if (((*(char *)0x4ff1 != '\x01') && (*(char *)0x5011 != -1)) && (*(char *)0x5011 != -4)) {
                 uVar6 = CONCAT22(iVar3 + 0xa00, CONCAT11(pcVar5[2], (char)((uint16_t)arg3 >> 8)));
                 if ((int16_t)arg3 < 0) {
-                    uVar6 = fcn.000006d5();
+                    uVar6 = ai_func_4();
                 }
-                fcn.0000059d((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
+                ai_multiply((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
             }
         }
         in_ZF = pcVar4[7] == pcVar7[7];
@@ -1854,40 +1854,40 @@ void fcn.00000112(int16_t arg3)
     char *pcVar9;
     
     do {
-        fcn.00000128(arg3);
+        vga_operation3(arg3);
         do {
             while( true ) {
                 pcVar7 = (char *)0x11b;
-                uVar6 = fcn.00001504();
+                uVar6 = ai_func_3();
                 *(int16_t *)0x4feb = *(int16_t *)0x4feb + 0xa00;
                 pcVar1 = (char *)0x4ff1;
                 *pcVar1 = *pcVar1 + -1;
                 if (*pcVar1 == '\0') {
                     return;
                 }
-                fcn.00000dff(arg3, (int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10));
+                ai_func_15(arg3, (int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10));
                 arg3 = 0;
                 pcVar8 = unaff_SI + 8;
                 if (unaff_SI[7] < '\0') {
-                    fcn.000003e7(arg2, 0);
+                    vga_operation2(arg2, 0);
                 }
                 do {
                     pcVar4 = unaff_DI;
                     pcVar5 = pcVar8;
                     if (*pcVar5 != *pcVar4) {
-                        fcn.00000128(arg3);
+                        vga_operation3(arg3);
                     }
                     arg3 = arg3 + 1;
                     if (pcVar5[1] != pcVar4[1]) {
-                        fcn.00000128(arg3);
+                        vga_operation3(arg3);
                     }
                     arg3 = arg3 + 1;
                     if (pcVar5[2] != pcVar4[2]) {
-                        fcn.00000128(arg3);
+                        vga_operation3(arg3);
                     }
                     arg3 = arg3 + 1;
                     if (pcVar5[3] != pcVar4[3]) {
-                        fcn.00000128(arg3);
+                        vga_operation3(arg3);
                     }
                     arg3 = arg3 + 1;
                     pcVar8 = pcVar5 + 4;
@@ -1895,15 +1895,15 @@ void fcn.00000112(int16_t arg3)
                 } while (in_stack_00000008 != 1);
                 if (pcVar5[4] != pcVar4[4]) {
                     in_stack_00000008 = 0xf4;
-                    fcn.00000128(arg3);
+                    vga_operation3(arg3);
                 }
                 arg3 = arg3 + 1;
                 if (pcVar5[5] != pcVar4[5]) {
-                    fcn.00000128(arg3);
+                    vga_operation3(arg3);
                 }
                 arg3 = arg3 + 1;
                 if (pcVar5[6] != pcVar4[6]) {
-                    fcn.00000128(arg3);
+                    vga_operation3(arg3);
                 }
                 arg3 = arg3 + 1;
                 unaff_SI = pcVar5 + 8;
@@ -1923,9 +1923,9 @@ void fcn.00000112(int16_t arg3)
                 cVar2 = pcVar5[7];
                 pcVar5 = pcVar5 + 0x2c;
                 iStackY_a = 0x506;
-                fcn.00001504(arg3, arg3);
+                ai_func_3(arg3, arg3);
                 pcVar8 = (char *)0x50e;
-                cVar2 = fcn.000006dc((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
+                cVar2 = ai_func_5((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
                 pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
                 iVar3 = (int16_t)unaff_DI * 8 + *(int16_t *)0x4feb;
                 arg3 = (int16_t)unaff_DI;
@@ -1935,11 +1935,11 @@ void fcn.00000112(int16_t arg3)
                     arg3 = (int16_t)pcVar4;
                     if (cVar2 < '\0') {
                         iStackY_a = 0x539;
-                        uVar6 = fcn.000006d5();
+                        uVar6 = ai_func_4();
                         pcVar9 = pcVar5;
                     }
                     pcVar5 = pcVar8;
-                    fcn.0000059d((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    ai_multiply((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                     pcVar4 = pcVar9;
                     iVar3 = iStackY_a;
                 }
@@ -1948,9 +1948,9 @@ void fcn.00000112(int16_t arg3)
                 if (((*(char *)0x4ff1 != '\x01') && (*(char *)0x5011 != -1)) && (*(char *)0x5011 != -4)) {
                     uVar6 = CONCAT22(iVar3 + 0xa00, CONCAT11(pcVar5[2], (char)((uint16_t)pcVar4 >> 8)));
                     if ((int16_t)pcVar4 < 0) {
-                        uVar6 = fcn.000006d5();
+                        uVar6 = ai_func_4();
                     }
-                    fcn.0000059d((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    ai_multiply((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                 }
             }
         } while (pcVar5[7] == pcVar4[7]);
@@ -1986,40 +1986,40 @@ void fcn.00000112(int16_t arg3)
     char *pcVar9;
     
     do {
-        fcn.00000128(arg3);
+        vga_operation3(arg3);
         do {
             while( true ) {
                 pcVar7 = (char *)0x11b;
-                uVar6 = fcn.00001504();
+                uVar6 = ai_func_3();
                 *(int16_t *)0x4feb = *(int16_t *)0x4feb + 0xa00;
                 pcVar1 = (char *)0x4ff1;
                 *pcVar1 = *pcVar1 + -1;
                 if (*pcVar1 == '\0') {
                     return;
                 }
-                fcn.00000dff(arg3, (int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10));
+                ai_func_15(arg3, (int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10));
                 arg3 = 0;
                 pcVar8 = unaff_SI + 8;
                 if (unaff_SI[7] < '\0') {
-                    fcn.000003e7(arg2, 0);
+                    vga_operation2(arg2, 0);
                 }
                 do {
                     pcVar4 = unaff_DI;
                     pcVar5 = pcVar8;
                     if (*pcVar5 != *pcVar4) {
-                        fcn.00000128(arg3);
+                        vga_operation3(arg3);
                     }
                     arg3 = arg3 + 1;
                     if (pcVar5[1] != pcVar4[1]) {
-                        fcn.00000128(arg3);
+                        vga_operation3(arg3);
                     }
                     arg3 = arg3 + 1;
                     if (pcVar5[2] != pcVar4[2]) {
-                        fcn.00000128(arg3);
+                        vga_operation3(arg3);
                     }
                     arg3 = arg3 + 1;
                     if (pcVar5[3] != pcVar4[3]) {
-                        fcn.00000128(arg3);
+                        vga_operation3(arg3);
                     }
                     arg3 = arg3 + 1;
                     pcVar8 = pcVar5 + 4;
@@ -2027,15 +2027,15 @@ void fcn.00000112(int16_t arg3)
                 } while (in_stack_00000008 != 1);
                 if (pcVar5[4] != pcVar4[4]) {
                     in_stack_00000008 = 0xf4;
-                    fcn.00000128(arg3);
+                    vga_operation3(arg3);
                 }
                 arg3 = arg3 + 1;
                 if (pcVar5[5] != pcVar4[5]) {
-                    fcn.00000128(arg3);
+                    vga_operation3(arg3);
                 }
                 arg3 = arg3 + 1;
                 if (pcVar5[6] != pcVar4[6]) {
-                    fcn.00000128(arg3);
+                    vga_operation3(arg3);
                 }
                 arg3 = arg3 + 1;
                 unaff_SI = pcVar5 + 8;
@@ -2055,9 +2055,9 @@ void fcn.00000112(int16_t arg3)
                 cVar2 = pcVar5[7];
                 pcVar5 = pcVar5 + 0x2c;
                 iStackY_a = 0x506;
-                fcn.00001504(arg3, arg3);
+                ai_func_3(arg3, arg3);
                 pcVar8 = (char *)0x50e;
-                cVar2 = fcn.000006dc((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
+                cVar2 = ai_func_5((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
                 pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
                 iVar3 = (int16_t)unaff_DI * 8 + *(int16_t *)0x4feb;
                 arg3 = (int16_t)unaff_DI;
@@ -2067,11 +2067,11 @@ void fcn.00000112(int16_t arg3)
                     arg3 = (int16_t)pcVar4;
                     if (cVar2 < '\0') {
                         iStackY_a = 0x539;
-                        uVar6 = fcn.000006d5();
+                        uVar6 = ai_func_4();
                         pcVar9 = pcVar5;
                     }
                     pcVar5 = pcVar8;
-                    fcn.0000059d((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    ai_multiply((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                     pcVar4 = pcVar9;
                     iVar3 = iStackY_a;
                 }
@@ -2080,9 +2080,9 @@ void fcn.00000112(int16_t arg3)
                 if (((*(char *)0x4ff1 != '\x01') && (*(char *)0x5011 != -1)) && (*(char *)0x5011 != -4)) {
                     uVar6 = CONCAT22(iVar3 + 0xa00, CONCAT11(pcVar5[2], (char)((uint16_t)pcVar4 >> 8)));
                     if ((int16_t)pcVar4 < 0) {
-                        uVar6 = fcn.000006d5();
+                        uVar6 = ai_func_4();
                     }
-                    fcn.0000059d((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    ai_multiply((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                 }
             }
         } while (pcVar5[7] == pcVar4[7]);
@@ -2123,34 +2123,34 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
     
     while( true ) {
         unaff_DI[unaff_BP + 0x4c6] = unaff_DI[unaff_BP + 0x4c6] + in_AL;
-        uVar7 = fcn.00001504();
+        uVar7 = ai_func_3();
         *(int16_t *)0x4feb = *(int16_t *)0x4feb + 0xa00;
         pcVar1 = (char *)0x4ff1;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000dff(in_BX, (int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+        ai_func_15(in_BX, (int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
         in_BX = 0;
         pcVar4 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000003e7(arg2, 0);
+            vga_operation2(arg2, 0);
         }
         do {
             pcVar6 = unaff_DI;
             pcVar5 = pcVar4;
             if (*pcVar5 != *pcVar6) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[1] != pcVar6[1]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[2] != pcVar6[2]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[3] != pcVar6[3]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             pcVar4 = pcVar5 + 4;
@@ -2158,15 +2158,15 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
         } while (param_3 != (char *)0x1);
         if (pcVar5[4] != pcVar6[4]) {
             param_3 = (char *)0xf4;
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar5[5] != pcVar6[5]) {
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar5[6] != pcVar6[6]) {
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         pcVar4 = pcVar5 + 8;
@@ -2186,8 +2186,8 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             *(char *)0x5011 = cVar2;
             cVar2 = pcVar5[7];
             pcVar5 = pcVar5 + 0x2c;
-            fcn.00001504();
-            in_AL = fcn.000006dc((int16_t)pcVar4, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
+            ai_func_3();
+            in_AL = ai_func_5((int16_t)pcVar4, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
             pcVar6 = (char *)CONCAT11(extraout_DL, in_AL);
             pcVar3 = (char *)((int16_t)unaff_DI * 8 + *(int16_t *)0x4feb);
             arg3_00 = pcVar6;
@@ -2196,9 +2196,9 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar5, in_AL));
                 pcVar5 = pcVar6;
                 if (in_AL < '\0') {
-                    uVar7 = fcn.000006d5();
+                    uVar7 = ai_func_4();
                 }
-                in_AL = fcn.0000059d((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
+                in_AL = ai_multiply((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
                 pcVar3 = pcVar6;
                 arg3_00 = param_5;
                 pcVar5 = pcVar4;
@@ -2210,13 +2210,13 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             if (((*(char *)0x4ff1 != '\x01') && (*(char *)0x5011 != -1)) && (*(char *)0x5011 != -4)) {
                 uVar7 = CONCAT22(pcVar3 + 0xa00, CONCAT11(pcVar5[2], (char)((uint16_t)arg3_00 >> 8)));
                 if ((int16_t)arg3_00 < 0) {
-                    uVar7 = fcn.000006d5();
+                    uVar7 = ai_func_4();
                 }
                 param_5 = (char *)0x569;
-                in_AL = fcn.0000059d((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
+                in_AL = ai_multiply((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
             }
         } else if (in_AL != pcVar6[7]) {
-            in_AL = fcn.00000128(in_BX);
+            in_AL = vga_operation3(in_BX);
         }
         unaff_SI = pcVar4 + 4;
     }
@@ -2251,34 +2251,34 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
     undefined4 uVar7;
     
     while( true ) {
-        uVar7 = fcn.00001504();
+        uVar7 = ai_func_3();
         *(int16_t *)0x4feb = *(int16_t *)0x4feb + 0xa00;
         pcVar1 = (char *)0x4ff1;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000dff(in_BX, (int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+        ai_func_15(in_BX, (int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
         in_BX = 0;
         pcVar5 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000003e7(arg2, 0);
+            vga_operation2(arg2, 0);
         }
         do {
             pcVar3 = unaff_DI;
             pcVar6 = pcVar5;
             if (*pcVar6 != *pcVar3) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar6[1] != pcVar3[1]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar6[2] != pcVar3[2]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar6[3] != pcVar3[3]) {
-                fcn.00000128(in_BX);
+                vga_operation3(in_BX);
             }
             in_BX = in_BX + 1;
             pcVar5 = pcVar6 + 4;
@@ -2286,15 +2286,15 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
         } while (param_3 != (char *)0x1);
         if (pcVar6[4] != pcVar3[4]) {
             param_3 = (char *)0xf4;
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar6[5] != pcVar3[5]) {
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar6[6] != pcVar3[6]) {
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         in_BX = in_BX + 1;
         pcVar5 = pcVar6 + 8;
@@ -2313,8 +2313,8 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             *(char *)0x5011 = cVar2;
             cVar2 = pcVar6[7];
             pcVar6 = pcVar6 + 0x2c;
-            fcn.00001504();
-            cVar2 = fcn.000006dc((int16_t)pcVar5, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
+            ai_func_3();
+            cVar2 = ai_func_5((int16_t)pcVar5, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar3 = (char *)((int16_t)unaff_DI * 8 + *(int16_t *)0x4feb);
             arg3_00 = pcVar4;
@@ -2323,9 +2323,9 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar6, cVar2));
                 pcVar6 = pcVar4;
                 if (cVar2 < '\0') {
-                    uVar7 = fcn.000006d5();
+                    uVar7 = ai_func_4();
                 }
-                fcn.0000059d((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
+                ai_multiply((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
                 pcVar3 = pcVar4;
                 arg3_00 = param_5;
                 pcVar6 = pcVar5;
@@ -2337,13 +2337,13 @@ void fcn.00000118(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             if (((*(char *)0x4ff1 != '\x01') && (*(char *)0x5011 != -1)) && (*(char *)0x5011 != -4)) {
                 uVar7 = CONCAT22(pcVar3 + 0xa00, CONCAT11(pcVar6[2], (char)((uint16_t)arg3_00 >> 8)));
                 if ((int16_t)arg3_00 < 0) {
-                    uVar7 = fcn.000006d5();
+                    uVar7 = ai_func_4();
                 }
                 param_5 = (char *)0x569;
-                fcn.0000059d((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
+                ai_multiply((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
             }
         } else if (pcVar6[7] != pcVar3[7]) {
-            fcn.00000128(in_BX);
+            vga_operation3(in_BX);
         }
         unaff_SI = pcVar5 + 4;
     }

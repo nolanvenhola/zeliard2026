@@ -107,13 +107,13 @@ static const char *STR_0x1366 = "jCDA  / aC"; // [ibm037]
 static const char *STR_0x151a = "Cavern of Plata"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_35 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3, int16_t arg1)
+void zr3_35(int16_t arg3, int16_t arg1)
 {
     undefined2 in_AX;
     uint8_t in_CL;

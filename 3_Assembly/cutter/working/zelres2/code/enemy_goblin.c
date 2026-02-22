@@ -36,12 +36,12 @@ static const char *STR_0xbc5 = "Here you are, sir. One gold."; // [ascii]
 static const char *STR_0xc20 = "&golds in your account."; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_13 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr2_13(int16_t arg3)
 {
     char cVar1;
     int16_t arg1;
@@ -71,7 +71,7 @@ void fcn.00000000(int16_t arg3)
     uStack0006 = 0x4c;
     (**(code **)0x2010)();
     uStack0008 = 0x4f;
-    fcn.000006a7();
+    goblin_func_1();
     arg3_00 = 0xd60;
     uStack000a = 0x5c;
     (**(code **)0x2000)();
@@ -88,7 +88,7 @@ void fcn.00000000(int16_t arg3)
         arg1 = (**(code **)0x6004)();
         do {
             uStack000a = 0x89;
-            arg1 = fcn.0000072c(arg1);
+            arg1 = goblin_func_2(arg1);
         } while (*(uint8_t *)0xff1a < 0x3f);
         iStack000e = iStack000c + -1;
     } while (iStack000e != 0);
@@ -99,7 +99,7 @@ void fcn.00000000(int16_t arg3)
         cVar1 = (**(code **)0x6004)();
         if (cVar1 == -1) break;
         iStack000c = 0xaa;
-        fcn.000000b1(arg3_00);
+        goblin_func_3(arg3_00);
     }
     // WARNING: Could not recover jumptable at 0x000000ac. Too many branches
     // WARNING: Treating indirect jump as call
@@ -108,11 +108,11 @@ void fcn.00000000(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x6a7: fcn.000006a7 */
+/* 0x6a7: goblin_func_1 */
 /* ====================================================================== */
 
 
-void fcn.000006a7(void)
+void goblin_func_1(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -138,12 +138,12 @@ void fcn.000006a7(void)
 }
 
 /* ====================================================================== */
-/* 0x72c: fcn.0000072c */
+/* 0x72c: goblin_func_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000072c(int16_t arg1)
+void goblin_func_2(int16_t arg1)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -178,12 +178,12 @@ void fcn.0000072c(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xb1: fcn.000000b1 */
+/* 0xb1: goblin_func_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000000b1(int16_t arg3)
+void goblin_func_3(int16_t arg3)
 {
     uint8_t in_AL;
     
@@ -194,11 +194,11 @@ void fcn.000000b1(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x623: fcn.00000623 */
+/* 0x623: goblin_process_loop */
 /* ====================================================================== */
 
 
-void fcn.00000623(void)
+void goblin_process_loop(void)
 {
     // WARNING: Could not recover jumptable at 0x0000062b. Too many branches
     // WARNING: Treating indirect jump as call
@@ -207,11 +207,11 @@ void fcn.00000623(void)
 }
 
 /* ====================================================================== */
-/* 0x755: fcn.00000755 */
+/* 0x755: goblin_multiply */
 /* ====================================================================== */
 
 
-void fcn.00000755(void)
+void goblin_multiply(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -237,11 +237,11 @@ void fcn.00000755(void)
 }
 
 /* ====================================================================== */
-/* 0x630: fcn.00000630 */
+/* 0x630: goblin_process_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.00000630(void)
+void goblin_process_loop_2(void)
 {
     uint8_t in_AL;
     uint8_t uVar1;
@@ -300,12 +300,12 @@ void fcn.00000630(void)
 }
 
 /* ====================================================================== */
-/* 0x817: fcn.00000817 */
+/* 0x817: goblin_func_7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000817(short unsigned int arg1)
+void goblin_func_7(short unsigned int arg1)
 {
     int16_t *unaff_SI;
     undefined2 unaff_DS;
@@ -314,7 +314,7 @@ void fcn.00000817(short unsigned int arg1)
     while( true ) {
         *(undefined *)0xff1a = 0;
         if (*unaff_SI == -1) break;
-        fcn.00000755(unaff_SI + 1);
+        goblin_multiply(unaff_SI + 1);
         do {
             unaff_SI = in_stack_00000000;
         } while (*(uint8_t *)0xff1a < 0x28);

@@ -9,12 +9,12 @@ static const char *STR_0x23b9 = "nnUUWUUU@"; // [ascii]
 static const char *STR_0x23c3 = "uUUUUuU"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_08 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg1)
+void zr2_08(int16_t arg1)
 {
     undefined2 *puVar1;
     undefined2 in_AX;
@@ -31,33 +31,33 @@ void fcn.00000000(int16_t arg1)
         puVar3 = puVar3 + 1;
         *puVar1 = 0;
     }
-    fcn.00000060();
-    fcn.00000060();
+    bat_func_1();
+    bat_func_1();
     uStack0002 = 0x3a;
-    fcn.00000082();
+    bat_process_loop();
     iVar2 = 0x10;
     do {
         uStack0004 = 0x4e;
-        fcn.00000291();
+        bat_func_3();
         iVar2 = iVar2 + -1;
     } while (iVar2 != 0);
     iVar2 = 0x10;
     do {
         uStack0004 = 0x59;
-        fcn.00000291();
+        bat_func_3();
         iVar2 = iVar2 + -1;
     } while (iVar2 != 0);
     uStack0006 = 0x5e;
-    fcn.000002b3();
+    bat_func_4();
     return;
 }
 
 /* ====================================================================== */
-/* 0x60: fcn.00000060 */
+/* 0x60: bat_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00000060(void)
+void bat_func_1(void)
 {
     undefined2 *puVar1;
     undefined *puVar2;
@@ -99,11 +99,11 @@ void fcn.00000060(void)
 }
 
 /* ====================================================================== */
-/* 0x82: fcn.00000082 */
+/* 0x82: bat_process_loop */
 /* ====================================================================== */
 
 
-void fcn.00000082(void)
+void bat_process_loop(void)
 {
     undefined2 unaff_DS;
     
@@ -114,11 +114,11 @@ void fcn.00000082(void)
 }
 
 /* ====================================================================== */
-/* 0x291: fcn.00000291 */
+/* 0x291: bat_func_3 */
 /* ====================================================================== */
 
 
-void fcn.00000291(void)
+void bat_func_3(void)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -151,11 +151,11 @@ void fcn.00000291(void)
 }
 
 /* ====================================================================== */
-/* 0x2b3: fcn.000002b3 */
+/* 0x2b3: bat_func_4 */
 /* ====================================================================== */
 
 
-void fcn.000002b3(void)
+void bat_func_4(void)
 {
     undefined2 unaff_DS;
     
@@ -166,11 +166,11 @@ void fcn.000002b3(void)
 }
 
 /* ====================================================================== */
-/* 0xc0: fcn.000000c0 */
+/* 0xc0: copy_buffer */
 /* ====================================================================== */
 
 
-void fcn.000000c0(void)
+void copy_buffer(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -200,11 +200,11 @@ void fcn.000000c0(void)
 }
 
 /* ====================================================================== */
-/* 0x1fd: fcn.000001fd */
+/* 0x1fd: bat_process_loop_2 */
 /* ====================================================================== */
 
 
-char fcn.000001fd(void)
+char bat_process_loop_2(void)
 {
     uint8_t in_DL;
     uint8_t in_DH;

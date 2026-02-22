@@ -5,13 +5,13 @@
 static const char *STR_0x2a3 = "ÚÄxGW=@=?XGXÕ@==7CW"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_24 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(short unsigned int arg3)
+void zr1_24(short unsigned int arg3)
 {
     char cVar1;
     undefined2 in_AX;

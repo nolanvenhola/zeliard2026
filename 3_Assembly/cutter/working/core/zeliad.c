@@ -14,12 +14,12 @@ static const char *STR_0x851 = "game.bin"; // [ascii]
 static const char *STR_0x85c = "stdply.bin"; // [ascii]
 
 /* ====================================================================== */
-/* 0x520: fcn.00000520 */
+/* 0x520: zeliad */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000520(int16_t arg1)
+void zeliad(int16_t arg1)
 {
     code *pcVar1;
     char *pcVar2;
@@ -50,11 +50,11 @@ void fcn.00000520(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x4ef: fcn.000004ef */
+/* 0x4ef: flush_keyboard */
 /* ====================================================================== */
 
 
-void fcn.000004ef(void)
+void flush_keyboard(void)
 {
     code *pcVar1;
     int16_t arg1;
@@ -76,7 +76,7 @@ void fcn.000004ef(void)
             }
         }
     }
-    fcn.00000520(arg1);
+    zeliad(arg1);
     pcVar1 = (code *)swi(0x21);
     (*pcVar1)();
     pcVar1 = (code *)swi(0x21);
@@ -104,14 +104,14 @@ void fcn.000004ef(void)
 }
 
 /* ====================================================================== */
-/* 0x0: entry0 */
+/* 0x0: read_config_line */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: Restarted to delay deadcode elimination for space: ram
 
-void entry0(void)
+void read_config_line(void)
 {
     uint8_t *puVar1;
     char *pcVar2;
@@ -150,26 +150,26 @@ void entry0(void)
         pcVar4 = (code *)swi(0x20);
         (*pcVar4)();
     }
-    fcn.000005f9();
+    load_driver_file();
     pcVar4 = (code *)swi(0x21);
     iVar6 = (*pcVar4)();
     if ((bool)uVar15) {
-        fcn.00000520(iVar6);
+        zeliad(iVar6);
         pcVar4 = (code *)swi(0x21);
         iVar6 = (*pcVar4)();
     }
-    fcn.00000390(iVar6);
+    ctrl_c_handler(iVar6);
     if (!(bool)uVar15) {
-        iVar6 = fcn.000003cc();
-        fcn.00000390(iVar6);
+        iVar6 = set_video_mode();
+        ctrl_c_handler(iVar6);
         if (!(bool)uVar15) {
             iVar6 = fcn.00000443();
-            fcn.00000390(iVar6);
+            ctrl_c_handler(iVar6);
             if (!(bool)uVar15) {
-                iVar6 = fcn.0000047c();
-                fcn.00000390(iVar6);
+                iVar6 = parse_graphics_mode();
+                ctrl_c_handler(iVar6);
                 if (!(bool)uVar15) {
-                    fcn.00000493();
+                    display_file_error();
                     pcVar4 = (code *)swi(0x21);
                     (*pcVar4)();
                     uVar10 = 0x4000;
@@ -200,7 +200,7 @@ void entry0(void)
                         iVar6 = (*pcVar4)();
                         if (bVar16) {
                             *(undefined2 *)(*(undefined **)0x8c2 + -2) = 0xbb;
-                            fcn.00000520(iVar6);
+                            zeliad(iVar6);
                             pcVar4 = (code *)swi(0x21);
                             (*pcVar4)();
                         }
@@ -282,18 +282,18 @@ void entry0(void)
                     *(uint8_t *)0xff14 = *(uint8_t *)0x8e7;
                     *(int16_t *)0xff2c = *(int16_t *)0x8af + 0x1000;
                     in_stack_00000036 = 0x21c;
-                    fcn.000004ef();
+                    flush_keyboard();
                     in_stack_00000038 = 0x227;
-                    fcn.000004ef();
+                    flush_keyboard();
                     in_stack_0000003a = 0x232;
-                    fcn.000004ef();
+                    flush_keyboard();
                     iVar6 = (uint16_t)*(uint8_t *)0x8e7 * 2;
                     in_stack_0000003c = 0x246;
-                    fcn.000004ef();
+                    flush_keyboard();
                     in_stack_0000003e = 0x255;
-                    fcn.000004ef();
+                    flush_keyboard();
                     in_stack_00000040 = 0x264;
-                    fcn.000004ef();
+                    flush_keyboard();
                     in_stack_00000042 = 0;
                     pcVar4 = (code *)swi(0x21);
                     (*pcVar4)();
@@ -317,7 +317,7 @@ void entry0(void)
                     out(0x40, 0xb1);
                     out(0x40, 0x13);
                     in_stack_0000005a = 0x2cf;
-                    fcn.0000057a(iVar6);
+                    parse_command_line(iVar6);
     // WARNING: Could not recover jumptable at 0x000002d4. Too many branches
     // WARNING: Treating indirect jump as call
                     (*(code *)(uint32_t)*(uint16_t *)0x8ad)();
@@ -347,11 +347,11 @@ void entry0(void)
 }
 
 /* ====================================================================== */
-/* 0x47c: fcn.0000047c */
+/* 0x47c: parse_graphics_mode */
 /* ====================================================================== */
 
 
-void fcn.0000047c(void)
+void parse_graphics_mode(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -362,7 +362,7 @@ void fcn.0000047c(void)
     undefined2 unaff_CS;
     undefined2 unaff_DS;
     
-    fcn.000004da();
+    find_colon_in_line();
     uVar3 = in_CX - 1;
     if (0xe < uVar3) {
         uVar3 = 0xf;
@@ -380,11 +380,11 @@ void fcn.0000047c(void)
 }
 
 /* ====================================================================== */
-/* 0x4da: fcn.000004da */
+/* 0x4da: find_colon_in_line */
 /* ====================================================================== */
 
 
-void fcn.000004da(void)
+void find_colon_in_line(void)
 {
     char *pcVar1;
     code *pcVar2;
@@ -413,11 +413,11 @@ void fcn.000004da(void)
 }
 
 /* ====================================================================== */
-/* 0x5f9: fcn.000005f9 */
+/* 0x5f9: load_driver_file */
 /* ====================================================================== */
 
 
-void fcn.000005f9(void)
+void load_driver_file(void)
 {
     char cVar1;
     char cVar2;
@@ -464,11 +464,11 @@ void fcn.000005f9(void)
 }
 
 /* ====================================================================== */
-/* 0x493: fcn.00000493 */
+/* 0x493: display_file_error */
 /* ====================================================================== */
 
 
-void fcn.00000493(void)
+void display_file_error(void)
 {
     char *pcVar1;
     char *pcVar2;
@@ -482,7 +482,7 @@ void fcn.00000493(void)
     undefined2 unaff_DS;
     bool bVar7;
     
-    fcn.000004da();
+    find_colon_in_line();
     bVar7 = in_CX == 3;
     if (bVar7) {
         pcVar6 = (char *)0x4c8;
@@ -541,11 +541,11 @@ void fcn.00000493(void)
 }
 
 /* ====================================================================== */
-/* 0x3cc: fcn.000003cc */
+/* 0x3cc: set_video_mode */
 /* ====================================================================== */
 
 
-void fcn.000003cc(void)
+void set_video_mode(void)
 {
     char *pcVar1;
     char *pcVar2;
@@ -562,7 +562,7 @@ void fcn.000003cc(void)
     undefined2 unaff_DS;
     bool bVar10;
     
-    fcn.000004da();
+    find_colon_in_line();
     bVar10 = in_CX == 4;
     if (bVar10) {
         pcVar8 = (char *)0x433;
@@ -637,12 +637,12 @@ void fcn.000003cc(void)
 }
 
 /* ====================================================================== */
-/* 0x390: fcn.00000390 */
+/* 0x390: ctrl_c_handler */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000390(int16_t arg1)
+void ctrl_c_handler(int16_t arg1)
 {
     code *pcVar1;
     uint8_t *puVar2;
@@ -674,12 +674,12 @@ void fcn.00000390(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x57a: fcn.0000057a */
+/* 0x57a: parse_command_line */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000057a(int16_t arg3)
+void parse_command_line(int16_t arg3)
 {
     // WARNING: Could not recover jumptable at 0x00000583. Too many branches
     // WARNING: Treating indirect jump as call
@@ -727,7 +727,7 @@ void fcn.00000443(void)
     bool bVar10;
     
     *(undefined *)0x8e8 = 0;
-    fcn.000004da();
+    find_colon_in_line();
     uVar5 = in_CX - 1;
     if (0xe < uVar5) {
         uVar5 = 0xf;

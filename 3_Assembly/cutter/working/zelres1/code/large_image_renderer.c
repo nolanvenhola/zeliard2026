@@ -23,7 +23,7 @@ static const char *STR_0xa05 = "cG&SSC×"; // [ibm037]
 static const char *STR_0xe2d = "}SSC«3}ó}ó}óaS"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_10 */
 /* ====================================================================== */
 
 // WARNING: Instruction at (ram,0x00000047) overlaps instruction at (ram,0x00000044)
@@ -31,7 +31,7 @@ static const char *STR_0xe2d = "}SSC«3}ó}ó}óaS"; // [ibm037]
 // WARNING: Removing unreachable block (ram,0x00000018)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(short unsigned int arg_1639h, int16_t arg2)
+void zr1_10(short unsigned int arg_1639h, int16_t arg2)
 {
     undefined2 *puVar1;
     uint8_t uVar2;
@@ -98,11 +98,11 @@ code_r0x0000004e:
 }
 
 /* ====================================================================== */
-/* 0x47f: fcn.0000047f */
+/* 0x47f: limg_scan_loop */
 /* ====================================================================== */
 
 
-void fcn.0000047f(undefined2 param_1, int16_t *param_2)
+void limg_scan_loop(undefined2 param_1, int16_t *param_2)
 {
     int16_t iVar1;
     int16_t in_AX;
@@ -116,22 +116,22 @@ void fcn.0000047f(undefined2 param_1, int16_t *param_2)
     *(undefined *)0x3e69 = *(undefined *)(iVar1 + 0x27);
     *(int16_t *)0x3e6d = *(int16_t *)0x80 + 3;
     if (*(char *)0x3e67 == -3) {
-        in_AX = fcn.000004fe();
+        in_AX = limg_multiply_3();
         *(undefined *)0x3e67 = (char)in_AX;
     }
-    fcn.0000039d(3, in_AX);
+    limg_process_loop_2(3, in_AX);
     arg1 = *(int16_t **)0xc00f;
     do {
-        fcn.000005f8();
+        limg_func_17();
         if (in_BL != 0) {
             in_BL = in_BL - 1;
-            fcn.000005d2((uint16_t)in_BL * 3);
-            fcn.00000638((int16_t)arg1);
+            limg_func_18((uint16_t)in_BL * 3);
+            limg_process_loop_3((int16_t)arg1);
             arg1 = param_2;
         }
         arg1 = arg1 + 4;
     } while (*arg1 != -1);
-    fcn.00000525();
+    limg_multiply_2();
     *(undefined *)0xe005 = 0xff;
     *(undefined *)0xe006 = 0xff;
     *(undefined *)0xe007 = 0xff;
@@ -139,11 +139,11 @@ void fcn.0000047f(undefined2 param_1, int16_t *param_2)
 }
 
 /* ====================================================================== */
-/* 0xe1: fcn.000000e1 */
+/* 0xe1: limg_multiply */
 /* ====================================================================== */
 
 
-void fcn.000000e1(void)
+void limg_multiply(void)
 {
     int16_t iVar1;
     int16_t unaff_SI;
@@ -159,7 +159,7 @@ void fcn.000000e1(void)
     iVar2 = (uint16_t)*(uint8_t *)0x83 * 4 + 0x5238;
     iVar1 = 2;
     do {
-        fcn.00000525(iVar2);
+        limg_multiply_2(iVar2);
         iVar2 = iVar1 + 4;
         iVar1 = unaff_SI + -1;
     } while (iVar1 != 0);
@@ -167,11 +167,11 @@ void fcn.000000e1(void)
 }
 
 /* ====================================================================== */
-/* 0x525: fcn.00000525 */
+/* 0x525: limg_multiply_2 */
 /* ====================================================================== */
 
 
-void fcn.00000525(void)
+void limg_multiply_2(void)
 {
     int16_t iVar1;
     undefined2 *unaff_SI;
@@ -239,12 +239,12 @@ void fcn.00000525(void)
 }
 
 /* ====================================================================== */
-/* 0x277: fcn.00000277 */
+/* 0x277: limg_func_8 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000277(int16_t arg3, int16_t arg2)
+void limg_func_8(int16_t arg3, int16_t arg2)
 {
     uint8_t uVar1;
     undefined2 uVar2;
@@ -295,9 +295,9 @@ void fcn.00000277(int16_t arg3, int16_t arg2)
             } while (iVar6 != 0);
         } else {
             do {
-                fcn.00000e4f(uVar7);
+                limg_func_9(uVar7);
                 *puVar4 = *puVar8 & arg2_00 | *puVar11;
-                fcn.00000e4f(arg2_00);
+                limg_func_9(arg2_00);
                 puVar4[1] = puVar8[1] & extraout_DX | puVar11[1];
                 puVar8 = puVar8 + 2;
                 puVar11 = puVar11 + 2;
@@ -438,12 +438,12 @@ void fcn.00000277(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xe4f: fcn.00000e4f */
+/* 0xe4f: limg_func_9 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000e4f(int16_t arg2)
+void limg_func_9(int16_t arg2)
 {
     int16_t iVar1;
     
@@ -455,12 +455,12 @@ void fcn.00000e4f(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x129: fcn.00000129 */
+/* 0x129: limg_check_state */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000129(int16_t arg3, int16_t arg2)
+void limg_check_state(int16_t arg3, int16_t arg2)
 {
     char cVar1;
     undefined2 uVar2;
@@ -579,12 +579,12 @@ void fcn.00000129(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x120: fcn.00000120 */
+/* 0x120: limg_get_value */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000120(int16_t arg3, int16_t arg2)
+void limg_get_value(int16_t arg3, int16_t arg2)
 {
     char cVar1;
     undefined2 uVar2;
@@ -608,31 +608,31 @@ void fcn.00000120(int16_t arg3, int16_t arg2)
         *(undefined2 *)0x3e6a = *(undefined2 *)((int16_t)unaff_SI + 7);
         *(undefined *)0x3e6c = *(undefined *)((int16_t)unaff_SI + 9);
         *(int16_t *)0x3e6d = (uint16_t)(uint8_t)(*(char *)0x3e66 + 4) + *(int16_t *)0x80;
-        iVar4 = fcn.000004fe();
+        iVar4 = limg_multiply_3();
         *(undefined *)0x3e67 = (char)iVar4;
         if (*(char *)0x3e6a == -3) {
-            iVar4 = fcn.000004fe();
+            iVar4 = limg_multiply_3();
             *(undefined *)0x3e6a = (char)iVar4;
         }
-        fcn.0000039a(iVar4);
+        limg_process_loop(iVar4);
         arg3_00 = *(int16_t **)0xc00f;
         iVar4 = unaff_DS;
         do {
-            arg1 = fcn.000005f8();
+            arg1 = limg_func_17();
             if ((char)arg3 != '\0') {
-                fcn.000005d2(arg1);
+                limg_func_18(arg1);
                 iVar4 = 0x41a;
-                fcn.000005b0((int16_t)arg3_00);
+                limg_func_19((int16_t)arg3_00);
                 arg3 = (int16_t)arg3_00;
                 arg3_00 = in_stack_00000002;
             }
             arg3_00 = arg3_00 + 4;
         } while (*arg3_00 != -1);
         if (*(char *)(iVar4 + -1) != -1) {
-            fcn.00000525(*(int16_t *)0x3e64 + 0x640, CONCAT11(*(char *)(iVar4 + -1), *(undefined *)(iVar4 + 7)));
+            limg_multiply_2(*(int16_t *)0x3e64 + 0x640, CONCAT11(*(char *)(iVar4 + -1), *(undefined *)(iVar4 + 7)));
         }
         if ((*(char *)0x3e66 != '\x1b') && ((char)iVar4 != -1)) {
-            fcn.00000525();
+            limg_multiply_2();
         }
         *(undefined *)((int16_t)in_stack_00000002 + -1) = 0xfe;
         *(undefined *)in_stack_00000002 = 0xff;
@@ -747,11 +747,11 @@ void fcn.00000120(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x4fe: fcn.000004fe */
+/* 0x4fe: limg_multiply_3 */
 /* ====================================================================== */
 
 
-void fcn.000004fe(void)
+void limg_multiply_3(void)
 {
     char *pcVar1;
     int16_t in_DX;
@@ -761,13 +761,13 @@ void fcn.000004fe(void)
     int16_t unaff_SI;
     undefined2 unaff_DS;
     
-    fcn.00000517(in_DX);
+    limg_scan_loop_2(in_DX);
     arg2 = extraout_DX;
     if (*(char *)(unaff_SI + 3) != -3) {
         return;
     }
     do {
-        fcn.0000051b(arg2);
+        limg_multiply_4(arg2);
         pcVar1 = (char *)(unaff_SI + 0xb);
         arg2 = extraout_DX_00;
         unaff_SI = unaff_SI + 8;
@@ -776,12 +776,12 @@ void fcn.000004fe(void)
 }
 
 /* ====================================================================== */
-/* 0x517: fcn.00000517 */
+/* 0x517: limg_scan_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000517(int16_t arg2)
+void limg_scan_loop_2(int16_t arg2)
 {
     int16_t *piVar1;
     undefined2 unaff_DS;
@@ -792,12 +792,12 @@ void fcn.00000517(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x51b: fcn.0000051b */
+/* 0x51b: limg_multiply_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000051b(short unsigned int arg2)
+void limg_multiply_4(short unsigned int arg2)
 {
     short unsigned int *unaff_SI;
     undefined2 unaff_DS;
@@ -808,12 +808,12 @@ void fcn.0000051b(short unsigned int arg2)
 }
 
 /* ====================================================================== */
-/* 0x39a: fcn.0000039a */
+/* 0x39a: limg_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000039a(int16_t arg1)
+void limg_process_loop(int16_t arg1)
 {
     uint8_t *puVar1;
     undefined2 *puVar2;
@@ -846,11 +846,11 @@ void fcn.0000039a(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x5f8: fcn.000005f8 */
+/* 0x5f8: limg_func_17 */
 /* ====================================================================== */
 
 
-void fcn.000005f8(void)
+void limg_func_17(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -870,12 +870,12 @@ void fcn.000005f8(void)
 }
 
 /* ====================================================================== */
-/* 0x5d2: fcn.000005d2 */
+/* 0x5d2: limg_func_18 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-char fcn.000005d2(int16_t arg1)
+char limg_func_18(int16_t arg1)
 {
     char cVar1;
     int16_t unaff_SI;
@@ -889,24 +889,24 @@ char fcn.000005d2(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x5b0: fcn.000005b0 */
+/* 0x5b0: limg_func_19 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005b0(int16_t arg3)
+void limg_func_19(int16_t arg3)
 {
     (**(code **)((uint16_t)(uint8_t)((char)arg3 - 1) * 2 + 0x35ba))();
     return;
 }
 
 /* ====================================================================== */
-/* 0x39d: fcn.0000039d */
+/* 0x39d: limg_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000039d(int16_t arg4, int16_t arg1)
+void limg_process_loop_2(int16_t arg4, int16_t arg1)
 {
     uint8_t *puVar1;
     undefined2 *puVar2;
@@ -937,12 +937,12 @@ void fcn.0000039d(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x638: fcn.00000638 */
+/* 0x638: limg_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000638(int16_t arg1)
+void limg_process_loop_3(int16_t arg1)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -960,7 +960,7 @@ void fcn.00000638(int16_t arg1)
         pcVar3 = unaff_SI + 1;
         *(int16_t *)0x3e77 = ((uint16_t)(uint8_t)(*unaff_BP - 1) * 0x20 >> 2) + 0x7000;
         *(undefined2 *)0x3e79 = 0x2000;
-        fcn.000006b3(0x2000);
+        limg_process_loop_4(0x2000);
         puVar1 = (undefined *)(in_stack_00000000 + -1);
         unaff_BP = unaff_ES;
         unaff_SI = unaff_DS;
@@ -971,12 +971,12 @@ void fcn.00000638(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x6b3: fcn.000006b3 */
+/* 0x6b3: limg_process_loop_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000006b3(int16_t arg1)
+void limg_process_loop_4(int16_t arg1)
 {
     uint16_t *puVar1;
     int16_t iVar2;
@@ -992,9 +992,9 @@ void fcn.000006b3(int16_t arg1)
     
     puVar3 = unaff_DI;
     do {
-        fcn.00000e4f(in_DX);
+        limg_func_9(in_DX);
         *unaff_DI = *unaff_DI & arg2;
-        fcn.00000e4f(arg2);
+        limg_func_9(arg2);
         unaff_DI[1] = unaff_DI[1] & extraout_DX;
         unaff_DI = unaff_DI + 2;
         in_DX = extraout_DX;
@@ -1012,12 +1012,12 @@ void fcn.000006b3(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xe31: fcn.00000e31 */
+/* 0xe31: limg_func_23 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00000e31(int16_t arg2, int16_t arg3)
+int16_t limg_func_23(int16_t arg2, int16_t arg3)
 {
     return ((uint16_t)arg3 >> 2 & 0x3f) * 0xa0 +
            (uint16_t)((uint8_t)((uint8_t)((uint8_t)arg3 << 7) >> 1 | ((uint8_t)arg3 >> 1) << 7) >> 1) * 0x100 +
@@ -1025,12 +1025,12 @@ int16_t fcn.00000e31(int16_t arg2, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x8ff: fcn.000008ff */
+/* 0x8ff: limg_func_24 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000008ff(int16_t arg3)
+void limg_func_24(int16_t arg3)
 {
     undefined2 in_AX;
     char *pcVar1;
@@ -1043,7 +1043,7 @@ void fcn.000008ff(int16_t arg3)
     while( true ) {
         if (*unaff_SI == '\0') break;
         pcVar2 = pcVar1;
-        in_AX = fcn.0000091c(CONCAT11((char)((uint16_t)in_AX >> 8), *unaff_SI), (uint16_t)pcVar1 & 0xff01);
+        in_AX = limg_func_25(CONCAT11((char)((uint16_t)in_AX >> 8), *unaff_SI), (uint16_t)pcVar1 & 0xff01);
         pcVar1 = (char *)CONCAT11((char)((uint16_t)in_stack_00000000 >> 8), (char)in_stack_00000000 + '\x01');
         unaff_SI = unaff_DS;
         unaff_DS = pcVar2;
@@ -1052,12 +1052,12 @@ void fcn.000008ff(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x91c: fcn.0000091c */
+/* 0x91c: limg_func_25 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000091c(int16_t arg1, int16_t arg3)
+void limg_func_25(int16_t arg1, int16_t arg3)
 {
     undefined2 uVar1;
     uint8_t extraout_AH;
@@ -1073,8 +1073,8 @@ void fcn.0000091c(int16_t arg1, int16_t arg3)
     cVar3 = '\b';
     puVar5 = unaff_DI;
     do {
-        uVar1 = fcn.0000096d(cVar3);
-        fcn.0000096d(uVar1);
+        uVar1 = limg_process_loop_5(cVar3);
+        limg_process_loop_5(uVar1);
         uVar4 = CONCAT11((char)((uint16_t)unaff_DI >> 8), extraout_AH) >> (uVar2 & 0x1f);
         *puVar5 = *puVar5 | CONCAT11((char)uVar4, (char)(uVar4 >> 8));
         puVar5[1] = puVar5[1] | ((uint16_t)extraout_AH << 8) >> (uVar2 & 0x1f) & 0xff;
@@ -1088,11 +1088,11 @@ void fcn.0000091c(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x96d: fcn.0000096d */
+/* 0x96d: limg_process_loop_5 */
 /* ====================================================================== */
 
 
-void fcn.0000096d(void)
+void limg_process_loop_5(void)
 {
     char cVar1;
     
@@ -1104,11 +1104,11 @@ void fcn.0000096d(void)
 }
 
 /* ====================================================================== */
-/* 0x9ad: fcn.000009ad */
+/* 0x9ad: limg_scan_loop_3 */
 /* ====================================================================== */
 
 
-void fcn.000009ad(int16_t param_1)
+void limg_scan_loop_3(int16_t param_1)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -1117,7 +1117,7 @@ void fcn.000009ad(int16_t param_1)
     undefined *puVar5;
     undefined2 unaff_DS;
     
-    fcn.00000a0b();
+    extract_bits();
     iVar1 = *(int16_t *)0xff68 * 2;
     iVar2 = 6;
     puVar3 = (undefined *)0x3a20;
@@ -1133,17 +1133,17 @@ void fcn.000009ad(int16_t param_1)
 }
 
 /* ====================================================================== */
-/* 0xa0b: fcn.00000a0b */
+/* 0xa0b: extract_bits */
 /* ====================================================================== */
 
 
-void fcn.00000a0b(void)
+void extract_bits(void)
 {
     int16_t iVar1;
     char *pcVar2;
     
     pcVar2 = (char *)0x3a1f;
-    fcn.00000a2a();
+    limg_process_loop_6();
     iVar1 = 6;
     do {
         if (*pcVar2 != '\0') {
@@ -1157,11 +1157,11 @@ void fcn.00000a0b(void)
 }
 
 /* ====================================================================== */
-/* 0xa2a: fcn.00000a2a */
+/* 0xa2a: limg_process_loop_6 */
 /* ====================================================================== */
 
 
-void fcn.00000a2a(void)
+void limg_process_loop_6(void)
 {
     undefined uVar1;
     int16_t in_AX;
@@ -1260,11 +1260,11 @@ void fcn.000009d3(int16_t arg1)
     }
     iVar1 = 7;
     do {
-        fcn.0000096d();
+        limg_process_loop_5();
         *unaff_DI = *unaff_DI | extraout_AH;
-        fcn.0000096d();
+        limg_process_loop_5();
         unaff_DI[1] = unaff_DI[1] | extraout_AH_00;
-        fcn.0000096d();
+        limg_process_loop_5();
         unaff_DI[2] = unaff_DI[2] | extraout_AH_01;
         unaff_DI = unaff_DI + 0x50;
         iVar1 = iVar1 + -1;

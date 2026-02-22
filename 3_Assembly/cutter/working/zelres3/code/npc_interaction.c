@@ -70,7 +70,7 @@ static const char *STR_0xcf3 = "N  B&B aäNhD"; // [ibm037]
 static const char *STR_0xe99 = "Cavern of Riza\r"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_26 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
@@ -78,7 +78,7 @@ static const char *STR_0xe99 = "Cavern of Riza\r"; // [ascii]
 // WARNING: Removing unreachable block (ram,0x00000013)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg1, int16_t arg3)
+void zr3_26(int16_t arg1, int16_t arg3)
 {
     uint8_t *puVar1;
     char *pcVar2;

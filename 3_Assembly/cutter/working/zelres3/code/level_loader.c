@@ -9,12 +9,12 @@ static const char *STR_0x528 = "¸vstvµÆv"; // [ibm037]
 static const char *STR_0x554 = "ævstvµ¤v"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_00 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr3_00(int16_t arg3)
 {
     char *pcVar1;
     uint8_t uVar2;
@@ -71,8 +71,8 @@ void fcn.00000000(int16_t arg3)
         *(char *)0xe7 = *(char *)0xe7 + '\x01';
         *(uint8_t *)0xe7 = *(uint8_t *)0xe7 & 3;
         uStack0006 = uVar5;
-        fcn.0000040b(iVar4, iVar6);
-        iVar4 = fcn.00000493();
+        lvload_multiply(iVar4, iVar6);
+        iVar4 = lvload_multiply_2();
         cVar7 = (char)((uint16_t)in_stack_00000008 >> 8);
         iVar6 = in_stack_00000008;
         if (cVar7 != '$') {
@@ -83,35 +83,35 @@ void fcn.00000000(int16_t arg3)
         uVar5 = in_stack_0000000a - 1;
     } while (uVar5 != 0);
     *(undefined *)0xe7 = 4;
-    fcn.0000040b(iVar4, 0x246e);
+    lvload_multiply(iVar4, 0x246e);
     iStack000c = 5;
     do {
-        iVar6 = fcn.00000493();
+        iVar6 = lvload_multiply_2();
         iStack000c = in_stack_0000000e + -1;
     } while (iStack000c != 0);
     *(undefined *)0xe7 = 5;
     do {
         iStack000c = 0xbd;
-        fcn.0000040b(iVar6, 0x246e);
-        fcn.00000493();
-        iVar6 = fcn.00000493();
+        lvload_multiply(iVar6, 0x246e);
+        lvload_multiply_2();
+        iVar6 = lvload_multiply_2();
         *(char *)0xe7 = *(char *)0xe7 + '\x01';
     } while (*(uint8_t *)0xe7 < 9);
     uStack0012 = 0xd4;
-    fcn.0000040b(iVar6, 0x246e);
+    lvload_multiply(iVar6, 0x246e);
     uStack0014 = 0xd9;
     (**(code **)0x3024)();
     *(undefined *)0xa59a = *(undefined *)(*(uint8_t *)0xa0 + 0xa568);
     *(undefined *)0xa59b = 2;
     uStack0016 = 0xef;
-    fcn.000004a7();
+    lvload_func_3();
     uStack0018 = 0x106;
     (**(code **)0x2026)();
     *(undefined *)0xa5a5 = 0;
     do {
         uStack001a = 0x11d;
         (**(code **)0x3026)();
-        fcn.00000493();
+        lvload_multiply_2();
         (**(code **)0x2028)();
         *(char *)0xa5a5 = *(char *)0xa5a5 + '\x01';
     } while (*(uint8_t *)0xa5a5 < 2);
@@ -121,8 +121,8 @@ void fcn.00000000(int16_t arg3)
     *(undefined *)0xa5a5 = 0;
     do {
         (**(code **)0x3026)();
-        fcn.00000493();
-        fcn.00000493();
+        lvload_multiply_2();
+        lvload_multiply_2();
         (**(code **)0x2028)();
         *(char *)0xa5a5 = *(char *)0xa5a5 + '\x01';
     } while (*(uint8_t *)0xa5a5 < 2);
@@ -132,7 +132,7 @@ void fcn.00000000(int16_t arg3)
     *(undefined *)0xa5a5 = 0;
     do {
         (**(code **)0x3026)();
-        fcn.00000493();
+        lvload_multiply_2();
         (**(code **)0x2028)();
         *(char *)0xa5a5 = *(char *)0xa5a5 + '\x01';
     } while (*(uint8_t *)0xa5a5 < 4);
@@ -147,18 +147,18 @@ void fcn.00000000(int16_t arg3)
         }
     }
     (**(code **)0x2028)();
-    fcn.0000050e();
+    lvload_func_4();
     (**(code **)0x2026)();
     (**(code **)0x3026)();
-    fcn.00000493();
+    lvload_multiply_2();
     (**(code **)0x2028)();
     (**(code **)0x2026)();
     *(undefined *)0xff75 = 0x1b;
     *(undefined *)0xa5a5 = 0;
     do {
         (**(code **)0x3026)();
-        fcn.00000493();
-        fcn.00000493();
+        lvload_multiply_2();
+        lvload_multiply_2();
         (**(code **)0x2028)();
         *(char *)0xa5a5 = *(char *)0xa5a5 + '\x01';
     } while (*(uint8_t *)0xa5a5 < 2);
@@ -167,7 +167,7 @@ void fcn.00000000(int16_t arg3)
     *(undefined *)0xa5a5 = 4;
     do {
         (**(code **)0x3026)();
-        fcn.00000493();
+        lvload_multiply_2();
         (**(code **)0x2028)();
         pcVar1 = (char *)0xa5a5;
         *pcVar1 = *pcVar1 + -1;
@@ -183,18 +183,18 @@ void fcn.00000000(int16_t arg3)
     *(uint8_t *)0x36f7 = 8;
     do {
         uStack0034 = 0x399;
-        fcn.0000040b(iVar6, 0x246e);
-        fcn.00000493();
-        iVar6 = fcn.00000493();
+        lvload_multiply(iVar6, 0x246e);
+        lvload_multiply_2();
+        iVar6 = lvload_multiply_2();
         *(uint8_t *)0x36f7 = *(uint8_t *)0x36f7 - 1;
     } while (4 < *(uint8_t *)0x36f7);
     uStack003a = 0x3b0;
-    fcn.0000040b(iVar6, 0x246e);
+    lvload_multiply(iVar6, 0x246e);
     iVar6 = 5;
     do {
         uStack003a = 0x3b7;
         iStack003c = iVar6;
-        fcn.00000493();
+        lvload_multiply_2();
         iVar6 = in_stack_0000003e + -1;
     } while (iVar6 != 0);
     iVar4 = (**(code **)0x2000)();
@@ -207,8 +207,8 @@ void fcn.00000000(int16_t arg3)
         *(uint8_t *)0x36f7 = *(uint8_t *)0x36f7 + 1 & 3;
         iStack003c = 0x3e6;
         uStack0040 = uVar5;
-        fcn.0000040b(iVar4, iVar6);
-        iVar4 = fcn.00000493();
+        lvload_multiply(iVar4, iVar6);
+        iVar4 = lvload_multiply_2();
         cVar7 = (char)((uint16_t)in_stack_00000042 >> 8);
         iVar6 = in_stack_00000042;
         if (cVar7 != '>') {
@@ -225,12 +225,12 @@ void fcn.00000000(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x40b: fcn.0000040b */
+/* 0x40b: lvload_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000040b(int16_t arg1, int16_t arg3)
+void lvload_multiply(int16_t arg1, int16_t arg3)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -256,11 +256,11 @@ void fcn.0000040b(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x493: fcn.00000493 */
+/* 0x493: lvload_multiply_2 */
 /* ====================================================================== */
 
 
-void fcn.00000493(void)
+void lvload_multiply_2(void)
 {
     undefined2 unaff_DS;
     
@@ -271,11 +271,11 @@ void fcn.00000493(void)
 }
 
 /* ====================================================================== */
-/* 0x4a7: fcn.000004a7 */
+/* 0x4a7: lvload_func_3 */
 /* ====================================================================== */
 
 
-void fcn.000004a7(void)
+void lvload_func_3(void)
 {
     char cVar1;
     undefined uVar2;
@@ -318,11 +318,11 @@ void fcn.000004a7(void)
 }
 
 /* ====================================================================== */
-/* 0x50e: fcn.0000050e */
+/* 0x50e: lvload_func_4 */
 /* ====================================================================== */
 
 
-void fcn.0000050e(void)
+void lvload_func_4(void)
 {
     char cVar1;
     undefined2 unaff_DS;

@@ -11,13 +11,13 @@ static const char *STR_0x1fe = "g.IHëED\\Ä¿cKLMöI"; // [ibm037]
 static const char *STR_0x2c4 = "Cavern of Tesoro"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_37 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3, int16_t arg4)
+void zr3_37(int16_t arg3, int16_t arg4)
 {
     uint8_t *puVar1;
     uint8_t uVar2;

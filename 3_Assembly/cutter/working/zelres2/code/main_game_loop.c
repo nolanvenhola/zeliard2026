@@ -107,7 +107,7 @@ static const char *STR_0x3edc = "^MBOS.MSD"; // [ascii]
 static const char *STR_0x3ee7 = "`MMAO.MSD"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_00 */
 /* ====================================================================== */
 
 // WARNING (jumptable): Unable to track spacebase fully for stack
@@ -115,7 +115,7 @@ static const char *STR_0x3ee7 = "`MMAO.MSD"; // [ascii]
 // WARNING: This function may have set the stack pointer
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3, int16_t arg2, int16_t arg1)
+void zr2_00(int16_t arg3, int16_t arg2, int16_t arg1)
 {
     char cVar1;
     code *pcVar2;
@@ -222,7 +222,7 @@ void fcn.00000000(int16_t arg3, int16_t arg2, int16_t arg1)
     *(undefined *)0x9f01 = 0;
     if (*(char *)0xff34 != '\0') {
         *(undefined2 *)0x1ffe = 0x89;
-        fcn.00000c59();
+        vga_operation();
         puVar10 = (undefined *)0x2002;
         pcVar2 = (code *)swi(0x60);
         (*pcVar2)();
@@ -249,7 +249,7 @@ void fcn.00000000(int16_t arg3, int16_t arg2, int16_t arg1)
         *(undefined2 *)(puVar14 + -2) = 0xd4;
         iVar8 = (*pcVar2)();
         puVar15[-1] = 0xd7;
-        fcn.00001480(iVar8, iVar7);
+        game_func_24(iVar8, iVar7);
         *(undefined *)0x9f02 = 0;
         *puVar15 = uVar48;
         pcVar2 = (code *)swi(0x60);
@@ -295,7 +295,7 @@ void fcn.00000000(int16_t arg3, int16_t arg2, int16_t arg1)
     *(undefined2 *)0x1ffe = 0x182;
     (*pcVar2)();
     puVar22[-1] = 0x185;
-    fcn.00000c37();
+    game_get_value();
     puVar47 = *(undefined2 **)0xc00e;
     pcVar2 = *(code **)0x2010;
     *puVar22 = 0x18e;
@@ -322,14 +322,14 @@ void fcn.00000000(int16_t arg3, int16_t arg2, int16_t arg1)
         *(undefined2 *)0x80 = 0x29;
         *(undefined *)0x83 = 5;
         puVar26[-1] = 0x1bf;
-        fcn.00000c9c();
+        game_func_27();
         *puVar26 = 0x1c2;
-        fcn.000013b7();
+        game_get_value_2();
         puVar47 = puVar26 + 2;
         do {
             puVar27 = puVar47;
             puVar27[-1] = 0x1c5;
-            fcn.00000f9f();
+            game_func_29();
             puVar47 = puVar27 + 1;
         } while (*(char *)0xe6 != '\0');
         *puVar27 = uVar48;
@@ -343,9 +343,9 @@ void fcn.00000000(int16_t arg3, int16_t arg2, int16_t arg1)
         *(undefined *)0xff34 = 0xff;
         *(undefined *)0x9f27 = 0xff;
         puVar27[-1] = 0x1fa;
-        iVar7 = fcn.00001e97();
+        iVar7 = vga_operation0();
         *puVar27 = 0x1fd;
-        fcn.00001ebf(iVar7, iVar8);
+        vga_operation1(iVar7, iVar8);
         puVar27[1] = uVar48;
         pcVar2 = _fcn.00002044;
         *puVar27 = 0x20e;
@@ -370,9 +370,9 @@ void fcn.00000000(int16_t arg3, int16_t arg2, int16_t arg1)
         *(undefined *)0x83 = 0xc;
         *(undefined *)0x9f00 = 0xc;
         *puVar30 = 0x23b;
-        fcn.00001dc5();
+        vga_operation4();
         puVar30[1] = 0x23e;
-        fcn.00000c59();
+        vga_operation();
         puVar20 = puVar30 + 3;
 code_r0x00000154:
         *(undefined *)0x9f01 = *(undefined *)(*(int16_t *)0xa002 + 8);
@@ -392,7 +392,7 @@ code_r0x00000154:
         (*pcVar2)();
     }
     puVar26[-1] = 0x244;
-    fcn.00000c9c();
+    game_func_27();
     if (*(char *)0x9f27 == '\0') {
         puVar34 = puVar26 + 1;
         if (*(char *)0xff34 != '\0') {
@@ -402,15 +402,15 @@ code_r0x00000154:
             puVar34 = puVar26;
         }
         puVar34[-1] = 0x267;
-        fcn.000013b7();
+        game_get_value_2();
         *puVar34 = 0x26a;
-        fcn.0000365d();
+        vga_operation5();
         puVar32 = puVar34 + 2;
     } else {
         *puVar26 = 0x24e;
-        fcn.000013b7();
+        game_get_value_2();
         puVar26[1] = 0x251;
-        fcn.00000f9f();
+        game_func_29();
         puVar32 = puVar26 + 3;
         *(undefined *)0x9f26 = 0;
     }
@@ -434,16 +434,16 @@ code_r0x00000154:
         *(undefined *)0xff39 = 0;
         *(undefined *)0xff37 = 0;
         puVar38[-1] = 0x393f;
-        fcn.00000f9f();
+        game_func_29();
         *puVar38 = 0x9929;
         puVar38[-1] = 0x3946;
-        fcn.0000095e();
+        copy_buffer();
         *(undefined *)0xff37 = 0;
         puVar47 = puVar38 + 2;
         while( true ) {
             while( true ) {
                 *(undefined2 *)((int16_t)puVar47 + -2) = 0x394f;
-                fcn.00000f9f();
+                game_func_29();
                 puVar39 = (undefined *)((int16_t)puVar47 + 2);
                 puVar40 = (undefined *)((int16_t)puVar47 + 2);
                 puVar41 = (undefined *)((int16_t)puVar47 + 2);
@@ -471,7 +471,7 @@ code_r0x00000154:
         do {
             piVar42[-1] = iVar7;
             piVar42[-2] = 0x399b;
-            fcn.00000f9f();
+            game_func_29();
             iVar7 = *piVar42;
             piVar43 = piVar42 + 1;
             *(char *)0xff37 = ((uint8_t)iVar7 & 1) - 1;
@@ -543,17 +543,17 @@ code_r0x00000154:
         puVar3 = puVar47;
         if (*(char *)0xff39 == '\0') {
             puVar34[-1] = 0x2aa;
-            fcn.00000e3f();
+            vga_operation8();
             *puVar34 = 0x2ad;
-            fcn.000004bf();
+            game_func_43();
             puVar34[1] = 0x2b0;
-            fcn.00000f9f();
+            game_func_29();
             puVar34[2] = 0x2b3;
-            uVar51 = fcn.000027b4(iVar8);
+            uVar51 = game_check_state_4(iVar8);
             puVar34[3] = 0x2b6;
-            fcn.000003de((int16_t)uVar51, (int16_t)((uint32_t)uVar51 >> 0x10));
+            game_func_66((int16_t)uVar51, (int16_t)((uint32_t)uVar51 >> 0x10));
             puVar34[4] = 0x2b9;
-            fcn.00000416();
+            game_func_69();
             *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
             if (*(char *)0x9f0a == '\x02') {
                 *(undefined *)0xff38 = 0;
@@ -566,9 +566,9 @@ code_r0x00000154:
                 *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
             }
             puVar33[-1] = 0x2db;
-            uVar51 = fcn.0000095e();
+            uVar51 = copy_buffer();
             *puVar33 = 0x2de;
-            fcn.00000347((int16_t)uVar51, (int16_t)((uint32_t)uVar51 >> 0x10));
+            game_func_81((int16_t)uVar51, (int16_t)((uint32_t)uVar51 >> 0x10));
             return;
         }
         do {
@@ -584,27 +584,27 @@ code_r0x00000154:
                 (*pcVar2)();
                 *(undefined *)0xff43 = 0;
                 puVar35[-1] = 0x300;
-                fcn.00000f9f();
+                game_func_29();
                 *puVar35 = 0x303;
-                uVar51 = fcn.00000416();
+                uVar51 = game_func_69();
                 puVar35[1] = 0x306;
-                arg1_00 = fcn.00000347((int16_t)uVar51, (int16_t)((uint32_t)uVar51 >> 0x10));
+                arg1_00 = game_func_81((int16_t)uVar51, (int16_t)((uint32_t)uVar51 >> 0x10));
                 puVar36 = puVar35 + 3;
                 uVar50 = *(char *)0xff39 != -1;
                 if (*(char *)0xff39 != -1) goto code_r0x00000321;
                 puVar35[2] = 0x310;
-                fcn.00000db5(arg1_00, iVar7);
+                vga_operation9(arg1_00, iVar7);
                 puVar35[3] = 0x314;
-                fcn.00000bc1();
+                game_func_80();
                 puVar34 = puVar35 + 5;
                 puVar3 = (undefined2 *)((int16_t)puVar47 + 1);
             } while ((bool)uVar50);
             uVar50 = (undefined2 *)0xffdb < (undefined2 *)((int16_t)puVar47 + 1);
             puVar47 = (undefined2 *)((int16_t)puVar47 + 0x25);
             puVar35[4] = 0x31c;
-            fcn.00000d86();
+            game_process_loop();
             puVar35[5] = 799;
-            fcn.00000bc1();
+            game_func_80();
             puVar36 = puVar35 + 7;
             puVar34 = puVar35 + 7;
             puVar3 = puVar47;
@@ -622,11 +622,11 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0xc59: fcn.00000c59 */
+/* 0xc59: vga_operation */
 /* ====================================================================== */
 
 
-void fcn.00000c59(void)
+void vga_operation(void)
 {
     (*_fcn.00002004)();
     (*_fcn.00002004)();
@@ -639,11 +639,11 @@ void fcn.00000c59(void)
 }
 
 /* ====================================================================== */
-/* 0x2004: fcn.00002004 */
+/* 0x2004: game_check_state */
 /* ====================================================================== */
 
 
-void fcn.00002004(void)
+void game_check_state(void)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -651,17 +651,17 @@ void fcn.00002004(void)
     *(undefined *)0xe7 = 0x80;
     *(char *)0x82 = *(char *)0x82 + '\x01';
     iVar1 = *(int16_t *)0xff31;
-    fcn.00000d86();
+    game_process_loop();
     *(int16_t *)0xff31 = iVar1 + 0x24;
     return;
 }
 
 /* ====================================================================== */
-/* 0xd86: fcn.00000d86 */
+/* 0xd86: game_process_loop */
 /* ====================================================================== */
 
 
-void fcn.00000d86(void)
+void game_process_loop(void)
 {
     uint16_t unaff_SI;
     
@@ -672,11 +672,11 @@ void fcn.00000d86(void)
 }
 
 /* ====================================================================== */
-/* 0x202c: fcn.0000202c */
+/* 0x202c: game_func_19 */
 /* ====================================================================== */
 
 
-void fcn.0000202c(undefined2 param_1, undefined2 param_2, undefined2 param_3)
+void game_func_19(undefined2 param_1, undefined2 param_2, undefined2 param_3)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -688,7 +688,7 @@ void fcn.0000202c(undefined2 param_1, undefined2 param_2, undefined2 param_3)
     undefined2 unaff_DS;
     
     puVar3 = (uint8_t *)(unaff_SI + 0x23);
-    fcn.00000d86();
+    game_process_loop();
     if ((*puVar3 & 0x80) != 0) {
         return;
     }
@@ -701,12 +701,12 @@ void fcn.0000202c(undefined2 param_1, undefined2 param_2, undefined2 param_3)
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
     arg3 = unaff_SI + 0x24;
-    fcn.00000d86();
+    game_process_loop();
     iVar2 = 3;
     iVar1 = extraout_DX;
     do {
-        fcn.00002356(unaff_SI);
-        fcn.00002356(arg3);
+        game_func_20(unaff_SI);
+        game_func_20(arg3);
         arg3 = unaff_DI + 1;
         unaff_SI = iVar1 + 1;
         iVar1 = CONCAT11((char)((uint16_t)param_3 >> 8), (char)param_3 + '\x01');
@@ -718,12 +718,12 @@ void fcn.0000202c(undefined2 param_1, undefined2 param_2, undefined2 param_3)
 }
 
 /* ====================================================================== */
-/* 0x2356: fcn.00002356 */
+/* 0x2356: game_func_20 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002356(int16_t arg3)
+void game_func_20(int16_t arg3)
 {
     uint8_t in_DL;
     uint8_t *unaff_DI;
@@ -738,12 +738,12 @@ void fcn.00002356(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x1480: fcn.00001480 */
+/* 0x1480: game_func_24 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001480(int16_t arg1, int16_t arg4)
+void game_func_24(int16_t arg1, int16_t arg4)
 {
     undefined *puVar1;
     int16_t iVar2;
@@ -763,11 +763,11 @@ void fcn.00001480(int16_t arg1, int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0xc37: fcn.00000c37 */
+/* 0xc37: game_get_value */
 /* ====================================================================== */
 
 
-void fcn.00000c37(void)
+void game_get_value(void)
 {
     (*_fcn.0000200e)();
     (*_fcn.0000200e)();
@@ -775,12 +775,12 @@ void fcn.00000c37(void)
 }
 
 /* ====================================================================== */
-/* 0x200e: fcn.0000200e */
+/* 0x200e: game_scan_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000200e(int16_t arg1, int16_t arg3)
+void game_scan_loop(int16_t arg1, int16_t arg3)
 {
     undefined2 unaff_DS;
     
@@ -797,11 +797,11 @@ void fcn.0000200e(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0xc9c: fcn.00000c9c */
+/* 0xc9c: game_func_27 */
 /* ====================================================================== */
 
 
-void fcn.00000c9c(void)
+void game_func_27(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -815,7 +815,7 @@ void fcn.00000c9c(void)
     iVar3 = -0x3fe5;
     for (iVar2 = *(int16_t *)0x80; iVar2 != 0; iVar2 = iVar2 + -1) {
         do {
-            fcn.00000cf1(in_BX);
+            game_func_62(in_BX);
             iVar3 = iVar3 + 1;
         } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
     }
@@ -823,7 +823,7 @@ void fcn.00000c9c(void)
     iVar4 = -0x2000;
     iVar2 = 0x24;
     do {
-        iVar1 = fcn.00000d5b(iVar4);
+        iVar1 = game_process_loop_2(iVar4);
         iVar4 = in_stack_00000000 + 1;
         iVar1 = iVar1 + 1;
         if (iVar1 == *(int16_t *)0xc002) {
@@ -836,17 +836,17 @@ void fcn.00000c9c(void)
         iVar3 = *(int16_t *)0xc019;
     }
     *(int16_t *)0x9f05 = iVar3 + -1;
-    fcn.00000d72(in_BX, (uint16_t)*(uint8_t *)0x82);
+    vga_operation7(in_BX, (uint16_t)*(uint8_t *)0x82);
     *(int16_t *)0xff31 = iVar4;
     return;
 }
 
 /* ====================================================================== */
-/* 0x13b7: fcn.000013b7 */
+/* 0x13b7: game_get_value_2 */
 /* ====================================================================== */
 
 
-void fcn.000013b7(void)
+void game_get_value_2(void)
 {
     undefined *puVar1;
     int16_t iVar2;
@@ -863,14 +863,14 @@ void fcn.000013b7(void)
 }
 
 /* ====================================================================== */
-/* 0xf9f: fcn.00000f9f */
+/* 0xf9f: game_func_29 */
 /* ====================================================================== */
 
 // WARNING: This function may have set the stack pointer
 // WARNING: Removing unreachable block (ram,0x0000011b)
 // WARNING: [rz-ghidra] Detected overlap for variable arg_2h
 
-void fcn.00000f9f(void)
+void game_func_29(void)
 {
     int16_t *piVar1;
     int16_t *piVar2;
@@ -919,19 +919,19 @@ void fcn.00000f9f(void)
         }
         *(undefined *)0x9f0d = (char)iVar7;
         uVar13 = 0;
-        fcn.0000169d(iVar7, (int16_t)((uint32_t)uVar14 >> 0x10));
+        game_func_130(iVar7, (int16_t)((uint32_t)uVar14 >> 0x10));
         iVar7 = extraout_DX;
         if (*(char *)0xff3d == '\0') {
             *(undefined *)0x9f09 = 0;
             if (*(uint8_t *)0x9f00 != *(uint8_t *)0x84) {
                 if (*(uint8_t *)0x9f00 < *(uint8_t *)0x84) {
                     uVar13 = 0;
-                    fcn.00000b32();
+                    game_func_73();
                     *(char *)0x84 = *(char *)0x84 + -1;
                     iVar7 = extraout_DX_01;
                 } else {
                     uVar13 = 0;
-                    fcn.00000625();
+                    game_scan_loop_10();
                     *(char *)0x84 = *(char *)0x84 + '\x01';
                     iVar7 = extraout_DX_00;
                 }
@@ -939,24 +939,24 @@ void fcn.00000f9f(void)
         }
         if ((*(char *)0xe6 == '\0') && (*(char *)0xff34 == '\0')) {
             if (*(char *)0x83 != '\f') {
-                fcn.000006a9(CONCAT11(uVar13, *(char *)0x83), iVar7);
+                game_func_70(CONCAT11(uVar13, *(char *)0x83), iVar7);
                 *(char *)0x83 = *(char *)0x83 + '\x01';
             }
         } else if (*(char *)0x83 != *(char *)(*(int16_t *)0xa002 + 7)) {
-            fcn.00000850(CONCAT11(uVar13, *(char *)(*(int16_t *)0xa002 + 7)), iVar7);
+            game_func_71(CONCAT11(uVar13, *(char *)(*(int16_t *)0xa002 + 7)), iVar7);
             *(char *)0x83 = *(char *)0x83 + -1;
         }
         *(uint8_t *)0xff35 = *(char *)0x84 + *(char *)0x82 & 0x3f;
-        fcn.00001752();
-        fcn.000021b2();
-        fcn.00001fb5();
-        fcn.00002167();
-        fcn.000018e1(arg_3h);
+        game_func_132();
+        game_func_133();
+        game_func_136();
+        game_func_137();
+        game_func_138(arg_3h);
         in_stack_0000000c = CONCAT22(uVar15, 0x1029);
-        uVar14 = fcn.00002ab1(in_BX);
+        uVar14 = game_func_141(in_BX);
         if (*(char *)0xff30 == '\0') {
             in_stack_0000000c = 0x10331029;
-            uVar14 = fcn.00002d1d();
+            uVar14 = game_func_143();
         }
         *(undefined *)0xff36 = 0;
         *(undefined *)0x9f14 = 0;
@@ -971,7 +971,7 @@ void fcn.00000f9f(void)
             *(undefined *)0xff36 = 0xff;
             *(undefined *)0xff75 = 9;
             iVar7 = fcn.00001689(0xf);
-            fcn.000013e4(-0x6447, iVar7);
+            game_func_100(-0x6447, iVar7);
         }
         iVar7 = fcn.00001214(in_CX);
         if (*(char *)0xe8 == '\0') {
@@ -995,7 +995,7 @@ void fcn.00000f9f(void)
             *(undefined *)0xff3f = *(undefined *)0xff46;
         }
         if (*(char *)0xff37 == '\0') {
-            fcn.00001480(iVar7, in_CX);
+            game_func_24(iVar7, in_CX);
         }
         (*(code *)0x173)();
         if ((*(char *)0xe8 == '\0') && (*(int16_t *)0xc6 != 0)) {
@@ -1079,7 +1079,7 @@ void fcn.00000f9f(void)
         (*_fcn.00002044)();
         *(undefined *)0x9ef5 = 0xff;
         uStack_4 = 0x12c6;
-        uVar14 = fcn.000013b7();
+        uVar14 = game_get_value_2();
         *(undefined *)0xff1d = 0;
         *(undefined *)0xff1e = 0;
         *(undefined *)0x9eef = 0;
@@ -1104,7 +1104,7 @@ void fcn.00000f9f(void)
         piVar11 = piVar11 + 2;
         *(int16_t *)*piVar1 = *piVar2;
     }
-    fcn.00000db5(-1, iVar7);
+    vga_operation9(-1, iVar7);
     uVar8 = *(int16_t *)0x117a0 + (uint16_t)*(uint8_t *)0x117a3;
     if (*(char *)((int16_t)piVar11 + -3) != '\0') {
         uVar8 = uVar8 + 9;
@@ -1113,10 +1113,10 @@ void fcn.00000f9f(void)
         uVar8 = uVar8 - *(uint16_t *)0x1d722;
     }
     **(uint16_t **)0x1d72a = uVar8;
-    fcn.000018e1(arg_3h_00);
+    game_func_138(arg_3h_00);
     iVar9 = fcn.00001214(iVar7);
     in_stack_00000040 = 0x13991396;
-    fcn.00001480(iVar9, iVar7);
+    game_func_24(iVar9, iVar7);
     uVar13 = (undefined)iVar7;
     (**(code **)0x3012)();
     iVar7 = 0x21c;
@@ -1139,7 +1139,7 @@ void fcn.00000f9f(void)
     *(undefined *)0x9f01 = 0;
     if (*(char *)0xff34 != '\0') {
         *(undefined2 *)0x1ffe = 0x89;
-        fcn.00000c59();
+        vga_operation();
         pcVar3 = (code *)swi(0x60);
         (*pcVar3)();
         *(undefined *)0x9f02 = 0xff;
@@ -1149,7 +1149,7 @@ void fcn.00000f9f(void)
         *(undefined *)0xff37 = 0;
         (*_fcn.00003016)();
         iVar7 = (**(code **)0x3014)();
-        fcn.00001480(iVar7, iVar9);
+        game_func_24(iVar7, iVar9);
         *(undefined *)0x9f02 = 0;
         pcVar3 = (code *)swi(0x60);
         (*pcVar3)();
@@ -1167,7 +1167,7 @@ void fcn.00000f9f(void)
     pcVar3 = *(code **)0x2012;
     *(undefined2 *)0x1ffe = 0x182;
     (*pcVar3)();
-    fcn.00000c37();
+    game_get_value();
     uVar8 = *(uint16_t *)0xc00e;
     (**(code **)0x2010)();
     iStack0050 = 0x193;
@@ -1183,10 +1183,10 @@ void fcn.00000f9f(void)
         *(undefined *)0x9f26 = 0xff;
         *(undefined2 *)0x80 = 0x29;
         *(undefined *)0x83 = 5;
-        fcn.00000c9c();
-        fcn.000013b7();
+        game_func_27();
+        game_get_value_2();
         do {
-            fcn.00000f9f();
+            game_func_29();
         } while (*(char *)0xe6 != '\0');
         pcVar3 = (code *)swi(0x60);
         (*pcVar3)();
@@ -1194,8 +1194,8 @@ void fcn.00000f9f(void)
         (*_fcn.0000010c)();
         *(undefined *)0xff34 = 0xff;
         *(undefined *)0x9f27 = 0xff;
-        iVar9 = fcn.00001e97();
-        fcn.00001ebf(iVar9, iVar7);
+        iVar9 = vga_operation0();
+        vga_operation1(iVar9, iVar7);
         (*_fcn.00002044)();
         (*_fcn.0000302a)();
         (*_fcn.0000301a)();
@@ -1205,8 +1205,8 @@ void fcn.00000f9f(void)
         *(undefined *)0x9f1c = 0xd;
         *(undefined *)0x83 = 0xc;
         *(undefined *)0x9f00 = 0xc;
-        fcn.00001dc5();
-        fcn.00000c59();
+        vga_operation4();
+        vga_operation();
         in_stack_00000048 = 0x23b;
         in_stack_00000040 = 0x21a0213;
         uStack003a = 0x1e8;
@@ -1219,16 +1219,16 @@ void fcn.00000f9f(void)
         iVar7 = iVar6;
         uVar12 = uVar10;
     }
-    fcn.00000c9c();
+    game_func_27();
     if (*(char *)0x9f27 == '\0') {
         if (*(char *)0xff34 != '\0') {
             (**(code **)0x3012)();
         }
-        fcn.000013b7();
-        fcn.0000365d();
+        game_get_value_2();
+        vga_operation5();
     } else {
-        fcn.000013b7();
-        fcn.00000f9f();
+        game_get_value_2();
+        game_func_29();
         *(undefined *)0x9f26 = 0;
     }
     if (*(char *)0x49 == '\0') {
@@ -1245,12 +1245,12 @@ void fcn.00000f9f(void)
         do {
             uVar4 = uVar8;
             if (*(char *)0xff39 == '\0') {
-                fcn.00000e3f();
-                fcn.000004bf();
-                fcn.00000f9f();
-                uVar14 = fcn.000027b4(iVar7);
-                fcn.000003de((int16_t)uVar14, (int16_t)((uint32_t)uVar14 >> 0x10));
-                fcn.00000416();
+                vga_operation8();
+                game_func_43();
+                game_func_29();
+                uVar14 = game_check_state_4(iVar7);
+                game_func_66((int16_t)uVar14, (int16_t)((uint32_t)uVar14 >> 0x10));
+                game_func_69();
                 *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
                 if (*(char *)0x9f0a == '\x02') {
                     *(undefined *)0xff38 = 0;
@@ -1260,8 +1260,8 @@ void fcn.00000f9f(void)
                 if ((uVar8 & 2) != 0) {
                     *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
                 }
-                uVar14 = fcn.0000095e();
-                fcn.00000347((int16_t)uVar14, (int16_t)((uint32_t)uVar14 >> 0x10));
+                uVar14 = copy_buffer();
+                game_func_81((int16_t)uVar14, (int16_t)((uint32_t)uVar14 >> 0x10));
                 return;
             }
             do {
@@ -1273,19 +1273,19 @@ void fcn.00000f9f(void)
                     *(undefined *)0xff3c = 0;
                     (*(code *)0xfec3)();
                     *(undefined *)0xff43 = 0;
-                    fcn.00000f9f();
-                    uVar14 = fcn.00000416();
-                    iVar6 = fcn.00000347((int16_t)uVar14, (int16_t)((uint32_t)uVar14 >> 0x10));
+                    game_func_29();
+                    uVar14 = game_func_69();
+                    iVar6 = game_func_81((int16_t)uVar14, (int16_t)((uint32_t)uVar14 >> 0x10));
                     uVar13 = *(char *)0xff39 != -1;
                     if (*(char *)0xff39 != -1) goto code_r0x00000321;
-                    fcn.00000db5(iVar6, iVar9);
-                    fcn.00000bc1();
+                    vga_operation9(iVar6, iVar9);
+                    game_func_80();
                     uVar4 = uVar8 + 1;
                 } while ((bool)uVar13);
                 uVar13 = 0xffdb < uVar8 + 1;
                 uVar8 = uVar8 + 0x25;
-                fcn.00000d86();
-                fcn.00000bc1();
+                game_process_loop();
+                game_func_80();
                 uVar4 = uVar8;
             } while ((bool)uVar13);
 code_r0x00000321:
@@ -1311,12 +1311,12 @@ code_r0x00003900:
     *(undefined *)0xe7 = 0;
     *(undefined *)0xff39 = 0;
     *(undefined *)0xff37 = 0;
-    fcn.00000f9f();
-    fcn.0000095e();
+    game_func_29();
+    copy_buffer();
     *(undefined *)0xff37 = 0;
     while( true ) {
         while( true ) {
-            fcn.00000f9f();
+            game_func_29();
             *(undefined *)0xff37 = 0;
             if (*(char *)0xe7 == '\x02') break;
             *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -1332,7 +1332,7 @@ code_r0x00003900:
     }
     *(undefined *)0xff24 = 8;
     do {
-        fcn.00000f9f();
+        game_func_29();
         *(char *)0xff37 = ((uint8_t)in_stack_00000040 & 1) - 1;
     } while (iVar16 != 1);
     pcVar3 = (code *)swi(0x60);
@@ -1369,11 +1369,11 @@ code_r0x00001d89:
 }
 
 /* ====================================================================== */
-/* 0x1e97: fcn.00001e97 */
+/* 0x1e97: vga_operation0 */
 /* ====================================================================== */
 
 
-void fcn.00001e97(void)
+void vga_operation0(void)
 {
     uint8_t *puVar1;
     uint8_t *puVar2;
@@ -1407,12 +1407,12 @@ void fcn.00001e97(void)
 }
 
 /* ====================================================================== */
-/* 0x1ebf: fcn.00001ebf */
+/* 0x1ebf: vga_operation1 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001ebf(int16_t arg1, int16_t arg3)
+void vga_operation1(int16_t arg1, int16_t arg3)
 {
     char cVar1;
     code *pcVar2;
@@ -1458,12 +1458,12 @@ void fcn.00001ebf(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x10c: fcn.0000010c */
+/* 0x10c: vga_operation2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000010c(int16_t arg1)
+void vga_operation2(int16_t arg1)
 {
     code *pcVar1;
     uint16_t uVar2;
@@ -1519,10 +1519,10 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0x9f26 = 0xff;
         *(undefined2 *)0x80 = 0x29;
         *(undefined *)0x83 = 5;
-        fcn.00000c9c();
-        fcn.000013b7();
+        game_func_27();
+        game_get_value_2();
         do {
-            fcn.00000f9f();
+            game_func_29();
         } while (*(char *)0xe6 != '\0');
         pcVar1 = (code *)swi(0x60);
         (*pcVar1)();
@@ -1531,8 +1531,8 @@ void fcn.0000010c(int16_t arg1)
         (*_fcn.0000010c)();
         *(undefined *)0xff34 = 0xff;
         *(undefined *)0x9f27 = 0xff;
-        iVar8 = fcn.00001e97();
-        fcn.00001ebf(iVar8, arg3);
+        iVar8 = vga_operation0();
+        vga_operation1(iVar8, arg3);
         (*_fcn.00002044)();
         in_stack_0000001e = 0x213;
         (*_fcn.0000302a)();
@@ -1545,19 +1545,19 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0x83 = 0xc;
         *(undefined *)0x9f00 = 0xc;
         uVar9 = 0x23b;
-        fcn.00001dc5();
-        fcn.00000c59();
+        vga_operation4();
+        vga_operation();
     }
-    fcn.00000c9c();
+    game_func_27();
     if (*(char *)0x9f27 == '\0') {
         if (*(char *)0xff34 != '\0') {
             (**(code **)0x3012)();
         }
-        fcn.000013b7();
-        fcn.0000365d();
+        game_get_value_2();
+        vga_operation5();
     } else {
-        fcn.000013b7();
-        fcn.00000f9f();
+        game_get_value_2();
+        game_func_29();
         *(undefined *)0x9f26 = 0;
     }
     if (*(char *)0x49 != '\0') {
@@ -1574,12 +1574,12 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0xe7 = 0;
         *(undefined *)0xff39 = 0;
         *(undefined *)0xff37 = 0;
-        fcn.00000f9f();
-        fcn.0000095e();
+        game_func_29();
+        copy_buffer();
         *(undefined *)0xff37 = 0;
         while( true ) {
             while( true ) {
-                fcn.00000f9f();
+                game_func_29();
                 *(undefined *)0xff37 = 0;
                 if (*(char *)0xe7 == '\x02') break;
                 *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -1595,7 +1595,7 @@ void fcn.0000010c(int16_t arg1)
         }
         *(undefined *)0xff24 = 8;
         do {
-            fcn.00000f9f();
+            game_func_29();
             *(char *)0xff37 = ((uint8_t)in_stack_0000001e & 1) - 1;
         } while (in_stack_0000001e != 1);
         pcVar1 = (code *)swi(0x60);
@@ -1645,13 +1645,13 @@ void fcn.0000010c(int16_t arg1)
     do {
         uVar2 = uVar5;
         if (*(char *)0xff39 == '\0') {
-            fcn.00000e3f();
+            vga_operation8();
             uStack0016 = 0x2ad;
-            fcn.000004bf();
-            fcn.00000f9f();
-            uVar7 = fcn.000027b4(arg3);
-            fcn.000003de((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
-            fcn.00000416();
+            game_func_43();
+            game_func_29();
+            uVar7 = game_check_state_4(arg3);
+            game_func_66((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+            game_func_69();
             *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
             if (*(char *)0x9f0a == '\x02') {
                 *(undefined *)0xff38 = 0;
@@ -1661,9 +1661,9 @@ void fcn.0000010c(int16_t arg1)
             if ((uVar5 & 2) != 0) {
                 *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
             }
-            uVar7 = fcn.0000095e();
+            uVar7 = copy_buffer();
             uStack0024 = 0x2de;
-            fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+            game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
             return;
         }
         do {
@@ -1675,19 +1675,19 @@ void fcn.0000010c(int16_t arg1)
                 *(undefined *)0xff3c = 0;
                 (*_fcn.00003004)();
                 *(undefined *)0xff43 = 0;
-                fcn.00000f9f();
-                uVar7 = fcn.00000416();
-                arg1_00 = fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+                game_func_29();
+                uVar7 = game_func_69();
+                arg1_00 = game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
                 uVar6 = *(char *)0xff39 != -1;
                 if (*(char *)0xff39 != -1) goto code_r0x00000321;
-                fcn.00000db5(arg1_00, iVar8);
-                fcn.00000bc1();
+                vga_operation9(arg1_00, iVar8);
+                game_func_80();
                 uVar2 = uVar5 + 1;
             } while ((bool)uVar6);
             uVar6 = 0xffdb < uVar5 + 1;
             uVar5 = uVar5 + 0x25;
-            fcn.00000d86();
-            fcn.00000bc1();
+            game_process_loop();
+            game_func_80();
             uVar2 = uVar5;
         } while ((bool)uVar6);
 code_r0x00000321:
@@ -1702,21 +1702,21 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0x3028: fcn.00003028 */
+/* 0x3028: vga_operation3 */
 /* ====================================================================== */
 
 
-void fcn.00003028(void)
+void vga_operation3(void)
 {
     return;
 }
 
 /* ====================================================================== */
-/* 0x1dc5: fcn.00001dc5 */
+/* 0x1dc5: vga_operation4 */
 /* ====================================================================== */
 
 
-void fcn.00001dc5(void)
+void vga_operation4(void)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -1731,11 +1731,11 @@ void fcn.00001dc5(void)
 }
 
 /* ====================================================================== */
-/* 0x365d: fcn.0000365d */
+/* 0x365d: vga_operation5 */
 /* ====================================================================== */
 
 
-void fcn.0000365d(void)
+void vga_operation5(void)
 {
     uint8_t *puVar1;
     char cVar2;
@@ -1759,10 +1759,10 @@ void fcn.0000365d(void)
         bVar6 = cVar2 != -1;
         if (cVar2 != -1) {
             *(undefined *)((int16_t)piVar4 + 3) = 0xff;
-            fcn.000036a5(iVar3);
+            vga_operation6(iVar3);
             if (!bVar6) {
                 *(undefined *)((int16_t)piVar4 + 3) = (char)in_BX;
-                fcn.00000d72(in_BX, CONCAT11((char)in_BX, *(undefined *)(piVar4 + 1)));
+                vga_operation7(in_BX, CONCAT11((char)in_BX, *(undefined *)(piVar4 + 1)));
                 *puVar5 = *(uint8_t *)0xff4a | 0x80;
             }
         }
@@ -1772,12 +1772,12 @@ void fcn.0000365d(void)
 }
 
 /* ====================================================================== */
-/* 0x36a5: fcn.000036a5 */
+/* 0x36a5: vga_operation6 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.000036a5(int16_t arg1)
+int16_t vga_operation6(int16_t arg1)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -1793,12 +1793,12 @@ int16_t fcn.000036a5(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xd72: fcn.00000d72 */
+/* 0xd72: vga_operation7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00000d72(int16_t arg3, int16_t arg1)
+int16_t vga_operation7(int16_t arg3, int16_t arg1)
 {
     uint8_t uVar1;
     
@@ -1807,11 +1807,11 @@ int16_t fcn.00000d72(int16_t arg3, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xe3f: fcn.00000e3f */
+/* 0xe3f: vga_operation8 */
 /* ====================================================================== */
 
 
-void fcn.00000e3f(void)
+void vga_operation8(void)
 {
     code *pcVar1;
     uint16_t uVar2;
@@ -1850,15 +1850,15 @@ void fcn.00000e3f(void)
         return;
     }
     if (*(char *)0xff34 == '\0') {
-        fcn.00000db5(uVar2, in_CX);
-        arg1 = fcn.00000d92();
+        vga_operation9(uVar2, in_CX);
+        arg1 = game_check_state_2();
         uVar5 = 0;
         iVar3 = 4;
         uVar2 = unaff_SI - 0x93;
         do {
             do {
                 uVar4 = uVar2;
-                arg1 = fcn.00000dcf(arg1);
+                arg1 = game_func_42(arg1);
                 if ((!(bool)uVar5) && (uVar5 = 0, (arg1 & 0x60) == 0)) {
                     uVar5 = 0;
                 }
@@ -1866,7 +1866,7 @@ void fcn.00000e3f(void)
             } while (iStack_2 != 1);
             uVar5 = 0xffe3 < uVar2;
             iStack_2 = 0xed3;
-            arg1 = fcn.00000d86();
+            arg1 = game_process_loop();
             iVar3 = iVar3 + -1;
             uVar2 = uVar4 + 0x1d;
         } while (iVar3 != 0);
@@ -1891,12 +1891,12 @@ code_r0x00000efb:
 }
 
 /* ====================================================================== */
-/* 0xdb5: fcn.00000db5 */
+/* 0xdb5: vga_operation9 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000db5(int16_t arg1, int16_t arg4)
+void vga_operation9(int16_t arg1, int16_t arg4)
 {
     undefined2 unaff_DS;
     
@@ -1907,11 +1907,11 @@ void fcn.00000db5(int16_t arg1, int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0xd92: fcn.00000d92 */
+/* 0xd92: game_check_state_2 */
 /* ====================================================================== */
 
 
-void fcn.00000d92(void)
+void game_check_state_2(void)
 {
     uint16_t unaff_SI;
     
@@ -1922,12 +1922,12 @@ void fcn.00000d92(void)
 }
 
 /* ====================================================================== */
-/* 0xdcf: fcn.00000dcf */
+/* 0xdcf: game_func_42 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint8_t fcn.00000dcf(int16_t arg1)
+uint8_t game_func_42(int16_t arg1)
 {
     uint8_t uVar1;
     uint8_t *unaff_SI;
@@ -1941,11 +1941,11 @@ uint8_t fcn.00000dcf(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x4bf: fcn.000004bf */
+/* 0x4bf: game_func_43 */
 /* ====================================================================== */
 
 
-uint16_t fcn.000004bf(void)
+uint16_t game_func_43(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -1976,7 +1976,7 @@ uint16_t fcn.000004bf(void)
     undefined uVar17;
     int16_t in_stack_00000016;
     
-    uVar6 = fcn.00000d9e();
+    uVar6 = game_func_44();
     if (!(bool)in_ZF) {
         return uVar6;
     }
@@ -1987,9 +1987,9 @@ uint16_t fcn.000004bf(void)
         return uVar6;
     }
     *(char *)0x9f20 = *(char *)0x9f20 + -1;
-    fcn.00000db5(uVar6, in_CX);
+    vga_operation9(uVar6, in_CX);
     puVar10 = (uint8_t *)(unaff_SI + 0x6d);
-    fcn.00000d86();
+    game_process_loop();
     uVar5 = *puVar10;
     if ((0x3f < uVar5) && (uVar5 < 0x49)) {
         *(undefined *)0x9f20 = 0;
@@ -2001,25 +2001,25 @@ uint16_t fcn.000004bf(void)
         if (cVar9 == '\x02') {
             return uVar6;
         }
-        fcn.00000db5(uVar6, in_CX);
-        iVar7 = fcn.00000d92();
+        vga_operation9(uVar6, in_CX);
+        iVar7 = game_check_state_2();
         iVar8 = 4;
         do {
-            uVar5 = fcn.00000dcf(iVar7);
+            uVar5 = game_func_42(iVar7);
             if (CARRY1(uVar5, uVar5)) {
                 return (uint16_t)(uint8_t)(uVar5 * '\x02');
             }
-            iVar7 = fcn.00000d86();
+            iVar7 = game_process_loop();
             iVar8 = iVar8 + -1;
         } while (iVar8 != 0);
         bVar16 = *(char *)0xff38 == '\0';
         if (bVar16) {
-            uVar6 = fcn.00000de9(0);
+            uVar6 = game_check_state_3(0);
             bVar15 = true;
             if (!bVar16) {
                 return uVar6;
             }
-            uVar6 = fcn.000007a7();
+            uVar6 = fill_buffer();
             if (bVar15) {
                 return uVar6;
             }
@@ -2028,13 +2028,13 @@ uint16_t fcn.000004bf(void)
         while( true ) {
             puVar10 = puVar10 + 0x24;
             uVar17 = puVar10 == (uint8_t *)0x0;
-            fcn.00000d86();
-            uVar6 = fcn.00000e1f(iVar7);
+            game_process_loop();
+            uVar6 = game_func_51(iVar7);
             bVar16 = true;
             if (!(bool)uVar17) {
                 return uVar6;
             }
-            uVar6 = fcn.000007a7();
+            uVar6 = fill_buffer();
             if (bVar16) break;
             iVar7 = in_stack_00000016 + -1;
             if (iVar7 == 0) {
@@ -2056,7 +2056,7 @@ uint16_t fcn.000004bf(void)
                 puVar10 = (uint8_t *)0xe8dc;
                 do {
                     iVar7 = iVar7 + -1;
-                    fcn.00000d0a(in_BX);
+                    game_multiply(in_BX);
                     uVar6 = (uint16_t)in_BX >> 8;
                     do {
                         *puVar10 = (uint8_t)in_BX;
@@ -2070,12 +2070,12 @@ uint16_t fcn.000004bf(void)
                 if (*(int16_t *)0x80 + 0x24 != *(int16_t *)0xc002) {
                     iVar7 = *(int16_t *)0x9f05;
                     do {
-                        fcn.00000d0a(in_BX);
+                        game_multiply(in_BX);
                         iVar7 = iVar7 + -1;
                     } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
                 }
                 *(int16_t *)0x9f05 = iVar7;
-                fcn.00002652();
+                game_multiply_2();
                 uVar6 = *(uint16_t *)0x80;
                 *(undefined *)0xff4a = 0;
                 puVar11 = *(uint16_t **)0xc010;
@@ -2083,7 +2083,7 @@ uint16_t fcn.000004bf(void)
                     uVar4 = *puVar11;
                     if (uVar4 == 0xffff) break;
                     if (((char)(uVar4 >> 8) != -1) && (uVar4 == uVar6)) {
-                        fcn.00000d72(uVar6, (uint16_t)*(uint8_t *)(puVar11 + 1));
+                        vga_operation7(uVar6, (uint16_t)*(uint8_t *)(puVar11 + 1));
                         *puVar10 = *(uint8_t *)0xff4a | 0x80;
                     }
                     *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -2097,26 +2097,26 @@ uint16_t fcn.000004bf(void)
     if (cVar9 == '\x01') {
         return uVar6;
     }
-    fcn.00000db5(uVar6, in_CX);
+    vga_operation9(uVar6, in_CX);
     iVar12 = unaff_SI + 0x6f;
-    iVar7 = fcn.00000d92();
+    iVar7 = game_check_state_2();
     iVar8 = 4;
     do {
-        uVar5 = fcn.00000dcf(iVar7);
+        uVar5 = game_func_42(iVar7);
         if (CARRY1(uVar5, uVar5)) {
             return (uint16_t)(uint8_t)(uVar5 * '\x02');
         }
-        iVar7 = fcn.00000d86();
+        iVar7 = game_process_loop();
         iVar8 = iVar8 + -1;
     } while (iVar8 != 0);
     bVar16 = *(char *)0xff38 == '\0';
     if (bVar16) {
-        uVar6 = fcn.00000de9(0);
+        uVar6 = game_check_state_3(0);
         bVar15 = true;
         if (!bVar16) {
             return uVar6;
         }
-        uVar6 = fcn.00000946();
+        uVar6 = game_scan_loop_3();
         if (bVar15) {
             return uVar6;
         }
@@ -2125,13 +2125,13 @@ uint16_t fcn.000004bf(void)
     while( true ) {
         iVar12 = iVar12 + 0x24;
         uVar17 = iVar12 == 0;
-        fcn.00000d86();
-        uVar6 = fcn.00000e1f(iVar7);
+        game_process_loop();
+        uVar6 = game_func_51(iVar7);
         bVar16 = true;
         if (!(bool)uVar17) {
             return uVar6;
         }
-        uVar6 = fcn.00000946();
+        uVar6 = game_scan_loop_3();
         if (bVar16) break;
         iVar7 = in_stack_00000016 + -1;
         if (iVar7 == 0) {
@@ -2149,7 +2149,7 @@ uint16_t fcn.000004bf(void)
                 *puVar2 = *puVar1;
             }
             uVar3 = *(undefined2 *)0x9f05;
-            fcn.00000d5b();
+            game_process_loop_2();
             *(undefined2 *)0x9f05 = uVar3;
             if (*(int16_t *)0x80 == *(int16_t *)0xc002) {
                 *(undefined2 *)0x80 = 0;
@@ -2157,12 +2157,12 @@ uint16_t fcn.000004bf(void)
             } else {
                 iVar7 = *(int16_t *)0x9f03;
                 do {
-                    fcn.00000cf1(in_BX);
+                    game_func_62(in_BX);
                     iVar7 = iVar7 + 1;
                 } while ((uint8_t)(extraout_DH_00 + (char)((uint16_t)in_BX >> 8)) < 0x40);
             }
             *(int16_t *)0x9f03 = iVar7;
-            fcn.0000263d();
+            game_func_63();
             *(undefined *)0xff4a = 0;
             uVar6 = *(int16_t *)0x80 + 0x23;
             if (*(uint16_t *)0xc002 <= uVar6) {
@@ -2173,7 +2173,7 @@ uint16_t fcn.000004bf(void)
                 uVar4 = *puVar11;
                 if (uVar4 == 0xffff) break;
                 if (((char)(uVar4 >> 8) != -1) && (uVar4 == uVar6)) {
-                    fcn.00000d72(uVar6, CONCAT11(0x23, *(undefined *)(puVar11 + 1)));
+                    vga_operation7(uVar6, CONCAT11(0x23, *(undefined *)(puVar11 + 1)));
                     *(uint8_t *)0xe023 = *(uint8_t *)0xff4a | 0x80;
                 }
                 *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -2186,11 +2186,11 @@ uint16_t fcn.000004bf(void)
 }
 
 /* ====================================================================== */
-/* 0xd9e: fcn.00000d9e */
+/* 0xd9e: game_func_44 */
 /* ====================================================================== */
 
 
-undefined fcn.00000d9e(void)
+undefined game_func_44(void)
 {
     undefined in_AL;
     undefined2 unaff_DS;
@@ -2205,12 +2205,12 @@ undefined fcn.00000d9e(void)
 }
 
 /* ====================================================================== */
-/* 0xde9: fcn.00000de9 */
+/* 0xde9: game_check_state_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint8_t fcn.00000de9(int16_t arg4)
+uint8_t game_check_state_3(int16_t arg4)
 {
     uint8_t *puVar1;
     uint8_t in_AL;
@@ -2241,11 +2241,11 @@ uint8_t fcn.00000de9(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x7a7: fcn.000007a7 */
+/* 0x7a7: fill_buffer */
 /* ====================================================================== */
 
 
-void fcn.000007a7(void)
+void fill_buffer(void)
 {
     char in_CL;
     undefined2 unaff_DS;
@@ -2253,7 +2253,7 @@ void fcn.000007a7(void)
     if (*(char *)0xc012 == '\a') {
         return;
     }
-    fcn.000016fa();
+    game_scan_loop_2();
     if (in_CL == '\x02') {
         return;
     }
@@ -2261,11 +2261,11 @@ void fcn.000007a7(void)
 }
 
 /* ====================================================================== */
-/* 0x16fa: fcn.000016fa */
+/* 0x16fa: game_scan_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.000016fa(void)
+void game_scan_loop_2(void)
 {
     char *pcVar1;
     char in_AL;
@@ -2313,12 +2313,12 @@ void fcn.000016fa(void)
 }
 
 /* ====================================================================== */
-/* 0xe1f: fcn.00000e1f */
+/* 0xe1f: game_func_51 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint8_t fcn.00000e1f(int16_t arg4)
+uint8_t game_func_51(int16_t arg4)
 {
     uint8_t *puVar1;
     uint8_t in_AL;
@@ -2346,12 +2346,12 @@ uint8_t fcn.00000e1f(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0xd0a: fcn.00000d0a */
+/* 0xd0a: game_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000d0a(int16_t arg3)
+void game_multiply(int16_t arg3)
 {
     uint8_t *unaff_SI;
     undefined2 unaff_DS;
@@ -2363,11 +2363,11 @@ void fcn.00000d0a(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x2652: fcn.00002652 */
+/* 0x2652: game_multiply_2 */
 /* ====================================================================== */
 
 
-void fcn.00002652(void)
+void game_multiply_2(void)
 {
     char *pcVar1;
     undefined2 unaff_DS;
@@ -2381,11 +2381,11 @@ void fcn.00002652(void)
 }
 
 /* ====================================================================== */
-/* 0x946: fcn.00000946 */
+/* 0x946: game_scan_loop_3 */
 /* ====================================================================== */
 
 
-void fcn.00000946(void)
+void game_scan_loop_3(void)
 {
     char in_CL;
     undefined2 unaff_DS;
@@ -2393,7 +2393,7 @@ void fcn.00000946(void)
     if (*(char *)0xc012 == '\a') {
         return;
     }
-    fcn.000016fa();
+    game_scan_loop_2();
     if (in_CL == '\x01') {
         return;
     }
@@ -2401,11 +2401,11 @@ void fcn.00000946(void)
 }
 
 /* ====================================================================== */
-/* 0xd5b: fcn.00000d5b */
+/* 0xd5b: game_process_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.00000d5b(void)
+void game_process_loop_2(void)
 {
     uint16_t uVar1;
     char extraout_DL;
@@ -2415,7 +2415,7 @@ void fcn.00000d5b(void)
     undefined2 unaff_DS;
     
     do {
-        fcn.00000cf1(in_BX);
+        game_func_62(in_BX);
         uVar1 = (uint16_t)in_BX >> 8;
         do {
             *unaff_DI = (char)in_BX;
@@ -2428,12 +2428,12 @@ void fcn.00000d5b(void)
 }
 
 /* ====================================================================== */
-/* 0xcf1: fcn.00000cf1 */
+/* 0xcf1: game_func_62 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000cf1(int16_t arg3)
+void game_func_62(int16_t arg3)
 {
     uint8_t *unaff_SI;
     undefined2 unaff_DS;
@@ -2445,11 +2445,11 @@ void fcn.00000cf1(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x263d: fcn.0000263d */
+/* 0x263d: game_func_63 */
 /* ====================================================================== */
 
 
-void fcn.0000263d(void)
+void game_func_63(void)
 {
     char *pcVar1;
     undefined2 unaff_DS;
@@ -2463,12 +2463,12 @@ void fcn.0000263d(void)
 }
 
 /* ====================================================================== */
-/* 0x27b4: fcn.000027b4 */
+/* 0x27b4: game_check_state_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000027b4(int16_t arg3)
+void game_check_state_4(int16_t arg3)
 {
     char *pcVar1;
     undefined2 unaff_DS;
@@ -2516,12 +2516,12 @@ void fcn.000027b4(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x2018: fcn.00002018 */
+/* 0x2018: game_func_65 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002018(int16_t arg3)
+void game_func_65(int16_t arg3)
 {
     undefined2 unaff_DS;
     
@@ -2534,12 +2534,12 @@ void fcn.00002018(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x3de: fcn.000003de */
+/* 0x3de: game_func_66 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000003de(int16_t arg1, int16_t arg2)
+void game_func_66(int16_t arg1, int16_t arg2)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -2577,22 +2577,22 @@ void fcn.000003de(int16_t arg1, int16_t arg2)
     if (!(bool)uVar14) {
         return;
     }
-    fcn.00000db5(arg1, in_CX);
-    fcn.00000de9(in_CX);
+    vga_operation9(arg1, in_CX);
+    game_check_state_3(in_CX);
     if ((bool)uVar14) {
         return;
     }
     bVar15 = unaff_SI == -2;
     uStack0002 = 0x400;
-    fcn.00000de9(in_CX);
+    game_check_state_3(in_CX);
     if (bVar15) {
         return;
     }
     uVar14 = unaff_SI == -0x26;
     uStack0004 = 0x409;
-    fcn.00000d86();
+    game_process_loop();
     uStack0006 = 0x40e;
-    fcn.00000de9(in_CX);
+    game_check_state_3(in_CX);
     if (!(bool)uVar14) {
         *(int16_t *)0x80 = *(int16_t *)0x80 + -1;
         if (*(int16_t *)0x80 == -1) {
@@ -2612,7 +2612,7 @@ void fcn.000003de(int16_t arg1, int16_t arg2)
         puVar13 = (uint8_t *)0xe8dc;
         do {
             iVar6 = iVar6 + -1;
-            fcn.00000d0a(in_BX);
+            game_multiply(in_BX);
             uVar7 = (uint16_t)in_BX >> 8;
             do {
                 *puVar13 = (uint8_t)in_BX;
@@ -2626,18 +2626,18 @@ void fcn.000003de(int16_t arg1, int16_t arg2)
         if (*(int16_t *)0x80 + 0x24 != *(int16_t *)0xc002) {
             iVar6 = *(int16_t *)0x9f05;
             do {
-                fcn.00000d0a(in_BX);
+                game_multiply(in_BX);
                 iVar6 = iVar6 + -1;
             } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
         }
         *(int16_t *)0x9f05 = iVar6;
-        fcn.00002652();
+        game_multiply_2();
         iVar6 = *(int16_t *)0x80;
         *(undefined *)0xff4a = 0;
         for (piVar10 = *(int16_t **)0xc010; iVar3 = *piVar10, iVar3 != -1; piVar10 = piVar10 + 8) {
             if (((char)((uint16_t)iVar3 >> 8) != -1) && (iVar3 == iVar6)) {
                 uStack000a = 0x797;
-                fcn.00000d72(iVar6, (uint16_t)*(uint8_t *)(piVar10 + 1));
+                vga_operation7(iVar6, (uint16_t)*(uint8_t *)(piVar10 + 1));
                 *puVar13 = *(uint8_t *)0xff4a | 0x80;
             }
             *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -2658,7 +2658,7 @@ void fcn.000003de(int16_t arg1, int16_t arg2)
         *puVar2 = *puVar1;
     }
     uVar4 = *(undefined2 *)0x9f05;
-    fcn.00000d5b();
+    game_process_loop_2();
     *(undefined2 *)0x9f05 = uVar4;
     if (*(int16_t *)0x80 == *(int16_t *)0xc002) {
         *(undefined2 *)0x80 = 0;
@@ -2667,13 +2667,13 @@ void fcn.000003de(int16_t arg1, int16_t arg2)
         iVar6 = *(int16_t *)0x9f03;
         do {
             uStack000a = 0x8f4;
-            fcn.00000cf1(in_BX);
+            game_func_62(in_BX);
             iVar6 = iVar6 + 1;
         } while ((uint8_t)(extraout_DH_00 + (char)((uint16_t)in_BX >> 8)) < 0x40);
     }
     *(int16_t *)0x9f03 = iVar6;
     uStack000a = 0x903;
-    fcn.0000263d();
+    game_func_63();
     *(undefined *)0xff4a = 0;
     uVar7 = *(int16_t *)0x80 + 0x23;
     if (*(uint16_t *)0xc002 <= uVar7) {
@@ -2682,7 +2682,7 @@ void fcn.000003de(int16_t arg1, int16_t arg2)
     for (puVar11 = *(uint16_t **)0xc010; uVar5 = *puVar11, uVar5 != 0xffff; puVar11 = puVar11 + 8) {
         if (((char)(uVar5 >> 8) != -1) && (uVar5 == uVar7)) {
             uStack000c = 0x936;
-            fcn.00000d72(uVar7, CONCAT11(0x23, *(undefined *)(puVar11 + 1)));
+            vga_operation7(uVar7, CONCAT11(0x23, *(undefined *)(puVar11 + 1)));
             *(uint8_t *)0xe023 = *(uint8_t *)0xff4a | 0x80;
         }
         *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -2691,12 +2691,12 @@ void fcn.000003de(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x6fc: fcn.000006fc */
+/* 0x6fc: game_get_value_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000006fc(int16_t arg1)
+void game_get_value_3(int16_t arg1)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -2732,7 +2732,7 @@ void fcn.000006fc(int16_t arg1)
     puVar10 = (uint8_t *)0xe8dc;
     do {
         iVar5 = iVar5 + -1;
-        fcn.00000d0a(in_BX);
+        game_multiply(in_BX);
         uVar4 = (uint16_t)in_BX >> 8;
         do {
             *puVar10 = (uint8_t)in_BX;
@@ -2746,17 +2746,17 @@ void fcn.000006fc(int16_t arg1)
     if (*(int16_t *)0x80 + 0x24 != *(int16_t *)0xc002) {
         iVar5 = *(int16_t *)0x9f05;
         do {
-            fcn.00000d0a(in_BX);
+            game_multiply(in_BX);
             iVar5 = iVar5 + -1;
         } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
     }
     *(int16_t *)0x9f05 = iVar5;
-    fcn.00002652();
+    game_multiply_2();
     iVar5 = *(int16_t *)0x80;
     *(undefined *)0xff4a = 0;
     for (piVar8 = *(int16_t **)0xc010; iVar3 = *piVar8, iVar3 != -1; piVar8 = piVar8 + 8) {
         if (((char)((uint16_t)iVar3 >> 8) != -1) && (iVar3 == iVar5)) {
-            fcn.00000d72(iVar5, (uint16_t)*(uint8_t *)(piVar8 + 1));
+            vga_operation7(iVar5, (uint16_t)*(uint8_t *)(piVar8 + 1));
             *puVar10 = *(uint8_t *)0xff4a | 0x80;
         }
         *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -2765,11 +2765,11 @@ void fcn.000006fc(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x8a4: fcn.000008a4 */
+/* 0x8a4: game_func_68 */
 /* ====================================================================== */
 
 
-void fcn.000008a4(void)
+void game_func_68(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -2799,7 +2799,7 @@ void fcn.000008a4(void)
         *puVar2 = *puVar1;
     }
     uVar3 = *(undefined2 *)0x9f05;
-    fcn.00000d5b();
+    game_process_loop_2();
     *(undefined2 *)0x9f05 = uVar3;
     if (*(int16_t *)0x80 == *(int16_t *)0xc002) {
         *(undefined2 *)0x80 = 0;
@@ -2807,12 +2807,12 @@ void fcn.000008a4(void)
     } else {
         iVar5 = *(int16_t *)0x9f03;
         do {
-            fcn.00000cf1(in_BX);
+            game_func_62(in_BX);
             iVar5 = iVar5 + 1;
         } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
     }
     *(int16_t *)0x9f03 = iVar5;
-    fcn.0000263d();
+    game_func_63();
     *(undefined *)0xff4a = 0;
     arg3 = *(int16_t *)0x80 + 0x23;
     if (*(uint16_t *)0xc002 <= arg3) {
@@ -2820,7 +2820,7 @@ void fcn.000008a4(void)
     }
     for (puVar7 = *(uint16_t **)0xc010; uVar4 = *puVar7, uVar4 != 0xffff; puVar7 = puVar7 + 8) {
         if (((char)(uVar4 >> 8) != -1) && (uVar4 == arg3)) {
-            fcn.00000d72(arg3, CONCAT11(0x23, *(undefined *)(puVar7 + 1)));
+            vga_operation7(arg3, CONCAT11(0x23, *(undefined *)(puVar7 + 1)));
             *(uint8_t *)0xe023 = *(uint8_t *)0xff4a | 0x80;
         }
         *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -2829,11 +2829,11 @@ void fcn.000008a4(void)
 }
 
 /* ====================================================================== */
-/* 0x416: fcn.00000416 */
+/* 0x416: game_func_69 */
 /* ====================================================================== */
 
 
-void fcn.00000416(void)
+void game_func_69(void)
 {
     int16_t iVar1;
     uint8_t uVar2;
@@ -2860,8 +2860,8 @@ void fcn.00000416(void)
             *(undefined *)0xff3d = 0x7f;
             *(undefined *)0xff1d = 0;
         }
-        uVar5 = fcn.00000850(CONCAT11(uVar3, uVar2), in_DX);
-        uVar5 = fcn.00000850((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10));
+        uVar5 = game_func_71(CONCAT11(uVar3, uVar2), in_DX);
+        uVar5 = game_func_71((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10));
     } else {
 code_r0x00000444:
         if (*(char *)0xff39 != '\0') {
@@ -2870,8 +2870,8 @@ code_r0x00000444:
             *(undefined *)0xff3d = 0x7f;
             *(undefined *)0xff1d = 0;
         }
-        uVar5 = fcn.000006a9(in_AX, in_DX);
-        uVar5 = fcn.000006a9((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10));
+        uVar5 = game_func_70(in_AX, in_DX);
+        uVar5 = game_func_70((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10));
     }
     if (*(char *)0xff39 != '\0') {
         *(undefined *)0xff39 = 0x80;
@@ -2884,7 +2884,7 @@ code_r0x00000444:
     if ((*(uint8_t *)0xff3d & 0x80) != 0) {
         return;
     }
-    fcn.00000b7a((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10));
+    game_func_72((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10));
     if (!bVar4) {
         if (*(char *)0x9f09 != '\0') {
             *(char *)0x9f09 = *(char *)0x9f09 + -1;
@@ -2893,7 +2893,7 @@ code_r0x00000444:
         }
         *(char *)0x82 = *(char *)0x82 + '\x01';
         iVar1 = *(int16_t *)0xff31;
-        fcn.00000d86();
+        game_process_loop();
         *(int16_t *)0xff31 = iVar1 + 0x24;
         return;
     }
@@ -2901,12 +2901,12 @@ code_r0x00000444:
 }
 
 /* ====================================================================== */
-/* 0x6a9: fcn.000006a9 */
+/* 0x6a9: game_func_70 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint16_t fcn.000006a9(int16_t arg1, int16_t arg2)
+uint16_t game_func_70(int16_t arg1, int16_t arg2)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -2934,26 +2934,26 @@ uint16_t fcn.000006a9(int16_t arg1, int16_t arg2)
     undefined2 uStack000a;
     int16_t in_stack_00000010;
     
-    fcn.00000db5(arg1, in_CX);
-    iVar5 = fcn.00000d92();
+    vga_operation9(arg1, in_CX);
+    iVar5 = game_check_state_2();
     iVar7 = 4;
     do {
         uStack0002 = 0x6bb;
-        uVar4 = fcn.00000dcf(iVar5);
+        uVar4 = game_func_42(iVar5);
         if (CARRY1(uVar4, uVar4)) {
             return (uint16_t)(uint8_t)(uVar4 * '\x02');
         }
-        iVar5 = fcn.00000d86();
+        iVar5 = game_process_loop();
         iVar7 = iVar7 + -1;
     } while (iVar7 != 0);
     bVar14 = *(char *)0xff38 == '\0';
     if (bVar14) {
-        uVar6 = fcn.00000de9(0);
+        uVar6 = game_check_state_3(0);
         bVar13 = true;
         if (!bVar14) {
             return uVar6;
         }
-        uVar6 = fcn.000007a7();
+        uVar6 = fill_buffer();
         if (bVar13) {
             return uVar6;
         }
@@ -2963,13 +2963,13 @@ uint16_t fcn.000006a9(int16_t arg1, int16_t arg2)
         unaff_SI = unaff_SI + 0x24;
         uVar15 = unaff_SI == 0;
         uStack000a = 0x6e9;
-        fcn.00000d86();
-        uVar6 = fcn.00000e1f(iVar5);
+        game_process_loop();
+        uVar6 = game_func_51(iVar5);
         bVar14 = true;
         if (!(bool)uVar15) {
             return uVar6;
         }
-        uVar6 = fcn.000007a7();
+        uVar6 = fill_buffer();
         if (bVar14) break;
         iVar5 = in_stack_00000010 + -1;
         if (iVar5 == 0) {
@@ -2992,7 +2992,7 @@ uint16_t fcn.000006a9(int16_t arg1, int16_t arg2)
             do {
                 iVar5 = iVar5 + -1;
                 uStack000a = 0x732;
-                fcn.00000d0a(in_BX);
+                game_multiply(in_BX);
                 uVar6 = (uint16_t)in_BX >> 8;
                 do {
                     *puVar12 = (uint8_t)in_BX;
@@ -3007,13 +3007,13 @@ uint16_t fcn.000006a9(int16_t arg1, int16_t arg2)
                 iVar5 = *(int16_t *)0x9f05;
                 do {
                     uStack000a = 0x762;
-                    fcn.00000d0a(in_BX);
+                    game_multiply(in_BX);
                     iVar5 = iVar5 + -1;
                 } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
             }
             *(int16_t *)0x9f05 = iVar5;
             uStack000a = 0x771;
-            fcn.00002652();
+            game_multiply_2();
             uVar6 = *(uint16_t *)0x80;
             *(undefined *)0xff4a = 0;
             puVar10 = *(uint16_t **)0xc010;
@@ -3021,7 +3021,7 @@ uint16_t fcn.000006a9(int16_t arg1, int16_t arg2)
                 uVar3 = *puVar10;
                 if (uVar3 == 0xffff) break;
                 if (((char)(uVar3 >> 8) != -1) && (uVar3 == uVar6)) {
-                    fcn.00000d72(uVar6, (uint16_t)*(uint8_t *)(puVar10 + 1));
+                    vga_operation7(uVar6, (uint16_t)*(uint8_t *)(puVar10 + 1));
                     *puVar12 = *(uint8_t *)0xff4a | 0x80;
                 }
                 *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -3034,12 +3034,12 @@ uint16_t fcn.000006a9(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x850: fcn.00000850 */
+/* 0x850: game_func_71 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint16_t fcn.00000850(int16_t arg1, int16_t arg2)
+uint16_t game_func_71(int16_t arg1, int16_t arg2)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -3068,27 +3068,27 @@ uint16_t fcn.00000850(int16_t arg1, int16_t arg2)
     undefined2 uStack0012;
     undefined2 uStack0014;
     
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     iVar9 = unaff_SI + 2;
-    iVar6 = fcn.00000d92();
+    iVar6 = game_check_state_2();
     iVar8 = 4;
     do {
         uStack0002 = 0x863;
-        uVar5 = fcn.00000dcf(iVar6);
+        uVar5 = game_func_42(iVar6);
         if (CARRY1(uVar5, uVar5)) {
             return (uint16_t)(uint8_t)(uVar5 * '\x02');
         }
-        iVar6 = fcn.00000d86();
+        iVar6 = game_process_loop();
         iVar8 = iVar8 + -1;
     } while (iVar8 != 0);
     bVar14 = *(char *)0xff38 == '\0';
     if (bVar14) {
-        uVar7 = fcn.00000de9(0);
+        uVar7 = game_check_state_3(0);
         bVar13 = true;
         if (!bVar14) {
             return uVar7;
         }
-        uVar7 = fcn.00000946();
+        uVar7 = game_scan_loop_3();
         if (bVar13) {
             return uVar7;
         }
@@ -3098,13 +3098,13 @@ uint16_t fcn.00000850(int16_t arg1, int16_t arg2)
         iVar9 = iVar9 + 0x24;
         uVar15 = iVar9 == 0;
         uStack000a = 0x891;
-        fcn.00000d86();
-        uVar7 = fcn.00000e1f(iVar6);
+        game_process_loop();
+        uVar7 = game_func_51(iVar6);
         bVar14 = true;
         if (!(bool)uVar15) {
             return uVar7;
         }
-        uVar7 = fcn.00000946();
+        uVar7 = game_scan_loop_3();
         if (bVar14) break;
         iVar6 = in_stack_00000010 + -1;
         if (iVar6 == 0) {
@@ -3122,7 +3122,7 @@ uint16_t fcn.00000850(int16_t arg1, int16_t arg2)
                 *puVar2 = *puVar1;
             }
             uVar3 = *(undefined2 *)0x9f05;
-            fcn.00000d5b();
+            game_process_loop_2();
             *(undefined2 *)0x9f05 = uVar3;
             if (*(int16_t *)0x80 == *(int16_t *)0xc002) {
                 *(undefined2 *)0x80 = 0;
@@ -3131,13 +3131,13 @@ uint16_t fcn.00000850(int16_t arg1, int16_t arg2)
                 iVar6 = *(int16_t *)0x9f03;
                 do {
                     uStack0012 = 0x8f4;
-                    fcn.00000cf1(in_BX);
+                    game_func_62(in_BX);
                     iVar6 = iVar6 + 1;
                 } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
             }
             *(int16_t *)0x9f03 = iVar6;
             uStack0012 = 0x903;
-            fcn.0000263d();
+            game_func_63();
             *(undefined *)0xff4a = 0;
             uVar7 = *(int16_t *)0x80 + 0x23;
             if (*(uint16_t *)0xc002 <= uVar7) {
@@ -3149,7 +3149,7 @@ uint16_t fcn.00000850(int16_t arg1, int16_t arg2)
                 if (uVar4 == 0xffff) break;
                 if (((char)(uVar4 >> 8) != -1) && (uVar4 == uVar7)) {
                     uStack0014 = 0x936;
-                    fcn.00000d72(uVar7, CONCAT11(0x23, *(undefined *)(puVar11 + 1)));
+                    vga_operation7(uVar7, CONCAT11(0x23, *(undefined *)(puVar11 + 1)));
                     *(uint8_t *)0xe023 = *(uint8_t *)0xff4a | 0x80;
                 }
                 *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -3162,12 +3162,12 @@ uint16_t fcn.00000850(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xb7a: fcn.00000b7a */
+/* 0xb7a: game_func_72 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000b7a(int16_t arg1, int16_t arg2)
+void game_func_72(int16_t arg1, int16_t arg2)
 {
     uint8_t uVar1;
     int16_t arg1_00;
@@ -3182,22 +3182,22 @@ void fcn.00000b7a(int16_t arg1, int16_t arg2)
     undefined2 uStack0008;
     undefined2 uStack000a;
     
-    fcn.00000db5(arg1, in_CX);
-    arg1_00 = fcn.00000d86();
+    vga_operation9(arg1, in_CX);
+    arg1_00 = game_process_loop();
     uStack0002 = 0xb88;
-    uVar2 = fcn.00000dcf(arg1_00);
+    uVar2 = game_func_42(arg1_00);
     uVar1 = (uint8_t)uVar2;
     if (CARRY1(uVar1, uVar1)) {
         return;
     }
     uStack0004 = 0xb91;
-    uVar1 = fcn.00000dcf(CONCAT11((char)((uint16_t)uVar2 >> 8), uVar1 * '\x02'));
+    uVar1 = game_func_42(CONCAT11((char)((uint16_t)uVar2 >> 8), uVar1 * '\x02'));
     bVar3 = (uVar1 & 0x7f) == 0;
     if (CARRY1(uVar1, uVar1)) {
         return;
     }
     uStack0006 = 0xb9d;
-    fcn.00000e1f(in_CX);
+    game_func_51(in_CX);
     if (!bVar3) {
         return;
     }
@@ -3206,13 +3206,13 @@ void fcn.00000b7a(int16_t arg1, int16_t arg2)
     }
     bVar3 = unaff_SI == -0x6c;
     uStack0008 = 0xbb0;
-    fcn.00000e1f(in_CX);
+    game_func_51(in_CX);
     if (bVar3) {
         return;
     }
     bVar3 = unaff_SI == -0x6e;
     uStack000a = 0xbbb;
-    fcn.00000e1f(in_CX);
+    game_func_51(in_CX);
     if (!bVar3) {
         return;
     }
@@ -3220,28 +3220,28 @@ void fcn.00000b7a(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xb32: fcn.00000b32 */
+/* 0xb32: game_func_73 */
 /* ====================================================================== */
 
 
-void fcn.00000b32(void)
+void game_func_73(void)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
     
     *(char *)0x82 = *(char *)0x82 + '\x01';
     iVar1 = *(int16_t *)0xff31;
-    fcn.00000d86();
+    game_process_loop();
     *(int16_t *)0xff31 = iVar1 + 0x24;
     return;
 }
 
 /* ====================================================================== */
-/* 0x95e: fcn.0000095e */
+/* 0x95e: copy_buffer */
 /* ====================================================================== */
 
 
-uint16_t fcn.0000095e(undefined2 param_1, undefined2 param_2, uint16_t param_3)
+uint16_t copy_buffer(undefined2 param_1, undefined2 param_2, uint16_t param_3)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -3285,9 +3285,9 @@ uint16_t fcn.0000095e(undefined2 param_1, undefined2 param_2, uint16_t param_3)
     if ((*(uint8_t *)0xff3d & 0x80) != 0) {
         return in_AX;
     }
-    uVar20 = fcn.00002192(in_AX, in_DX);
-    uVar20 = fcn.00000a6b((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
-    fcn.00000b7a((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
+    uVar20 = vga_operation_2(in_AX, in_DX);
+    uVar20 = game_func_78((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
+    game_func_72((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
     if ((bool)uVar17) {
         if (*(uint8_t *)0xff3d != 0x7f) {
             return *(uint8_t *)0xff3d ^ 0x7f;
@@ -3308,7 +3308,7 @@ uint16_t fcn.0000095e(undefined2 param_1, undefined2 param_2, uint16_t param_3)
     }
     *(char *)0x9f08 = *(char *)0x9f08 + '\x01';
     if (*(char *)0x9f09 == '\0') {
-        uVar20 = fcn.00000b32();
+        uVar20 = game_func_73();
         iVar7 = (int16_t)((uint32_t)uVar20 >> 0x10);
         param_3 = (uint16_t)uVar20;
     } else {
@@ -3318,11 +3318,11 @@ uint16_t fcn.0000095e(undefined2 param_1, undefined2 param_2, uint16_t param_3)
         iVar7 = extraout_DX;
     }
     if ((*(uint8_t *)0xc2 & 2) == 0) {
-        fcn.00000db5(param_3, in_CX);
+        vga_operation9(param_3, in_CX);
         uVar17 = 0xffb6 < unaff_SI;
         unaff_SI = unaff_SI + 0x49;
-        fcn.00000d86();
-        uVar20 = fcn.00000bc1();
+        game_process_loop();
+        uVar20 = game_func_80();
         iVar7 = (int16_t)((uint32_t)uVar20 >> 0x10);
         if ((bool)uVar17) {
             *(undefined *)0xff39 = 0xff;
@@ -3350,49 +3350,49 @@ uint16_t fcn.0000095e(undefined2 param_1, undefined2 param_2, uint16_t param_3)
         if (cVar10 == '\x04') {
             if ((*(uint8_t *)0xc2 & 1) == 0) {
                 *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
-                uVar8 = fcn.00000828();
+                uVar8 = game_func_129();
                 goto code_r0x00000a22;
             }
         } else if ((cVar10 == '\b') && ((*(uint8_t *)0xc2 & 1) != 0)) {
             *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
-            uVar8 = fcn.00000828();
+            uVar8 = game_func_129();
             goto code_r0x00000a4e;
         }
         if ((*(uint8_t *)0xc2 & 2) == 0) {
             if (cVar10 == '\x04') {
 code_r0x00000a4e:
-                fcn.00000db5(uVar8, in_CX);
+                vga_operation9(uVar8, in_CX);
                 uVar17 = unaff_SI == 0xff93;
-                fcn.00000d86();
-                uVar8 = fcn.00000de9(in_CX);
+                game_process_loop();
+                uVar8 = game_check_state_3(in_CX);
                 if (!(bool)uVar17) {
                     return uVar8;
                 }
                 iVar7 = unaff_SI + 0x6c;
                 bVar19 = iVar7 == 0;
-                uVar8 = fcn.00000de9(in_CX);
+                uVar8 = game_check_state_3(in_CX);
                 if (bVar19) {
                     return uVar8;
                 }
-                fcn.00000db5(uVar8, in_CX);
-                iVar9 = fcn.00000d92();
+                vga_operation9(uVar8, in_CX);
+                iVar9 = game_check_state_2();
                 iVar12 = 4;
                 do {
-                    uVar6 = fcn.00000dcf(iVar9);
+                    uVar6 = game_func_42(iVar9);
                     if (CARRY1(uVar6, uVar6)) {
                         return (uint16_t)(uint8_t)(uVar6 * '\x02');
                     }
-                    iVar9 = fcn.00000d86();
+                    iVar9 = game_process_loop();
                     iVar12 = iVar12 + -1;
                 } while (iVar12 != 0);
                 bVar19 = *(char *)0xff38 == '\0';
                 if (bVar19) {
-                    uVar8 = fcn.00000de9(0);
+                    uVar8 = game_check_state_3(0);
                     bVar18 = true;
                     if (!bVar19) {
                         return uVar8;
                     }
-                    uVar8 = fcn.000007a7();
+                    uVar8 = fill_buffer();
                     if (bVar18) {
                         return uVar8;
                     }
@@ -3401,13 +3401,13 @@ code_r0x00000a4e:
                 while( true ) {
                     iVar7 = iVar7 + 0x24;
                     uVar17 = iVar7 == 0;
-                    fcn.00000d86();
-                    uVar8 = fcn.00000e1f(iVar9);
+                    game_process_loop();
+                    uVar8 = game_func_51(iVar9);
                     bVar19 = true;
                     if (!(bool)uVar17) {
                         return uVar8;
                     }
-                    uVar8 = fcn.000007a7();
+                    uVar8 = fill_buffer();
                     if (bVar19) break;
                     iVar9 = in_stack_00000020 + -1;
                     if (iVar9 == 0) {
@@ -3429,7 +3429,7 @@ code_r0x00000a4e:
                         puVar14 = (uint8_t *)0xe8dc;
                         do {
                             iVar7 = iVar7 + -1;
-                            fcn.00000d0a(in_BX);
+                            game_multiply(in_BX);
                             uVar8 = (uint16_t)in_BX >> 8;
                             do {
                                 *puVar14 = (uint8_t)in_BX;
@@ -3443,12 +3443,12 @@ code_r0x00000a4e:
                         if (*(int16_t *)0x80 + 0x24 != *(int16_t *)0xc002) {
                             iVar7 = *(int16_t *)0x9f05;
                             do {
-                                fcn.00000d0a(in_BX);
+                                game_multiply(in_BX);
                                 iVar7 = iVar7 + -1;
                             } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
                         }
                         *(int16_t *)0x9f05 = iVar7;
-                        fcn.00002652();
+                        game_multiply_2();
                         uVar8 = *(uint16_t *)0x80;
                         *(undefined *)0xff4a = 0;
                         puVar11 = *(uint16_t **)0xc010;
@@ -3456,7 +3456,7 @@ code_r0x00000a4e:
                             uVar4 = *puVar11;
                             if (uVar4 == 0xffff) break;
                             if (((char)(uVar4 >> 8) != -1) && (uVar4 == uVar8)) {
-                                fcn.00000d72(uVar8, (uint16_t)*(uint8_t *)(puVar11 + 1));
+                                vga_operation7(uVar8, (uint16_t)*(uint8_t *)(puVar11 + 1));
                                 *puVar14 = *(uint8_t *)0xff4a | 0x80;
                             }
                             *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -3471,38 +3471,38 @@ code_r0x00000a4e:
                 return uVar8;
             }
 code_r0x00000a22:
-            fcn.00000db5(uVar8, in_CX);
+            vga_operation9(uVar8, in_CX);
             uVar17 = unaff_SI == 0xff93;
-            fcn.00000d86();
-            uVar8 = fcn.00000de9(in_CX);
+            game_process_loop();
+            uVar8 = game_check_state_3(in_CX);
             if (!(bool)uVar17) {
                 return uVar8;
             }
             bVar18 = unaff_SI == 0xff92;
-            uVar8 = fcn.00000de9(in_CX);
+            uVar8 = game_check_state_3(in_CX);
             if (bVar18) {
                 return uVar8;
             }
-            fcn.00000db5(uVar8, in_CX);
+            vga_operation9(uVar8, in_CX);
             iVar12 = unaff_SI + 0x70;
-            iVar7 = fcn.00000d92();
+            iVar7 = game_check_state_2();
             iVar9 = 4;
             do {
-                uVar6 = fcn.00000dcf(iVar7);
+                uVar6 = game_func_42(iVar7);
                 if (CARRY1(uVar6, uVar6)) {
                     return (uint16_t)(uint8_t)(uVar6 * '\x02');
                 }
-                iVar7 = fcn.00000d86();
+                iVar7 = game_process_loop();
                 iVar9 = iVar9 + -1;
             } while (iVar9 != 0);
             bVar18 = *(char *)0xff38 == '\0';
             if (bVar18) {
-                uVar8 = fcn.00000de9(0);
+                uVar8 = game_check_state_3(0);
                 bVar16 = true;
                 if (!bVar18) {
                     return uVar8;
                 }
-                uVar8 = fcn.00000946();
+                uVar8 = game_scan_loop_3();
                 if (bVar16) {
                     return uVar8;
                 }
@@ -3511,13 +3511,13 @@ code_r0x00000a22:
             while( true ) {
                 iVar12 = iVar12 + 0x24;
                 uVar17 = iVar12 == 0;
-                fcn.00000d86();
-                uVar8 = fcn.00000e1f(iVar7);
+                game_process_loop();
+                uVar8 = game_func_51(iVar7);
                 bVar18 = true;
                 if (!(bool)uVar17) {
                     return uVar8;
                 }
-                uVar8 = fcn.00000946();
+                uVar8 = game_scan_loop_3();
                 if (bVar18) break;
                 iVar7 = in_stack_00000020 + -1;
                 if (iVar7 == 0) {
@@ -3535,7 +3535,7 @@ code_r0x00000a22:
                         *puVar2 = *puVar1;
                     }
                     uVar3 = *(undefined2 *)0x9f05;
-                    fcn.00000d5b();
+                    game_process_loop_2();
                     *(undefined2 *)0x9f05 = uVar3;
                     if (*(int16_t *)0x80 == *(int16_t *)0xc002) {
                         *(undefined2 *)0x80 = 0;
@@ -3543,12 +3543,12 @@ code_r0x00000a22:
                     } else {
                         iVar7 = *(int16_t *)0x9f03;
                         do {
-                            fcn.00000cf1(in_BX);
+                            game_func_62(in_BX);
                             iVar7 = iVar7 + 1;
                         } while ((uint8_t)(extraout_DH_00 + (char)((uint16_t)in_BX >> 8)) < 0x40);
                     }
                     *(int16_t *)0x9f03 = iVar7;
-                    fcn.0000263d();
+                    game_func_63();
                     *(undefined *)0xff4a = 0;
                     uVar8 = *(int16_t *)0x80 + 0x23;
                     if (*(uint16_t *)0xc002 <= uVar8) {
@@ -3559,7 +3559,7 @@ code_r0x00000a22:
                         uVar4 = *puVar11;
                         if (uVar4 == 0xffff) break;
                         if (((char)(uVar4 >> 8) != -1) && (uVar4 == uVar8)) {
-                            fcn.00000d72(uVar8, CONCAT11(0x23, *(undefined *)(puVar11 + 1)));
+                            vga_operation7(uVar8, CONCAT11(0x23, *(undefined *)(puVar11 + 1)));
                             *(uint8_t *)0xe023 = *(uint8_t *)0xff4a | 0x80;
                         }
                         *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -3579,13 +3579,13 @@ code_r0x00000a22:
                 return uVar8;
             }
             bVar19 = *(uint8_t *)0xff42 < 2;
-            if ((*(uint8_t *)0xff42 != 2) && (uVar8 = fcn.00000850(uVar8, iVar7), !bVar19)) {
+            if ((*(uint8_t *)0xff42 != 2) && (uVar8 = game_func_71(uVar8, iVar7), !bVar19)) {
                 *(undefined *)0x9f22 = 1;
                 bVar19 = *(char *)0xff39 == '\0';
                 if (!bVar19) {
                     return uVar8;
                 }
-                uVar8 = fcn.00000d9e();
+                uVar8 = game_func_44();
                 if ((bVar19) && (*(char *)0x9f20 == '\0')) {
                     *(undefined *)0x9f23 = 1;
                     *(char *)0x9f21 = *(char *)0x9f21 + '\x01';
@@ -3608,13 +3608,13 @@ code_r0x00000a22:
                 return uVar8;
             }
             bVar19 = *(char *)0xff42 == '\0';
-            if ((*(char *)0xff42 != '\x01') && (uVar8 = fcn.000006a9(uVar8, iVar7), !bVar19)) {
+            if ((*(char *)0xff42 != '\x01') && (uVar8 = game_func_70(uVar8, iVar7), !bVar19)) {
                 *(undefined *)0x9f22 = 2;
                 bVar19 = *(char *)0xff39 == '\0';
                 if (!bVar19) {
                     return uVar8;
                 }
-                uVar8 = fcn.00000d9e();
+                uVar8 = game_func_44();
                 if ((bVar19) && (*(char *)0x9f20 == '\0')) {
                     *(undefined *)0x9f23 = 0;
                     *(char *)0x9f21 = *(char *)0x9f21 + '\x01';
@@ -3647,12 +3647,12 @@ code_r0x0000083b:
 }
 
 /* ====================================================================== */
-/* 0x2192: fcn.00002192 */
+/* 0x2192: vga_operation_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002192(int16_t arg1, int16_t arg2)
+void vga_operation_2(int16_t arg1, int16_t arg2)
 {
     int16_t iVar1;
     int16_t in_CX;
@@ -3665,34 +3665,34 @@ void fcn.00002192(int16_t arg1, int16_t arg2)
     undefined2 uStack0004;
     undefined2 uStack0006;
     
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     uVar2 = 0xff92 < unaff_SI;
     uVar3 = unaff_SI == 0xff93;
-    fcn.00000d86();
+    game_process_loop();
     uStack0002 = 0x21a0;
-    fcn.00002150();
+    game_multiply_3();
     if (!(bool)uVar3) {
         return;
     }
     uStack0004 = 0x21ac;
-    fcn.00002028(CONCAT11(extraout_DH, 0x43));
+    game_scan_loop_4(CONCAT11(extraout_DH, 0x43));
     if (!(bool)uVar2) {
         return;
     }
     *(char *)0x82 = *(char *)0x82 + '\x01';
     iVar1 = *(int16_t *)0xff31;
     uStack0006 = 0xb40;
-    fcn.00000d86();
+    game_process_loop();
     *(int16_t *)0xff31 = iVar1 + 0x24;
     return;
 }
 
 /* ====================================================================== */
-/* 0x2150: fcn.00002150 */
+/* 0x2150: game_multiply_3 */
 /* ====================================================================== */
 
 
-void fcn.00002150(void)
+void game_multiply_3(void)
 {
     char in_DL;
     char *unaff_SI;
@@ -3708,12 +3708,12 @@ void fcn.00002150(void)
 }
 
 /* ====================================================================== */
-/* 0x2028: fcn.00002028 */
+/* 0x2028: game_scan_loop_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002028(int16_t arg2)
+void game_scan_loop_4(int16_t arg2)
 {
     int16_t iVar1;
     short unsigned int in_AX;
@@ -3727,9 +3727,9 @@ void fcn.00002028(int16_t arg2)
     int16_t iStack0002;
     undefined2 in_stack_00000006;
     
-    fcn.0000210d(in_AX);
+    game_func_120(in_AX);
     puVar3 = (uint8_t *)(unaff_SI + 0x23);
-    fcn.00000d86();
+    game_process_loop();
     if ((*puVar3 & 0x80) != 0) {
         return;
     }
@@ -3743,14 +3743,14 @@ void fcn.00002028(int16_t arg2)
     } while (iVar2 != 0);
     arg3 = unaff_SI + 0x24;
     iStack0002 = 0x2050;
-    fcn.00000d86();
+    game_process_loop();
     iVar2 = 3;
     iStack0002 = extraout_DX;
     do {
-        fcn.00002356(unaff_SI);
+        game_func_20(unaff_SI);
         iVar1 = iStack0002;
         iStack0002 = arg3;
-        fcn.00002356(arg3);
+        game_func_20(arg3);
         arg3 = unaff_DI + 1;
         unaff_SI = iVar1 + 1;
         iStack0002 = CONCAT11((char)((uint16_t)in_stack_00000006 >> 8), (char)in_stack_00000006 + '\x01');
@@ -3762,12 +3762,12 @@ void fcn.00002028(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xa6b: fcn.00000a6b */
+/* 0xa6b: game_func_78 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint16_t fcn.00000a6b(int16_t arg1, int16_t arg2)
+uint16_t game_func_78(int16_t arg1, int16_t arg2)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -3806,12 +3806,12 @@ uint16_t fcn.00000a6b(int16_t arg1, int16_t arg2)
     undefined2 uStack001a;
     
     *(undefined *)0xff42 = 0;
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     iVar13 = unaff_SI + 0x49;
     uVar18 = iVar13 == 0;
-    fcn.00000d86();
+    game_process_loop();
     uStack0002 = 0xa7c;
-    uVar8 = fcn.00000bc8();
+    uVar8 = game_process_loop_3();
     if (!(bool)uVar18) {
         return uVar8;
     }
@@ -3832,28 +3832,28 @@ uint16_t fcn.00000a6b(int16_t arg1, int16_t arg2)
             }
 code_r0x00000850:
             uStack0004 = 0x853;
-            fcn.00000db5(uVar8, in_CX);
+            vga_operation9(uVar8, in_CX);
             iVar9 = unaff_SI + 0x4b;
             uStack0006 = 0x85d;
-            iVar13 = fcn.00000d92();
+            iVar13 = game_check_state_2();
             iVar7 = 4;
             do {
                 uStack0008 = 0x863;
-                uVar6 = fcn.00000dcf(iVar13);
+                uVar6 = game_func_42(iVar13);
                 if (CARRY1(uVar6, uVar6)) {
                     return (uint16_t)(uint8_t)(uVar6 * '\x02');
                 }
-                iVar13 = fcn.00000d86();
+                iVar13 = game_process_loop();
                 iVar7 = iVar7 + -1;
             } while (iVar7 != 0);
             bVar17 = *(char *)0xff38 == '\0';
             if (bVar17) {
-                uVar8 = fcn.00000de9(0);
+                uVar8 = game_check_state_3(0);
                 bVar16 = true;
                 if (!bVar17) {
                     return uVar8;
                 }
-                uVar8 = fcn.00000946();
+                uVar8 = game_scan_loop_3();
                 if (bVar16) {
                     return uVar8;
                 }
@@ -3863,13 +3863,13 @@ code_r0x00000850:
                 iVar9 = iVar9 + 0x24;
                 uVar18 = iVar9 == 0;
                 uStack0010 = 0x891;
-                fcn.00000d86();
-                uVar8 = fcn.00000e1f(iVar13);
+                game_process_loop();
+                uVar8 = game_func_51(iVar13);
                 bVar17 = true;
                 if (!(bool)uVar18) {
                     return uVar8;
                 }
-                uVar8 = fcn.00000946();
+                uVar8 = game_scan_loop_3();
                 if (bVar17) break;
                 iVar13 = in_stack_00000016 + -1;
                 if (iVar13 == 0) {
@@ -3887,7 +3887,7 @@ code_r0x00000850:
                         *puVar2 = *puVar1;
                     }
                     uVar4 = *(undefined2 *)0x9f05;
-                    fcn.00000d5b();
+                    game_process_loop_2();
                     *(undefined2 *)0x9f05 = uVar4;
                     if (*(int16_t *)0x80 == *(int16_t *)0xc002) {
                         *(undefined2 *)0x80 = 0;
@@ -3896,13 +3896,13 @@ code_r0x00000850:
                         iVar13 = *(int16_t *)0x9f03;
                         do {
                             uStack0018 = 0x8f4;
-                            fcn.00000cf1(in_BX);
+                            game_func_62(in_BX);
                             iVar13 = iVar13 + 1;
                         } while ((uint8_t)(extraout_DH_00 + (char)((uint16_t)in_BX >> 8)) < 0x40);
                     }
                     *(int16_t *)0x9f03 = iVar13;
                     uStack0018 = 0x903;
-                    fcn.0000263d();
+                    game_func_63();
                     *(undefined *)0xff4a = 0;
                     uVar8 = *(int16_t *)0x80 + 0x23;
                     if (*(uint16_t *)0xc002 <= uVar8) {
@@ -3914,7 +3914,7 @@ code_r0x00000850:
                         if (uVar3 == 0xffff) break;
                         if (((char)(uVar3 >> 8) != -1) && (uVar3 == uVar8)) {
                             uStack001a = 0x936;
-                            fcn.00000d72(uVar8, CONCAT11(0x23, *(undefined *)(puVar12 + 1)));
+                            vga_operation7(uVar8, CONCAT11(0x23, *(undefined *)(puVar12 + 1)));
                             *(uint8_t *)0xe023 = *(uint8_t *)0xff4a | 0x80;
                         }
                         *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -3937,27 +3937,27 @@ code_r0x00000850:
         if (*(char *)0xff42 == '\x01') goto code_r0x00000850;
     }
     uStack0004 = 0x6ac;
-    fcn.00000db5(uVar8, in_CX);
+    vga_operation9(uVar8, in_CX);
     uStack0006 = 0x6b4;
-    iVar7 = fcn.00000d92();
+    iVar7 = game_check_state_2();
     iVar9 = 4;
     do {
         uStack0008 = 0x6bb;
-        uVar6 = fcn.00000dcf(iVar7);
+        uVar6 = game_func_42(iVar7);
         if (CARRY1(uVar6, uVar6)) {
             return (uint16_t)(uint8_t)(uVar6 * '\x02');
         }
-        iVar7 = fcn.00000d86();
+        iVar7 = game_process_loop();
         iVar9 = iVar9 + -1;
     } while (iVar9 != 0);
     bVar17 = *(char *)0xff38 == '\0';
     if (bVar17) {
-        uVar8 = fcn.00000de9(0);
+        uVar8 = game_check_state_3(0);
         bVar16 = true;
         if (!bVar17) {
             return uVar8;
         }
-        uVar8 = fcn.000007a7();
+        uVar8 = fill_buffer();
         if (bVar16) {
             return uVar8;
         }
@@ -3967,13 +3967,13 @@ code_r0x00000850:
         iVar13 = iVar13 + 0x24;
         uVar18 = iVar13 == 0;
         uStack0010 = 0x6e9;
-        fcn.00000d86();
-        uVar8 = fcn.00000e1f(iVar7);
+        game_process_loop();
+        uVar8 = game_func_51(iVar7);
         bVar17 = true;
         if (!(bool)uVar18) {
             return uVar8;
         }
-        uVar8 = fcn.000007a7();
+        uVar8 = fill_buffer();
         if (bVar17) break;
         iVar7 = in_stack_00000016 + -1;
         if (iVar7 == 0) {
@@ -3996,7 +3996,7 @@ code_r0x00000850:
             do {
                 iVar13 = iVar13 + -1;
                 uStack0010 = 0x732;
-                fcn.00000d0a(in_BX);
+                game_multiply(in_BX);
                 uVar8 = (uint16_t)in_BX >> 8;
                 do {
                     *puVar15 = (uint8_t)in_BX;
@@ -4011,13 +4011,13 @@ code_r0x00000850:
                 iVar13 = *(int16_t *)0x9f05;
                 do {
                     uStack0010 = 0x762;
-                    fcn.00000d0a(in_BX);
+                    game_multiply(in_BX);
                     iVar13 = iVar13 + -1;
                 } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
             }
             *(int16_t *)0x9f05 = iVar13;
             uStack0010 = 0x771;
-            fcn.00002652();
+            game_multiply_2();
             uVar8 = *(uint16_t *)0x80;
             *(undefined *)0xff4a = 0;
             puVar12 = *(uint16_t **)0xc010;
@@ -4025,7 +4025,7 @@ code_r0x00000850:
                 uVar3 = *puVar12;
                 if (uVar3 == 0xffff) break;
                 if (((char)(uVar3 >> 8) != -1) && (uVar3 == uVar8)) {
-                    fcn.00000d72(uVar8, (uint16_t)*(uint8_t *)(puVar12 + 1));
+                    vga_operation7(uVar8, (uint16_t)*(uint8_t *)(puVar12 + 1));
                     *puVar15 = *(uint8_t *)0xff4a | 0x80;
                 }
                 *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -4038,11 +4038,11 @@ code_r0x00000850:
 }
 
 /* ====================================================================== */
-/* 0xbc8: fcn.00000bc8 */
+/* 0xbc8: game_process_loop_3 */
 /* ====================================================================== */
 
 
-void fcn.00000bc8(void)
+void game_process_loop_3(void)
 {
     int16_t iVar1;
     char *unaff_SI;
@@ -4076,11 +4076,11 @@ void fcn.00000bc8(void)
 }
 
 /* ====================================================================== */
-/* 0xbc1: fcn.00000bc1 */
+/* 0xbc1: game_func_80 */
 /* ====================================================================== */
 
 
-char fcn.00000bc1(void)
+char game_func_80(void)
 {
     char *unaff_SI;
     undefined2 unaff_DS;
@@ -4089,7 +4089,7 @@ char fcn.00000bc1(void)
 }
 
 /* ====================================================================== */
-/* 0x347: fcn.00000347 */
+/* 0x347: game_func_81 */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x0000063d: Changing call to branch
@@ -4098,7 +4098,7 @@ char fcn.00000bc1(void)
 // WARNING: Removing unreachable block (ram,0x000007c8)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000347(int16_t arg1, int16_t arg2)
+void game_func_81(int16_t arg1, int16_t arg2)
 {
     uint8_t uVar1;
     uint8_t uVar2;
@@ -4145,13 +4145,13 @@ void fcn.00000347(int16_t arg1, int16_t arg2)
                 *(uint8_t *)0x9f24 = uVar1 & 1;
                 uStack0002 = arg1_00;
                 if ((uVar1 & 1) != uVar2) {
-                    fcn.0000050c();
+                    game_func_82();
                     iVar5 = extraout_DX;
                 }
                 cVar4 = (char)((uint16_t)in_stack_00000004 >> 8);
                 if (cVar4 == '\x02') {
                     uStack0002 = 0x3ba;
-                    fcn.00000acd();
+                    game_scan_loop_5();
                     iVar5 = extraout_DX_00;
                 }
                 arg1_00 = CONCAT11(cVar4, cVar4) & 0xff0c;
@@ -4163,13 +4163,13 @@ code_r0x00000642:
                         return;
                     }
                     bVar6 = *(char *)0xff42 == '\0';
-                    if ((*(char *)0xff42 != '\x01') && (fcn.000006a9(arg1_00, iVar5), !bVar6)) {
+                    if ((*(char *)0xff42 != '\x01') && (game_func_70(arg1_00, iVar5), !bVar6)) {
                         *(undefined *)0x9f22 = 2;
                         bVar6 = *(char *)0xff39 == '\0';
                         if (!bVar6) {
                             return;
                         }
-                        fcn.00000d9e();
+                        game_func_44();
                         if ((bVar6) && (*(char *)0x9f20 == '\0')) {
                             *(undefined *)0x9f23 = 0;
                             *(char *)0x9f21 = *(char *)0x9f21 + '\x01';
@@ -4186,7 +4186,7 @@ code_r0x00000642:
                     goto code_r0x0000083b;
                 }
                 if ((char)arg1_00 != '\b') {
-                    fcn.0000050c();
+                    game_func_82();
                     if ((*(uint8_t *)0xff39 | *(uint8_t *)0xff38) == 0) {
                         *(undefined *)0xe7 = 0x80;
                         return;
@@ -4208,13 +4208,13 @@ code_r0x00000828:
                 return;
             }
             bVar6 = *(uint8_t *)0xff42 < 2;
-            if ((*(uint8_t *)0xff42 != 2) && (fcn.00000850(arg1_00, iVar5), !bVar6)) {
+            if ((*(uint8_t *)0xff42 != 2) && (game_func_71(arg1_00, iVar5), !bVar6)) {
                 *(undefined *)0x9f22 = 1;
                 bVar6 = *(char *)0xff39 == '\0';
                 if (!bVar6) {
                     return;
                 }
-                fcn.00000d9e();
+                game_func_44();
                 if ((bVar6) && (*(char *)0x9f20 == '\0')) {
                     *(undefined *)0x9f23 = 1;
                     *(char *)0x9f21 = *(char *)0x9f21 + '\x01';
@@ -4238,9 +4238,9 @@ code_r0x0000083b:
         }
         *(undefined *)0x9f18 = 0;
         uStack0002 = 0x543;
-        uVar8 = fcn.00001a87(arg1_01, iVar5);
-        uVar8 = fcn.00002078((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
-        arg1_01 = fcn.000005c9((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
+        uVar8 = game_func_85(arg1_01, iVar5);
+        uVar8 = game_func_117((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
+        arg1_01 = game_func_122((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
     }
     *(char *)0x9f20 = *(char *)0x9f20 + '\x01';
     if (9 < *(uint8_t *)0x9f20) {
@@ -4251,11 +4251,11 @@ code_r0x0000083b:
     }
     *(undefined *)0xff38 = 0;
     if (*(uint8_t *)0x9f09 < *(uint8_t *)0x9f0d) {
-        fcn.00000db5(CONCAT11((char)((uint16_t)arg1_01 >> 8), *(uint8_t *)0x9f09), in_CX);
+        vga_operation9(CONCAT11((char)((uint16_t)arg1_01 >> 8), *(uint8_t *)0x9f09), in_CX);
         uVar7 = unaff_SI == 0x23;
         uStack0002 = 0x578;
-        fcn.00000d92();
-        fcn.00000de9(in_CX);
+        game_check_state_2();
+        game_check_state_3(in_CX);
         if ((bool)uVar7) {
             *(undefined *)0xe7 = 0;
             *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
@@ -4268,7 +4268,7 @@ code_r0x0000083b:
             }
             *(char *)0x82 = *(char *)0x82 + -1;
             iVar5 = *(int16_t *)0xff31;
-            fcn.00000d92();
+            game_check_state_2();
             *(int16_t *)0xff31 = iVar5 + -0x24;
             return;
         }
@@ -4287,17 +4287,17 @@ code_r0x000005be:
 }
 
 /* ====================================================================== */
-/* 0x50c: fcn.0000050c */
+/* 0x50c: game_func_82 */
 /* ====================================================================== */
 
 
-void fcn.0000050c(void)
+void game_func_82(void)
 {
     uint8_t uVar1;
     undefined2 unaff_DS;
     undefined in_ZF;
     
-    fcn.00000d9e();
+    game_func_44();
     if (!(bool)in_ZF) {
         return;
     }
@@ -4320,11 +4320,11 @@ void fcn.0000050c(void)
 }
 
 /* ====================================================================== */
-/* 0xacd: fcn.00000acd */
+/* 0xacd: game_scan_loop_5 */
 /* ====================================================================== */
 
 
-void fcn.00000acd(void)
+void game_scan_loop_5(void)
 {
     char *pcVar1;
     int16_t in_AX;
@@ -4340,25 +4340,25 @@ void fcn.00000acd(void)
     if (*(char *)0xff42 != '\0') {
         return;
     }
-    iVar2 = fcn.00001fe0(in_AX, in_DX);
-    fcn.00000db5(iVar2, in_CX);
+    iVar2 = game_func_84(in_AX, in_DX);
+    vga_operation9(iVar2, in_CX);
     uVar3 = 0xff92 < unaff_SI;
-    fcn.00000d86();
-    iVar2 = fcn.00000bc1();
+    game_process_loop();
+    iVar2 = game_func_80();
     if ((bool)uVar3) {
         do {
-            fcn.00000db5(iVar2, in_CX);
-            fcn.00000d86();
+            vga_operation9(iVar2, in_CX);
+            game_process_loop();
             pcVar1 = (char *)0xe7;
             *pcVar1 = *pcVar1 + '\x01';
             bVar4 = *pcVar1 == '\0';
-            fcn.00000de9(in_CX);
+            game_check_state_3(in_CX);
             if (!bVar4) {
                 *(uint8_t *)0xe7 = *(uint8_t *)0xe7 | 1;
                 return;
             }
-            fcn.00000b32();
-            iVar2 = fcn.00000f9f();
+            game_func_73();
+            iVar2 = game_func_29();
         } while ((*(uint8_t *)0xe7 & 1) == 0);
         return;
     }
@@ -4373,12 +4373,12 @@ void fcn.00000acd(void)
 }
 
 /* ====================================================================== */
-/* 0x1fe0: fcn.00001fe0 */
+/* 0x1fe0: game_func_84 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001fe0(int16_t arg1, int16_t arg2)
+void game_func_84(int16_t arg1, int16_t arg2)
 {
     uint8_t uVar1;
     int16_t iVar2;
@@ -4397,28 +4397,28 @@ void fcn.00001fe0(int16_t arg1, int16_t arg2)
     if (*(char *)0xff39 != '\0') {
         return;
     }
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     uVar3 = 0xff92 < unaff_SI;
     uVar4 = unaff_SI == 0xff93;
-    fcn.00000d86();
+    game_process_loop();
     uStack0002 = 0x1ff6;
-    fcn.00002150();
+    game_multiply_3();
     if (!(bool)uVar4) {
         return;
     }
     uStack0004 = 0x2002;
-    iVar2 = fcn.00002028(CONCAT11(extraout_DH, 0x40));
+    iVar2 = game_scan_loop_4(CONCAT11(extraout_DH, 0x40));
     if ((bool)uVar3) {
         *(undefined *)0xe7 = 0x80;
         *(char *)0x82 = *(char *)0x82 + '\x01';
         iVar2 = *(int16_t *)0xff31;
         uStack0008 = 0xb40;
-        fcn.00000d86();
+        game_process_loop();
         *(int16_t *)0xff31 = iVar2 + 0x24;
         return;
     }
     uStack0006 = 0x2010;
-    uVar1 = fcn.00000dcf(iVar2);
+    uVar1 = game_func_42(iVar2);
     if ((bool)uVar3) {
         return;
     }
@@ -4434,14 +4434,14 @@ void fcn.00001fe0(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x1a87: fcn.00001a87 */
+/* 0x1a87: game_func_85 */
 /* ====================================================================== */
 
 // WARNING: This function may have set the stack pointer
 // WARNING: Removing unreachable block (ram,0x0000011b)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
+uint16_t game_func_85(int16_t arg1, int16_t arg2)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -4487,34 +4487,34 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
     undefined2 in_stack_00000022;
     int16_t iStack0028;
     
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     pcVar15 = (char *)(unaff_SI + -0x25);
-    uVar7 = fcn.00000d92();
+    uVar7 = game_check_state_2();
     if (*pcVar15 == 'J') {
         if ((*(uint8_t *)0xc2 & 1) == 0) {
             return uVar7;
         }
-        fcn.00000db5(in_stack_00000004, in_CX);
+        vga_operation9(in_stack_00000004, in_CX);
         puStack0006 = (uint16_t *)0x6b4;
-        iVar6 = fcn.00000d92();
+        iVar6 = game_check_state_2();
         iVar9 = 4;
         do {
             uStack0008 = 0x6bb;
-            uVar5 = fcn.00000dcf(iVar6);
+            uVar5 = game_func_42(iVar6);
             if (CARRY1(uVar5, uVar5)) {
                 return (uint16_t)(uint8_t)(uVar5 * '\x02');
             }
-            iVar6 = fcn.00000d86();
+            iVar6 = game_process_loop();
             iVar9 = iVar9 + -1;
         } while (iVar9 != 0);
         bVar18 = *(char *)0xff38 == '\0';
         if (bVar18) {
-            uVar7 = fcn.00000de9(0);
+            uVar7 = game_check_state_3(0);
             bVar17 = true;
             if (!bVar18) {
                 return uVar7;
             }
-            uVar7 = fcn.000007a7();
+            uVar7 = fill_buffer();
             if (bVar17) {
                 return uVar7;
             }
@@ -4524,13 +4524,13 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
             pcVar15 = pcVar15 + 0x24;
             uVar19 = pcVar15 == (char *)0x0;
             uStack0010 = 0x6e9;
-            fcn.00000d86();
-            uVar7 = fcn.00000e1f(iVar6);
+            game_process_loop();
+            uVar7 = game_func_51(iVar6);
             bVar18 = true;
             if (!(bool)uVar19) {
                 return uVar7;
             }
-            uVar7 = fcn.000007a7();
+            uVar7 = fill_buffer();
             if (bVar18) break;
             iVar6 = in_stack_00000016 + -1;
             if (iVar6 == 0) {
@@ -4553,7 +4553,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                 do {
                     iVar6 = iVar6 + -1;
                     uStack0010 = 0x732;
-                    fcn.00000d0a(in_BX);
+                    game_multiply(in_BX);
                     uVar7 = (uint16_t)in_BX >> 8;
                     do {
                         *puVar10 = (uint8_t)in_BX;
@@ -4568,13 +4568,13 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                     iVar6 = *(int16_t *)0x9f05;
                     do {
                         uStack0010 = 0x762;
-                        fcn.00000d0a(in_BX);
+                        game_multiply(in_BX);
                         iVar6 = iVar6 + -1;
                     } while ((uint8_t)(extraout_DH + (char)((uint16_t)in_BX >> 8)) < 0x40);
                 }
                 *(int16_t *)0x9f05 = iVar6;
                 uStack0010 = 0x771;
-                fcn.00002652();
+                game_multiply_2();
                 uVar7 = *(uint16_t *)0x80;
                 *(undefined *)0xff4a = 0;
                 puVar12 = *(uint16_t **)0xc010;
@@ -4582,7 +4582,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                     uVar3 = *puVar12;
                     if (uVar3 == 0xffff) break;
                     if (((char)(uVar3 >> 8) != -1) && (uVar3 == uVar7)) {
-                        fcn.00000d72(uVar7, (uint16_t)*(uint8_t *)(puVar12 + 1));
+                        vga_operation7(uVar7, (uint16_t)*(uint8_t *)(puVar12 + 1));
                         *puVar10 = *(uint8_t *)0xff4a | 0x80;
                     }
                     *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -4600,28 +4600,28 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
         if ((*(uint8_t *)0xc2 & 1) != 0) {
             return uVar7;
         }
-        fcn.00000db5(in_stack_00000004, in_CX);
+        vga_operation9(in_stack_00000004, in_CX);
         iVar13 = unaff_SI + -0x21;
         puStack0006 = (uint16_t *)0x85d;
-        iVar6 = fcn.00000d92();
+        iVar6 = game_check_state_2();
         iVar9 = 4;
         do {
             uStack0008 = 0x863;
-            uVar5 = fcn.00000dcf(iVar6);
+            uVar5 = game_func_42(iVar6);
             if (CARRY1(uVar5, uVar5)) {
                 return (uint16_t)(uint8_t)(uVar5 * '\x02');
             }
-            iVar6 = fcn.00000d86();
+            iVar6 = game_process_loop();
             iVar9 = iVar9 + -1;
         } while (iVar9 != 0);
         bVar18 = *(char *)0xff38 == '\0';
         if (bVar18) {
-            uVar7 = fcn.00000de9(0);
+            uVar7 = game_check_state_3(0);
             bVar17 = true;
             if (!bVar18) {
                 return uVar7;
             }
-            uVar7 = fcn.00000946();
+            uVar7 = game_scan_loop_3();
             if (bVar17) {
                 return uVar7;
             }
@@ -4631,13 +4631,13 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
             iVar13 = iVar13 + 0x24;
             uVar19 = iVar13 == 0;
             uStack0010 = 0x891;
-            fcn.00000d86();
-            uVar7 = fcn.00000e1f(iVar6);
+            game_process_loop();
+            uVar7 = game_func_51(iVar6);
             bVar18 = true;
             if (!(bool)uVar19) {
                 return uVar7;
             }
-            uVar7 = fcn.00000946();
+            uVar7 = game_scan_loop_3();
             if (bVar18) break;
             iVar6 = in_stack_00000016 + -1;
             if (iVar6 == 0) {
@@ -4655,7 +4655,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                     *puVar2 = *puVar1;
                 }
                 uVar8 = *(undefined2 *)0x9f05;
-                fcn.00000d5b();
+                game_process_loop_2();
                 *(undefined2 *)0x9f05 = uVar8;
                 if (*(int16_t *)0x80 == *(int16_t *)0xc002) {
                     *(undefined2 *)0x80 = 0;
@@ -4664,13 +4664,13 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                     iVar6 = *(int16_t *)0x9f03;
                     do {
                         iStack0018 = 0x8f4;
-                        fcn.00000cf1(in_BX);
+                        game_func_62(in_BX);
                         iVar6 = iVar6 + 1;
                     } while ((uint8_t)(extraout_DH_00 + (char)((uint16_t)in_BX >> 8)) < 0x40);
                 }
                 *(int16_t *)0x9f03 = iVar6;
                 iStack0018 = 0x903;
-                fcn.0000263d();
+                game_func_63();
                 *(undefined *)0xff4a = 0;
                 uVar7 = *(int16_t *)0x80 + 0x23;
                 if (*(uint16_t *)0xc002 <= uVar7) {
@@ -4681,7 +4681,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                     uVar3 = *puVar12;
                     if (uVar3 == 0xffff) break;
                     if (((char)(uVar3 >> 8) != -1) && (uVar3 == uVar7)) {
-                        fcn.00000d72(uVar7, CONCAT11(0x23, *(undefined *)(puVar12 + 1)));
+                        vga_operation7(uVar7, CONCAT11(0x23, *(undefined *)(puVar12 + 1)));
                         *(uint8_t *)0xe023 = *(uint8_t *)0xff4a | 0x80;
                     }
                     *(char *)0xff4a = *(char *)0xff4a + '\x01';
@@ -4706,7 +4706,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
     }
     bVar18 = false;
     if ((*(uint8_t *)((int16_t)puVar12 + 3) & 0x80) == 0) {
-        uVar7 = fcn.00001e19();
+        uVar7 = game_func_88();
         if (!bVar18) {
             return uVar7;
         }
@@ -4732,13 +4732,13 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
         *puVar10 = *puVar10 | *(uint8_t *)((int16_t)puVar12 + 0xb);
     }
     uStack0002 = 0x1b3a;
-    fcn.000023df();
-    fcn.000013b7();
+    game_func_89();
+    game_get_value_2();
     puStack0006 = (uint16_t *)0x1b42;
     (*_fcn.00003004)();
     uStack0008 = 0x1b45;
-    uVar20 = fcn.00001e5f();
-    fcn.00001093((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
+    uVar20 = game_func_91();
+    game_func_92((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
     **(undefined2 **)0xc010 = 0xffff;
     *(undefined2 *)0x9f1a = *(undefined2 *)(in_stack_0000000e + 5);
     *(undefined *)0x9f1c = *(undefined *)(in_stack_0000000e + 7);
@@ -4751,9 +4751,9 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
     *(uint8_t *)0xc4 = uVar5;
     (*_fcn.0000010c)();
     if ((*(uint8_t *)0xc4 & 0x80) == 0) {
-        fcn.00000c00();
+        game_func_93();
     }
-    fcn.00001dc5();
+    vga_operation4();
     if ((**(uint8_t **)0xc000 & 1) == 0) {
         uStack0010 = 0x1bb0;
         (*_fcn.0000010c)();
@@ -4768,7 +4768,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
         uStack0010 = 0x1bf7;
         (*_fcn.00002044)();
         (*_fcn.0000301e)();
-        fcn.00001e97();
+        vga_operation0();
     }
     *(undefined *)0xff3a = 0;
     *(undefined *)0x9ef5 = 0xff;
@@ -4784,7 +4784,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                 iStack0018 = CONCAT11((char)((uint16_t)iStack0018 >> 8) + '\x02', (char)iStack0018);
                 iVar6 = (*_fcn.00003020)();
                 iStack0018 = 0x1c9c;
-                fcn.00001f86(iVar6);
+                game_func_103(iVar6);
                 iStack001a = 0x1ca8;
                 (*_fcn.00002000)();
                 puVar10 = (uint8_t *)0x1c99;
@@ -4801,7 +4801,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                 iStack0018 = CONCAT11((char)((uint16_t)iStack0018 >> 8) + -2, (char)iStack0018);
                 iVar6 = (*_fcn.00003020)();
                 iStack0018 = 0x1cdb;
-                fcn.00001f86(iVar6);
+                game_func_103(iVar6);
                 iStack001a = 0x1cea;
                 (*_fcn.00002000)();
                 puVar10 = (uint8_t *)0x1cd8;
@@ -4820,7 +4820,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
         uVar19 = *(undefined *)0xc8;
         *(undefined *)0x9efa = uVar19;
         *(undefined *)0x9f02 = 0xff;
-        fcn.00001ebf(CONCAT11(extraout_AH, uVar19), (int16_t)puVar10);
+        vga_operation1(CONCAT11(extraout_AH, uVar19), (int16_t)puVar10);
         (*_fcn.0000010c)();
         in_stack_00000020 = in_stack_00000014;
         (*_fcn.00003028)();
@@ -4830,7 +4830,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
         (*_fcn.0000010c)();
         uVar19 = 0;
     } else {
-        fcn.00001ebf(CONCAT11(uVar5, uVar5) & 0xff01, (int16_t)puVar10);
+        vga_operation1(CONCAT11(uVar5, uVar5) & 0xff01, (int16_t)puVar10);
         uVar5 = **(uint8_t **)0xc000;
         *(char *)0xff34 = -CARRY1(uVar5, uVar5);
         cVar11 = -CARRY1(uVar5 * '\x02', uVar5 * '\x02');
@@ -4863,7 +4863,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
         *(undefined *)0x9f01 = 0;
         if (*(char *)0xff34 != '\0') {
             *(undefined2 *)0x1ffe = 0x89;
-            fcn.00000c59();
+            vga_operation();
             pcVar4 = (code *)swi(0x60);
             (*pcVar4)();
             *(undefined *)0x9f02 = 0xff;
@@ -4875,7 +4875,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
             (*_fcn.00003016)();
             iStack0018 = 0xd4;
             iVar6 = (**(code **)0x3014)();
-            fcn.00001480(iVar6, iVar9);
+            game_func_24(iVar6, iVar9);
             *(undefined *)0x9f02 = 0;
             pcVar4 = (code *)swi(0x60);
             (*pcVar4)();
@@ -4893,7 +4893,7 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
         pcVar4 = *(code **)0x2012;
         *(undefined2 *)0x1ffe = 0x182;
         (*pcVar4)();
-        fcn.00000c37();
+        game_get_value();
         uVar7 = *(uint16_t *)0xc00e;
         (**(code **)0x2010)();
         iStack0028 = 0x193;
@@ -4910,10 +4910,10 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
             *(undefined2 *)0x80 = 0x29;
             *(undefined *)0x83 = 5;
             uStack0008 = 0x1bf;
-            fcn.00000c9c();
-            fcn.000013b7();
+            game_func_27();
+            game_get_value_2();
             do {
-                fcn.00000f9f();
+                game_func_29();
             } while (*(char *)0xe6 != '\0');
             pcVar4 = (code *)swi(0x60);
             (*pcVar4)();
@@ -4921,8 +4921,8 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
             (*_fcn.0000010c)();
             *(undefined *)0xff34 = 0xff;
             *(undefined *)0x9f27 = 0xff;
-            iVar9 = fcn.00001e97();
-            fcn.00001ebf(iVar9, iVar6);
+            iVar9 = vga_operation0();
+            vga_operation1(iVar9, iVar6);
             iStack0018 = unaff_DS;
             (*_fcn.00002044)();
             iStack0018 = 0x213;
@@ -4934,8 +4934,8 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
             *(undefined *)0x9f1c = 0xd;
             *(undefined *)0x83 = 0xc;
             *(undefined *)0x9f00 = 0xc;
-            fcn.00001dc5();
-            fcn.00000c59();
+            vga_operation4();
+            vga_operation();
             in_stack_00000020 = 0x23b;
             iStack001a = 0x21a;
             unaff_DS = 0x1e8;
@@ -4949,16 +4949,16 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
             in_stack_00000022 = uVar8;
         }
         uStack0008 = 0x244;
-        fcn.00000c9c();
+        game_func_27();
         if (*(char *)0x9f27 == '\0') {
             if (*(char *)0xff34 != '\0') {
                 (**(code **)0x3012)();
             }
-            fcn.000013b7();
-            fcn.0000365d();
+            game_get_value_2();
+            vga_operation5();
         } else {
-            fcn.000013b7();
-            fcn.00000f9f();
+            game_get_value_2();
+            game_func_29();
             *(undefined *)0x9f26 = 0;
         }
         if (*(char *)0x49 == '\0') {
@@ -4975,14 +4975,14 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
             do {
                 uVar3 = uVar7;
                 if (*(char *)0xff39 == '\0') {
-                    fcn.00000e3f();
+                    vga_operation8();
                     uStack0010 = 0x2ad;
-                    fcn.000004bf();
-                    fcn.00000f9f();
-                    uVar20 = fcn.000027b4(iVar6);
-                    fcn.000003de((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
+                    game_func_43();
+                    game_func_29();
+                    uVar20 = game_check_state_4(iVar6);
+                    game_func_66((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
                     iStack0018 = 0x2b9;
-                    fcn.00000416();
+                    game_func_69();
                     *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
                     if (*(char *)0x9f0a == '\x02') {
                         *(undefined *)0xff38 = 0;
@@ -4992,8 +4992,8 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                     if ((uVar7 & 2) != 0) {
                         *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
                     }
-                    uVar20 = fcn.0000095e();
-                    uVar7 = fcn.00000347((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
+                    uVar20 = copy_buffer();
+                    uVar7 = game_func_81((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
                     return uVar7;
                 }
                 do {
@@ -5005,22 +5005,22 @@ uint16_t fcn.00001a87(int16_t arg1, int16_t arg2)
                         *(undefined *)0xff3c = 0;
                         (*_fcn.00003004)();
                         *(undefined *)0xff43 = 0;
-                        fcn.00000f9f();
+                        game_func_29();
                         uStack0002 = 0x303;
-                        uVar20 = fcn.00000416();
-                        iVar13 = fcn.00000347((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
+                        uVar20 = game_func_69();
+                        iVar13 = game_func_81((int16_t)uVar20, (int16_t)((uint32_t)uVar20 >> 0x10));
                         uVar19 = *(char *)0xff39 != -1;
                         if (*(char *)0xff39 != -1) goto code_r0x00000321;
                         puStack0006 = (uint16_t *)0x310;
-                        fcn.00000db5(iVar13, iVar9);
+                        vga_operation9(iVar13, iVar9);
                         uStack0008 = 0x314;
-                        fcn.00000bc1();
+                        game_func_80();
                         uVar3 = uVar7 + 1;
                     } while ((bool)uVar19);
                     uVar19 = 0xffdb < uVar7 + 1;
                     uVar7 = uVar7 + 0x25;
-                    fcn.00000d86();
-                    fcn.00000bc1();
+                    game_process_loop();
+                    game_func_80();
                     uVar3 = uVar7;
                 } while ((bool)uVar19);
 code_r0x00000321:
@@ -5046,12 +5046,12 @@ code_r0x00000321:
         *(undefined *)0xe7 = 0;
         *(undefined *)0xff39 = 0;
         *(undefined *)0xff37 = 0;
-        fcn.00000f9f();
-        fcn.0000095e();
+        game_func_29();
+        copy_buffer();
         *(undefined *)0xff37 = 0;
         while( true ) {
             while( true ) {
-                fcn.00000f9f();
+                game_func_29();
                 *(undefined *)0xff37 = 0;
                 if (*(char *)0xe7 == '\x02') break;
                 *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -5069,7 +5069,7 @@ code_r0x00000321:
         iVar6 = 0x1e;
         do {
             iStack0018 = iVar6;
-            fcn.00000f9f();
+            game_func_29();
             *(undefined *)0xff37 = 0xff;
             iVar6 = iStack001a + -1;
         } while (iVar6 != 0);
@@ -5106,12 +5106,12 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0x2000: fcn.00002000 */
+/* 0x2000: game_scan_loop_6 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001fe0(int16_t arg1, int16_t arg2)
+void game_func_84(int16_t arg1, int16_t arg2)
 {
     uint8_t uVar1;
     int16_t iVar2;
@@ -5130,28 +5130,28 @@ void fcn.00001fe0(int16_t arg1, int16_t arg2)
     if (*(char *)0xff39 != '\0') {
         return;
     }
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     uVar3 = 0xff92 < unaff_SI;
     uVar4 = unaff_SI == 0xff93;
-    fcn.00000d86();
+    game_process_loop();
     uStack0002 = 0x1ff6;
-    fcn.00002150();
+    game_multiply_3();
     if (!(bool)uVar4) {
         return;
     }
     uStack0004 = 0x2002;
-    iVar2 = fcn.00002028(CONCAT11(extraout_DH, 0x40));
+    iVar2 = game_scan_loop_4(CONCAT11(extraout_DH, 0x40));
     if ((bool)uVar3) {
         *(undefined *)0xe7 = 0x80;
         *(char *)0x82 = *(char *)0x82 + '\x01';
         iVar2 = *(int16_t *)0xff31;
         uStack0008 = 0xb40;
-        fcn.00000d86();
+        game_process_loop();
         *(int16_t *)0xff31 = iVar2 + 0x24;
         return;
     }
     uStack0006 = 0x2010;
-    uVar1 = fcn.00000dcf(iVar2);
+    uVar1 = game_func_42(iVar2);
     if ((bool)uVar3) {
         return;
     }
@@ -5167,12 +5167,12 @@ void fcn.00001fe0(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x202a: fcn.0000202a */
+/* 0x202a: game_func_87 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002028(int16_t arg2)
+void game_scan_loop_4(int16_t arg2)
 {
     int16_t iVar1;
     short unsigned int in_AX;
@@ -5186,9 +5186,9 @@ void fcn.00002028(int16_t arg2)
     int16_t iStack0002;
     undefined2 in_stack_00000006;
     
-    fcn.0000210d(in_AX);
+    game_func_120(in_AX);
     puVar3 = (uint8_t *)(unaff_SI + 0x23);
-    fcn.00000d86();
+    game_process_loop();
     if ((*puVar3 & 0x80) != 0) {
         return;
     }
@@ -5202,14 +5202,14 @@ void fcn.00002028(int16_t arg2)
     } while (iVar2 != 0);
     arg3 = unaff_SI + 0x24;
     iStack0002 = 0x2050;
-    fcn.00000d86();
+    game_process_loop();
     iVar2 = 3;
     iStack0002 = extraout_DX;
     do {
-        fcn.00002356(unaff_SI);
+        game_func_20(unaff_SI);
         iVar1 = iStack0002;
         iStack0002 = arg3;
-        fcn.00002356(arg3);
+        game_func_20(arg3);
         arg3 = unaff_DI + 1;
         unaff_SI = iVar1 + 1;
         iStack0002 = CONCAT11((char)((uint16_t)in_stack_00000006 >> 8), (char)in_stack_00000006 + '\x01');
@@ -5221,11 +5221,11 @@ void fcn.00002028(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x1e19: fcn.00001e19 */
+/* 0x1e19: game_func_88 */
 /* ====================================================================== */
 
 
-void fcn.00001e19(void)
+void game_func_88(void)
 {
     int16_t unaff_SI;
     undefined2 unaff_DS;
@@ -5251,11 +5251,11 @@ void fcn.00001e19(void)
 }
 
 /* ====================================================================== */
-/* 0x23df: fcn.000023df */
+/* 0x23df: game_func_89 */
 /* ====================================================================== */
 
 
-void fcn.000023df(void)
+void game_func_89(void)
 {
     int16_t in_AX;
     char *pcVar1;
@@ -5272,21 +5272,21 @@ void fcn.000023df(void)
 }
 
 /* ====================================================================== */
-/* 0x3004: fcn.00003004 */
+/* 0x3004: game_check_state_5 */
 /* ====================================================================== */
 
 
-void fcn.00003004(void)
+void game_check_state_5(void)
 {
     return;
 }
 
 /* ====================================================================== */
-/* 0x1e5f: fcn.00001e5f */
+/* 0x1e5f: game_func_91 */
 /* ====================================================================== */
 
 
-void fcn.00001e5f(void)
+void game_func_91(void)
 {
     undefined *puVar1;
     int16_t iVar2;
@@ -5320,7 +5320,7 @@ void fcn.00001e5f(void)
 }
 
 /* ====================================================================== */
-/* 0x1093: fcn.00001093 */
+/* 0x1093: game_func_92 */
 /* ====================================================================== */
 
 // WARNING: This function may have set the stack pointer
@@ -5328,7 +5328,7 @@ void fcn.00001e5f(void)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_2h
 
-void fcn.00001093(int16_t arg1, int16_t arg2)
+void game_func_92(int16_t arg1, int16_t arg2)
 {
     int16_t *piVar1;
     int16_t *piVar2;
@@ -5389,7 +5389,7 @@ code_r0x00001093:
             *(undefined *)0xff3f = *(undefined *)0xff46;
         }
         if (*(char *)0xff37 == '\0') {
-            fcn.00001480(arg1, in_CX);
+            game_func_24(arg1, in_CX);
         }
         (*(code *)0x173)();
         if ((*(char *)0xe8 == '\0') && (*(int16_t *)0xc6 != 0)) {
@@ -5473,7 +5473,7 @@ code_r0x00001093:
         (*_fcn.00002044)();
         *(undefined *)0x9ef5 = 0xff;
         in_stack_0000001e = 0x12c6;
-        fcn.000013b7();
+        game_get_value_2();
         *(undefined *)0xff1d = 0;
         *(undefined *)0xff1e = 0;
         *(undefined *)0x9eef = 0;
@@ -5484,7 +5484,7 @@ code_r0x00001093:
         }
         *(undefined *)0x9f0d = uVar14;
         uVar11 = 0;
-        fcn.0000169d(CONCAT11(extraout_AH, uVar14), arg2_00);
+        game_func_130(CONCAT11(extraout_AH, uVar14), arg2_00);
         iVar12 = extraout_DX;
         if (*(char *)0xff3d == '\0') {
             *(undefined *)0x9f09 = 0;
@@ -5492,13 +5492,13 @@ code_r0x00001093:
                 if (*(uint8_t *)0x9f00 < *(uint8_t *)0x84) {
                     in_stack_00000022 = 0xfd3;
                     uVar11 = 0;
-                    fcn.00000b32();
+                    game_func_73();
                     *(char *)0x84 = *(char *)0x84 + -1;
                     iVar12 = extraout_DX_01;
                 } else {
                     in_stack_00000022 = 0xfca;
                     uVar11 = 0;
-                    fcn.00000625();
+                    game_scan_loop_10();
                     *(char *)0x84 = *(char *)0x84 + '\x01';
                     iVar12 = extraout_DX_00;
                 }
@@ -5506,24 +5506,24 @@ code_r0x00001093:
         }
         if ((*(char *)0xe6 == '\0') && (*(char *)0xff34 == '\0')) {
             if (*(char *)0x83 != '\f') {
-                fcn.000006a9(CONCAT11(uVar11, *(char *)0x83), iVar12);
+                game_func_70(CONCAT11(uVar11, *(char *)0x83), iVar12);
                 *(char *)0x83 = *(char *)0x83 + '\x01';
             }
         } else if (*(char *)0x83 != *(char *)(*(int16_t *)0xa002 + 7)) {
-            fcn.00000850(CONCAT11(uVar11, *(char *)(*(int16_t *)0xa002 + 7)), iVar12);
+            game_func_71(CONCAT11(uVar11, *(char *)(*(int16_t *)0xa002 + 7)), iVar12);
             *(char *)0x83 = *(char *)0x83 + -1;
         }
         *(uint8_t *)0xff35 = *(char *)0x84 + *(char *)0x82 & 0x3f;
-        fcn.00001752();
-        fcn.000021b2();
-        fcn.00001fb5();
-        fcn.00002167();
-        fcn.000018e1(arg_3h_00);
+        game_func_132();
+        game_func_133();
+        game_func_136();
+        game_func_137();
+        game_func_138(arg_3h_00);
         in_stack_0000002e = CONCAT22(uVar18, 0x1029);
-        uVar15 = fcn.00002ab1(in_BX);
+        uVar15 = game_func_141(in_BX);
         if (*(char *)0xff30 == '\0') {
             in_stack_0000002e = 0x10331029;
-            uVar15 = fcn.00002d1d();
+            uVar15 = game_func_143();
         }
         *(undefined *)0xff36 = 0;
         *(undefined *)0x9f14 = 0;
@@ -5538,7 +5538,7 @@ code_r0x00001093:
             *(undefined *)0xff36 = 0xff;
             *(undefined *)0xff75 = 9;
             iVar12 = fcn.00001689(0xf);
-            fcn.000013e4(-0x6447, iVar12);
+            game_func_100(-0x6447, iVar12);
         }
         arg1 = fcn.00001214(in_CX);
         if (*(char *)0xe8 == '\0') goto code_r0x00001093;
@@ -5563,7 +5563,7 @@ code_r0x00001093:
         piVar13 = piVar13 + 2;
         *(int16_t *)*piVar1 = *piVar2;
     }
-    fcn.00000db5(-1, iVar12);
+    vga_operation9(-1, iVar12);
     uVar8 = *(int16_t *)0x117a0 + (uint16_t)*(uint8_t *)0x117a3;
     if (*(char *)((int16_t)piVar13 + -3) != '\0') {
         uVar8 = uVar8 + 9;
@@ -5572,10 +5572,10 @@ code_r0x00001093:
         uVar8 = uVar8 - *(uint16_t *)0x1d722;
     }
     **(uint16_t **)0x1d72a = uVar8;
-    fcn.000018e1(arg_3h);
+    game_func_138(arg_3h);
     iVar9 = fcn.00001214(iVar12);
     in_stack_0000001a = 0x13991396;
-    fcn.00001480(iVar9, iVar12);
+    game_func_24(iVar9, iVar12);
     uVar14 = (undefined)iVar12;
     (**(code **)0x3012)();
     iVar12 = 0x21c;
@@ -5598,7 +5598,7 @@ code_r0x00001093:
     *(undefined *)0x9f01 = 0;
     if (*(char *)0xff34 != '\0') {
         *(undefined2 *)0x1ffe = 0x89;
-        fcn.00000c59();
+        vga_operation();
         pcVar3 = (code *)swi(0x60);
         (*pcVar3)();
         *(undefined *)0x9f02 = 0xff;
@@ -5608,7 +5608,7 @@ code_r0x00001093:
         *(undefined *)0xff37 = 0;
         (*_fcn.00003016)();
         iVar12 = (**(code **)0x3014)();
-        fcn.00001480(iVar12, iVar9);
+        game_func_24(iVar12, iVar9);
         *(undefined *)0x9f02 = 0;
         pcVar3 = (code *)swi(0x60);
         (*pcVar3)();
@@ -5626,7 +5626,7 @@ code_r0x00001093:
     pcVar3 = *(code **)0x2012;
     *(undefined2 *)0x1ffe = 0x182;
     (*pcVar3)();
-    fcn.00000c37();
+    game_get_value();
     uVar8 = *(uint16_t *)0xc00e;
     (**(code **)0x2010)();
     iStack002a = 0x193;
@@ -5641,10 +5641,10 @@ code_r0x00001093:
         *(undefined *)0x9f26 = 0xff;
         *(undefined2 *)0x80 = 0x29;
         *(undefined *)0x83 = 5;
-        fcn.00000c9c();
-        fcn.000013b7();
+        game_func_27();
+        game_get_value_2();
         do {
-            fcn.00000f9f();
+            game_func_29();
         } while (*(char *)0xe6 != '\0');
         pcVar3 = (code *)swi(0x60);
         (*pcVar3)();
@@ -5652,8 +5652,8 @@ code_r0x00001093:
         (*_fcn.0000010c)();
         *(undefined *)0xff34 = 0xff;
         *(undefined *)0x9f27 = 0xff;
-        iVar9 = fcn.00001e97();
-        fcn.00001ebf(iVar9, iVar12);
+        iVar9 = vga_operation0();
+        vga_operation1(iVar9, iVar12);
         (*_fcn.00002044)();
         (*_fcn.0000302a)();
         (*_fcn.0000301a)();
@@ -5663,8 +5663,8 @@ code_r0x00001093:
         *(undefined *)0x9f1c = 0xd;
         *(undefined *)0x83 = 0xc;
         *(undefined *)0x9f00 = 0xc;
-        fcn.00001dc5();
-        fcn.00000c59();
+        vga_operation4();
+        vga_operation();
         in_stack_00000022 = 0x23b;
         in_stack_0000001a = 0x21a0213;
         uStack0014 = 0x1e8;
@@ -5677,16 +5677,16 @@ code_r0x00001093:
         iVar12 = iVar7;
         uVar10 = uVar4;
     }
-    fcn.00000c9c();
+    game_func_27();
     if (*(char *)0x9f27 == '\0') {
         if (*(char *)0xff34 != '\0') {
             (**(code **)0x3012)();
         }
-        fcn.000013b7();
-        fcn.0000365d();
+        game_get_value_2();
+        vga_operation5();
     } else {
-        fcn.000013b7();
-        fcn.00000f9f();
+        game_get_value_2();
+        game_func_29();
         *(undefined *)0x9f26 = 0;
     }
     if (*(char *)0x49 != '\0') {
@@ -5703,12 +5703,12 @@ code_r0x00003900:
         *(undefined *)0xe7 = 0;
         *(undefined *)0xff39 = 0;
         *(undefined *)0xff37 = 0;
-        fcn.00000f9f();
-        fcn.0000095e();
+        game_func_29();
+        copy_buffer();
         *(undefined *)0xff37 = 0;
         while( true ) {
             while( true ) {
-                fcn.00000f9f();
+                game_func_29();
                 *(undefined *)0xff37 = 0;
                 if (*(char *)0xe7 == '\x02') break;
                 *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -5724,7 +5724,7 @@ code_r0x00003900:
         }
         *(undefined *)0xff24 = 8;
         do {
-            fcn.00000f9f();
+            game_func_29();
             *(char *)0xff37 = ((uint8_t)in_stack_0000001a & 1) - 1;
         } while (iVar16 != 1);
         pcVar3 = (code *)swi(0x60);
@@ -5772,12 +5772,12 @@ code_r0x00001d89:
     do {
         uVar5 = uVar8;
         if (*(char *)0xff39 == '\0') {
-            fcn.00000e3f();
-            fcn.000004bf();
-            fcn.00000f9f();
-            uVar15 = fcn.000027b4(iVar12);
-            fcn.000003de((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10));
-            fcn.00000416();
+            vga_operation8();
+            game_func_43();
+            game_func_29();
+            uVar15 = game_check_state_4(iVar12);
+            game_func_66((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10));
+            game_func_69();
             *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
             if (*(char *)0x9f0a == '\x02') {
                 *(undefined *)0xff38 = 0;
@@ -5787,8 +5787,8 @@ code_r0x00001d89:
             if ((uVar8 & 2) != 0) {
                 *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
             }
-            uVar15 = fcn.0000095e();
-            fcn.00000347((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10));
+            uVar15 = copy_buffer();
+            game_func_81((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10));
             return;
         }
         do {
@@ -5800,19 +5800,19 @@ code_r0x00001d89:
                 *(undefined *)0xff3c = 0;
                 (*(code *)0xfec3)();
                 *(undefined *)0xff43 = 0;
-                fcn.00000f9f();
-                uVar15 = fcn.00000416();
-                iVar7 = fcn.00000347((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10));
+                game_func_29();
+                uVar15 = game_func_69();
+                iVar7 = game_func_81((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10));
                 uVar14 = *(char *)0xff39 != -1;
                 if (*(char *)0xff39 != -1) goto code_r0x00000321;
-                fcn.00000db5(iVar7, iVar9);
-                fcn.00000bc1();
+                vga_operation9(iVar7, iVar9);
+                game_func_80();
                 uVar5 = uVar8 + 1;
             } while ((bool)uVar14);
             uVar14 = 0xffdb < uVar8 + 1;
             uVar8 = uVar8 + 0x25;
-            fcn.00000d86();
-            fcn.00000bc1();
+            game_process_loop();
+            game_func_80();
             uVar5 = uVar8;
         } while ((bool)uVar14);
 code_r0x00000321:
@@ -5827,11 +5827,11 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0xc00: fcn.00000c00 */
+/* 0xc00: game_func_93 */
 /* ====================================================================== */
 
 
-void fcn.00000c00(void)
+void game_func_93(void)
 {
     int16_t **ppiVar1;
     int16_t **ppiVar2;
@@ -5854,11 +5854,11 @@ void fcn.00000c00(void)
 }
 
 /* ====================================================================== */
-/* 0x2044: fcn.00002044 */
+/* 0x2044: copy_buffer_2 */
 /* ====================================================================== */
 
 
-void fcn.0000202c(undefined2 param_1, undefined2 param_2, undefined2 param_3)
+void game_func_19(undefined2 param_1, undefined2 param_2, undefined2 param_3)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -5870,7 +5870,7 @@ void fcn.0000202c(undefined2 param_1, undefined2 param_2, undefined2 param_3)
     undefined2 unaff_DS;
     
     puVar3 = (uint8_t *)(unaff_SI + 0x23);
-    fcn.00000d86();
+    game_process_loop();
     if ((*puVar3 & 0x80) != 0) {
         return;
     }
@@ -5883,12 +5883,12 @@ void fcn.0000202c(undefined2 param_1, undefined2 param_2, undefined2 param_3)
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
     arg3 = unaff_SI + 0x24;
-    fcn.00000d86();
+    game_process_loop();
     iVar2 = 3;
     iVar1 = extraout_DX;
     do {
-        fcn.00002356(unaff_SI);
-        fcn.00002356(arg3);
+        game_func_20(unaff_SI);
+        game_func_20(arg3);
         arg3 = unaff_DI + 1;
         unaff_SI = iVar1 + 1;
         iVar1 = CONCAT11((char)((uint16_t)param_3 >> 8), (char)param_3 + '\x01');
@@ -5900,12 +5900,12 @@ void fcn.0000202c(undefined2 param_1, undefined2 param_2, undefined2 param_3)
 }
 
 /* ====================================================================== */
-/* 0x301e: fcn.0000301e */
+/* 0x301e: game_scan_loop_7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000301e(int16_t arg3)
+void game_scan_loop_7(int16_t arg3)
 {
     uint8_t *puVar1;
     uint8_t in_AL;
@@ -5918,13 +5918,13 @@ void fcn.0000301e(int16_t arg3)
     
     uVar2 = 0;
     *(uint8_t *)(arg3 + unaff_DI) = *(uint8_t *)(arg3 + unaff_DI) ^ in_AL;
-    fcn.00003259();
-    arg1 = fcn.00003194();
+    game_func_96();
+    arg1 = game_func_99();
     if ((bool)uVar2) {
         return;
     }
     uStack0002 = 0x302f;
-    fcn.000013e4(-0x6567, arg1);
+    game_func_100(-0x6567, arg1);
     *(int16_t *)0xc6 = *(int16_t *)0xc6 + (*(uint16_t *)0xb2 >> 3) + 1;
     *unaff_SI = 0xff00;
     if ((*(uint8_t *)((int16_t)unaff_SI + 7) & 0x20) == 0) {
@@ -5940,11 +5940,11 @@ void fcn.0000301e(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x3259: fcn.00003259 */
+/* 0x3259: game_func_96 */
 /* ====================================================================== */
 
 
-void fcn.00003259(void)
+void game_func_96(void)
 {
     int16_t in_DX;
     int16_t unaff_SI;
@@ -5958,7 +5958,7 @@ void fcn.00003259(void)
     if (*(char *)(unaff_SI + 3) == '#') {
         return;
     }
-    fcn.0000339e(in_DX);
+    game_func_97(in_DX);
     if (bVar1) {
         return;
     }
@@ -5968,12 +5968,12 @@ void fcn.00003259(void)
 }
 
 /* ====================================================================== */
-/* 0x339e: fcn.0000339e */
+/* 0x339e: game_func_97 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint8_t fcn.0000339e(int16_t arg2)
+uint8_t game_func_97(int16_t arg2)
 {
     uint8_t uVar1;
     int16_t in_CX;
@@ -5985,16 +5985,16 @@ uint8_t fcn.0000339e(int16_t arg2)
     undefined2 uStack0002;
     undefined2 uStack0004;
     
-    fcn.00000d72(in_BX, *(int16_t *)(unaff_SI + 2));
+    vga_operation7(in_BX, *(int16_t *)(unaff_SI + 2));
     uVar2 = (uint8_t *)(unaff_DI + 0x48) == (uint8_t *)0x0;
-    fcn.00000d86();
+    game_process_loop();
     uStack0002 = 0x33b3;
-    uVar1 = fcn.000034e5(in_CX);
+    uVar1 = game_func_98(in_CX);
     if (!(bool)uVar2) {
         return uVar1;
     }
     uStack0004 = 0x33bd;
-    uVar1 = fcn.000034e5(in_CX);
+    uVar1 = game_func_98(in_CX);
     if (!(bool)uVar2) {
         return uVar1;
     }
@@ -6002,12 +6002,12 @@ uint8_t fcn.0000339e(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x34e5: fcn.000034e5 */
+/* 0x34e5: game_func_98 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000034e5(int16_t arg4)
+void game_func_98(int16_t arg4)
 {
     uint8_t *puVar1;
     uint8_t in_AL;
@@ -6034,11 +6034,11 @@ void fcn.000034e5(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x3194: fcn.00003194 */
+/* 0x3194: game_func_99 */
 /* ====================================================================== */
 
 
-void fcn.00003194(void)
+void game_func_99(void)
 {
     uint8_t uVar1;
     char cVar2;
@@ -6078,12 +6078,12 @@ void fcn.00003194(void)
 }
 
 /* ====================================================================== */
-/* 0x13e4: fcn.000013e4 */
+/* 0x13e4: game_func_100 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000013e4(int16_t arg2, int16_t arg1)
+void game_func_100(int16_t arg2, int16_t arg1)
 {
     undefined2 unaff_DS;
     
@@ -6096,12 +6096,12 @@ void fcn.000013e4(int16_t arg2, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x3017: fcn.00003017 */
+/* 0x3017: game_multiply_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00003017(int16_t arg1, int16_t arg3)
+void game_multiply_4(int16_t arg1, int16_t arg3)
 {
     uint8_t *puVar1;
     int16_t in_CX;
@@ -6128,11 +6128,11 @@ void fcn.00003017(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x3020: fcn.00003020 */
+/* 0x3020: game_func_102 */
 /* ====================================================================== */
 
 
-void fcn.00003020(void)
+void game_func_102(void)
 {
     uint8_t *puVar1;
     int16_t arg1;
@@ -6140,12 +6140,12 @@ void fcn.00003020(void)
     undefined2 unaff_DS;
     undefined in_CF;
     
-    fcn.00003259();
-    arg1 = fcn.00003194();
+    game_func_96();
+    arg1 = game_func_99();
     if ((bool)in_CF) {
         return;
     }
-    fcn.000013e4(-0x6567, arg1);
+    game_func_100(-0x6567, arg1);
     *(int16_t *)0xc6 = *(int16_t *)0xc6 + (*(uint16_t *)0xb2 >> 3) + 1;
     *unaff_SI = 0xff00;
     if ((*(uint8_t *)((int16_t)unaff_SI + 7) & 0x20) == 0) {
@@ -6161,12 +6161,12 @@ void fcn.00003020(void)
 }
 
 /* ====================================================================== */
-/* 0x1f86: fcn.00001f86 */
+/* 0x1f86: game_func_103 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001f86(int16_t arg1)
+void game_func_103(int16_t arg1)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -6185,12 +6185,12 @@ void fcn.00001f86(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x110: fcn.00000110 */
+/* 0x110: game_scan_loop_8 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000110(int16_t arg4, int16_t arg1)
+void game_scan_loop_8(int16_t arg4, int16_t arg1)
 {
     code *pcVar1;
     uint16_t uVar2;
@@ -6240,10 +6240,10 @@ void fcn.00000110(int16_t arg4, int16_t arg1)
                     *(undefined *)0x9f26 = 0xff;
                     *(undefined2 *)0x80 = 0x29;
                     *(undefined *)0x83 = 5;
-                    fcn.00000c9c();
-                    fcn.000013b7();
+                    game_func_27();
+                    game_get_value_2();
                     do {
-                        fcn.00000f9f();
+                        game_func_29();
                     } while (*(char *)0xe6 != '\0');
                     pcVar1 = (code *)swi(0x60);
                     (*pcVar1)();
@@ -6252,8 +6252,8 @@ void fcn.00000110(int16_t arg4, int16_t arg1)
                     (*_fcn.0000010c)();
                     *(undefined *)0xff34 = 0xff;
                     *(undefined *)0x9f27 = 0xff;
-                    iVar8 = fcn.00001e97();
-                    fcn.00001ebf(iVar8, arg3);
+                    iVar8 = vga_operation0();
+                    vga_operation1(iVar8, arg3);
                     (*_fcn.00002044)();
                     in_stack_0000001e = 0x213;
                     (*_fcn.0000302a)();
@@ -6266,19 +6266,19 @@ void fcn.00000110(int16_t arg4, int16_t arg1)
                     *(undefined *)0x83 = 0xc;
                     *(undefined *)0x9f00 = 0xc;
                     uVar9 = 0x23b;
-                    fcn.00001dc5();
-                    fcn.00000c59();
+                    vga_operation4();
+                    vga_operation();
                 }
-                fcn.00000c9c();
+                game_func_27();
                 if (*(char *)0x9f27 == '\0') {
                     if (*(char *)0xff34 != '\0') {
                         (**(code **)0x3012)();
                     }
-                    fcn.000013b7();
-                    fcn.0000365d();
+                    game_get_value_2();
+                    vga_operation5();
                 } else {
-                    fcn.000013b7();
-                    fcn.00000f9f();
+                    game_get_value_2();
+                    game_func_29();
                     *(undefined *)0x9f26 = 0;
                 }
                 if (*(char *)0x49 != '\0') {
@@ -6295,12 +6295,12 @@ void fcn.00000110(int16_t arg4, int16_t arg1)
                     *(undefined *)0xe7 = 0;
                     *(undefined *)0xff39 = 0;
                     *(undefined *)0xff37 = 0;
-                    fcn.00000f9f();
-                    fcn.0000095e();
+                    game_func_29();
+                    copy_buffer();
                     *(undefined *)0xff37 = 0;
                     while( true ) {
                         while( true ) {
-                            fcn.00000f9f();
+                            game_func_29();
                             *(undefined *)0xff37 = 0;
                             if (*(char *)0xe7 == '\x02') break;
                             *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -6316,7 +6316,7 @@ void fcn.00000110(int16_t arg4, int16_t arg1)
                     }
                     *(undefined *)0xff24 = 8;
                     do {
-                        fcn.00000f9f();
+                        game_func_29();
                         *(char *)0xff37 = ((uint8_t)in_stack_0000001e & 1) - 1;
                     } while (in_stack_0000001e != 1);
                     pcVar1 = (code *)swi(0x60);
@@ -6366,13 +6366,13 @@ void fcn.00000110(int16_t arg4, int16_t arg1)
                 do {
                     uVar2 = uVar5;
                     if (*(char *)0xff39 == '\0') {
-                        fcn.00000e3f();
+                        vga_operation8();
                         uStack0016 = 0x2ad;
-                        fcn.000004bf();
-                        fcn.00000f9f();
-                        uVar7 = fcn.000027b4(arg3);
-                        fcn.000003de((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
-                        fcn.00000416();
+                        game_func_43();
+                        game_func_29();
+                        uVar7 = game_check_state_4(arg3);
+                        game_func_66((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+                        game_func_69();
                         *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
                         if (*(char *)0x9f0a == '\x02') {
                             *(undefined *)0xff38 = 0;
@@ -6382,9 +6382,9 @@ void fcn.00000110(int16_t arg4, int16_t arg1)
                         if ((uVar5 & 2) != 0) {
                             *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
                         }
-                        uVar7 = fcn.0000095e();
+                        uVar7 = copy_buffer();
                         uStack0024 = 0x2de;
-                        fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+                        game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
                         return;
                     }
                     do {
@@ -6396,19 +6396,19 @@ void fcn.00000110(int16_t arg4, int16_t arg1)
                             *(undefined *)0xff3c = 0;
                             (*_fcn.00003004)();
                             *(undefined *)0xff43 = 0;
-                            fcn.00000f9f();
-                            uVar7 = fcn.00000416();
-                            arg1_00 = fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+                            game_func_29();
+                            uVar7 = game_func_69();
+                            arg1_00 = game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
                             uVar6 = *(char *)0xff39 != -1;
                             if (*(char *)0xff39 != -1) goto code_r0x00000321;
-                            fcn.00000db5(arg1_00, iVar8);
-                            fcn.00000bc1();
+                            vga_operation9(arg1_00, iVar8);
+                            game_func_80();
                             uVar2 = uVar5 + 1;
                         } while ((bool)uVar6);
                         uVar6 = 0xffdb < uVar5 + 1;
                         uVar5 = uVar5 + 0x25;
-                        fcn.00000d86();
-                        fcn.00000bc1();
+                        game_process_loop();
+                        game_func_80();
                         uVar2 = uVar5;
                     } while ((bool)uVar6);
 code_r0x00000321:
@@ -6432,12 +6432,12 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0x112: fcn.00000112 */
+/* 0x112: game_func_105 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000010c(int16_t arg1)
+void vga_operation2(int16_t arg1)
 {
     code *pcVar1;
     uint16_t uVar2;
@@ -6493,10 +6493,10 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0x9f26 = 0xff;
         *(undefined2 *)0x80 = 0x29;
         *(undefined *)0x83 = 5;
-        fcn.00000c9c();
-        fcn.000013b7();
+        game_func_27();
+        game_get_value_2();
         do {
-            fcn.00000f9f();
+            game_func_29();
         } while (*(char *)0xe6 != '\0');
         pcVar1 = (code *)swi(0x60);
         (*pcVar1)();
@@ -6505,8 +6505,8 @@ void fcn.0000010c(int16_t arg1)
         (*_fcn.0000010c)();
         *(undefined *)0xff34 = 0xff;
         *(undefined *)0x9f27 = 0xff;
-        iVar8 = fcn.00001e97();
-        fcn.00001ebf(iVar8, arg3);
+        iVar8 = vga_operation0();
+        vga_operation1(iVar8, arg3);
         (*_fcn.00002044)();
         in_stack_0000001e = 0x213;
         (*_fcn.0000302a)();
@@ -6519,19 +6519,19 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0x83 = 0xc;
         *(undefined *)0x9f00 = 0xc;
         uVar9 = 0x23b;
-        fcn.00001dc5();
-        fcn.00000c59();
+        vga_operation4();
+        vga_operation();
     }
-    fcn.00000c9c();
+    game_func_27();
     if (*(char *)0x9f27 == '\0') {
         if (*(char *)0xff34 != '\0') {
             (**(code **)0x3012)();
         }
-        fcn.000013b7();
-        fcn.0000365d();
+        game_get_value_2();
+        vga_operation5();
     } else {
-        fcn.000013b7();
-        fcn.00000f9f();
+        game_get_value_2();
+        game_func_29();
         *(undefined *)0x9f26 = 0;
     }
     if (*(char *)0x49 != '\0') {
@@ -6548,12 +6548,12 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0xe7 = 0;
         *(undefined *)0xff39 = 0;
         *(undefined *)0xff37 = 0;
-        fcn.00000f9f();
-        fcn.0000095e();
+        game_func_29();
+        copy_buffer();
         *(undefined *)0xff37 = 0;
         while( true ) {
             while( true ) {
-                fcn.00000f9f();
+                game_func_29();
                 *(undefined *)0xff37 = 0;
                 if (*(char *)0xe7 == '\x02') break;
                 *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -6569,7 +6569,7 @@ void fcn.0000010c(int16_t arg1)
         }
         *(undefined *)0xff24 = 8;
         do {
-            fcn.00000f9f();
+            game_func_29();
             *(char *)0xff37 = ((uint8_t)in_stack_0000001e & 1) - 1;
         } while (in_stack_0000001e != 1);
         pcVar1 = (code *)swi(0x60);
@@ -6619,13 +6619,13 @@ void fcn.0000010c(int16_t arg1)
     do {
         uVar2 = uVar5;
         if (*(char *)0xff39 == '\0') {
-            fcn.00000e3f();
+            vga_operation8();
             uStack0016 = 0x2ad;
-            fcn.000004bf();
-            fcn.00000f9f();
-            uVar7 = fcn.000027b4(arg3);
-            fcn.000003de((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
-            fcn.00000416();
+            game_func_43();
+            game_func_29();
+            uVar7 = game_check_state_4(arg3);
+            game_func_66((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+            game_func_69();
             *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
             if (*(char *)0x9f0a == '\x02') {
                 *(undefined *)0xff38 = 0;
@@ -6635,9 +6635,9 @@ void fcn.0000010c(int16_t arg1)
             if ((uVar5 & 2) != 0) {
                 *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
             }
-            uVar7 = fcn.0000095e();
+            uVar7 = copy_buffer();
             uStack0024 = 0x2de;
-            fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+            game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
             return;
         }
         do {
@@ -6649,19 +6649,19 @@ void fcn.0000010c(int16_t arg1)
                 *(undefined *)0xff3c = 0;
                 (*_fcn.00003004)();
                 *(undefined *)0xff43 = 0;
-                fcn.00000f9f();
-                uVar7 = fcn.00000416();
-                arg1_00 = fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+                game_func_29();
+                uVar7 = game_func_69();
+                arg1_00 = game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
                 uVar6 = *(char *)0xff39 != -1;
                 if (*(char *)0xff39 != -1) goto code_r0x00000321;
-                fcn.00000db5(arg1_00, iVar8);
-                fcn.00000bc1();
+                vga_operation9(arg1_00, iVar8);
+                game_func_80();
                 uVar2 = uVar5 + 1;
             } while ((bool)uVar6);
             uVar6 = 0xffdb < uVar5 + 1;
             uVar5 = uVar5 + 0x25;
-            fcn.00000d86();
-            fcn.00000bc1();
+            game_process_loop();
+            game_func_80();
             uVar2 = uVar5;
         } while ((bool)uVar6);
 code_r0x00000321:
@@ -6676,12 +6676,12 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0x114: fcn.00000114 */
+/* 0x114: game_func_106 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000010c(int16_t arg1)
+void vga_operation2(int16_t arg1)
 {
     code *pcVar1;
     uint16_t uVar2;
@@ -6737,10 +6737,10 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0x9f26 = 0xff;
         *(undefined2 *)0x80 = 0x29;
         *(undefined *)0x83 = 5;
-        fcn.00000c9c();
-        fcn.000013b7();
+        game_func_27();
+        game_get_value_2();
         do {
-            fcn.00000f9f();
+            game_func_29();
         } while (*(char *)0xe6 != '\0');
         pcVar1 = (code *)swi(0x60);
         (*pcVar1)();
@@ -6749,8 +6749,8 @@ void fcn.0000010c(int16_t arg1)
         (*_fcn.0000010c)();
         *(undefined *)0xff34 = 0xff;
         *(undefined *)0x9f27 = 0xff;
-        iVar8 = fcn.00001e97();
-        fcn.00001ebf(iVar8, arg3);
+        iVar8 = vga_operation0();
+        vga_operation1(iVar8, arg3);
         (*_fcn.00002044)();
         in_stack_0000001e = 0x213;
         (*_fcn.0000302a)();
@@ -6763,19 +6763,19 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0x83 = 0xc;
         *(undefined *)0x9f00 = 0xc;
         uVar9 = 0x23b;
-        fcn.00001dc5();
-        fcn.00000c59();
+        vga_operation4();
+        vga_operation();
     }
-    fcn.00000c9c();
+    game_func_27();
     if (*(char *)0x9f27 == '\0') {
         if (*(char *)0xff34 != '\0') {
             (**(code **)0x3012)();
         }
-        fcn.000013b7();
-        fcn.0000365d();
+        game_get_value_2();
+        vga_operation5();
     } else {
-        fcn.000013b7();
-        fcn.00000f9f();
+        game_get_value_2();
+        game_func_29();
         *(undefined *)0x9f26 = 0;
     }
     if (*(char *)0x49 != '\0') {
@@ -6792,12 +6792,12 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0xe7 = 0;
         *(undefined *)0xff39 = 0;
         *(undefined *)0xff37 = 0;
-        fcn.00000f9f();
-        fcn.0000095e();
+        game_func_29();
+        copy_buffer();
         *(undefined *)0xff37 = 0;
         while( true ) {
             while( true ) {
-                fcn.00000f9f();
+                game_func_29();
                 *(undefined *)0xff37 = 0;
                 if (*(char *)0xe7 == '\x02') break;
                 *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -6813,7 +6813,7 @@ void fcn.0000010c(int16_t arg1)
         }
         *(undefined *)0xff24 = 8;
         do {
-            fcn.00000f9f();
+            game_func_29();
             *(char *)0xff37 = ((uint8_t)in_stack_0000001e & 1) - 1;
         } while (in_stack_0000001e != 1);
         pcVar1 = (code *)swi(0x60);
@@ -6863,13 +6863,13 @@ void fcn.0000010c(int16_t arg1)
     do {
         uVar2 = uVar5;
         if (*(char *)0xff39 == '\0') {
-            fcn.00000e3f();
+            vga_operation8();
             uStack0016 = 0x2ad;
-            fcn.000004bf();
-            fcn.00000f9f();
-            uVar7 = fcn.000027b4(arg3);
-            fcn.000003de((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
-            fcn.00000416();
+            game_func_43();
+            game_func_29();
+            uVar7 = game_check_state_4(arg3);
+            game_func_66((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+            game_func_69();
             *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
             if (*(char *)0x9f0a == '\x02') {
                 *(undefined *)0xff38 = 0;
@@ -6879,9 +6879,9 @@ void fcn.0000010c(int16_t arg1)
             if ((uVar5 & 2) != 0) {
                 *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
             }
-            uVar7 = fcn.0000095e();
+            uVar7 = copy_buffer();
             uStack0024 = 0x2de;
-            fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+            game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
             return;
         }
         do {
@@ -6893,19 +6893,19 @@ void fcn.0000010c(int16_t arg1)
                 *(undefined *)0xff3c = 0;
                 (*_fcn.00003004)();
                 *(undefined *)0xff43 = 0;
-                fcn.00000f9f();
-                uVar7 = fcn.00000416();
-                arg1_00 = fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+                game_func_29();
+                uVar7 = game_func_69();
+                arg1_00 = game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
                 uVar6 = *(char *)0xff39 != -1;
                 if (*(char *)0xff39 != -1) goto code_r0x00000321;
-                fcn.00000db5(arg1_00, iVar8);
-                fcn.00000bc1();
+                vga_operation9(arg1_00, iVar8);
+                game_func_80();
                 uVar2 = uVar5 + 1;
             } while ((bool)uVar6);
             uVar6 = 0xffdb < uVar5 + 1;
             uVar5 = uVar5 + 0x25;
-            fcn.00000d86();
-            fcn.00000bc1();
+            game_process_loop();
+            game_func_80();
             uVar2 = uVar5;
         } while ((bool)uVar6);
 code_r0x00000321:
@@ -6920,12 +6920,12 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0x116: fcn.00000116 */
+/* 0x116: game_func_109 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000010c(int16_t arg1)
+void vga_operation2(int16_t arg1)
 {
     code *pcVar1;
     uint16_t uVar2;
@@ -6981,10 +6981,10 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0x9f26 = 0xff;
         *(undefined2 *)0x80 = 0x29;
         *(undefined *)0x83 = 5;
-        fcn.00000c9c();
-        fcn.000013b7();
+        game_func_27();
+        game_get_value_2();
         do {
-            fcn.00000f9f();
+            game_func_29();
         } while (*(char *)0xe6 != '\0');
         pcVar1 = (code *)swi(0x60);
         (*pcVar1)();
@@ -6993,8 +6993,8 @@ void fcn.0000010c(int16_t arg1)
         (*_fcn.0000010c)();
         *(undefined *)0xff34 = 0xff;
         *(undefined *)0x9f27 = 0xff;
-        iVar8 = fcn.00001e97();
-        fcn.00001ebf(iVar8, arg3);
+        iVar8 = vga_operation0();
+        vga_operation1(iVar8, arg3);
         (*_fcn.00002044)();
         in_stack_0000001e = 0x213;
         (*_fcn.0000302a)();
@@ -7007,19 +7007,19 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0x83 = 0xc;
         *(undefined *)0x9f00 = 0xc;
         uVar9 = 0x23b;
-        fcn.00001dc5();
-        fcn.00000c59();
+        vga_operation4();
+        vga_operation();
     }
-    fcn.00000c9c();
+    game_func_27();
     if (*(char *)0x9f27 == '\0') {
         if (*(char *)0xff34 != '\0') {
             (**(code **)0x3012)();
         }
-        fcn.000013b7();
-        fcn.0000365d();
+        game_get_value_2();
+        vga_operation5();
     } else {
-        fcn.000013b7();
-        fcn.00000f9f();
+        game_get_value_2();
+        game_func_29();
         *(undefined *)0x9f26 = 0;
     }
     if (*(char *)0x49 != '\0') {
@@ -7036,12 +7036,12 @@ void fcn.0000010c(int16_t arg1)
         *(undefined *)0xe7 = 0;
         *(undefined *)0xff39 = 0;
         *(undefined *)0xff37 = 0;
-        fcn.00000f9f();
-        fcn.0000095e();
+        game_func_29();
+        copy_buffer();
         *(undefined *)0xff37 = 0;
         while( true ) {
             while( true ) {
-                fcn.00000f9f();
+                game_func_29();
                 *(undefined *)0xff37 = 0;
                 if (*(char *)0xe7 == '\x02') break;
                 *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -7057,7 +7057,7 @@ void fcn.0000010c(int16_t arg1)
         }
         *(undefined *)0xff24 = 8;
         do {
-            fcn.00000f9f();
+            game_func_29();
             *(char *)0xff37 = ((uint8_t)in_stack_0000001e & 1) - 1;
         } while (in_stack_0000001e != 1);
         pcVar1 = (code *)swi(0x60);
@@ -7107,13 +7107,13 @@ void fcn.0000010c(int16_t arg1)
     do {
         uVar2 = uVar5;
         if (*(char *)0xff39 == '\0') {
-            fcn.00000e3f();
+            vga_operation8();
             uStack0016 = 0x2ad;
-            fcn.000004bf();
-            fcn.00000f9f();
-            uVar7 = fcn.000027b4(arg3);
-            fcn.000003de((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
-            fcn.00000416();
+            game_func_43();
+            game_func_29();
+            uVar7 = game_check_state_4(arg3);
+            game_func_66((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+            game_func_69();
             *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
             if (*(char *)0x9f0a == '\x02') {
                 *(undefined *)0xff38 = 0;
@@ -7123,9 +7123,9 @@ void fcn.0000010c(int16_t arg1)
             if ((uVar5 & 2) != 0) {
                 *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
             }
-            uVar7 = fcn.0000095e();
+            uVar7 = copy_buffer();
             uStack0024 = 0x2de;
-            fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+            game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
             return;
         }
         do {
@@ -7137,19 +7137,19 @@ void fcn.0000010c(int16_t arg1)
                 *(undefined *)0xff3c = 0;
                 (*_fcn.00003004)();
                 *(undefined *)0xff43 = 0;
-                fcn.00000f9f();
-                uVar7 = fcn.00000416();
-                arg1_00 = fcn.00000347((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
+                game_func_29();
+                uVar7 = game_func_69();
+                arg1_00 = game_func_81((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10));
                 uVar6 = *(char *)0xff39 != -1;
                 if (*(char *)0xff39 != -1) goto code_r0x00000321;
-                fcn.00000db5(arg1_00, iVar8);
-                fcn.00000bc1();
+                vga_operation9(arg1_00, iVar8);
+                game_func_80();
                 uVar2 = uVar5 + 1;
             } while ((bool)uVar6);
             uVar6 = 0xffdb < uVar5 + 1;
             uVar5 = uVar5 + 0x25;
-            fcn.00000d86();
-            fcn.00000bc1();
+            game_process_loop();
+            game_func_80();
             uVar2 = uVar5;
         } while ((bool)uVar6);
 code_r0x00000321:
@@ -7164,12 +7164,12 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0x118: fcn.00000118 */
+/* 0x118: game_func_110 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000118(int16_t arg1)
+void game_func_110(int16_t arg1)
 {
     code *pcVar1;
     uint16_t uVar2;
@@ -7225,10 +7225,10 @@ void fcn.00000118(int16_t arg1)
         *(undefined *)0x9f26 = 0xff;
         *(undefined2 *)0x80 = 0x29;
         *(undefined *)0x83 = 5;
-        fcn.00000c9c();
-        fcn.000013b7();
+        game_func_27();
+        game_get_value_2();
         do {
-            fcn.00000f9f();
+            game_func_29();
         } while (*(char *)0xe6 != '\0');
         pcVar1 = (code *)swi(0x60);
         (*pcVar1)();
@@ -7237,8 +7237,8 @@ void fcn.00000118(int16_t arg1)
         (*_fcn.0000010c)();
         *(undefined *)0xff34 = 0xff;
         *(undefined *)0x9f27 = 0xff;
-        iVar4 = fcn.00001e97();
-        fcn.00001ebf(iVar4, arg3);
+        iVar4 = vga_operation0();
+        vga_operation1(iVar4, arg3);
         (*_fcn.00002044)();
         in_stack_00000020 = 0x213;
         (*_fcn.0000302a)();
@@ -7251,19 +7251,19 @@ void fcn.00000118(int16_t arg1)
         *(undefined *)0x83 = 0xc;
         *(undefined *)0x9f00 = 0xc;
         uVar9 = 0x23b;
-        fcn.00001dc5();
-        fcn.00000c59();
+        vga_operation4();
+        vga_operation();
     }
-    fcn.00000c9c();
+    game_func_27();
     if (*(char *)0x9f27 == '\0') {
         if (*(char *)0xff34 != '\0') {
             (**(code **)0x3012)();
         }
-        fcn.000013b7();
-        fcn.0000365d();
+        game_get_value_2();
+        vga_operation5();
     } else {
-        fcn.000013b7();
-        fcn.00000f9f();
+        game_get_value_2();
+        game_func_29();
         *(undefined *)0x9f26 = 0;
     }
     if (*(char *)0x49 != '\0') {
@@ -7280,12 +7280,12 @@ void fcn.00000118(int16_t arg1)
         *(undefined *)0xe7 = 0;
         *(undefined *)0xff39 = 0;
         *(undefined *)0xff37 = 0;
-        fcn.00000f9f();
-        fcn.0000095e();
+        game_func_29();
+        copy_buffer();
         *(undefined *)0xff37 = 0;
         while( true ) {
             while( true ) {
-                fcn.00000f9f();
+                game_func_29();
                 *(undefined *)0xff37 = 0;
                 if (*(char *)0xe7 == '\x02') break;
                 *(char *)0x9f28 = *(char *)0x9f28 + '\x01';
@@ -7301,7 +7301,7 @@ void fcn.00000118(int16_t arg1)
         }
         *(undefined *)0xff24 = 8;
         do {
-            fcn.00000f9f();
+            game_func_29();
             *(char *)0xff37 = ((uint8_t)in_stack_00000020 & 1) - 1;
         } while (in_stack_00000020 != 1);
         pcVar1 = (code *)swi(0x60);
@@ -7351,13 +7351,13 @@ void fcn.00000118(int16_t arg1)
     do {
         uVar2 = uVar6;
         if (*(char *)0xff39 == '\0') {
-            fcn.00000e3f();
+            vga_operation8();
             uStack0018 = 0x2ad;
-            fcn.000004bf();
-            fcn.00000f9f();
-            uVar8 = fcn.000027b4(arg3);
-            fcn.000003de((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
-            fcn.00000416();
+            game_func_43();
+            game_func_29();
+            uVar8 = game_check_state_4(arg3);
+            game_func_66((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
+            game_func_69();
             *(char *)0x9f0a = *(char *)0x9f0a + '\x01';
             if (*(char *)0x9f0a == '\x02') {
                 *(undefined *)0xff38 = 0;
@@ -7367,9 +7367,9 @@ void fcn.00000118(int16_t arg1)
             if ((uVar6 & 2) != 0) {
                 *(uint8_t *)0xc2 = *(uint8_t *)0xc2 & 0xfd;
             }
-            uVar8 = fcn.0000095e();
+            uVar8 = copy_buffer();
             uStack0026 = 0x2de;
-            fcn.00000347((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
+            game_func_81((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
             return;
         }
         do {
@@ -7381,19 +7381,19 @@ void fcn.00000118(int16_t arg1)
                 *(undefined *)0xff3c = 0;
                 (*_fcn.00003004)();
                 *(undefined *)0xff43 = 0;
-                fcn.00000f9f();
-                uVar8 = fcn.00000416();
-                arg1_00 = fcn.00000347((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
+                game_func_29();
+                uVar8 = game_func_69();
+                arg1_00 = game_func_81((int16_t)uVar8, (int16_t)((uint32_t)uVar8 >> 0x10));
                 uVar7 = *(char *)0xff39 != -1;
                 if (*(char *)0xff39 != -1) goto code_r0x00000321;
-                fcn.00000db5(arg1_00, iVar4);
-                fcn.00000bc1();
+                vga_operation9(arg1_00, iVar4);
+                game_func_80();
                 uVar2 = uVar6 + 1;
             } while ((bool)uVar7);
             uVar7 = 0xffdb < uVar6 + 1;
             uVar6 = uVar6 + 0x25;
-            fcn.00000d86();
-            fcn.00000bc1();
+            game_process_loop();
+            game_func_80();
             uVar2 = uVar6;
         } while ((bool)uVar7);
 code_r0x00000321:
@@ -7408,7 +7408,7 @@ code_r0x00000321:
 }
 
 /* ====================================================================== */
-/* 0x3016: fcn.00003016 */
+/* 0x3016: game_func_111 */
 /* ====================================================================== */
 
 // WARNING: Unable to track spacebase fully for stack
@@ -7422,7 +7422,7 @@ void fcn.0000300a(int16_t arg1, int16_t arg3)
     undefined2 *unaff_SI;
     undefined2 unaff_DS;
     
-    fcn.000013e4(-0x657d, arg1 + unaff_BP);
+    game_func_100(-0x657d, arg1 + unaff_BP);
     *(char *)0xc6 = *(char *)0xc6 + '\n';
     *unaff_SI = 0xff00;
     if ((*(uint8_t *)((int16_t)unaff_SI + 7) & 0x20) == 0) {
@@ -7438,11 +7438,11 @@ void fcn.0000300a(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x2002: fcn.00002002 */
+/* 0x2002: game_func_112 */
 /* ====================================================================== */
 
 
-void fcn.00002000(void)
+void game_scan_loop_6(void)
 {
     char *pcVar1;
     int16_t iVar2;
@@ -7457,18 +7457,18 @@ void fcn.00002000(void)
     *(undefined *)0xe7 = 0x80;
     *(char *)0x82 = *(char *)0x82 + '\x01';
     iVar2 = *(int16_t *)0xff31;
-    fcn.00000d86();
+    game_process_loop();
     *(int16_t *)0xff31 = iVar2 + 0x24;
     return;
 }
 
 /* ====================================================================== */
-/* 0x302a: fcn.0000302a */
+/* 0x302a: game_scan_loop_9 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000302a(int16_t arg1)
+void game_scan_loop_9(int16_t arg1)
 {
     uint8_t *puVar1;
     uint16_t uVar2;
@@ -7491,7 +7491,7 @@ void fcn.0000302a(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x301a: fcn.0000301a */
+/* 0x301a: game_func_115 */
 /* ====================================================================== */
 
 // WARNING: Unable to track spacebase fully for stack
@@ -7505,7 +7505,7 @@ void fcn.0000300a(int16_t arg1, int16_t arg3)
     undefined2 *unaff_SI;
     undefined2 unaff_DS;
     
-    fcn.000013e4(-0x657d, arg1 + unaff_BP);
+    game_func_100(-0x657d, arg1 + unaff_BP);
     *(char *)0xc6 = *(char *)0xc6 + '\n';
     *unaff_SI = 0xff00;
     if ((*(uint8_t *)((int16_t)unaff_SI + 7) & 0x20) == 0) {
@@ -7521,7 +7521,7 @@ void fcn.0000300a(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x46: fcn.00000046 */
+/* 0x46: game_func_116 */
 /* ====================================================================== */
 /* (too large for decompiler: 14812 bytes — disassembly below) */
 /*
@@ -8552,12 +8552,12 @@ void fcn.0000300a(int16_t arg1, int16_t arg3)
 */
 
 /* ====================================================================== */
-/* 0x2078: fcn.00002078 */
+/* 0x2078: game_func_117 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002078(int16_t arg1, int16_t arg2)
+void game_func_117(int16_t arg1, int16_t arg2)
 {
     int16_t iVar1;
     short unsigned int arg1_00;
@@ -8587,32 +8587,32 @@ void fcn.00002078(int16_t arg1, int16_t arg2)
     if (*(char *)0xff39 != '\0') {
         return;
     }
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     uVar7 = unaff_SI == 0x23;
-    fcn.00000d92();
+    game_check_state_2();
     uStack0002 = 0x208e;
-    fcn.00000de9(in_CX);
+    game_check_state_3(in_CX);
     if (!(bool)uVar7) {
         return;
     }
     uVar7 = unaff_SI == -0x6d;
     uStack0004 = 0x2098;
-    fcn.00000d86();
+    game_process_loop();
     uStack0006 = 0x209d;
-    arg1_00 = fcn.00002150();
+    arg1_00 = game_multiply_3();
     if (!(bool)uVar7) {
         return;
     }
     iVar1 = *(int16_t *)0xc004;
     uStack0008 = CONCAT11(extraout_DH, 0x40);
     uStack0006 = 0x20aa;
-    fcn.0000210d(arg1_00);
+    game_func_120(arg1_00);
     pcVar5 = (char *)(unaff_SI + 0x49);
     uStack000a = 0x20b3;
-    fcn.00000d92();
+    game_check_state_2();
     puVar6 = (uint8_t *)(unaff_SI + 0x25);
     iStack000c = 0x20bb;
-    iVar2 = fcn.00000d92();
+    iVar2 = game_check_state_2();
     iVar3 = 3;
     while( true ) {
         if ((*puVar6 & 0x80) != 0) {
@@ -8625,7 +8625,7 @@ void fcn.00002078(int16_t arg1, int16_t arg2)
         if (iVar3 == 0) {
             arg3 = iVar2 + -0x24;
             iStack000e = 0x20d8;
-            fcn.00000d92();
+            game_check_state_2();
             iVar4 = 3;
             iVar3 = extraout_DX;
             iStack0010 = iVar1;
@@ -8633,11 +8633,11 @@ void fcn.00002078(int16_t arg1, int16_t arg2)
                 uStack000a = 0x20e3;
                 iStack000c = iVar2;
                 iStack000e = iVar3;
-                fcn.00002356(iVar2);
+                game_func_20(iVar2);
                 iVar2 = iStack000e;
                 iStack000c = 0x20ec;
                 iStack000e = arg3;
-                fcn.00002356(arg3);
+                game_func_20(arg3);
                 arg3 = iStack0010 + 1;
                 iVar2 = iVar2 + 1;
                 iVar3 = CONCAT11((char)((uint16_t)in_stack_00000012 >> 8), (char)in_stack_00000012 + '\x01');
@@ -8650,7 +8650,7 @@ void fcn.00002078(int16_t arg1, int16_t arg2)
             *(char *)0x82 = *(char *)0x82 + -1;
             iVar1 = *(int16_t *)0xff31;
             uStack0018 = 0x633;
-            fcn.00000d92();
+            game_check_state_2();
             *(int16_t *)0xff31 = iVar1 + -0x24;
             return;
         }
@@ -8659,12 +8659,12 @@ void fcn.00002078(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x210d: fcn.0000210d */
+/* 0x210d: game_func_120 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000210d(short unsigned int arg1)
+void game_func_120(short unsigned int arg1)
 {
     uint16_t arg1_00;
     char in_DH;
@@ -8679,35 +8679,35 @@ void fcn.0000210d(short unsigned int arg1)
     for (; (arg1_00 != *unaff_DI || ((*(char *)0x82 + *(char *)0x84 + 3U & 0x3f) != *(uint8_t *)(unaff_DI + 1)));
         unaff_DI = (uint16_t *)((int16_t)unaff_DI + 3)) {
     }
-    fcn.000022fc(arg1_00);
-    fcn.00000d72(in_BX, CONCAT11((char)in_BX, *(undefined *)(unaff_DI + 1)));
+    game_func_135(arg1_00);
+    vga_operation7(in_BX, CONCAT11((char)in_BX, *(undefined *)(unaff_DI + 1)));
     return;
 }
 
 /* ====================================================================== */
-/* 0x625: fcn.00000625 */
+/* 0x625: game_scan_loop_10 */
 /* ====================================================================== */
 
 
-void fcn.00000625(void)
+void game_scan_loop_10(void)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
     
     *(char *)0x82 = *(char *)0x82 + -1;
     iVar1 = *(int16_t *)0xff31;
-    fcn.00000d92();
+    game_check_state_2();
     *(int16_t *)0xff31 = iVar1 + -0x24;
     return;
 }
 
 /* ====================================================================== */
-/* 0x5c9: fcn.000005c9 */
+/* 0x5c9: game_func_122 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005c9(int16_t arg1, int16_t arg2)
+void game_func_122(int16_t arg1, int16_t arg2)
 {
     int16_t arg1_00;
     int16_t in_CX;
@@ -8720,31 +8720,31 @@ void fcn.000005c9(int16_t arg1, int16_t arg2)
     undefined4 uVar4;
     undefined2 uStack0002;
     
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     uVar1 = unaff_SI + 1;
-    arg1_00 = fcn.00000bc1();
+    arg1_00 = game_func_80();
     if ((bool)in_CF) {
         *(undefined *)0xff39 = 0xff;
         *(undefined *)0xff38 = 0;
         do {
             uStack0002 = 0x600;
-            fcn.00000db5(arg1_00, in_CX);
+            vga_operation9(arg1_00, in_CX);
             uVar2 = uVar1 < 0x23;
             uVar1 = uVar1 - 0x23;
-            fcn.00000d92();
+            game_check_state_2();
             *(char *)0xe7 = *(char *)0xe7 + -1;
-            fcn.00000bc1();
+            game_func_80();
             if (!(bool)uVar2) {
                 *(uint8_t *)0xe7 = *(uint8_t *)0xe7 | 1;
                 return;
             }
-            fcn.00000625();
-            arg1_00 = fcn.00000f9f();
+            game_scan_loop_10();
+            arg1_00 = game_func_29();
         } while ((*(uint8_t *)0xe7 & 1) == 0);
         return;
     }
     uStack0002 = 0x5d6;
-    uVar4 = fcn.00000bc1();
+    uVar4 = game_func_80();
     if ((bool)in_CF) {
         if ((*(uint8_t *)0xc2 & 1) == 0) {
             return;
@@ -8756,13 +8756,13 @@ void fcn.000005c9(int16_t arg1, int16_t arg2)
             }
             bVar3 = *(char *)0xff42 == '\0';
             if ((*(char *)0xff42 != '\x01') &&
-               (fcn.000006a9((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10)), !bVar3)) {
+               (game_func_70((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10)), !bVar3)) {
                 *(undefined *)0x9f22 = 2;
                 bVar3 = *(char *)0xff39 == '\0';
                 if (!bVar3) {
                     return;
                 }
-                fcn.00000d9e();
+                game_func_44();
                 if ((bVar3) && (*(char *)0x9f20 == '\0')) {
                     *(undefined *)0x9f23 = 0;
                     *(char *)0x9f21 = *(char *)0x9f21 + '\x01';
@@ -8785,7 +8785,7 @@ code_r0x0000083b:
             return;
         }
     } else {
-        uVar4 = fcn.00000bc1();
+        uVar4 = game_func_80();
         if (!(bool)in_CF) {
             return;
         }
@@ -8798,14 +8798,14 @@ code_r0x0000083b:
                 return;
             }
             bVar3 = *(uint8_t *)0xff42 < 2;
-            if ((*(uint8_t *)0xff42 != 2) && (fcn.00000850((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10)), !bVar3))
+            if ((*(uint8_t *)0xff42 != 2) && (game_func_71((int16_t)uVar4, (int16_t)((uint32_t)uVar4 >> 0x10)), !bVar3))
             {
                 *(undefined *)0x9f22 = 1;
                 bVar3 = *(char *)0xff39 == '\0';
                 if (!bVar3) {
                     return;
                 }
-                fcn.00000d9e();
+                game_func_44();
                 if ((bVar3) && (*(char *)0x9f20 == '\0')) {
                     *(undefined *)0x9f23 = 1;
                     *(char *)0x9f21 = *(char *)0x9f21 + '\x01';
@@ -8831,12 +8831,12 @@ code_r0x0000083b:
 }
 
 /* ====================================================================== */
-/* 0x7ca: fcn.000007ca */
+/* 0x7ca: game_func_128 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000007ca(int16_t arg1, int16_t arg2)
+void game_func_128(int16_t arg1, int16_t arg2)
 {
     undefined2 unaff_DS;
     bool bVar1;
@@ -8855,14 +8855,14 @@ void fcn.000007ca(int16_t arg1, int16_t arg2)
     }
     bVar1 = *(uint8_t *)0xff42 < 2;
     if (*(uint8_t *)0xff42 != 2) {
-        fcn.00000850(arg1, arg2);
+        game_func_71(arg1, arg2);
         if (!bVar1) {
             *(undefined *)0x9f22 = 1;
             bVar1 = *(char *)0xff39 == '\0';
             if (!bVar1) {
                 return;
             }
-            fcn.00000d9e();
+            game_func_44();
             if ((bVar1) && (*(char *)0x9f20 == '\0')) {
                 *(undefined *)0x9f23 = 1;
                 *(char *)0x9f21 = *(char *)0x9f21 + '\x01';
@@ -8886,11 +8886,11 @@ void fcn.000007ca(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x828: fcn.00000828 */
+/* 0x828: game_func_129 */
 /* ====================================================================== */
 
 
-void fcn.00000828(void)
+void game_func_129(void)
 {
     undefined2 unaff_DS;
     
@@ -8903,12 +8903,12 @@ void fcn.00000828(void)
 }
 
 /* ====================================================================== */
-/* 0x169d: fcn.0000169d */
+/* 0x169d: game_func_130 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000169d(int16_t arg1, int16_t arg2)
+void game_func_130(int16_t arg1, int16_t arg2)
 {
     int16_t in_CX;
     undefined2 unaff_DS;
@@ -8916,30 +8916,30 @@ void fcn.0000169d(int16_t arg1, int16_t arg2)
     int16_t in_stack_00000006;
     
     *(undefined *)0x9f15 = 0;
-    fcn.00000db5(arg1, in_CX);
-    fcn.00000d86();
+    vga_operation9(arg1, in_CX);
+    game_process_loop();
     iStack0002 = 3;
     do {
-        fcn.000016bc();
+        game_func_131();
         iStack0002 = 0x16b8;
-        fcn.00000d92();
+        game_check_state_2();
         iStack0002 = in_stack_00000006 + -1;
     } while (iStack0002 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0x16bc: fcn.000016bc */
+/* 0x16bc: game_func_131 */
 /* ====================================================================== */
 
 
-void fcn.000016bc(void)
+void game_func_131(void)
 {
     uint8_t in_CL;
     undefined2 unaff_DS;
     undefined in_ZF;
     
-    fcn.000016fa();
+    game_scan_loop_2();
     if (!(bool)in_ZF) {
         return;
     }
@@ -8950,11 +8950,11 @@ void fcn.000016bc(void)
 }
 
 /* ====================================================================== */
-/* 0x1752: fcn.00001752 */
+/* 0x1752: game_func_132 */
 /* ====================================================================== */
 
 
-void fcn.00001752(void)
+void game_func_132(void)
 {
     int16_t arg1;
     uint8_t uVar1;
@@ -8967,7 +8967,7 @@ void fcn.00001752(void)
     arg1 = *(int16_t *)0xc013;
     bVar4 = arg1 != -1;
     if (arg1 != -1) {
-        fcn.000036a5(arg1);
+        vga_operation6(arg1);
         if (!bVar4) {
             uVar1 = *(char *)0x83 + 4;
             uVar2 = uVar1 - in_BL;
@@ -9005,11 +9005,11 @@ void fcn.00001752(void)
 }
 
 /* ====================================================================== */
-/* 0x21b2: fcn.000021b2 */
+/* 0x21b2: game_func_133 */
 /* ====================================================================== */
 
 
-void fcn.000021b2(char param_1)
+void game_func_133(char param_1)
 {
     uint16_t arg1;
     uint16_t uVar1;
@@ -9026,23 +9026,23 @@ void fcn.000021b2(char param_1)
     *(char *)0x9f07 = *(char *)0x9f07 + '\x01';
     for (puVar5 = *(uint16_t **)0xc008; *puVar5 != 0xffff; puVar5 = (uint16_t *)((int16_t)puVar5 + 7)) {
         bVar6 = false;
-        fcn.00002323(*puVar5 & 0x3fff);
+        game_func_134(*puVar5 & 0x3fff);
         if (!bVar6) {
             cVar3 = (char)in_BX;
             in_BX = in_BX - 2;
             if ((int16_t)in_BX < 0) {
                 uVar1 = (uint16_t)(uint8_t)(cVar3 + 1);
-                fcn.00000d72(in_BX, (uint16_t)*(uint8_t *)(puVar5 + 1));
+                vga_operation7(in_BX, (uint16_t)*(uint8_t *)(puVar5 + 1));
             } else if (in_BX < 0x22) {
-                fcn.00000d72(in_BX, CONCAT11((char)in_BX, *(undefined *)(puVar5 + 1)));
+                vga_operation7(in_BX, CONCAT11((char)in_BX, *(undefined *)(puVar5 + 1)));
                 uVar1 = 3;
             } else {
-                fcn.00000d72(in_BX, CONCAT11(0x22, *(undefined *)(puVar5 + 1)));
+                vga_operation7(in_BX, CONCAT11(0x22, *(undefined *)(puVar5 + 1)));
                 uVar1 = (uint16_t)(uint8_t)(2 - param_1);
             }
             uVar1 = uVar1 & 0xff;
             do {
-                fcn.00002356(in_BX);
+                game_func_20(in_BX);
                 uVar1 = uVar1 - 1;
             } while (uVar1 != 0);
         }
@@ -9060,12 +9060,12 @@ void fcn.000021b2(char param_1)
             arg1 = (**(code **)(in_BX + 0x8244))();
         }
         param_1 = '+';
-        fcn.000022fc(arg1);
+        game_func_135(arg1);
         if (!(bool)uVar8) {
-            fcn.00000d72(in_BX, CONCAT11((char)in_BX, *(undefined *)(puVar5 + 1)));
+            vga_operation7(in_BX, CONCAT11((char)in_BX, *(undefined *)(puVar5 + 1)));
             iVar2 = 3;
             do {
-                fcn.00002356(in_BX);
+                game_func_20(in_BX);
                 iVar2 = iVar2 + -1;
             } while (iVar2 != 0);
         }
@@ -9074,12 +9074,12 @@ void fcn.000021b2(char param_1)
 }
 
 /* ====================================================================== */
-/* 0x2323: fcn.00002323 */
+/* 0x2323: game_func_134 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00002323(int16_t arg1)
+int16_t game_func_134(int16_t arg1)
 {
     uint16_t uVar1;
     uint16_t uVar2;
@@ -9100,12 +9100,12 @@ int16_t fcn.00002323(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x22fc: fcn.000022fc */
+/* 0x22fc: game_func_135 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.000022fc(int16_t arg1)
+int16_t game_func_135(int16_t arg1)
 {
     undefined2 unaff_DS;
     
@@ -9119,11 +9119,11 @@ int16_t fcn.000022fc(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x1fb5: fcn.00001fb5 */
+/* 0x1fb5: game_func_136 */
 /* ====================================================================== */
 
 
-void fcn.00001fb5(void)
+void game_func_136(void)
 {
     int16_t iVar1;
     int16_t in_BX;
@@ -9136,12 +9136,12 @@ void fcn.00001fb5(void)
         iVar1 = *piVar2;
         bVar3 = iVar1 != -1;
         if (iVar1 == -1) break;
-        fcn.000022fc(iVar1);
+        game_func_135(iVar1);
         if (!bVar3) {
-            fcn.00000d72(in_BX, CONCAT11((char)in_BX, *(undefined *)(piVar2 + 1)));
+            vga_operation7(in_BX, CONCAT11((char)in_BX, *(undefined *)(piVar2 + 1)));
             iVar1 = 3;
             do {
-                fcn.00002356(in_BX);
+                game_func_20(in_BX);
                 iVar1 = iVar1 + -1;
             } while (iVar1 != 0);
         }
@@ -9151,11 +9151,11 @@ void fcn.00001fb5(void)
 }
 
 /* ====================================================================== */
-/* 0x2167: fcn.00002167 */
+/* 0x2167: game_func_137 */
 /* ====================================================================== */
 
 
-void fcn.00002167(void)
+void game_func_137(void)
 {
     int16_t iVar1;
     int16_t in_BX;
@@ -9168,12 +9168,12 @@ void fcn.00002167(void)
         iVar1 = *piVar2;
         bVar3 = iVar1 != -1;
         if (iVar1 == -1) break;
-        fcn.000022fc(iVar1);
+        game_func_135(iVar1);
         if (!bVar3) {
-            fcn.00000d72(in_BX, CONCAT11((char)in_BX, *(undefined *)(piVar2 + 1)));
+            vga_operation7(in_BX, CONCAT11((char)in_BX, *(undefined *)(piVar2 + 1)));
             iVar1 = 3;
             do {
-                fcn.00002356(in_BX);
+                game_func_20(in_BX);
                 iVar1 = iVar1 + -1;
             } while (iVar1 != 0);
         }
@@ -9183,13 +9183,13 @@ void fcn.00002167(void)
 }
 
 /* ====================================================================== */
-/* 0x18e1: fcn.000018e1 */
+/* 0x18e1: game_func_138 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_2h
 
-void fcn.000018e1(int16_t arg_3h)
+void game_func_138(int16_t arg_3h)
 {
     uint16_t uVar1;
     char cVar2;
@@ -9212,12 +9212,12 @@ void fcn.000018e1(int16_t arg_3h)
         iVar7 = *piVar6;
         bVar8 = iVar7 != -1;
         if (iVar7 == -1) break;
-        fcn.00001985(iVar7);
+        game_check_state_6(iVar7);
         if (!bVar8) {
             cVar2 = (*(uint8_t *)((int16_t)piVar6 + 3) & 7) + 0x61;
             *(char *)0x79b6 = cVar2;
             *(char *)0x79ca = cVar2;
-            fcn.00000d72(in_BX, (uint16_t)*(uint8_t *)(piVar6 + 1));
+            vga_operation7(in_BX, (uint16_t)*(uint8_t *)(piVar6 + 1));
             uVar4 = (uint8_t)in_BX;
             if (uVar4 < 4) {
                 iVar7 = 0x79c8;
@@ -9243,11 +9243,11 @@ void fcn.000018e1(int16_t arg_3h)
                 uVar1 = stack0x0004;
                 iStack0002 = (uint32_t)stack0x0004 << 0x10;
                 do {
-                    cVar2 = fcn.0000197a(iVar7, unaff_DI);
+                    cVar2 = clear_buffer(iVar7, unaff_DI);
                 } while (cVar2 != '\x01');
                 iVar7 = iVar7 + 5;
                 unaff_DI = uVar3 + 0x24;
-                fcn.00000d86();
+                game_process_loop();
                 uVar3 = uVar1;
             } while (in_stack_00000006 != 1);
         }
@@ -9257,12 +9257,12 @@ void fcn.000018e1(int16_t arg_3h)
 }
 
 /* ====================================================================== */
-/* 0x1985: fcn.00001985 */
+/* 0x1985: game_check_state_6 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00001985(int16_t arg1)
+int16_t game_check_state_6(int16_t arg1)
 {
     uint16_t uVar1;
     uint16_t uVar2;
@@ -9283,11 +9283,11 @@ int16_t fcn.00001985(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x197a: fcn.0000197a */
+/* 0x197a: clear_buffer */
 /* ====================================================================== */
 
 
-void fcn.0000197a(void)
+void clear_buffer(void)
 {
     uint8_t *unaff_SI;
     uint8_t *unaff_DI;
@@ -9301,12 +9301,12 @@ void fcn.0000197a(void)
 }
 
 /* ====================================================================== */
-/* 0x2ab1: fcn.00002ab1 */
+/* 0x2ab1: game_func_141 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002ab1(int16_t arg3)
+void game_func_141(int16_t arg3)
 {
     undefined2 unaff_DS;
     
@@ -9320,11 +9320,11 @@ void fcn.00002ab1(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x2d1d: fcn.00002d1d */
+/* 0x2d1d: game_func_143 */
 /* ====================================================================== */
 
 
-void fcn.00002d1d(void)
+void game_func_143(void)
 {
     uint8_t uVar1;
     int16_t arg1;
@@ -9343,11 +9343,11 @@ void fcn.00002d1d(void)
             *(undefined *)((int16_t)piVar3 + 3) = 0xff;
             cVar2 = (char)((uint16_t)arg1 >> 8);
             bVar4 = cVar2 != -1;
-            if ((cVar2 != -1) && (fcn.000036a5(arg1), !bVar4)) {
+            if ((cVar2 != -1) && (vga_operation6(arg1), !bVar4)) {
                 *(undefined *)((int16_t)piVar3 + 3) = (char)in_BX;
-                fcn.00002db2(arg2);
+                game_multiply_5(arg2);
                 if (*(char *)((int16_t)piVar3 + 1) != -1) {
-                    fcn.00000d72(in_BX, piVar3[1]);
+                    vga_operation7(in_BX, piVar3[1]);
                     in_BX = (uint16_t)*(uint8_t *)0xff4a;
                     LOCK();
                     uVar1 = *unaff_DI;
@@ -9356,7 +9356,7 @@ void fcn.00002d1d(void)
                     *(uint8_t *)(in_BX + 0xed20) = uVar1;
                     if (((*(uint8_t *)(piVar3 + 2) & 0x11) == 0) && ((*(uint8_t *)((int16_t)piVar3 + 7) & 0x10) != 0)) {
                         unaff_DI = unaff_DI + 0x48;
-                        fcn.00000d86();
+                        game_process_loop();
                         in_BX = (uint16_t)(uint8_t)(*(char *)0xff4a + 1U);
                         LOCK();
                         uVar1 = *unaff_DI;
@@ -9385,12 +9385,12 @@ void fcn.00002d1d(void)
 }
 
 /* ====================================================================== */
-/* 0x2db2: fcn.00002db2 */
+/* 0x2db2: game_multiply_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002db2(int16_t arg2)
+void game_multiply_5(int16_t arg2)
 {
     undefined2 *puVar1;
     uint8_t *puVar2;
@@ -9401,7 +9401,7 @@ void fcn.00002db2(int16_t arg2)
     undefined *unaff_DI;
     undefined2 unaff_DS;
     
-    fcn.00000d72(in_BX, unaff_SI[1]);
+    vga_operation7(in_BX, unaff_SI[1]);
     uVar3 = *(uint8_t *)((int16_t)unaff_SI + 5) & 0xdf;
     if ((*(uint8_t *)((int16_t)unaff_SI + 5) & 0x40) != 0) {
         if ((*(uint8_t *)(unaff_SI + 2) & 0x20) == 0) {
@@ -9413,7 +9413,7 @@ void fcn.00002db2(int16_t arg2)
     iVar4 = -0x12e0;
     *unaff_DI = *(undefined *)(uint32_t)(*(uint8_t *)0xff4a + 0xed20);
     if (((*(uint8_t *)(unaff_SI + 2) & 0x11) == 0) && ((*(uint8_t *)((int16_t)unaff_SI + 7) & 0x10) != 0)) {
-        fcn.00000d86();
+        game_process_loop();
         unaff_DI[0x48] = *(undefined *)(uint32_t)(iVar4 + (uint16_t)(uint8_t)(*(char *)0xff4a + 1));
     }
     if ((*(uint8_t *)(unaff_SI + 2) & 0x18) == 0) {
@@ -9499,7 +9499,7 @@ void fcn.00003503(undefined2 param_1, uint8_t *param_2)
     if (iVar3 == -1) {
         return;
     }
-    fcn.000036a5(iVar3);
+    vga_operation6(iVar3);
     if (bVar5) {
         return;
     }
@@ -9516,11 +9516,11 @@ void fcn.00003503(undefined2 param_1, uint8_t *param_2)
     }
     if ((*(uint8_t *)((int16_t)unaff_SI + 7) & 0x10) == 0) {
         *(uint8_t *)((int16_t)unaff_SI + 3) = uVar4;
-        fcn.00000d72(in_BX, CONCAT11(uVar4, *(undefined *)((int16_t)unaff_SI + 0xd)));
-        fcn.00000d92();
+        vga_operation7(in_BX, CONCAT11(uVar4, *(undefined *)((int16_t)unaff_SI + 0xd)));
+        game_check_state_2();
         iVar3 = 3;
         do {
-            cVar2 = fcn.00000d86();
+            cVar2 = game_process_loop();
             iVar3 = iVar3 + -1;
         } while (iVar3 != 0);
         if (cVar2 < '\0') {
@@ -9542,18 +9542,18 @@ void fcn.00003503(undefined2 param_1, uint8_t *param_2)
     }
     *(uint8_t *)((int16_t)unaff_SI + 3) = uVar4;
     *(uint8_t *)((int16_t)unaff_SI + 0x13) = uVar4;
-    fcn.00000d72(in_BX, CONCAT11(uVar4, *(undefined *)((int16_t)unaff_SI + 0xd)));
-    fcn.00000d92();
+    vga_operation7(in_BX, CONCAT11(uVar4, *(undefined *)((int16_t)unaff_SI + 0xd)));
+    game_check_state_2();
     iVar3 = 5;
     do {
-        cVar2 = fcn.00000d86();
+        cVar2 = game_process_loop();
         iVar3 = iVar3 + -1;
     } while (iVar3 != 0);
     if (cVar2 < '\0') {
         return;
     }
     *param_2 = *(uint8_t *)0xff4a | 0x80;
-    cVar2 = fcn.00000d86();
+    cVar2 = game_process_loop();
     param_2[0x48] = cVar2 + 1;
     uVar1 = *(undefined2 *)((int16_t)unaff_SI + 0xb);
     *unaff_SI = uVar1;
@@ -9603,7 +9603,7 @@ void fcn.00001523(int16_t arg1, int16_t arg2)
         return;
     }
     *(undefined2 *)0x9f12 = 0;
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     uVar2 = unaff_SI - 1;
     pcStack0002 = (code *)0x7651;
     cVar4 = '\0';
@@ -9611,7 +9611,7 @@ void fcn.00001523(int16_t arg1, int16_t arg2)
         pcStack0002 = (code *)0x763e;
         cVar4 = uVar2 < 0x24;
         uVar2 = unaff_SI - 0x25;
-        fcn.00000d92();
+        game_check_state_2();
     }
     (*pcStack0002)(uVar2);
     cVar5 = cVar4 != '\0';
@@ -9741,7 +9741,7 @@ void fcn.00001689(int16_t arg1)
 /* ====================================================================== */
 
 
-void fcn.00002004(void)
+void game_check_state(void)
 {
     int16_t iVar1;
     undefined2 unaff_DS;
@@ -9749,7 +9749,7 @@ void fcn.00002004(void)
     *(undefined *)0xe7 = 0x80;
     *(char *)0x82 = *(char *)0x82 + '\x01';
     iVar1 = *(int16_t *)0xff31;
-    fcn.00000d86();
+    game_process_loop();
     *(int16_t *)0xff31 = iVar1 + 0x24;
     return;
 }
@@ -9768,8 +9768,8 @@ void fcn.00001662(void)
     char cVar2;
     
     cVar2 = 0xffdb < unaff_SI;
-    arg1 = fcn.00000d86();
-    uVar1 = fcn.00000dcf(arg1);
+    arg1 = game_process_loop();
+    uVar1 = game_func_42(arg1);
     if (cVar2 != '\0') {
         return;
     }
@@ -9938,10 +9938,10 @@ int16_t fcn.00002700(int16_t arg3, int16_t arg1, int16_t arg2)
             *puVar4 = uVar1 + uVar2 & 0xf;
             iVar3 = ((uint8_t)(uVar1 + uVar2) & 0xf) * 2;
             arg3_00 = (char *)(iVar3 + -0x7870);
-            fcn.00000d72((int16_t)arg3_00, 
+            vga_operation7((int16_t)arg3_00, 
                          CONCAT11(*(char *)0x83 + *arg3_00, *(char *)0x84 + *(char *)(iVar3 + -0x786f) + *(char *)0x82))
             ;
-            fcn.00000d92();
+            game_check_state_2();
             arg1 = fcn.00002745();
         }
         puVar4 = puVar4 + 7;
@@ -9974,10 +9974,10 @@ void fcn.000014a4(int16_t arg1, int16_t arg2)
         return;
     }
     *(undefined *)0x9f17 = 0;
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     iVar4 = 3;
     if (*(char *)0xff38 != '\0') {
-        fcn.00000d86();
+        game_process_loop();
         unaff_SI = unaff_SI + 0x24;
         iVar4 = iVar4 + -1;
     }
@@ -9995,7 +9995,7 @@ void fcn.000014a4(int16_t arg1, int16_t arg2)
         } while (iStack0002 != 1);
         unaff_SI = iVar5 + 0x22;
         iStack0002 = 0x14e0;
-        fcn.00000d86();
+        game_process_loop();
         iVar4 = in_stack_00000006 + -1;
     } while (in_stack_00000006 + -1 != 0);
     if (*(char *)0xff39 == '\0') {
@@ -10195,7 +10195,7 @@ void fcn.000023f7(int16_t arg1)
     if (0xfb < *unaff_DI) {
         return;
     }
-    fcn.00000d72(in_BX, CONCAT11((char)((uint16_t)in_stack_00000000 >> 8), (char)in_stack_00000000 + *(char *)0x82));
+    vga_operation7(in_BX, CONCAT11((char)((uint16_t)in_stack_00000000 >> 8), (char)in_stack_00000000 + *(char *)0x82));
     // WARNING: Could not recover jumptable at 0x00002421. Too many branches
     // WARNING: Treating indirect jump as call
     (**(code **)0x300e)();
@@ -10231,7 +10231,7 @@ void fcn.0000300a(int16_t arg1, int16_t arg3)
     undefined2 *unaff_SI;
     undefined2 unaff_DS;
     
-    fcn.000013e4(-0x657d, arg1 + unaff_BP);
+    game_func_100(-0x657d, arg1 + unaff_BP);
     *(char *)0xc6 = *(char *)0xc6 + '\n';
     *unaff_SI = 0xff00;
     if ((*(uint8_t *)((int16_t)unaff_SI + 7) & 0x20) == 0) {
@@ -10261,7 +10261,7 @@ void fcn.00003008(int16_t arg1, int16_t arg3)
     undefined2 *unaff_SI;
     undefined2 unaff_DS;
     
-    fcn.000013e4(-0x657d, arg1 + unaff_BP);
+    game_func_100(-0x657d, arg1 + unaff_BP);
     *(char *)0xc6 = *(char *)0xc6 + '\n';
     *unaff_SI = 0xff00;
     if ((*(uint8_t *)((int16_t)unaff_SI + 7) & 0x20) == 0) {
@@ -10372,7 +10372,7 @@ uint16_t * fcn.00002972(void)
             uVar2 = *(uint16_t *)(iVar4 + (uint16_t)(uint8_t)((*(char *)0x9d + -1) * '\x02'));
             bVar15 = CARRY2(uVar2, uVar6);
             puVar13 = (uint16_t *)(uVar2 + uVar6);
-            in_AX = (uint16_t *)fcn.000036a5(*piVar9);
+            in_AX = (uint16_t *)vga_operation6(*piVar9);
             if (!bVar15) {
                 *(char *)(piVar9 + 3) = (char)uVar6;
                 cVar8 = *(char *)(piVar9 + 1);
@@ -10497,13 +10497,13 @@ void fcn.00000f0b(int16_t arg1, int16_t arg2)
     if ((*(char *)0xff34 != '\0') && (*(char *)0xff2e != '\0')) {
         return;
     }
-    fcn.00000db5(arg1, in_CX);
+    vga_operation9(arg1, in_CX);
     iVar5 = 0x90;
     if (*(char *)0xff38 != '\0') {
         iVar5 = 0x6c;
     }
     uVar7 = unaff_SI - iVar5;
-    fcn.00000d92();
+    game_check_state_2();
     uVar1 = *(undefined2 *)0xff2c;
     uVar2 = (*(uint8_t *)0xc2 & 1) * '\x10';
     cVar4 = '\0';
@@ -10521,8 +10521,8 @@ void fcn.00000f0b(int16_t arg1, int16_t arg2)
         uVar9 = CARRY2(uVar7, (uint16_t)uVar2);
         uVar7 = uVar7 + uVar2;
         uStack0002 = 0xf82;
-        iVar5 = fcn.00000d86();
-        uVar3 = fcn.00000dcf(iVar5);
+        iVar5 = game_process_loop();
+        uVar3 = game_func_42(iVar5);
         if (((!(bool)uVar9) && ((uVar3 & 0x20) == 0)) && ((*(uint8_t *)(uVar6 + 5) & 0x20) == 0)) {
             *(uint8_t *)(uVar6 + 5) = *(uint8_t *)(uVar6 + 5) | 0x40;
             *(uint8_t *)(uVar6 + 5) = *(uint8_t *)(uVar6 + 5) & 0xe0;
@@ -10608,7 +10608,7 @@ void fcn.00003180(int16_t arg1)
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00002002(int16_t arg1)
+void game_func_112(int16_t arg1)
 {
     int16_t iVar1;
     uint8_t uVar2;
@@ -10620,11 +10620,11 @@ void fcn.00002002(int16_t arg1)
         *(undefined *)0xe7 = 0x80;
         *(char *)0x82 = *(char *)0x82 + '\x01';
         iVar1 = *(int16_t *)0xff31;
-        fcn.00000d86();
+        game_process_loop();
         *(int16_t *)0xff31 = iVar1 + 0x24;
         return;
     }
-    uVar2 = fcn.00000dcf(arg1);
+    uVar2 = game_func_42(arg1);
     if (in_CF) {
         return;
     }
@@ -10713,7 +10713,7 @@ void fcn.000022b8(void)
         return;
     }
     bVar5 = false;
-    cVar1 = fcn.000022fc(*unaff_SI & 0x3fff);
+    cVar1 = game_func_135(*unaff_SI & 0x3fff);
     if (bVar5) {
         return;
     }
@@ -10754,7 +10754,7 @@ void fcn.00002473(void)
         if ((bool)uVar7) {
             return;
         }
-        fcn.00000d72(in_BX, CONCAT11(*unaff_SI, unaff_SI[1]));
+        vga_operation7(in_BX, CONCAT11(*unaff_SI, unaff_SI[1]));
         fcn.00000df0(in_CX);
         if (!(bool)uVar7) {
             *unaff_SI = '\0';
@@ -10937,7 +10937,7 @@ void fcn.000026e7(int16_t arg1)
     if (0xfb < *unaff_DI) {
         return;
     }
-    fcn.00000d72(in_BX, CONCAT11((char)((uint16_t)in_stack_00000000 >> 8), (char)in_stack_00000000 + *(char *)0x82));
+    vga_operation7(in_BX, CONCAT11((char)((uint16_t)in_stack_00000000 >> 8), (char)in_stack_00000000 + *(char *)0x82));
     // WARNING: Could not recover jumptable at 0x00002421. Too many branches
     // WARNING: Treating indirect jump as call
     (**(code **)0x300e)();
@@ -10961,7 +10961,7 @@ void fcn.0000240d(int16_t arg1, int16_t arg2)
     if (0xfb < *unaff_DI) {
         return;
     }
-    fcn.00000d72(in_BX, CONCAT11((char)((uint16_t)in_stack_00000000 >> 8), (char)in_stack_00000000 + *(char *)0x82));
+    vga_operation7(in_BX, CONCAT11((char)((uint16_t)in_stack_00000000 >> 8), (char)in_stack_00000000 + *(char *)0x82));
     // WARNING: Could not recover jumptable at 0x00002421. Too many branches
     // WARNING: Treating indirect jump as call
     (**(code **)0x300e)();
@@ -10992,7 +10992,7 @@ void fcn.00002745(void)
     if (*(char *)(unaff_SI + 2) == '\0') {
         return;
     }
-    fcn.00000dcf(in_AX);
+    game_func_42(in_AX);
     if (bVar1) {
         return;
     }
@@ -11051,7 +11051,7 @@ void fcn.00002c53(int16_t arg1)
     undefined2 unaff_DS;
     undefined in_CF;
     
-    uVar1 = fcn.00000dcf(arg1);
+    uVar1 = game_func_42(arg1);
     if ((bool)in_CF) {
         return;
     }
@@ -11116,22 +11116,22 @@ char fcn.00002bfb(undefined2 param_1, undefined2 param_2, int16_t param_3)
     if ((*(char *)0xff34 != '\0') && (bVar4 = true, *(char *)0xff2e != '\0')) {
         return in_AL;
     }
-    cVar1 = fcn.000036a5(*unaff_SI);
+    cVar1 = vga_operation6(*unaff_SI);
     if (bVar4) {
         return cVar1;
     }
     uVar3 = (char)in_BX - 2;
     if (uVar3 < 0x20) {
-        fcn.00000d72(CONCAT11((char)((uint16_t)in_BX >> 8), uVar3), CONCAT11((char)in_BX, *(undefined *)(unaff_SI + 1)))
+        vga_operation7(CONCAT11((char)((uint16_t)in_BX >> 8), uVar3), CONCAT11((char)in_BX, *(undefined *)(unaff_SI + 1)))
         ;
-        arg1 = fcn.00000d92();
+        arg1 = game_check_state_2();
         *(undefined *)0x9f2a = 0;
         iVar2 = 3;
         do {
             do {
                 arg1 = fcn.00002c53(arg1);
             } while (iVar2 != 1);
-            arg1 = fcn.00000d86();
+            arg1 = game_process_loop();
             iVar2 = param_3 + -1;
         } while (iVar2 != 0);
         return *(char *)0x9f2a * '\x02';
@@ -11244,8 +11244,8 @@ void fcn.000030d7(int16_t arg2)
     undefined2 unaff_DS;
     undefined in_CF;
     
-    fcn.00003259(arg2);
-    fcn.00003194();
+    game_func_96(arg2);
+    game_func_99();
     if ((bool)in_CF) {
         return;
     }
@@ -11338,23 +11338,23 @@ char fcn.000032b8(int16_t arg2)
     undefined2 uStack0006;
     undefined2 uStack0008;
     
-    iVar3 = fcn.00000d72(in_BX, *(int16_t *)(unaff_SI + 2));
+    iVar3 = vga_operation7(in_BX, *(int16_t *)(unaff_SI + 2));
     cVar1 = fcn.000032ef(iVar3);
     if ((bool)in_CF) {
         return cVar1;
     }
     uVar4 = 0xffdb < unaff_DI + 2U;
     uStack0002 = 0x32ce;
-    iVar3 = fcn.00000d86();
+    iVar3 = game_process_loop();
     uStack0004 = 0x32d3;
     cVar1 = fcn.000032ef(iVar3);
     if ((bool)uVar4) {
         return cVar1;
     }
     uStack0006 = 0x32e0;
-    fcn.00000d92();
+    game_check_state_2();
     uStack0008 = 0x32e8;
-    uVar2 = fcn.00000d92();
+    uVar2 = game_check_state_2();
     return (uVar2 | *(uint8_t *)(unaff_DI + -0x22)) * '\x02';
 }
 
@@ -11371,7 +11371,7 @@ void fcn.000032ef(int16_t arg1)
     undefined2 unaff_DS;
     undefined in_ZF;
     
-    fcn.000034e5(in_CX);
+    game_func_98(in_CX);
     cVar1 = (char)in_CX;
     if (!(bool)in_ZF) {
         return;
@@ -11379,7 +11379,7 @@ void fcn.000032ef(int16_t arg1)
     if (*(char *)0xc012 != '\x05') {
         return;
     }
-    fcn.000016fa();
+    game_scan_loop_2();
     if (cVar1 != '\x01') {
         return;
     }
@@ -11408,30 +11408,30 @@ void fcn.000033c9(int16_t arg2)
     undefined2 uStack0006;
     undefined2 uStack0008;
     
-    fcn.00000d72(in_BX, *(int16_t *)(unaff_SI + 2));
+    vga_operation7(in_BX, *(int16_t *)(unaff_SI + 2));
     bVar3 = unaff_DI == -2;
-    uVar1 = fcn.000034e5(in_CX);
+    uVar1 = game_func_98(in_CX);
     if (!bVar3) {
         return;
     }
     arg4 = CONCAT11((char)((uint16_t)in_CX >> 8), uVar1);
     uVar1 = unaff_DI == 0x22;
     uStack0002 = 0x33e4;
-    fcn.00000d92();
+    game_check_state_2();
     uStack0004 = 0x33eb;
-    uVar2 = fcn.000034e5(arg4);
+    uVar2 = game_func_98(arg4);
     if (!(bool)uVar1) {
         return;
     }
     uVar2 = (uint8_t)arg4 | uVar2;
     bVar3 = uVar2 == 0;
     uStack0006 = 0x33f7;
-    fcn.000034e5(CONCAT11((char)((uint16_t)arg4 >> 8), uVar2));
+    game_func_98(CONCAT11((char)((uint16_t)arg4 >> 8), uVar2));
     if (!bVar3) {
         return;
     }
     uStack0008 = 0x3403;
-    fcn.00000d92();
+    game_check_state_2();
     return;
 }
 
@@ -11474,21 +11474,21 @@ char fcn.00003366(int16_t arg2)
     undefined2 uStack0004;
     undefined2 uStack0006;
     
-    fcn.00000d72(in_BX, *(int16_t *)(unaff_SI + 2));
+    vga_operation7(in_BX, *(int16_t *)(unaff_SI + 2));
     uVar2 = unaff_DI == 0x24;
-    fcn.00000d92();
+    game_check_state_2();
     uStack0002 = 0x337b;
-    cVar1 = fcn.000034e5(in_CX);
+    cVar1 = game_func_98(in_CX);
     if (!(bool)uVar2) {
         return cVar1;
     }
     uStack0004 = 0x3385;
-    cVar1 = fcn.000034e5(in_CX);
+    cVar1 = game_func_98(in_CX);
     if (!(bool)uVar2) {
         return cVar1;
     }
     uStack0006 = 0x3391;
-    fcn.00000d92();
+    game_check_state_2();
     return (*(uint8_t *)(unaff_DI + -0x47) | *(uint8_t *)(unaff_DI + -0x48) | *(uint8_t *)(unaff_DI + -0x49)) * '\x02';
 }
 
@@ -11514,31 +11514,31 @@ void fcn.00003456(int16_t arg2)
     undefined2 uStack0008;
     int16_t arg4;
     
-    fcn.00000d72(in_BX, *(int16_t *)(unaff_SI + 2));
+    vga_operation7(in_BX, *(int16_t *)(unaff_SI + 2));
     bVar3 = unaff_DI == 1;
-    fcn.000034e5(in_CX);
+    game_func_98(in_CX);
     if (!bVar3) {
         return;
     }
     uVar1 = *(uint8_t *)(unaff_DI + -2);
     uVar2 = (undefined)((uint16_t)in_CX >> 8);
     uStack0002 = 0x3471;
-    fcn.00000d92();
+    game_check_state_2();
     uVar1 = uVar1 | *(uint8_t *)(unaff_DI + -0x26);
     arg4 = CONCAT11(uVar2, uVar1);
     bVar3 = uVar1 == 0;
     uStack0004 = 0x347b;
-    fcn.000034e5(arg4);
+    game_func_98(arg4);
     if (!bVar3) {
         return;
     }
     uStack0006 = 0x3485;
-    fcn.000034e5(arg4);
+    game_func_98(arg4);
     if (!bVar3) {
         return;
     }
     uStack0008 = 0x3491;
-    fcn.00000d92();
+    game_check_state_2();
     return;
 }
 
@@ -11584,23 +11584,23 @@ char fcn.0000330e(int16_t arg2)
     undefined2 uStack0006;
     undefined2 uStack0008;
     
-    iVar3 = fcn.00000d72(in_BX, *(int16_t *)(unaff_SI + 2));
+    iVar3 = vga_operation7(in_BX, *(int16_t *)(unaff_SI + 2));
     cVar1 = fcn.00003345(iVar3);
     if ((bool)in_CF) {
         return cVar1;
     }
     uVar4 = 0xffdb < unaff_DI - 1U;
     uStack0002 = 0x3323;
-    iVar3 = fcn.00000d86();
+    iVar3 = game_process_loop();
     uStack0004 = 0x3328;
     cVar1 = fcn.00003345(iVar3);
     if ((bool)uVar4) {
         return cVar1;
     }
     uStack0006 = 0x3336;
-    fcn.00000d92();
+    game_check_state_2();
     uStack0008 = 0x333e;
-    uVar2 = fcn.00000d92();
+    uVar2 = game_check_state_2();
     return (uVar2 | *(uint8_t *)(unaff_DI + -0x26)) * '\x02';
 }
 
@@ -11617,7 +11617,7 @@ void fcn.00003345(int16_t arg1)
     undefined2 unaff_DS;
     undefined in_ZF;
     
-    fcn.000034e5(in_CX);
+    game_func_98(in_CX);
     cVar1 = (char)in_CX;
     if (!(bool)in_ZF) {
         return;
@@ -11625,7 +11625,7 @@ void fcn.00003345(int16_t arg1)
     if (*(char *)0xc012 != '\x05') {
         return;
     }
-    fcn.000016fa();
+    game_scan_loop_2();
     if (cVar1 != '\x02') {
         return;
     }
@@ -11655,28 +11655,28 @@ void fcn.0000349e(int16_t arg2)
     undefined2 uStack0008;
     
     uVar3 = (undefined)((uint16_t)in_CX >> 8);
-    fcn.00000d72(in_BX, *(int16_t *)(unaff_SI + 2));
+    vga_operation7(in_BX, *(int16_t *)(unaff_SI + 2));
     uVar1 = *(uint8_t *)(unaff_DI + -2);
-    fcn.00000d86();
+    game_process_loop();
     arg4 = CONCAT11(uVar3, uVar1 | *(uint8_t *)(unaff_DI + 0x22));
     bVar2 = unaff_DI == -0x23;
     uStack0002 = 0x34ba;
-    fcn.000034e5(arg4);
+    game_func_98(arg4);
     if (!bVar2) {
         return;
     }
     uVar3 = unaff_DI == -0x47;
     uStack0004 = 0x34c6;
-    fcn.00000d86();
+    game_process_loop();
     uStack0006 = 0x34cd;
-    uVar1 = fcn.000034e5(arg4);
+    uVar1 = game_func_98(arg4);
     if (!(bool)uVar3) {
         return;
     }
     uVar1 = (uint8_t)arg4 | uVar1;
     bVar2 = uVar1 == 0;
     uStack0008 = 0x34d9;
-    fcn.000034e5(CONCAT11((char)((uint16_t)arg4 >> 8), uVar1));
+    game_func_98(CONCAT11((char)((uint16_t)arg4 >> 8), uVar1));
     if (!bVar2) {
         return;
     }
@@ -11706,28 +11706,28 @@ void fcn.00003410(int16_t arg2)
     undefined2 uStack0008;
     
     uVar3 = (undefined)((uint16_t)in_CX >> 8);
-    fcn.00000d72(in_BX, *(int16_t *)(unaff_SI + 2));
+    vga_operation7(in_BX, *(int16_t *)(unaff_SI + 2));
     iVar2 = CONCAT11(uVar3, *(undefined *)(unaff_DI + 2));
     uVar3 = unaff_DI == -0x26;
-    fcn.00000d86();
+    game_process_loop();
     uStack0002 = 0x3429;
-    uVar1 = fcn.000034e5(iVar2);
+    uVar1 = game_func_98(iVar2);
     if (!(bool)uVar3) {
         return;
     }
     iVar2 = CONCAT11((char)((uint16_t)iVar2 >> 8), (uint8_t)iVar2 | uVar1);
     uVar3 = unaff_DI == -0x4a;
     uStack0004 = 0x3437;
-    fcn.00000d86();
+    game_process_loop();
     uStack0006 = 0x343e;
-    uVar1 = fcn.000034e5(iVar2);
+    uVar1 = game_func_98(iVar2);
     if (!(bool)uVar3) {
         return;
     }
     uVar1 = (uint8_t)iVar2 | uVar1;
     bVar4 = uVar1 == 0;
     uStack0008 = 0x344a;
-    fcn.000034e5(CONCAT11((char)((uint16_t)iVar2 >> 8), uVar1));
+    game_func_98(CONCAT11((char)((uint16_t)iVar2 >> 8), uVar1));
     if (!bVar4) {
         return;
     }

@@ -5,12 +5,12 @@
 static const char *STR_0x49c = "{¡¡uuaBØ"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_04 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint16_t fcn.00000000(int16_t arg_ch, int16_t arg3, int16_t arg4, int16_t arg2)
+uint16_t zr1_04(int16_t arg_ch, int16_t arg3, int16_t arg4, int16_t arg2)
 {
     undefined2 *puVar1;
     int16_t *piVar2;
@@ -60,36 +60,36 @@ uint16_t fcn.00000000(int16_t arg_ch, int16_t arg3, int16_t arg4, int16_t arg2)
         puVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
         *(int16_t *)0x4bff = CONCAT11((char)*puVar1, (char)((uint16_t)*puVar1 >> 8));
-        arg1 = fcn.00001ae8(uVar5, *(int16_t *)0x4bff);
+        arg1 = stats_func_1(uVar5, *(int16_t *)0x4bff);
         piVar2 = piVar7 + 1;
         *piVar7 = arg1;
-        uVar8 = fcn.00001ae8(uVar5, arg1);
+        uVar8 = stats_func_1(uVar5, arg1);
         piVar7 = piVar7 + 2;
         *piVar2 = (int16_t)uVar8;
         uVar5 = uVar5 - 1;
     } while (uVar5 != 0);
     uStack0008 = 0x77;
     uStack0002 = 0;
-    fcn.00001be0((int16_t)((uint32_t)uVar8 >> 0x10), in_stack_00000006);
+    stats_func_2((int16_t)((uint32_t)uVar8 >> 0x10), in_stack_00000006);
     *(undefined2 *)0x4c0f = 0x3234;
     *(undefined *)0x4c0c = 0;
     if ((char)uStack0008 == '\0') {
         uStack0008 = 0x195;
-        fcn.000001a0(in_stack_00000004, in_stack_00000006);
+        copy_buffer(in_stack_00000004, in_stack_00000006);
     }
     *(undefined *)0x4c0c = 0xff;
     uStack000a = 0x19e;
-    uVar5 = fcn.000001a0(in_stack_00000004, in_stack_00000006);
+    uVar5 = copy_buffer(in_stack_00000004, in_stack_00000006);
     return uVar5;
 }
 
 /* ====================================================================== */
-/* 0x1ae8: fcn.00001ae8 */
+/* 0x1ae8: stats_func_1 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined2 fcn.00001ae8(int16_t arg4, int16_t arg1)
+undefined2 stats_func_1(int16_t arg4, int16_t arg1)
 {
     uint16_t uVar1;
     uint16_t uVar2;
@@ -130,12 +130,12 @@ undefined2 fcn.00001ae8(int16_t arg4, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x1be0: fcn.00001be0 */
+/* 0x1be0: stats_func_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00001be0(int16_t arg2, int16_t arg3)
+int16_t stats_func_2(int16_t arg2, int16_t arg3)
 {
     return ((uint16_t)arg3 >> 2 & 0x3f) * 0xa0 +
            (uint16_t)((uint8_t)((uint8_t)((uint8_t)arg3 << 7) >> 1 | ((uint8_t)arg3 >> 1) << 7) >> 1) * 0x100 +
@@ -143,12 +143,12 @@ int16_t fcn.00001be0(int16_t arg2, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x1a0: fcn.000001a0 */
+/* 0x1a0: copy_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.000001a0(int16_t arg4, int16_t arg3)
+int16_t copy_buffer(int16_t arg4, int16_t arg3)
 {
     char cVar1;
     uint8_t uVar3;
@@ -196,11 +196,11 @@ int16_t fcn.000001a0(int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x35c: fcn.0000035c */
+/* 0x35c: copy_buffer_2 */
 /* ====================================================================== */
 
 
-char fcn.0000035c(void)
+char copy_buffer_2(void)
 {
     char in_AL;
     
@@ -208,12 +208,12 @@ char fcn.0000035c(void)
 }
 
 /* ====================================================================== */
-/* 0x5b3: fcn.000005b3 */
+/* 0x5b3: stats_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005b3(int16_t arg4)
+void stats_multiply(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -246,12 +246,12 @@ void fcn.000005b3(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x5f9: fcn.000005f9 */
+/* 0x5f9: stats_multiply_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005f9(int16_t arg4, int16_t arg1, int16_t arg2)
+void stats_multiply_2(int16_t arg4, int16_t arg1, int16_t arg2)
 {
     uint16_t uVar1;
     char cVar2;
@@ -272,7 +272,7 @@ void fcn.000005f9(int16_t arg4, int16_t arg1, int16_t arg2)
             *(int16_t *)0x4bff = (uint16_t)*unaff_SI << 8;
             unaff_SI = unaff_SI + 1;
             *(int16_t *)0x4c03 = *(int16_t *)0x4bff;
-            uVar1 = fcn.00001ae8(arg4_00, *(int16_t *)0x4bff);
+            uVar1 = stats_func_1(arg4_00, *(int16_t *)0x4bff);
             *unaff_DI = *unaff_DI | uVar1;
             unaff_DI = unaff_DI + 1;
             arg4_00 = arg4_00 - 1;
@@ -289,12 +289,12 @@ void fcn.000005f9(int16_t arg4, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x5d6: fcn.000005d6 */
+/* 0x5d6: stats_func_7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005d6(int16_t arg4)
+void stats_func_7(int16_t arg4)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -327,12 +327,12 @@ void fcn.000005d6(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x76c: fcn.0000076c */
+/* 0x76c: extract_bits */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000076c(int16_t arg1, int16_t arg4, int16_t arg3)
+void extract_bits(int16_t arg1, int16_t arg4, int16_t arg3)
 {
     undefined2 uVar1;
     uint16_t uVar2;
@@ -372,11 +372,11 @@ void fcn.0000076c(int16_t arg1, int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x1b3e: fcn.00001b3e */
+/* 0x1b3e: stats_multiply_3 */
 /* ====================================================================== */
 
 
-undefined2 fcn.00001b3e(void)
+undefined2 stats_multiply_3(void)
 {
     uint16_t uVar1;
     uint16_t uVar2;
@@ -402,12 +402,12 @@ undefined2 fcn.00001b3e(void)
 }
 
 /* ====================================================================== */
-/* 0x99f: fcn.0000099f */
+/* 0x99f: fill_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000099f(int16_t arg1)
+void fill_buffer(int16_t arg1)
 {
     int16_t iVar1;
     int16_t in_CX;
@@ -420,44 +420,44 @@ void fcn.0000099f(int16_t arg1)
     undefined2 uStack0006;
     undefined2 uStack0008;
     
-    iVar1 = fcn.00000a11((uint16_t)(uint8_t)((char)arg1 - 1) * 8 + 0x3a44);
-    iVar1 = fcn.00001ae8(in_CX, iVar1);
+    iVar1 = clear_buffer((uint16_t)(uint8_t)((char)arg1 - 1) * 8 + 0x3a44);
+    iVar1 = stats_func_1(in_CX, iVar1);
     *unaff_DI = iVar1;
     piVar3 = unaff_DI + 0x1000;
     if ((int16_t *)0x7fff < piVar3) {
         piVar3 = unaff_DI + -0x2fb0;
     }
-    iVar1 = fcn.00000a11(iVar1);
-    iVar1 = fcn.00001ae8(in_CX, iVar1);
+    iVar1 = clear_buffer(iVar1);
+    iVar1 = stats_func_1(in_CX, iVar1);
     *piVar3 = iVar1;
     piVar2 = piVar3 + 0x1000;
     if ((int16_t *)0x7fff < piVar2) {
         piVar2 = piVar3 + -0x2fb0;
     }
     uStack0002 = 0x9ee;
-    iVar1 = fcn.00000a11(iVar1);
+    iVar1 = clear_buffer(iVar1);
     uStack0004 = 0x9f1;
-    iVar1 = fcn.00001ae8(in_CX, iVar1);
+    iVar1 = stats_func_1(in_CX, iVar1);
     *piVar2 = iVar1;
     piVar3 = piVar2 + 0x1000;
     if ((int16_t *)0x7fff < piVar3) {
         piVar3 = piVar2 + -0x2fb0;
     }
     uStack0006 = 0xa0a;
-    iVar1 = fcn.00000a11(iVar1);
+    iVar1 = clear_buffer(iVar1);
     uStack0008 = 0xa0d;
-    iVar1 = fcn.00001ae8(in_CX, iVar1);
+    iVar1 = stats_func_1(in_CX, iVar1);
     *piVar3 = iVar1;
     return;
 }
 
 /* ====================================================================== */
-/* 0xa11: fcn.00000a11 */
+/* 0xa11: clear_buffer */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000a11(int16_t arg1)
+void clear_buffer(int16_t arg1)
 {
     uint8_t uVar1;
     uint8_t uVar2;
@@ -487,12 +487,12 @@ void fcn.00000a11(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xce0: fcn.00000ce0 */
+/* 0xce0: stats_get_value */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000ce0(int16_t arg3, int16_t arg1, int16_t arg2)
+void stats_get_value(int16_t arg3, int16_t arg1, int16_t arg2)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -504,7 +504,7 @@ void fcn.00000ce0(int16_t arg3, int16_t arg1, int16_t arg2)
     undefined2 unaff_DS;
     undefined2 in_stack_00000000;
     
-    puVar2 = (undefined2 *)fcn.00001be0(arg2, CONCAT11(4, *(uint8_t *)0x4c0a + 0x10));
+    puVar2 = (undefined2 *)stats_func_2(arg2, CONCAT11(4, *(uint8_t *)0x4c0a + 0x10));
     uVar4 = (uint8_t)in_stack_00000000;
     if ((uVar4 <= *(uint8_t *)0x4c0a) && (*(uint8_t *)0x4c0a < (uint8_t)(uVar4 + *(char *)0x4c0f))) {
         puVar5 = (undefined2 *)
@@ -534,11 +534,11 @@ void fcn.00000ce0(int16_t arg3, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xdbe: fcn.00000dbe */
+/* 0xdbe: stats_process_loop */
 /* ====================================================================== */
 
 
-void fcn.00000dbe(void)
+void stats_process_loop(void)
 {
     uint8_t *puVar1;
     int16_t in_BX;
@@ -546,7 +546,7 @@ void fcn.00000dbe(void)
     uint8_t *puVar2;
     undefined2 unaff_ES;
     
-    fcn.00000dfd();
+    stats_process_loop_2();
     *unaff_DI = *unaff_DI | 0xf;
     puVar2 = unaff_DI + 1;
     for (; in_BX != 0; in_BX = in_BX + -1) {
@@ -559,11 +559,11 @@ void fcn.00000dbe(void)
 }
 
 /* ====================================================================== */
-/* 0xdfd: fcn.00000dfd */
+/* 0xdfd: stats_process_loop_2 */
 /* ====================================================================== */
 
 
-void fcn.00000dfd(void)
+void stats_process_loop_2(void)
 {
     int16_t unaff_DI;
     undefined2 unaff_ES;
@@ -574,12 +574,12 @@ void fcn.00000dfd(void)
 }
 
 /* ====================================================================== */
-/* 0xdd1: fcn.00000dd1 */
+/* 0xdd1: stats_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000dd1(int16_t arg4)
+void stats_process_loop_3(int16_t arg4)
 {
     int16_t iVar1;
     int16_t in_BX;
@@ -588,7 +588,7 @@ void fcn.00000dd1(int16_t arg4)
     int16_t in_stack_00000000;
     
     do {
-        fcn.00000dfd(unaff_DI);
+        stats_process_loop_2(unaff_DI);
         *unaff_DI = *unaff_DI | 0xf;
         for (iVar1 = in_BX; unaff_DI = unaff_DI + 1, iVar1 != 0; iVar1 = iVar1 + -1) {
             *unaff_DI = 0;
@@ -605,11 +605,11 @@ void fcn.00000dd1(int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0xfac: fcn.00000fac */
+/* 0xfac: fill_buffer_2 */
 /* ====================================================================== */
 
 
-void fcn.00000fac(int16_t param_1, undefined2 param_2, int16_t param_3)
+void fill_buffer_2(int16_t param_1, undefined2 param_2, int16_t param_3)
 {
     int16_t iVar1;
     int16_t unaff_DI;
@@ -617,7 +617,7 @@ void fcn.00000fac(int16_t param_1, undefined2 param_2, int16_t param_3)
     undefined *puVar3;
     undefined2 unaff_ES;
     
-    fcn.00001031();
+    stats_multiply_4();
     puVar2 = (undefined *)(unaff_DI + 0x36);
     iVar1 = 0x5b;
     do {
@@ -626,8 +626,8 @@ void fcn.00000fac(int16_t param_1, undefined2 param_2, int16_t param_3)
         puVar2 = puVar2 + 0x50;
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
-    fcn.00001031();
-    fcn.00001031();
+    stats_multiply_4();
+    stats_multiply_4();
     iVar1 = 0x2d;
     puVar2 = (undefined *)(param_1 + 0x2ab6);
     do {
@@ -641,8 +641,8 @@ void fcn.00000fac(int16_t param_1, undefined2 param_2, int16_t param_3)
     } while (iVar1 != 0);
     puVar3[0xa0] = 0xb0;
     puVar3[0xb9] = 0xe;
-    fcn.00001031();
-    fcn.00001031();
+    stats_multiply_4();
+    stats_multiply_4();
     puVar2 = (undefined *)(param_3 + 0x2ab6);
     iVar1 = 0x5b;
     do {
@@ -651,16 +651,16 @@ void fcn.00000fac(int16_t param_1, undefined2 param_2, int16_t param_3)
         puVar2 = puVar2 + 0x50;
         iVar1 = iVar1 + -1;
     } while (iVar1 != 0);
-    fcn.00001031();
+    stats_multiply_4();
     return;
 }
 
 /* ====================================================================== */
-/* 0x1031: fcn.00001031 */
+/* 0x1031: stats_multiply_4 */
 /* ====================================================================== */
 
 
-void fcn.00001031(void)
+void stats_multiply_4(void)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -682,12 +682,12 @@ void fcn.00001031(void)
 }
 
 /* ====================================================================== */
-/* 0xf30: fcn.00000f30 */
+/* 0xf30: stats_fill_buf */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f30(int16_t arg1, int16_t arg2)
+void stats_fill_buf(int16_t arg1, int16_t arg2)
 {
     undefined2 *puVar1;
     int16_t *piVar2;
@@ -711,7 +711,7 @@ void fcn.00000f30(int16_t arg1, int16_t arg2)
         *(undefined2 *)0x4c03 = CONCAT11(puVar6[0x5500], (char)arg1);
         *(undefined2 *)0x4c01 = CONCAT11(puVar6[0x2a80], (char)arg1);
         *(int16_t *)0x4bff = CONCAT11(*puVar6, puVar6[0x2a80]);
-        arg1 = fcn.00001ae8(iVar5, *(int16_t *)0x4bff);
+        arg1 = stats_func_1(iVar5, *(int16_t *)0x4bff);
         *piVar8 = arg1;
         iVar5 = iVar5 + -1;
         unaff_SI = puVar6 + 1;
@@ -726,9 +726,9 @@ void fcn.00000f30(int16_t arg1, int16_t arg2)
         *(undefined2 *)0x4c03 = CONCAT11((char)puVar7[0x2a80], (char)((uint16_t)puVar7[0x2a80] >> 8));
         *(undefined2 *)0x4c01 = CONCAT11((char)puVar7[0x1540], (char)((uint16_t)puVar7[0x1540] >> 8));
         *(int16_t *)0x4bff = CONCAT11((char)*puVar7, (char)((uint16_t)*puVar7 >> 8));
-        iVar4 = fcn.00001ae8(iVar5, *(int16_t *)0x4bff);
+        iVar4 = stats_func_1(iVar5, *(int16_t *)0x4bff);
         *piVar9 = iVar4;
-        iVar4 = fcn.00001ae8(iVar5, iVar4);
+        iVar4 = stats_func_1(iVar5, iVar4);
         piVar9[1] = iVar4;
         iVar5 = iVar5 + -1;
         puVar3 = puVar7 + 1;
@@ -744,7 +744,7 @@ void fcn.00000f30(int16_t arg1, int16_t arg2)
         puVar1 = puVar7;
         puVar7 = (undefined2 *)((int16_t)puVar7 + 1);
         *(int16_t *)0x4bff = CONCAT11(*(undefined *)puVar1, *(undefined *)puVar3);
-        iVar4 = fcn.00001ae8(iVar5, *(int16_t *)0x4bff);
+        iVar4 = stats_func_1(iVar5, *(int16_t *)0x4bff);
         piVar2 = piVar9;
         piVar9 = piVar9 + 1;
         *piVar2 = iVar4;
@@ -754,12 +754,12 @@ void fcn.00000f30(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0xf00: fcn.00000f00 */
+/* 0xf00: stats_process_loop_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000f00(int16_t arg2)
+void stats_process_loop_4(int16_t arg2)
 {
     undefined2 *puVar1;
     int16_t *piVar2;
@@ -778,10 +778,10 @@ void fcn.00000f00(int16_t arg2)
         puVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
         *(int16_t *)0x4bff = CONCAT11((char)*puVar1, (char)((uint16_t)*puVar1 >> 8));
-        iVar3 = fcn.00001ae8(arg4, *(int16_t *)0x4bff);
+        iVar3 = stats_func_1(arg4, *(int16_t *)0x4bff);
         piVar2 = unaff_DI + 1;
         *unaff_DI = iVar3;
-        iVar3 = fcn.00001ae8(arg4, iVar3);
+        iVar3 = stats_func_1(arg4, iVar3);
         unaff_DI = unaff_DI + 2;
         *piVar2 = iVar3;
         arg4 = arg4 + -1;
@@ -790,12 +790,12 @@ void fcn.00000f00(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x107b: fcn.0000107b */
+/* 0x107b: stats_func_20 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000107b(int16_t arg1, int16_t arg2)
+void stats_func_20(int16_t arg1, int16_t arg2)
 {
     undefined *puVar1;
     uint16_t *puVar2;
@@ -810,7 +810,7 @@ void fcn.0000107b(int16_t arg1, int16_t arg2)
     undefined2 uStack0002;
     
     puVar3 = (undefined *)((arg1 & 0xffU) * 0x2f + *(int16_t *)0x4c11);
-    puVar4 = (uint16_t *)fcn.00001be0(arg2, arg1 & 0xff);
+    puVar4 = (uint16_t *)stats_func_2(arg2, arg1 & 0xff);
     if (in_stack_00000000 < 0x14) {
         iVar6 = 0x2f;
     } else {
@@ -824,7 +824,7 @@ void fcn.0000107b(int16_t arg1, int16_t arg2)
                     *(undefined2 *)0x4c03 = CONCAT11(puVar7[0x29dc], (char)in_stack_00000000);
                     *(undefined2 *)0x4c01 = CONCAT11(puVar7[0x14ee], (char)in_stack_00000000);
                     *(int16_t *)0x4bff = CONCAT11(*puVar7, puVar7[0x14ee]);
-                    in_stack_00000000 = fcn.00001ae8(iVar6, *(int16_t *)0x4bff);
+                    in_stack_00000000 = stats_func_1(iVar6, *(int16_t *)0x4bff);
                     puVar2 = puVar4;
                     puVar4 = puVar4 + 1;
                     *puVar2 = in_stack_00000000;
@@ -835,7 +835,7 @@ void fcn.0000107b(int16_t arg1, int16_t arg2)
                 *(undefined2 *)0x4c01 = CONCAT11(puVar7[0x14ef], (char)in_stack_00000000);
                 *(int16_t *)0x4bff = CONCAT11(puVar7[1], puVar7[0x14ef]);
                 uStack0002 = 0x1111;
-                uVar5 = fcn.00001ae8(0, *(int16_t *)0x4bff);
+                uVar5 = stats_func_1(0, *(int16_t *)0x4bff);
                 *puVar4 = *puVar4 & 0xf00;
                 *puVar4 = *puVar4 | uVar5 & 0xf0ff;
                 return;
@@ -851,7 +851,7 @@ void fcn.0000107b(int16_t arg1, int16_t arg2)
         puVar1 = puVar3;
         puVar3 = puVar3 + 1;
         *(int16_t *)0x4bff = CONCAT11(*puVar1, *puVar7);
-        in_stack_00000000 = fcn.00001ae8(iVar6, *(int16_t *)0x4bff);
+        in_stack_00000000 = stats_func_1(iVar6, *(int16_t *)0x4bff);
         puVar2 = puVar4;
         puVar4 = puVar4 + 1;
         *puVar2 = in_stack_00000000;
@@ -861,12 +861,12 @@ void fcn.0000107b(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x115b: fcn.0000115b */
+/* 0x115b: extract_bits_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000115b(int16_t arg1, int16_t arg2)
+void extract_bits_2(int16_t arg1, int16_t arg2)
 {
     undefined2 *puVar1;
     int16_t *piVar2;
@@ -880,7 +880,7 @@ void fcn.0000115b(int16_t arg1, int16_t arg2)
     uint16_t in_stack_00000000;
     
     puVar4 = (undefined2 *)((arg1 & 0xffU) * 0x2f + 0x3cd + *(int16_t *)0x4c11);
-    piVar5 = (int16_t *)fcn.00001be0(arg2, CONCAT11(0x21, (char)arg1 + '\x14'));
+    piVar5 = (int16_t *)stats_func_2(arg2, CONCAT11(0x21, (char)arg1 + '\x14'));
     iVar7 = 0x2f;
     if (in_stack_00000000 < 0x5e) {
         iVar7 = 7;
@@ -891,10 +891,10 @@ void fcn.0000115b(int16_t arg1, int16_t arg2)
             puVar1 = puVar4;
             puVar4 = puVar4 + 1;
             *(int16_t *)0x4bff = CONCAT11((char)*puVar1, (char)((uint16_t)*puVar1 >> 8));
-            iVar6 = fcn.00001ae8(iVar7, *(int16_t *)0x4bff);
+            iVar6 = stats_func_1(iVar7, *(int16_t *)0x4bff);
             piVar3 = piVar5 + 1;
             *piVar5 = iVar6;
-            iVar6 = fcn.00001ae8(iVar7, iVar6);
+            iVar6 = stats_func_1(iVar7, iVar6);
             piVar5 = piVar5 + 2;
             *piVar3 = iVar6;
             iVar7 = iVar7 + -1;

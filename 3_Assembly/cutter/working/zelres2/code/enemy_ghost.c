@@ -53,11 +53,11 @@ static const char *STR_0x195c = "Ho! You\\ve got quite an eye for these things, 
 static const char *STR_0x1a13 = "This shield makes the mightiest swords seem like paper. It\\s light as a feather and hard as a diamond. Used well, this one will last you a lifetime."; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_12 */
 /* ====================================================================== */
 
 
-void fcn.00000000(undefined2 param_1)
+void zr2_12(undefined2 param_1)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -80,8 +80,8 @@ void fcn.00000000(undefined2 param_1)
     (**(code **)0x2002)();
     (**(code **)0x2012)();
     iVar4 = (**(code **)0x2010)();
-    iVar4 = fcn.000000ba(iVar4);
-    uVar5 = fcn.000000e6(iVar4);
+    iVar4 = ghost_process_loop(iVar4);
+    uVar5 = ghost_process_loop_2(iVar4);
     puVar6 = *(undefined2 **)((uint8_t)((*(char *)0xc006 + -1) * '\x02') + 0xbaa7);
     puVar7 = (undefined2 *)0xbbfd;
     for (iVar4 = 0x12; iVar4 != 0; iVar4 = iVar4 + -1) {
@@ -91,7 +91,7 @@ void fcn.00000000(undefined2 param_1)
         puVar6 = puVar6 + 1;
         *puVar2 = *puVar1;
     }
-    fcn.000009d3(uVar5 & 0xff00);
+    ghost_func_3(uVar5 & 0xff00);
     *(undefined *)0xbc23 = 0xff;
     iVar4 = 0xd60;
     (**(code **)0x2000)();
@@ -103,7 +103,7 @@ void fcn.00000000(undefined2 param_1)
     while( true ) {
         cVar3 = (**(code **)0x6004)();
         if (cVar3 == -1) break;
-        fcn.00000112(iVar4);
+        ghost_func_4(iVar4);
     }
     // WARNING: Could not recover jumptable at 0x000000b5. Too many branches
     // WARNING: Treating indirect jump as call
@@ -112,12 +112,12 @@ void fcn.00000000(undefined2 param_1)
 }
 
 /* ====================================================================== */
-/* 0xba: fcn.000000ba */
+/* 0xba: ghost_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000000ba(int16_t arg1)
+void ghost_process_loop(int16_t arg1)
 {
     char *pcVar1;
     int16_t iVar2;
@@ -148,12 +148,12 @@ void fcn.000000ba(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xe6: fcn.000000e6 */
+/* 0xe6: ghost_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000000e6(int16_t arg1)
+void ghost_process_loop_2(int16_t arg1)
 {
     char *pcVar1;
     int16_t iVar2;
@@ -184,12 +184,12 @@ void fcn.000000e6(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x9d3: fcn.000009d3 */
+/* 0x9d3: ghost_func_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000009d3(int16_t arg1)
+void ghost_func_3(int16_t arg1)
 {
     char *pcVar1;
     int16_t iVar2;
@@ -227,12 +227,12 @@ void fcn.000009d3(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x112: fcn.00000112 */
+/* 0x112: ghost_func_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000112(int16_t arg3)
+void ghost_func_4(int16_t arg3)
 {
     uint8_t in_AL;
     
@@ -243,29 +243,29 @@ void fcn.00000112(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x70a: fcn.0000070a */
+/* 0x70a: ghost_func_6 */
 /* ====================================================================== */
 
 
-void fcn.0000070a(void)
+void ghost_func_6(void)
 {
     int16_t in_AX;
     undefined2 unaff_DS;
     
     *(undefined *)0xff1a = 0;
     do {
-        in_AX = fcn.00000913(in_AX);
+        in_AX = ghost_func_7(in_AX);
     } while (*(uint8_t *)0xff1a < 0x96);
     return;
 }
 
 /* ====================================================================== */
-/* 0x913: fcn.00000913 */
+/* 0x913: ghost_func_7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000913(int16_t arg1)
+void ghost_func_7(int16_t arg1)
 {
     uint16_t uVar1;
     char *pcVar2;
@@ -356,12 +356,12 @@ code_r0x000009d3:
 }
 
 /* ====================================================================== */
-/* 0x11a: fcn.0000011a */
+/* 0x11a: ghost_func_8 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000011a(int16_t arg3)
+void ghost_func_8(int16_t arg3)
 {
     int16_t *piVar1;
     undefined in_AL;
@@ -377,11 +377,11 @@ void fcn.0000011a(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x906: fcn.00000906 */
+/* 0x906: ghost_check_state */
 /* ====================================================================== */
 
 
-void fcn.00000906(void)
+void ghost_check_state(void)
 {
     // WARNING: Could not recover jumptable at 0x0000090e. Too many branches
     // WARNING: Treating indirect jump as call
@@ -425,7 +425,7 @@ void fcn.00000874(int16_t arg1)
     
     *(undefined *)0xff1a = 0;
     do {
-        arg1 = fcn.00000913(arg1);
+        arg1 = ghost_func_7(arg1);
     } while (*(uint8_t *)0xff1a < 0x32);
     return;
 }

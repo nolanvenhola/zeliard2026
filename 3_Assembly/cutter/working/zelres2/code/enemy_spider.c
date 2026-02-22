@@ -31,12 +31,12 @@ static const char *STR_0x1dce = "DDLD4DD4"; // [ascii]
 static const char *STR_0x1de0 = "LDC4DLD4D"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_09 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr2_09(int16_t arg3)
 {
     char *pcVar1;
     undefined2 *puVar2;
@@ -65,29 +65,29 @@ void fcn.00000000(int16_t arg3)
         puVar4 = puVar4 + 1;
         *puVar2 = 0;
     }
-    fcn.00000368();
+    spider_func_1();
     uStack0002 = 0x37;
-    fcn.00000368();
+    spider_func_1();
     uStack0004 = 0;
     uStack0002 = 0x4f;
-    fcn.00000399();
+    copy_buffer();
     *(undefined *)0x3694 = 0x1c;
-    fcn.00000368();
+    spider_func_1();
     uStack0008 = 0x6f;
-    fcn.00000368();
+    spider_func_1();
     uStack0008 = 0x87;
-    fcn.00000399();
+    copy_buffer();
     uStack000c = 0x8b;
-    fcn.0000008d();
+    spider_func_3();
     return;
 }
 
 /* ====================================================================== */
-/* 0x368: fcn.00000368 */
+/* 0x368: spider_func_1 */
 /* ====================================================================== */
 
 
-void fcn.00000368(void)
+void spider_func_1(void)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -122,11 +122,11 @@ void fcn.00000368(void)
 }
 
 /* ====================================================================== */
-/* 0x399: fcn.00000399 */
+/* 0x399: copy_buffer */
 /* ====================================================================== */
 
 
-void fcn.00000399(void)
+void copy_buffer(void)
 {
     // WARNING: Could not recover jumptable at 0x000003a6. Too many branches
     // WARNING: Treating indirect jump as call
@@ -135,11 +135,11 @@ void fcn.00000399(void)
 }
 
 /* ====================================================================== */
-/* 0x8d: fcn.0000008d */
+/* 0x8d: spider_func_3 */
 /* ====================================================================== */
 
 
-void fcn.0000008d(void)
+void spider_func_3(void)
 {
     undefined2 unaff_DS;
     
@@ -150,11 +150,11 @@ void fcn.0000008d(void)
 }
 
 /* ====================================================================== */
-/* 0x23f: fcn.0000023f */
+/* 0x23f: spider_process_loop */
 /* ====================================================================== */
 
 
-void fcn.0000023f(void)
+void spider_process_loop(void)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -176,11 +176,11 @@ void fcn.0000023f(void)
 }
 
 /* ====================================================================== */
-/* 0x2af: fcn.000002af */
+/* 0x2af: spider_func_5 */
 /* ====================================================================== */
 
 
-char fcn.000002af(void)
+char spider_func_5(void)
 {
     uint8_t in_DL;
     uint8_t in_DH;
@@ -190,12 +190,12 @@ char fcn.000002af(void)
 }
 
 /* ====================================================================== */
-/* 0x32f: fcn.0000032f */
+/* 0x32f: spider_func_6 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint8_t fcn.0000032f(int16_t arg3)
+uint8_t spider_func_6(int16_t arg3)
 {
     uint8_t uVar1;
     uint8_t uVar2;
@@ -225,11 +225,11 @@ uint8_t fcn.0000032f(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x53e: fcn.0000053e */
+/* 0x53e: spider_func_7 */
 /* ====================================================================== */
 
 
-char fcn.0000053e(void)
+char spider_func_7(void)
 {
     uint8_t in_DL;
     uint8_t in_DH;
@@ -239,12 +239,12 @@ char fcn.0000053e(void)
 }
 
 /* ====================================================================== */
-/* 0x5aa: fcn.000005aa */
+/* 0x5aa: spider_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-uint8_t fcn.000005aa(int16_t arg3)
+uint8_t spider_process_loop_2(int16_t arg3)
 {
     uint8_t uVar1;
     uint8_t uVar2;
@@ -273,14 +273,14 @@ uint8_t fcn.000005aa(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0xe89: fcn.00000e89 */
+/* 0xe89: spider_func_9 */
 /* ====================================================================== */
 
 // WARNING: Control flow encountered bad instruction data
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000e89(int16_t arg_217h, int16_t arg3, int16_t arg4, int16_t arg1, int16_t arg2)
+void spider_func_9(int16_t arg_217h, int16_t arg3, int16_t arg4, int16_t arg1, int16_t arg2)
 {
     uint8_t *puVar1;
     int16_t *piVar2;

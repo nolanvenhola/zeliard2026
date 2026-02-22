@@ -6,12 +6,12 @@ static const char *STR_0x4 = "A:(0Q0(6w6"; // [ascii]
 static const char *STR_0x7c8 = "`px|xp`"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr1_11 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(short unsigned int arg3, short unsigned int arg4, int16_t arg1)
+void zr1_11(short unsigned int arg3, short unsigned int arg4, int16_t arg1)
 {
     char *pcVar1;
     uint8_t *puVar2;
@@ -67,11 +67,11 @@ void fcn.00000000(short unsigned int arg3, short unsigned int arg4, int16_t arg1
 }
 
 /* ====================================================================== */
-/* 0x418: fcn.00000418 */
+/* 0x418: vga_operation */
 /* ====================================================================== */
 
 
-void fcn.00000418(undefined2 param_1, int16_t *param_2)
+void vga_operation(undefined2 param_1, int16_t *param_2)
 {
     int16_t iVar1;
     undefined uVar2;
@@ -86,24 +86,24 @@ void fcn.00000418(undefined2 param_1, int16_t *param_2)
     *(undefined *)0x3c9d = *(undefined *)(iVar1 + 0x27);
     *(int16_t *)0x3ca1 = *(int16_t *)0x80 + 3;
     if (*(char *)0x3c9b == -3) {
-        uVar2 = fcn.00000499();
+        uVar2 = vga_operation2();
         *(undefined *)0x3c9b = uVar2;
     }
-    fcn.00000306(3, in_BX);
+    vga_operation9(3, in_BX);
     arg1 = *(int16_t **)0xc00f;
     do {
         uVar3 = (uint8_t)in_BX;
-        fcn.00000516();
+        vga_operation6();
         in_BX = (uint16_t)uVar3;
         if (uVar3 != 0) {
             in_BX = (uint16_t)(uint8_t)(uVar3 - 1);
-            fcn.000004f0(in_BX * 3);
-            fcn.00000556((int16_t)arg1);
+            vga_operation7(in_BX * 3);
+            simg_process_loop((int16_t)arg1);
             arg1 = param_2;
         }
         arg1 = arg1 + 4;
     } while (*arg1 != -1);
-    fcn.000004c0();
+    simg_multiply_2();
     *(undefined *)0xe005 = 0xff;
     *(undefined *)0xe006 = 0xff;
     *(undefined *)0xe007 = 0xff;
@@ -111,12 +111,12 @@ void fcn.00000418(undefined2 param_1, int16_t *param_2)
 }
 
 /* ====================================================================== */
-/* 0xd9: fcn.000000d9 */
+/* 0xd9: simg_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000000d9(int16_t arg1)
+void simg_multiply(int16_t arg1)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -131,7 +131,7 @@ void fcn.000000d9(int16_t arg1)
     iVar2 = (uint8_t)(*(char *)0x83 << 3) + 0x93b0;
     iVar1 = 2;
     do {
-        fcn.000004c0(iVar2);
+        simg_multiply_2(iVar2);
         iVar2 = iVar1 + 8;
         iVar1 = unaff_DS + -1;
     } while (iVar1 != 0);
@@ -139,11 +139,11 @@ void fcn.000000d9(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x4c0: fcn.000004c0 */
+/* 0x4c0: simg_multiply_2 */
 /* ====================================================================== */
 
 
-void fcn.000004c0(void)
+void simg_multiply_2(void)
 {
     undefined2 *puVar1;
     int16_t iVar2;
@@ -167,12 +167,12 @@ void fcn.000004c0(void)
 }
 
 /* ====================================================================== */
-/* 0x1dc: fcn.000001dc */
+/* 0x1dc: simg_func_8 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000001dc(int16_t arg3, int16_t arg2)
+void simg_func_8(int16_t arg3, int16_t arg2)
 {
     undefined *puVar1;
     undefined uVar2;
@@ -326,12 +326,12 @@ void fcn.000001dc(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x127: fcn.00000127 */
+/* 0x127: simg_func_9 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000127(int16_t arg3, int16_t arg2)
+void simg_func_9(int16_t arg3, int16_t arg2)
 {
     uint8_t uVar1;
     uint16_t *puVar2;
@@ -397,12 +397,12 @@ void fcn.00000127(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x11e: fcn.0000011e */
+/* 0x11e: vga_operation1 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000011e(int16_t arg3, int16_t arg2)
+void vga_operation1(int16_t arg3, int16_t arg2)
 {
     uint8_t uVar1;
     uint16_t *puVar2;
@@ -429,31 +429,31 @@ void fcn.0000011e(int16_t arg3, int16_t arg2)
         *(undefined2 *)0x3c9e = *(undefined2 *)((int16_t)unaff_SI + 7);
         *(undefined *)0x3ca0 = *(undefined *)((int16_t)unaff_SI + 9);
         *(int16_t *)0x3ca1 = (uint16_t)(uint8_t)(*(char *)0x3c9a + 4) + *(int16_t *)0x80;
-        uVar5 = fcn.00000499();
+        uVar5 = vga_operation2();
         *(undefined *)0x3c9b = uVar5;
         if (*(char *)0x3c9e == -3) {
-            uVar5 = fcn.00000499();
+            uVar5 = vga_operation2();
             *(undefined *)0x3c9e = uVar5;
         }
-        fcn.00000303(arg3);
+        vga_operation_2(arg3);
         arg3_00 = *(int16_t **)0xc00f;
         iVar11 = unaff_DS;
         do {
-            iVar7 = fcn.00000516();
+            iVar7 = vga_operation6();
             if ((char)arg3 != '\0') {
-                fcn.000004f0(iVar7);
+                vga_operation7(iVar7);
                 iVar11 = 0x3b1;
-                fcn.000004ce((int16_t)arg3_00);
+                extract_bits((int16_t)arg3_00);
                 arg3 = (int16_t)arg3_00;
                 arg3_00 = in_stack_00000002;
             }
             arg3_00 = arg3_00 + 4;
         } while (*arg3_00 != -1);
         if (*(char *)(iVar11 + -1) != -1) {
-            fcn.000004c0(*(int16_t *)0x3c98 + 0x3200, CONCAT11(*(char *)(iVar11 + -1), *(undefined *)(iVar11 + 7)));
+            simg_multiply_2(*(int16_t *)0x3c98 + 0x3200, CONCAT11(*(char *)(iVar11 + -1), *(undefined *)(iVar11 + 7)));
         }
         if ((*(char *)0x3c9a != '\x1b') && ((char)iVar11 != -1)) {
-            fcn.000004c0();
+            simg_multiply_2();
         }
         *(undefined *)((int16_t)in_stack_00000002 + -1) = 0xfe;
         *(undefined *)in_stack_00000002 = 0xff;
@@ -512,11 +512,11 @@ void fcn.0000011e(int16_t arg3, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x499: fcn.00000499 */
+/* 0x499: vga_operation2 */
 /* ====================================================================== */
 
 
-void fcn.00000499(void)
+void vga_operation2(void)
 {
     char *pcVar1;
     int16_t in_DX;
@@ -526,13 +526,13 @@ void fcn.00000499(void)
     int16_t unaff_SI;
     undefined2 unaff_DS;
     
-    fcn.000004b2(in_DX);
+    vga_operation3(in_DX);
     arg2 = extraout_DX;
     if (*(char *)(unaff_SI + 3) != -3) {
         return;
     }
     do {
-        fcn.000004b6(arg2);
+        vga_operation4(arg2);
         pcVar1 = (char *)(unaff_SI + 0xb);
         arg2 = extraout_DX_00;
         unaff_SI = unaff_SI + 8;
@@ -541,12 +541,12 @@ void fcn.00000499(void)
 }
 
 /* ====================================================================== */
-/* 0x4b2: fcn.000004b2 */
+/* 0x4b2: vga_operation3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000004b2(int16_t arg2)
+void vga_operation3(int16_t arg2)
 {
     int16_t *piVar1;
     undefined2 unaff_DS;
@@ -557,12 +557,12 @@ void fcn.000004b2(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x4b6: fcn.000004b6 */
+/* 0x4b6: vga_operation4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000004b6(short unsigned int arg2)
+void vga_operation4(short unsigned int arg2)
 {
     short unsigned int *unaff_SI;
     undefined2 unaff_DS;
@@ -573,12 +573,12 @@ void fcn.000004b6(short unsigned int arg2)
 }
 
 /* ====================================================================== */
-/* 0x303: fcn.00000303 */
+/* 0x303: vga_operation_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000303(int16_t arg3)
+void vga_operation_2(int16_t arg3)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -617,11 +617,11 @@ void fcn.00000303(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x516: fcn.00000516 */
+/* 0x516: vga_operation6 */
 /* ====================================================================== */
 
 
-void fcn.00000516(void)
+void vga_operation6(void)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -641,12 +641,12 @@ void fcn.00000516(void)
 }
 
 /* ====================================================================== */
-/* 0x4f0: fcn.000004f0 */
+/* 0x4f0: vga_operation7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-char fcn.000004f0(int16_t arg1)
+char vga_operation7(int16_t arg1)
 {
     char cVar1;
     int16_t unaff_SI;
@@ -660,24 +660,24 @@ char fcn.000004f0(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x4ce: fcn.000004ce */
+/* 0x4ce: extract_bits */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000004ce(int16_t arg3)
+void extract_bits(int16_t arg3)
 {
     (**(code **)((uint16_t)(uint8_t)((char)arg3 - 1) * 2 + 0x34d8))();
     return;
 }
 
 /* ====================================================================== */
-/* 0x306: fcn.00000306 */
+/* 0x306: vga_operation9 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000306(int16_t arg4, int16_t arg3)
+void vga_operation9(int16_t arg4, int16_t arg3)
 {
     uint8_t *puVar1;
     uint8_t uVar2;
@@ -714,12 +714,12 @@ void fcn.00000306(int16_t arg4, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x556: fcn.00000556 */
+/* 0x556: simg_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000556(int16_t arg1)
+void simg_process_loop(int16_t arg1)
 {
     undefined *puVar1;
     undefined *puVar2;
@@ -738,7 +738,7 @@ void fcn.00000556(int16_t arg1)
         pcVar3 = unaff_SI + 1;
         *(int16_t *)0x3cab = (uint16_t)(uint8_t)(*unaff_BP - 1) * 8 + 0x7000;
         *(undefined2 *)0x3cad = 0x2000;
-        fcn.000005db(-0x6000, in_BX);
+        simg_process_loop_2(-0x6000, in_BX);
         puVar1 = (undefined *)(in_stack_00000000 + -1);
         unaff_BP = unaff_ES;
         unaff_SI = unaff_DS;
@@ -749,12 +749,12 @@ void fcn.00000556(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x5db: fcn.000005db */
+/* 0x5db: simg_process_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005db(int16_t arg1, int16_t arg3)
+void simg_process_loop_2(int16_t arg1, int16_t arg3)
 {
     uint8_t *puVar1;
     uint16_t *puVar2;
@@ -806,11 +806,11 @@ void fcn.000005db(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x842: fcn.00000842 */
+/* 0x842: simg_func_22 */
 /* ====================================================================== */
 
 
-void fcn.00000842(void)
+void simg_func_22(void)
 {
     char *pcVar1;
     undefined2 in_AX;
@@ -825,7 +825,7 @@ void fcn.00000842(void)
         pcVar1 = unaff_SI;
         if (*pcVar1 == '\0') break;
         unaff_SI = unaff_DS;
-        in_AX = fcn.00000858(CONCAT11((char)((uint16_t)in_AX >> 8), *pcVar1), arg3);
+        in_AX = simg_func_23(CONCAT11((char)((uint16_t)in_AX >> 8), *pcVar1), arg3);
         unaff_DS = in_stack_00000000;
         in_stack_00000000 = unaff_DS;
     }
@@ -833,12 +833,12 @@ void fcn.00000842(void)
 }
 
 /* ====================================================================== */
-/* 0x858: fcn.00000858 */
+/* 0x858: simg_func_23 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000858(int16_t arg1, int16_t arg3)
+void simg_func_23(int16_t arg1, int16_t arg3)
 {
     uint8_t *puVar1;
     char cVar2;
@@ -873,11 +873,11 @@ void fcn.00000858(int16_t arg1, int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x8b8: fcn.000008b8 */
+/* 0x8b8: simg_func_24 */
 /* ====================================================================== */
 
 
-void fcn.000008b8(int16_t param_1)
+void simg_func_24(int16_t param_1)
 {
     int16_t iVar1;
     int16_t iVar2;
@@ -886,7 +886,7 @@ void fcn.000008b8(int16_t param_1)
     undefined *puVar5;
     undefined2 unaff_DS;
     
-    fcn.00000915();
+    simg_process_loop_3();
     iVar1 = *(int16_t *)0xff68 * 4;
     iVar2 = 6;
     puVar3 = (undefined *)0x392a;
@@ -902,17 +902,17 @@ void fcn.000008b8(int16_t param_1)
 }
 
 /* ====================================================================== */
-/* 0x915: fcn.00000915 */
+/* 0x915: simg_process_loop_3 */
 /* ====================================================================== */
 
 
-void fcn.00000915(void)
+void simg_process_loop_3(void)
 {
     int16_t iVar1;
     char *pcVar2;
     
     pcVar2 = (char *)0x3929;
-    fcn.00000934();
+    simg_func_26();
     iVar1 = 6;
     do {
         if (*pcVar2 != '\0') {
@@ -926,11 +926,11 @@ void fcn.00000915(void)
 }
 
 /* ====================================================================== */
-/* 0x934: fcn.00000934 */
+/* 0x934: simg_func_26 */
 /* ====================================================================== */
 
 
-void fcn.00000934(void)
+void simg_func_26(void)
 {
     undefined uVar1;
     int16_t in_AX;
@@ -943,11 +943,11 @@ void fcn.00000934(void)
     undefined extraout_DH_04;
     undefined *unaff_DI;
     
-    iVar2 = fcn.0000097a(in_AX, 0x4240);
+    iVar2 = simg_scan_loop(in_AX, 0x4240);
     *unaff_DI = extraout_DH;
-    iVar2 = fcn.0000097a(iVar2, -0x7960);
+    iVar2 = simg_scan_loop(iVar2, -0x7960);
     unaff_DI[1] = extraout_DH_00;
-    iVar2 = fcn.0000097a(iVar2, 10000);
+    iVar2 = simg_scan_loop(iVar2, 10000);
     unaff_DI[2] = extraout_DH_01;
     iVar2 = fcn.00000993(iVar2);
     unaff_DI[3] = extraout_DH_02;
@@ -960,12 +960,12 @@ void fcn.00000934(void)
 }
 
 /* ====================================================================== */
-/* 0x97a: fcn.0000097a */
+/* 0x97a: simg_scan_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.0000097a(int16_t arg1, int16_t arg3)
+undefined4 simg_scan_loop(int16_t arg1, int16_t arg3)
 {
     uint8_t in_CL;
     uint8_t in_DL;

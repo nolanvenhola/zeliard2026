@@ -81,13 +81,13 @@ static const char *STR_0x174c = "the box ahead."; // [ascii]
 static const char *STR_0x1822 = "Cavern of Peligro"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr3_22 */
 /* ====================================================================== */
 
 // WARNING: Unable to track spacebase fully for stack
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000000(int16_t arg3)
+void zr3_22(int16_t arg3)
 {
     char *pcVar1;
     code *pcVar2;

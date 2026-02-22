@@ -33,13 +33,13 @@ static const char *STR_0x19f2 = "aG&{vaGÚ"; // [ibm037]
 static const char *STR_0x1be9 = "aG&{ßSF¬cG"; // [ibm037]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_03 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000000(int16_t arg3)
+void zr2_03(int16_t arg3)
 {
     char *pcVar1;
     undefined uVar2;
@@ -105,10 +105,10 @@ void fcn.00000000(int16_t arg3)
     *(char *)0x5080 = *(char *)0x5080 + '\x01';
     *(undefined2 *)0x506d = 0x23c;
     iVar8 = *(int16_t *)0xff31;
-    fcn.000015db();
+    physsub_func_1();
     iVar11 = 0;
     if ((*(uint8_t *)(iVar8 + -0x21) & 0x80) != 0) {
-        fcn.00000422(0);
+        physsub_multiply(0);
     }
     puVar14 = (uint8_t *)(iVar8 + -0x20);
     iVar8 = 6;
@@ -116,67 +116,67 @@ void fcn.00000000(int16_t arg3)
         unaff_SI = puVar14;
         unaff_ES = in_stack_00000000;
         if ((*puVar14 & 0x80) != 0) {
-            fcn.0000045f(iVar11);
+            extract_bits(iVar11);
         }
 code_r0x00000067:
         in_stack_00000000 = unaff_ES;
         iVar11 = iVar11 + 1;
         if ((unaff_SI[1] & 0x80) != 0) {
-            fcn.0000045f(iVar11);
+            extract_bits(iVar11);
         }
         iVar11 = iVar11 + 1;
         if ((unaff_SI[2] & 0x80) != 0) {
-            fcn.0000045f(iVar11);
+            extract_bits(iVar11);
         }
         iVar11 = iVar11 + 1;
         if ((unaff_SI[3] & 0x80) != 0) {
-            fcn.0000045f(iVar11);
+            extract_bits(iVar11);
         }
         puVar14 = unaff_SI + 4;
         iVar11 = iVar11 + 1;
         iVar8 = iVar8 + -1;
     } while (iVar8 != 0);
     if ((*puVar14 & 0x80) != 0) {
-        fcn.0000045f(iVar11);
+        extract_bits(iVar11);
     }
     iVar11 = iVar11 + 1;
     if ((unaff_SI[5] & 0x80) != 0) {
-        fcn.0000045f(iVar11);
+        extract_bits(iVar11);
     }
     iVar11 = iVar11 + 1;
     if ((unaff_SI[6] & 0x80) != 0) {
-        fcn.0000045f(iVar11);
+        extract_bits(iVar11);
     }
     if ((unaff_SI[7] & 0x80) != 0) {
-        fcn.000004a3();
+        copy_buffer();
     }
     pcVar15 = *(char **)0xff31;
     pcVar18 = (char *)0xe900;
     *(undefined *)0x5073 = 0x12;
     do {
-        fcn.00000ed5(iVar11);
+        fill_buffer(iVar11);
         iVar11 = 0;
         pcVar9 = pcVar15 + 4;
         if (pcVar15[3] < '\0') {
-            fcn.000004db(0);
+            physsub_multiply_5(0);
         }
         do {
             pcVar13 = pcVar18;
             pcVar16 = pcVar9;
             if (*pcVar16 != *pcVar13) {
-                fcn.00000128(iVar11);
+                physsub_get_value_2(iVar11);
             }
             iVar11 = iVar11 + 1;
             if (pcVar16[1] != pcVar13[1]) {
-                fcn.00000128(iVar11);
+                physsub_get_value_2(iVar11);
             }
             iVar11 = iVar11 + 1;
             if (pcVar16[2] != pcVar13[2]) {
-                fcn.00000128(iVar11);
+                physsub_get_value_2(iVar11);
             }
             iVar11 = iVar11 + 1;
             if (pcVar16[3] != pcVar13[3]) {
-                fcn.00000128(iVar11);
+                physsub_get_value_2(iVar11);
             }
             iVar11 = iVar11 + 1;
             pcVar9 = pcVar16 + 4;
@@ -184,15 +184,15 @@ code_r0x00000067:
         } while (in_stack_00000008 != (char *)0x1);
         if (pcVar16[4] != pcVar13[4]) {
             in_stack_00000008 = (char *)0xf4;
-            fcn.00000128(iVar11);
+            physsub_get_value_2(iVar11);
         }
         iVar11 = iVar11 + 1;
         if (pcVar16[5] != pcVar13[5]) {
-            fcn.00000128(iVar11);
+            physsub_get_value_2(iVar11);
         }
         iVar11 = iVar11 + 1;
         if (pcVar16[6] != pcVar13[6]) {
-            fcn.00000128(iVar11);
+            physsub_get_value_2(iVar11);
         }
         iVar11 = iVar11 + 1;
         pcVar15 = pcVar16 + 8;
@@ -211,8 +211,8 @@ code_r0x00000067:
             *(char *)0x5093 = cVar6;
             cVar6 = pcVar16[7];
             pcVar16 = pcVar16 + 0x2c;
-            fcn.000015cf();
-            cVar6 = fcn.0000080e((int16_t)pcVar15, (int16_t)pcVar18, iVar11, CONCAT11(extraout_AH, cVar6));
+            physsub_func_3();
+            cVar6 = physsub_multiply_2((int16_t)pcVar15, (int16_t)pcVar18, iVar11, CONCAT11(extraout_AH, cVar6));
             pcVar12 = (char *)CONCAT11(extraout_DL, cVar6);
             pcVar9 = (char *)((int16_t)pcVar18 * 2 + *(int16_t *)0x506d);
             pcVar13 = pcVar12;
@@ -221,9 +221,9 @@ code_r0x00000067:
                 uVar19 = CONCAT22(pcVar9, CONCAT11(*pcVar16, cVar6));
                 pcVar18 = pcVar12;
                 if (cVar6 < '\0') {
-                    uVar19 = fcn.00000807();
+                    uVar19 = physsub_func_4();
                 }
-                fcn.00000684((int16_t)uVar19, (int16_t)((uint32_t)uVar19 >> 0x10), (int16_t)pcVar18);
+                physsub_process_loop((int16_t)uVar19, (int16_t)((uint32_t)uVar19 >> 0x10), (int16_t)pcVar18);
                 pcVar9 = pcVar12;
                 pcVar13 = in_stack_0000000c;
                 pcVar16 = pcVar15;
@@ -235,16 +235,16 @@ code_r0x00000067:
             if (((*(char *)0x5073 != '\x01') && (*(char *)0x5093 != -1)) && (*(char *)0x5093 != -4)) {
                 uVar19 = CONCAT22(pcVar9 + 0x140, CONCAT11(pcVar16[2], (char)((uint16_t)pcVar13 >> 8)));
                 if ((int16_t)pcVar13 < 0) {
-                    uVar19 = fcn.00000807();
+                    uVar19 = physsub_func_4();
                 }
                 in_stack_0000000c = (char *)0x651;
-                fcn.00000684((int16_t)uVar19, (int16_t)((uint32_t)uVar19 >> 0x10), (int16_t)pcVar13);
+                physsub_process_loop((int16_t)uVar19, (int16_t)((uint32_t)uVar19 >> 0x10), (int16_t)pcVar13);
             }
         } else if (pcVar16[7] != pcVar13[7]) {
-            fcn.00000128(iVar11);
+            physsub_get_value_2(iVar11);
         }
         pcVar15 = pcVar15 + 4;
-        fcn.000015cf();
+        physsub_func_3();
         *(int16_t *)0x506d = *(int16_t *)0x506d + 0x140;
         pcVar1 = (char *)0x5073;
         *pcVar1 = *pcVar1 + -1;
@@ -253,11 +253,11 @@ code_r0x00000067:
 }
 
 /* ====================================================================== */
-/* 0x15db: fcn.000015db */
+/* 0x15db: physsub_func_1 */
 /* ====================================================================== */
 
 
-void fcn.000015db(void)
+void physsub_func_1(void)
 {
     uint16_t unaff_SI;
     
@@ -268,13 +268,13 @@ void fcn.000015db(void)
 }
 
 /* ====================================================================== */
-/* 0x422: fcn.00000422 */
+/* 0x422: physsub_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000422(int16_t arg3)
+void physsub_multiply(int16_t arg3)
 {
     undefined extraout_AH;
     undefined uVar1;
@@ -292,23 +292,23 @@ void fcn.00000422(int16_t arg3)
     }
     *(undefined *)0xe900 = 0xff;
     uVar2 = *unaff_SI;
-    fcn.000015cf(arg3);
+    physsub_func_3(arg3);
     uVar1 = extraout_AH;
     if ((char)unaff_SI[0x25] < '\0') {
         uVar1 = 0;
-        fcn.00000807();
+        physsub_func_4();
     }
-    fcn.0000080e(in_stack_00000002, in_stack_00000000, arg3, CONCAT11(uVar1, uVar2));
-    fcn.00000684(CONCAT11(unaff_SI[0x28], (char)in_stack_00000000), 0x23c, arg3);
+    physsub_multiply_2(in_stack_00000002, in_stack_00000000, arg3, CONCAT11(uVar1, uVar2));
+    physsub_process_loop(CONCAT11(unaff_SI[0x28], (char)in_stack_00000000), 0x23c, arg3);
     return;
 }
 
 /* ====================================================================== */
-/* 0x15cf: fcn.000015cf */
+/* 0x15cf: physsub_func_3 */
 /* ====================================================================== */
 
 
-void fcn.000015cf(void)
+void physsub_func_3(void)
 {
     uint16_t unaff_SI;
     
@@ -319,11 +319,11 @@ void fcn.000015cf(void)
 }
 
 /* ====================================================================== */
-/* 0x807: fcn.00000807 */
+/* 0x807: physsub_func_4 */
 /* ====================================================================== */
 
 
-undefined fcn.00000807(void)
+undefined physsub_func_4(void)
 {
     uint8_t in_AL;
     
@@ -331,13 +331,13 @@ undefined fcn.00000807(void)
 }
 
 /* ====================================================================== */
-/* 0x80e: fcn.0000080e */
+/* 0x80e: physsub_multiply_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-undefined2 fcn.0000080e(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t arg1)
+undefined2 physsub_multiply_2(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t arg1)
 {
     undefined uVar1;
     uint8_t uVar2;
@@ -365,12 +365,12 @@ undefined2 fcn.0000080e(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t ar
 }
 
 /* ====================================================================== */
-/* 0x684: fcn.00000684 */
+/* 0x684: physsub_process_loop */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000684(int16_t arg1, int16_t arg2, int16_t arg3)
+void physsub_process_loop(int16_t arg1, int16_t arg2, int16_t arg3)
 {
     char cVar1;
     uint8_t uVar2;
@@ -383,23 +383,23 @@ void fcn.00000684(int16_t arg1, int16_t arg2, int16_t arg3)
     }
     *(undefined2 *)0x506b = *(undefined2 *)((uint16_t)(uVar2 & 0x7f) * 2 + 0x500f);
     if (-1 < (char)uVar2) {
-        fcn.00000726(arg2);
-        fcn.0000078e();
+        physsub_extract_bits(arg2);
+        physsub_func_21();
         return;
     }
-    fcn.000006f8(CONCAT11((char)((uint16_t)*(undefined2 *)0x506b >> 8), cVar1));
-    fcn.0000078e();
+    physsub_multiply_6(CONCAT11((char)((uint16_t)*(undefined2 *)0x506b >> 8), cVar1));
+    physsub_func_21();
     return;
 }
 
 /* ====================================================================== */
-/* 0x45f: fcn.0000045f */
+/* 0x45f: extract_bits */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.0000045f(int16_t arg3)
+void extract_bits(int16_t arg3)
 {
     undefined2 uVar1;
     undefined uVar2;
@@ -416,20 +416,20 @@ void fcn.0000045f(int16_t arg3)
     *(undefined *)0x5093 = 0;
     *(undefined *)(arg3 + -0x16ff) = 0xff;
     uVar2 = *unaff_SI;
-    fcn.000015cf(arg3);
+    physsub_func_3(arg3);
     uVar1 = *(undefined2 *)(unaff_SI + 0x24);
     *(undefined2 *)0x5096 = uVar1;
-    fcn.0000080e(in_stack_00000002, in_stack_00000000, 0x5096, CONCAT11((char)((uint16_t)uVar1 >> 8), uVar2));
-    fcn.00000657();
+    physsub_multiply_2(in_stack_00000002, in_stack_00000000, 0x5096, CONCAT11((char)((uint16_t)uVar1 >> 8), uVar2));
+    physsub_check_state();
     return;
 }
 
 /* ====================================================================== */
-/* 0x657: fcn.00000657 */
+/* 0x657: physsub_check_state */
 /* ====================================================================== */
 
 
-void fcn.00000657(void)
+void physsub_check_state(void)
 {
     int16_t arg1;
     int16_t in_DX;
@@ -443,22 +443,22 @@ void fcn.00000657(void)
     if ((*unaff_BP != -1) && (*unaff_BP != -4)) {
         arg1 = CONCAT11(*unaff_SI, *unaff_DI);
         if (*unaff_DI < '\0') {
-            uVar1 = fcn.00000807(0x65a);
+            uVar1 = physsub_func_4(0x65a);
             in_DX = (int16_t)((uint32_t)uVar1 >> 0x10);
             arg1 = (int16_t)uVar1;
         }
-        fcn.00000684(arg1, in_DX, in_BX);
+        physsub_process_loop(arg1, in_DX, in_BX);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x4a3: fcn.000004a3 */
+/* 0x4a3: copy_buffer */
 /* ====================================================================== */
 
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.000004a3(undefined2 param_1, int16_t param_2, int16_t param_3)
+void copy_buffer(undefined2 param_1, int16_t param_2, int16_t param_3)
 {
     char cVar1;
     undefined extraout_AH;
@@ -477,13 +477,13 @@ void fcn.000004a3(undefined2 param_1, int16_t param_2, int16_t param_3)
     }
     *(undefined *)0xe91b = 0xff;
     uVar3 = *unaff_SI;
-    fcn.000015cf();
+    physsub_func_3();
     uVar2 = extraout_AH;
     if ((char)unaff_SI[0x24] < '\0') {
         uVar2 = 0;
-        fcn.00000807();
+        physsub_func_4();
     }
-    fcn.0000080e(param_3, param_2, in_BX, CONCAT11(uVar2, uVar3));
+    physsub_multiply_2(param_3, param_2, in_BX, CONCAT11(uVar2, uVar3));
     cVar1 = (char)param_2;
     uVar4 = *(uint8_t *)0x5076;
     if ((cVar1 != '\0') && (-1 < cVar1)) {
@@ -491,23 +491,23 @@ void fcn.000004a3(undefined2 param_1, int16_t param_2, int16_t param_3)
     }
     *(undefined2 *)0x506b = *(undefined2 *)((uint16_t)(uVar4 & 0x7f) * 2 + 0x500f);
     if (-1 < (char)uVar4) {
-        fcn.00000726();
-        fcn.0000078e();
+        physsub_extract_bits();
+        physsub_func_21();
         return;
     }
-    fcn.000006f8(CONCAT11((char)((uint16_t)*(undefined2 *)0x506b >> 8), cVar1));
-    fcn.0000078e();
+    physsub_multiply_6(CONCAT11((char)((uint16_t)*(undefined2 *)0x506b >> 8), cVar1));
+    physsub_func_21();
     return;
 }
 
 /* ====================================================================== */
-/* 0xed5: fcn.00000ed5 */
+/* 0xed5: fill_buffer */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x00000eee: Changing call to branch
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000ed5(int16_t arg3)
+void fill_buffer(int16_t arg3)
 {
     uint8_t *puVar1;
     int16_t *piVar2;
@@ -546,9 +546,9 @@ void fcn.00000ed5(int16_t arg3)
             }
             if (*(char *)0xff43 != '\0') {
                 *(undefined *)0xff44 = 0xff;
-                fcn.00001066(CONCAT11((char)((uint16_t)in_AX >> 8), uVar5), 
+                physsub_check_state_2(CONCAT11((char)((uint16_t)in_AX >> 8), uVar5), 
                              CONCAT11((char)((uint16_t)in_CX >> 8), uVar4));
-                fcn.00001018();
+                physsub_multiply_4();
                 uVar3 = *(undefined2 *)0xff2c;
                 puVar10 = *(uint8_t **)0x507a;
                 puVar12 = *(uint16_t **)0x5078;
@@ -563,7 +563,7 @@ void fcn.00000ed5(int16_t arg3)
                         do {
                             piVar2 = piVar9;
                             piVar9 = piVar9 + 1;
-                            uVar6 = fcn.000016d3(*piVar2);
+                            uVar6 = physsub_func_20(*piVar2);
                             *puVar12 = *puVar12 | uVar6;
                             puVar11 = puVar12 + 0x1000;
                             if ((uint16_t *)0x3fff < puVar11) {
@@ -579,7 +579,7 @@ void fcn.00000ed5(int16_t arg3)
             }
             return;
         }
-        fcn.00000fff(arg3);
+        physsub_get_value(arg3);
     }
     if (*(char *)0xff37 == '\0') {
         *(undefined *)0xff37 = 0xff;
@@ -589,7 +589,7 @@ void fcn.00000ed5(int16_t arg3)
             iVar8 = 3;
             do {
                 iVar14 = iVar8;
-                fcn.0000078e(iVar13, iVar8, iVar7, arg3);
+                physsub_func_21(iVar13, iVar8, iVar7, arg3);
                 iVar13 = iVar14 + 2;
                 iVar8 = iVar7 + -1;
             } while (iVar8 != 0);
@@ -602,29 +602,29 @@ void fcn.00000ed5(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0xfff: fcn.00000fff */
+/* 0xfff: physsub_get_value */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000fff(int16_t arg3)
+void physsub_get_value(int16_t arg3)
 {
     undefined2 unaff_DS;
     
     if (*(char *)0xff44 == '\0') {
         return;
     }
-    fcn.00001041(arg3);
+    physsub_multiply_3(arg3);
     *(undefined *)0xff44 = 0;
     return;
 }
 
 /* ====================================================================== */
-/* 0x1041: fcn.00001041 */
+/* 0x1041: physsub_multiply_3 */
 /* ====================================================================== */
 
 
-void fcn.00001041(void)
+void physsub_multiply_3(void)
 {
     int16_t iVar1;
     undefined2 *puVar2;
@@ -653,12 +653,12 @@ void fcn.00001041(void)
 }
 
 /* ====================================================================== */
-/* 0x1066: fcn.00001066 */
+/* 0x1066: physsub_check_state_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001066(int16_t arg1, int16_t arg4)
+void physsub_check_state_2(int16_t arg1, int16_t arg4)
 {
     int16_t iVar1;
     uint8_t *puVar2;
@@ -669,7 +669,7 @@ void fcn.00001066(int16_t arg1, int16_t arg4)
     puVar2 = (uint8_t *)
              ((uint16_t)(*(char *)0x84 + *(char *)0x507c & 0x3f) * 0x24 +
               (uint16_t)(uint8_t)(*(char *)0x83 + *(char *)0x507d + 4) + *(int16_t *)0xff31);
-    fcn.000015cf();
+    physsub_func_3();
     do {
         iVar1 = 4;
         do {
@@ -679,17 +679,17 @@ void fcn.00001066(int16_t arg1, int16_t arg4)
             puVar2 = puVar3 + 1;
         } while (iVar1 != 0);
         puVar2 = puVar3 + 0x21;
-        fcn.000015cf();
+        physsub_func_3();
     } while (in_stack_00000002 != 1);
     return;
 }
 
 /* ====================================================================== */
-/* 0x1018: fcn.00001018 */
+/* 0x1018: physsub_multiply_4 */
 /* ====================================================================== */
 
 
-void fcn.00001018(void)
+void physsub_multiply_4(void)
 {
     int16_t iVar1;
     undefined2 *puVar2;
@@ -718,12 +718,12 @@ void fcn.00001018(void)
 }
 
 /* ====================================================================== */
-/* 0x16d3: fcn.000016d3 */
+/* 0x16d3: physsub_func_20 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.000016d3(int16_t arg1)
+int16_t physsub_func_20(int16_t arg1)
 {
     uint16_t uVar1;
     int16_t iVar2;
@@ -748,11 +748,11 @@ int16_t fcn.000016d3(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x78e: fcn.0000078e */
+/* 0x78e: physsub_func_21 */
 /* ====================================================================== */
 
 
-void fcn.0000078e(void)
+void physsub_func_21(void)
 {
     undefined2 *unaff_SI;
     undefined2 *unaff_DI;
@@ -801,13 +801,13 @@ void fcn.0000078e(void)
 }
 
 /* ====================================================================== */
-/* 0x4db: fcn.000004db */
+/* 0x4db: physsub_multiply_5 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.000004db(int16_t arg3)
+void physsub_multiply_5(int16_t arg3)
 {
     undefined extraout_AH;
     undefined uVar1;
@@ -836,8 +836,8 @@ void fcn.000004db(int16_t arg3)
     *(undefined *)0x5093 = uVar1;
     uVar1 = unaff_SI[-1];
     arg_6h = unaff_SI;
-    fcn.000015cf(arg3, arg3);
-    fcn.0000080e((int16_t)arg_6h, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, uVar1));
+    physsub_func_3(arg3, arg3);
+    physsub_multiply_2((int16_t)arg_6h, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, uVar1));
     puVar4 = unaff_SI + 0x25;
     iVar2 = (int16_t)unaff_DI * 2 + *(int16_t *)0x506d;
     iVar3 = extraout_DX;
@@ -847,31 +847,31 @@ void fcn.000004db(int16_t arg3)
         iVar6 = extraout_DX;
         if ((char)extraout_DX < '\0') {
             iVar6 = extraout_DX;
-            uVar5 = fcn.00000807(iVar2, puVar4);
+            uVar5 = physsub_func_4(iVar2, puVar4);
         }
         puVar4 = arg_6h;
         iVar2 = iVar6;
-        fcn.00000684((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
+        physsub_process_loop((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
         iVar3 = in_stack_00000000;
     }
     if (((*(char *)0x5073 != '\x01') && (*(char *)0x5093 != -1)) && (*(char *)0x5093 != -4)) {
         uVar5 = CONCAT22(iVar2 + 0x140, CONCAT11(puVar4[2], (char)((uint16_t)iVar3 >> 8)));
         if (iVar3 < 0) {
-            uVar5 = fcn.00000807();
+            uVar5 = physsub_func_4();
         }
-        fcn.00000684((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
+        physsub_process_loop((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x128: fcn.00000128 */
+/* 0x128: physsub_get_value_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000128(int16_t arg3)
+void physsub_get_value_2(int16_t arg3)
 {
     char *pcVar1;
     undefined2 uVar2;
@@ -904,19 +904,19 @@ void fcn.00000128(int16_t arg3)
         arg3_00 = 0x5096;
         *(undefined *)0x5097 = *unaff_SI;
         arg_4h = unaff_SI;
-        fcn.000015cf(arg3);
+        physsub_func_3(arg3);
         uVar2 = *(undefined2 *)(unaff_SI + 0x23);
         *(undefined2 *)(arg3_00 + 2) = uVar2;
         *(undefined *)0x5074 = (char)arg3;
         *(char *)0x5075 = '\x12' - *(char *)0x5073;
-        uVar6 = fcn.0000080e(in_stack_00000000, (int16_t)arg_4h, arg3_00, CONCAT11((char)((uint16_t)uVar2 >> 8), uVar6))
+        uVar6 = physsub_multiply_2(in_stack_00000000, (int16_t)arg_4h, arg3_00, CONCAT11((char)((uint16_t)uVar2 >> 8), uVar6))
         ;
         *(undefined *)0x5096 = uVar6;
-        fcn.00000657();
+        physsub_check_state();
         if (*(char *)0x5073 != '\x01') {
-            fcn.00000657();
+            physsub_check_state();
             if ((*(char *)0xff34 != '\0') && (*(char *)0xff2f != '\0')) {
-                fcn.0000085f();
+                physsub_func_31();
             }
         }
         return;
@@ -930,7 +930,7 @@ void fcn.00000128(int16_t arg3)
         *(undefined *)(unaff_DI + -1) = 0xfe;
         if (cVar3 != '\0') {
             *(char *)(unaff_DI + -1) = cVar4;
-            fcn.00000270(arg3, arg3 * 2 + *(int16_t *)0x506d, CONCAT11((char)((uint16_t)in_AX >> 8), cVar4));
+            physsub_func_30(arg3, arg3 * 2 + *(int16_t *)0x506d, CONCAT11((char)((uint16_t)in_AX >> 8), cVar4));
         }
     }
     uVar5 = *(uint8_t *)0xc012 - 5;
@@ -945,12 +945,12 @@ void fcn.00000128(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x270: fcn.00000270 */
+/* 0x270: physsub_func_30 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000270(int16_t arg3, int16_t arg2, int16_t arg1)
+void physsub_func_30(int16_t arg3, int16_t arg2, int16_t arg1)
 {
     undefined2 uVar1;
     int16_t iVar2;
@@ -1090,11 +1090,11 @@ void fcn.00000270(int16_t arg3, int16_t arg2, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x85f: fcn.0000085f */
+/* 0x85f: physsub_func_31 */
 /* ====================================================================== */
 
 
-void fcn.0000085f(void)
+void physsub_func_31(void)
 {
     uint8_t uVar1;
     uint8_t *puVar2;
@@ -1142,7 +1142,7 @@ void fcn.0000085f(void)
 }
 
 /* ====================================================================== */
-/* 0x11a: fcn.0000011a */
+/* 0x11a: physsub_func_33 */
 /* ====================================================================== */
 
 // WARNING: Instruction at (ram,0x0000011b) overlaps instruction at (ram,0x0000011a)
@@ -1150,7 +1150,7 @@ void fcn.0000085f(void)
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-int16_t fcn.0000011a(int16_t arg1, int16_t arg3, int16_t arg4)
+int16_t physsub_func_33(int16_t arg1, int16_t arg3, int16_t arg4)
 {
     char *pcVar1;
     undefined2 uVar2;
@@ -1190,29 +1190,29 @@ int16_t fcn.0000011a(int16_t arg1, int16_t arg3, int16_t arg4)
     puVar16 = unaff_ES;
     if (CARRY2(unaff_SI, (uint16_t)puVar13)) {
         while (!bVar14) {
-            fcn.00000ed5(arg3);
+            fill_buffer(arg3);
             arg3 = 0;
             pcVar3 = pcVar11 + 4;
             if (pcVar11[3] < '\0') {
-                fcn.000004db(0);
+                physsub_multiply_5(0);
             }
             do {
                 puVar10 = puVar13;
                 pcVar12 = pcVar3;
                 if (*pcVar12 != *(char *)puVar10) {
-                    fcn.00000128(arg3);
+                    physsub_get_value_2(arg3);
                 }
                 arg3 = arg3 + 1;
                 if (pcVar12[1] != *(char *)((int16_t)puVar10 + 1)) {
-                    fcn.00000128(arg3);
+                    physsub_get_value_2(arg3);
                 }
                 arg3 = arg3 + 1;
                 if (pcVar12[2] != *(char *)(puVar10 + 1)) {
-                    fcn.00000128(arg3);
+                    physsub_get_value_2(arg3);
                 }
                 arg3 = arg3 + 1;
                 if (pcVar12[3] != *(char *)((int16_t)puVar10 + 3)) {
-                    fcn.00000128(arg3);
+                    physsub_get_value_2(arg3);
                 }
                 arg3 = arg3 + 1;
                 pcVar3 = pcVar12 + 4;
@@ -1220,15 +1220,15 @@ int16_t fcn.0000011a(int16_t arg1, int16_t arg3, int16_t arg4)
             } while (puVar16 != (undefined2 *)0x1);
             if (pcVar12[4] != *(char *)(puVar10 + 2)) {
                 puVar16 = (undefined2 *)0xf4;
-                fcn.00000128(arg3);
+                physsub_get_value_2(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar12[5] != *(char *)((int16_t)puVar10 + 5)) {
-                fcn.00000128(arg3);
+                physsub_get_value_2(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar12[6] != *(char *)(puVar10 + 3)) {
-                fcn.00000128(arg3);
+                physsub_get_value_2(arg3);
             }
             arg3 = arg3 + 1;
             pcVar11 = pcVar12 + 8;
@@ -1247,8 +1247,8 @@ int16_t fcn.0000011a(int16_t arg1, int16_t arg3, int16_t arg4)
                 *(char *)0x5093 = cVar5;
                 cVar5 = pcVar12[7];
                 pcVar12 = pcVar12 + 0x2c;
-                fcn.000015cf(arg3, arg3);
-                cVar5 = fcn.0000080e((int16_t)pcVar11, (int16_t)puVar13, iVar6, CONCAT11(extraout_AH, cVar5));
+                physsub_func_3(arg3, arg3);
+                cVar5 = physsub_multiply_2((int16_t)pcVar11, (int16_t)puVar13, iVar6, CONCAT11(extraout_AH, cVar5));
                 puVar10 = (undefined2 *)CONCAT11(extraout_DL, cVar5);
                 puVar9 = (undefined2 *)((int16_t)puVar13 * 2 + *(int16_t *)0x506d);
                 puVar16 = puVar13;
@@ -1256,11 +1256,11 @@ int16_t fcn.0000011a(int16_t arg1, int16_t arg3, int16_t arg4)
                     uVar15 = CONCAT22(puVar9, CONCAT11(*pcVar12, cVar5));
                     puVar13 = puVar10;
                     if (cVar5 < '\0') {
-                        uVar15 = fcn.00000807(puVar9, pcVar12);
+                        uVar15 = physsub_func_4(puVar9, pcVar12);
                     }
                     puVar9 = puVar13;
                     pcVar12 = pcVar11;
-                    fcn.00000684((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10), (int16_t)puVar10);
+                    physsub_process_loop((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10), (int16_t)puVar10);
                     puVar10 = in_stack_00000002;
                     puVar16 = puVar9;
                 }
@@ -1270,16 +1270,16 @@ int16_t fcn.0000011a(int16_t arg1, int16_t arg3, int16_t arg4)
                 if (((*(char *)0x5073 != '\x01') && (*(char *)0x5093 != -1)) && (*(char *)0x5093 != -4)) {
                     uVar15 = CONCAT22(puVar9 + 0xa0, CONCAT11(pcVar12[2], (char)((uint16_t)puVar10 >> 8)));
                     if ((int16_t)puVar10 < 0) {
-                        uVar15 = fcn.00000807();
+                        uVar15 = physsub_func_4();
                     }
                     in_stack_00000002 = (undefined2 *)0x651;
-                    fcn.00000684((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10), (int16_t)puVar10);
+                    physsub_process_loop((int16_t)uVar15, (int16_t)((uint32_t)uVar15 >> 0x10), (int16_t)puVar10);
                 }
             } else if (pcVar12[7] != *(char *)((int16_t)puVar10 + 7)) {
-                fcn.00000128(arg3);
+                physsub_get_value_2(arg3);
             }
             pcVar11 = pcVar11 + 4;
-            iVar6 = fcn.000015cf();
+            iVar6 = physsub_func_3();
             *(int16_t *)0x506d = *(int16_t *)0x506d + 0x140;
             pcVar1 = (char *)0x5073;
             *pcVar1 = *pcVar1 + -1;
@@ -1307,11 +1307,11 @@ int16_t fcn.0000011a(int16_t arg1, int16_t arg3, int16_t arg4)
 }
 
 /* ====================================================================== */
-/* 0x726: fcn.00000726 */
+/* 0x726: physsub_extract_bits */
 /* ====================================================================== */
 
 
-void fcn.00000726(void)
+void physsub_extract_bits(void)
 {
     int16_t *piVar1;
     undefined2 *puVar2;
@@ -1327,7 +1327,7 @@ void fcn.00000726(void)
     do {
         piVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
-        uVar4 = fcn.00000731(*piVar1, in_DX);
+        uVar4 = extract_bits_2(*piVar1, in_DX);
         in_DX = (int16_t)((uint32_t)uVar4 >> 0x10);
         puVar2 = unaff_DI;
         unaff_DI = unaff_DI + 1;
@@ -1338,12 +1338,12 @@ void fcn.00000726(void)
 }
 
 /* ====================================================================== */
-/* 0x731: fcn.00000731 */
+/* 0x731: extract_bits_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined2 fcn.00000731(int16_t arg1, int16_t arg2)
+undefined2 extract_bits_2(int16_t arg1, int16_t arg2)
 {
     return CONCAT11(*(char *)(((uint16_t)arg1 >> 0xc) + *(int16_t *)0x506b) << 4 |
                     *(uint8_t *)(((arg1 & 0xf0fU) >> 8) + *(int16_t *)0x506b), 
@@ -1352,12 +1352,12 @@ undefined2 fcn.00000731(int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x6f8: fcn.000006f8 */
+/* 0x6f8: physsub_multiply_6 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000006f8(int16_t arg1)
+void physsub_multiply_6(int16_t arg1)
 {
     int16_t *piVar1;
     int16_t iVar2;
@@ -1370,14 +1370,14 @@ void fcn.000006f8(int16_t arg1)
     undefined4 uVar3;
     uint16_t *in_stack_00000000;
     
-    fcn.000007f9();
+    physsub_scan_loop();
     iVar2 = 8;
     arg2 = extraout_DX;
     do {
         *unaff_SI = *unaff_SI & *in_stack_00000000;
         piVar1 = unaff_BP;
         unaff_BP = unaff_BP + 1;
-        uVar3 = fcn.00000731(*piVar1, arg2);
+        uVar3 = extract_bits_2(*piVar1, arg2);
         arg2 = (int16_t)((uint32_t)uVar3 >> 0x10);
         *unaff_SI = *unaff_SI | (uint16_t)uVar3;
         in_stack_00000000 = in_stack_00000000 + 1;
@@ -1388,11 +1388,11 @@ void fcn.000006f8(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x7f9: fcn.000007f9 */
+/* 0x7f9: physsub_scan_loop */
 /* ====================================================================== */
 
 
-void fcn.000007f9(void)
+void physsub_scan_loop(void)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -1413,12 +1413,12 @@ void fcn.000007f9(void)
 }
 
 /* ====================================================================== */
-/* 0xea6: fcn.00000ea6 */
+/* 0xea6: physsub_func_39 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000ea6(int16_t arg1, int16_t arg4)
+void physsub_func_39(int16_t arg1, int16_t arg4)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -1429,7 +1429,7 @@ void fcn.00000ea6(int16_t arg1, int16_t arg4)
     
     puVar2 = (undefined2 *)
              ((uint16_t)*(uint8_t *)0x84 * 0x24 + (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0xff31);
-    fcn.000015cf();
+    physsub_func_3();
     puVar4 = (undefined2 *)0x5096;
     iVar3 = 3;
     do {
@@ -1438,18 +1438,18 @@ void fcn.00000ea6(int16_t arg1, int16_t arg4)
         puVar4 = (undefined2 *)((int16_t)puVar4 + 3);
         *(undefined *)puVar1 = *(undefined *)(puVar2 + 1);
         puVar2 = puVar2 + 0x12;
-        fcn.000015cf();
+        physsub_func_3();
         iVar3 = iVar3 + -1;
     } while (iVar3 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0xe00: fcn.00000e00 */
+/* 0xe00: physsub_process_loop_2 */
 /* ====================================================================== */
 
 
-uint8_t fcn.00000e00(void)
+uint8_t physsub_process_loop_2(void)
 {
     uint8_t uVar1;
     undefined2 unaff_DS;
@@ -1465,12 +1465,12 @@ uint8_t fcn.00000e00(void)
 }
 
 /* ====================================================================== */
-/* 0xdbe: fcn.00000dbe */
+/* 0xdbe: physsub_multiply_7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000dbe(int16_t arg4, int16_t arg1, int16_t arg2)
+void physsub_multiply_7(int16_t arg4, int16_t arg1, int16_t arg2)
 {
     int16_t extraout_DX;
     char *unaff_SI;
@@ -1482,7 +1482,7 @@ void fcn.00000dbe(int16_t arg4, int16_t arg1, int16_t arg2)
     do {
         pcVar1 = unaff_ES;
         if (*unaff_SI != '\0') {
-            fcn.0000070e(arg2);
+            physsub_process_loop_3(arg2);
             arg2 = extraout_DX;
             unaff_SI = unaff_DS;
             pcVar1 = (char *)arg4;
@@ -1497,12 +1497,12 @@ void fcn.00000dbe(int16_t arg4, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x70e: fcn.0000070e */
+/* 0x70e: physsub_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.0000070e(int16_t arg2)
+void physsub_process_loop_3(int16_t arg2)
 {
     int16_t *piVar1;
     int16_t iVar2;
@@ -1518,7 +1518,7 @@ void fcn.0000070e(int16_t arg2)
         *unaff_DI = *unaff_DI & *unaff_BP;
         piVar1 = unaff_SI;
         unaff_SI = unaff_SI + 1;
-        uVar3 = fcn.00000731(*piVar1, arg2);
+        uVar3 = extract_bits_2(*piVar1, arg2);
         arg2 = (int16_t)((uint32_t)uVar3 >> 0x10);
         *unaff_DI = *unaff_DI | (uint16_t)uVar3;
         unaff_BP = unaff_BP + 1;
@@ -1529,11 +1529,11 @@ void fcn.0000070e(int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x7ff: fcn.000007ff */
+/* 0x7ff: physsub_process_loop_4 */
 /* ====================================================================== */
 
 
-void fcn.000007ff(void)
+void physsub_process_loop_4(void)
 {
     undefined2 *puVar1;
     int16_t iVar2;
@@ -1549,12 +1549,12 @@ void fcn.000007ff(void)
 }
 
 /* ====================================================================== */
-/* 0x1226: fcn.00001226 */
+/* 0x1226: physsub_scan_loop_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001226(int16_t arg3, int16_t arg1)
+void physsub_scan_loop_2(int16_t arg3, int16_t arg1)
 {
     int16_t iVar1;
     uint16_t uVar2;
@@ -1856,39 +1856,39 @@ void fcn.00000110(undefined2 param_1, undefined2 param_2, int16_t param_3)
     pcStack_6 = in_BX;
     do {
         if (!(bool)in_ZF) {
-            fcn.00000128((int16_t)pcStack_6);
+            physsub_get_value_2((int16_t)pcStack_6);
         }
         while( true ) {
-            fcn.000015cf();
+            physsub_func_3();
             *(int16_t *)0x506d = *(int16_t *)0x506d + 0x140;
             pcVar1 = (char *)0x5073;
             *pcVar1 = *pcVar1 + -1;
             if (*pcVar1 == '\0') {
                 return;
             }
-            fcn.00000ed5((int16_t)pcStack_6);
+            fill_buffer((int16_t)pcStack_6);
             iVar3 = 0;
             pcVar5 = unaff_SI + 8;
             if (unaff_SI[7] < '\0') {
-                fcn.000004db(0);
+                physsub_multiply_5(0);
             }
             do {
                 pcVar7 = unaff_DI;
                 pcVar4 = pcVar5;
                 if (*pcVar4 != *pcVar7) {
-                    fcn.00000128(iVar3);
+                    physsub_get_value_2(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[1] != pcVar7[1]) {
-                    fcn.00000128(iVar3);
+                    physsub_get_value_2(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[2] != pcVar7[2]) {
-                    fcn.00000128(iVar3);
+                    physsub_get_value_2(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[3] != pcVar7[3]) {
-                    fcn.00000128(iVar3);
+                    physsub_get_value_2(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 pcVar5 = pcVar4 + 4;
@@ -1896,15 +1896,15 @@ void fcn.00000110(undefined2 param_1, undefined2 param_2, int16_t param_3)
             } while (param_3 != 1);
             if (pcVar4[4] != pcVar7[4]) {
                 param_3 = 0xf4;
-                fcn.00000128(iVar3);
+                physsub_get_value_2(iVar3);
             }
             iVar3 = iVar3 + 1;
             if (pcVar4[5] != pcVar7[5]) {
-                fcn.00000128(iVar3);
+                physsub_get_value_2(iVar3);
             }
             iVar3 = iVar3 + 1;
             if (pcVar4[6] != pcVar7[6]) {
-                fcn.00000128(iVar3);
+                physsub_get_value_2(iVar3);
             }
             pcStack_6 = (char *)(iVar3 + 1);
             unaff_SI = pcVar4 + 8;
@@ -1924,9 +1924,9 @@ void fcn.00000110(undefined2 param_1, undefined2 param_2, int16_t param_3)
             cVar2 = pcVar4[7];
             pcVar4 = pcVar4 + 0x2c;
             pcStackY_a = (char *)0x5f2;
-            fcn.000015cf(pcStack_6);
+            physsub_func_3(pcStack_6);
             pcVar7 = (char *)0x5fa;
-            cVar2 = fcn.0000080e((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
+            cVar2 = physsub_multiply_2((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
             arg3 = (char *)CONCAT11(extraout_DL, cVar2);
             iVar3 = (int16_t)unaff_DI * 2 + *(int16_t *)0x506d;
             pcVar5 = pcVar4;
@@ -1935,9 +1935,9 @@ void fcn.00000110(undefined2 param_1, undefined2 param_2, int16_t param_3)
                 unaff_DI = arg3;
                 if (cVar2 < '\0') {
                     pcStackY_a = (char *)0x621;
-                    uVar6 = fcn.00000807();
+                    uVar6 = physsub_func_4();
                 }
-                fcn.00000684((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
+                physsub_process_loop((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
                 arg3 = pcVar7;
                 iVar3 = iStackY_c;
                 pcVar5 = pcStackY_a;
@@ -1946,9 +1946,9 @@ void fcn.00000110(undefined2 param_1, undefined2 param_2, int16_t param_3)
             if (((*(char *)0x5073 != '\x01') && (*(char *)0x5093 != -1)) && (*(char *)0x5093 != -4)) {
                 uVar6 = CONCAT22(iVar3 + 0x140, CONCAT11(pcVar5[2], (char)((uint16_t)arg3 >> 8)));
                 if ((int16_t)arg3 < 0) {
-                    uVar6 = fcn.00000807();
+                    uVar6 = physsub_func_4();
                 }
-                fcn.00000684((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
+                physsub_process_loop((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
             }
         }
         in_ZF = pcVar4[7] == pcVar7[7];
@@ -1984,40 +1984,40 @@ void fcn.00000112(int16_t arg1)
     char *pcVar9;
     
     do {
-        fcn.00000128((int16_t)in_BX);
+        physsub_get_value_2((int16_t)in_BX);
         do {
             while( true ) {
                 pcVar7 = (char *)0x11b;
-                fcn.000015cf();
+                physsub_func_3();
                 *(int16_t *)0x506d = *(int16_t *)0x506d + 0x140;
                 pcVar1 = (char *)0x5073;
                 *pcVar1 = *pcVar1 + -1;
                 if (*pcVar1 == '\0') {
                     return;
                 }
-                fcn.00000ed5((int16_t)in_BX);
+                fill_buffer((int16_t)in_BX);
                 iVar3 = 0;
                 pcVar8 = unaff_SI + 8;
                 if (unaff_SI[7] < '\0') {
-                    fcn.000004db(0);
+                    physsub_multiply_5(0);
                 }
                 do {
                     pcVar4 = unaff_DI;
                     pcVar5 = pcVar8;
                     if (*pcVar5 != *pcVar4) {
-                        fcn.00000128(iVar3);
+                        physsub_get_value_2(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[1] != pcVar4[1]) {
-                        fcn.00000128(iVar3);
+                        physsub_get_value_2(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[2] != pcVar4[2]) {
-                        fcn.00000128(iVar3);
+                        physsub_get_value_2(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[3] != pcVar4[3]) {
-                        fcn.00000128(iVar3);
+                        physsub_get_value_2(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     pcVar8 = pcVar5 + 4;
@@ -2025,15 +2025,15 @@ void fcn.00000112(int16_t arg1)
                 } while (in_stack_00000008 != 1);
                 if (pcVar5[4] != pcVar4[4]) {
                     in_stack_00000008 = 0xf4;
-                    fcn.00000128(iVar3);
+                    physsub_get_value_2(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar5[5] != pcVar4[5]) {
-                    fcn.00000128(iVar3);
+                    physsub_get_value_2(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar5[6] != pcVar4[6]) {
-                    fcn.00000128(iVar3);
+                    physsub_get_value_2(iVar3);
                 }
                 in_BX = (char *)(iVar3 + 1);
                 unaff_SI = pcVar5 + 8;
@@ -2053,9 +2053,9 @@ void fcn.00000112(int16_t arg1)
                 cVar2 = pcVar5[7];
                 pcVar5 = pcVar5 + 0x2c;
                 iStackY_a = 0x5f2;
-                fcn.000015cf(in_BX, in_BX);
+                physsub_func_3(in_BX, in_BX);
                 pcVar8 = (char *)0x5fa;
-                cVar2 = fcn.0000080e((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
+                cVar2 = physsub_multiply_2((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
                 pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
                 iVar3 = (int16_t)unaff_DI * 2 + *(int16_t *)0x506d;
                 in_BX = unaff_DI;
@@ -2065,11 +2065,11 @@ void fcn.00000112(int16_t arg1)
                     in_BX = pcVar4;
                     if (cVar2 < '\0') {
                         iStackY_a = 0x621;
-                        uVar6 = fcn.00000807();
+                        uVar6 = physsub_func_4();
                         pcVar9 = pcVar5;
                     }
                     pcVar5 = pcVar8;
-                    fcn.00000684((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    physsub_process_loop((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                     pcVar4 = pcVar9;
                     iVar3 = iStackY_a;
                 }
@@ -2078,9 +2078,9 @@ void fcn.00000112(int16_t arg1)
                 if (((*(char *)0x5073 != '\x01') && (*(char *)0x5093 != -1)) && (*(char *)0x5093 != -4)) {
                     uVar6 = CONCAT22(iVar3 + 0x140, CONCAT11(pcVar5[2], (char)((uint16_t)pcVar4 >> 8)));
                     if ((int16_t)pcVar4 < 0) {
-                        uVar6 = fcn.00000807();
+                        uVar6 = physsub_func_4();
                     }
-                    fcn.00000684((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    physsub_process_loop((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                 }
             }
         } while (pcVar5[7] == pcVar4[7]);
@@ -2120,34 +2120,34 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
     
     while( true ) {
         unaff_DI[unaff_BP + 0x4c6] = unaff_DI[unaff_BP + 0x4c6] + in_AL;
-        fcn.000015cf();
+        physsub_func_3();
         *(int16_t *)0x506d = *(int16_t *)0x506d + 0x140;
         pcVar1 = (char *)0x5073;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000ed5(in_BX);
+        fill_buffer(in_BX);
         in_BX = 0;
         pcVar4 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000004db(0);
+            physsub_multiply_5(0);
         }
         do {
             pcVar6 = unaff_DI;
             pcVar5 = pcVar4;
             if (*pcVar5 != *pcVar6) {
-                fcn.00000128(in_BX);
+                physsub_get_value_2(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[1] != pcVar6[1]) {
-                fcn.00000128(in_BX);
+                physsub_get_value_2(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[2] != pcVar6[2]) {
-                fcn.00000128(in_BX);
+                physsub_get_value_2(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[3] != pcVar6[3]) {
-                fcn.00000128(in_BX);
+                physsub_get_value_2(in_BX);
             }
             in_BX = in_BX + 1;
             pcVar4 = pcVar5 + 4;
@@ -2155,15 +2155,15 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
         } while (param_3 != (char *)0x1);
         if (pcVar5[4] != pcVar6[4]) {
             param_3 = (char *)0xf4;
-            fcn.00000128(in_BX);
+            physsub_get_value_2(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar5[5] != pcVar6[5]) {
-            fcn.00000128(in_BX);
+            physsub_get_value_2(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar5[6] != pcVar6[6]) {
-            fcn.00000128(in_BX);
+            physsub_get_value_2(in_BX);
         }
         in_BX = in_BX + 1;
         pcVar4 = pcVar5 + 8;
@@ -2183,8 +2183,8 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             *(char *)0x5093 = cVar2;
             cVar2 = pcVar5[7];
             pcVar5 = pcVar5 + 0x2c;
-            fcn.000015cf();
-            in_AL = fcn.0000080e((int16_t)pcVar4, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
+            physsub_func_3();
+            in_AL = physsub_multiply_2((int16_t)pcVar4, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
             pcVar6 = (char *)CONCAT11(extraout_DL, in_AL);
             pcVar3 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x506d);
             arg3_00 = pcVar6;
@@ -2193,9 +2193,9 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar5, in_AL));
                 pcVar5 = pcVar6;
                 if (in_AL < '\0') {
-                    uVar7 = fcn.00000807();
+                    uVar7 = physsub_func_4();
                 }
-                in_AL = fcn.00000684((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
+                in_AL = physsub_process_loop((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
                 pcVar3 = pcVar6;
                 arg3_00 = param_5;
                 pcVar5 = pcVar4;
@@ -2207,13 +2207,13 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             if (((*(char *)0x5073 != '\x01') && (*(char *)0x5093 != -1)) && (*(char *)0x5093 != -4)) {
                 uVar7 = CONCAT22(pcVar3 + 0x140, CONCAT11(pcVar5[2], (char)((uint16_t)arg3_00 >> 8)));
                 if ((int16_t)arg3_00 < 0) {
-                    uVar7 = fcn.00000807();
+                    uVar7 = physsub_func_4();
                 }
                 param_5 = (char *)0x651;
-                in_AL = fcn.00000684((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
+                in_AL = physsub_process_loop((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
             }
         } else if (in_AL != pcVar6[7]) {
-            in_AL = fcn.00000128(in_BX);
+            in_AL = physsub_get_value_2(in_BX);
         }
         unaff_SI = pcVar4 + 4;
     }
@@ -2253,34 +2253,34 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
     
     while( true ) {
         unaff_DI[unaff_BP + 0x4c6] = unaff_DI[unaff_BP + 0x4c6] + in_AL;
-        fcn.000015cf();
+        physsub_func_3();
         *(int16_t *)0x506d = *(int16_t *)0x506d + 0x140;
         pcVar1 = (char *)0x5073;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000ed5(in_BX);
+        fill_buffer(in_BX);
         in_BX = 0;
         pcVar4 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000004db(0);
+            physsub_multiply_5(0);
         }
         do {
             pcVar6 = unaff_DI;
             pcVar5 = pcVar4;
             if (*pcVar5 != *pcVar6) {
-                fcn.00000128(in_BX);
+                physsub_get_value_2(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[1] != pcVar6[1]) {
-                fcn.00000128(in_BX);
+                physsub_get_value_2(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[2] != pcVar6[2]) {
-                fcn.00000128(in_BX);
+                physsub_get_value_2(in_BX);
             }
             in_BX = in_BX + 1;
             if (pcVar5[3] != pcVar6[3]) {
-                fcn.00000128(in_BX);
+                physsub_get_value_2(in_BX);
             }
             in_BX = in_BX + 1;
             pcVar4 = pcVar5 + 4;
@@ -2288,15 +2288,15 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
         } while (param_3 != (char *)0x1);
         if (pcVar5[4] != pcVar6[4]) {
             param_3 = (char *)0xf4;
-            fcn.00000128(in_BX);
+            physsub_get_value_2(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar5[5] != pcVar6[5]) {
-            fcn.00000128(in_BX);
+            physsub_get_value_2(in_BX);
         }
         in_BX = in_BX + 1;
         if (pcVar5[6] != pcVar6[6]) {
-            fcn.00000128(in_BX);
+            physsub_get_value_2(in_BX);
         }
         in_BX = in_BX + 1;
         pcVar4 = pcVar5 + 8;
@@ -2316,8 +2316,8 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             *(char *)0x5093 = cVar2;
             cVar2 = pcVar5[7];
             pcVar5 = pcVar5 + 0x2c;
-            fcn.000015cf();
-            in_AL = fcn.0000080e((int16_t)pcVar4, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
+            physsub_func_3();
+            in_AL = physsub_multiply_2((int16_t)pcVar4, (int16_t)unaff_DI, arg3, CONCAT11(extraout_AH, cVar2));
             pcVar6 = (char *)CONCAT11(extraout_DL, in_AL);
             pcVar3 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x506d);
             arg3_00 = pcVar6;
@@ -2326,9 +2326,9 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar5, in_AL));
                 pcVar5 = pcVar6;
                 if (in_AL < '\0') {
-                    uVar7 = fcn.00000807();
+                    uVar7 = physsub_func_4();
                 }
-                in_AL = fcn.00000684((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
+                in_AL = physsub_process_loop((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar5);
                 pcVar3 = pcVar6;
                 arg3_00 = param_5;
                 pcVar5 = pcVar4;
@@ -2340,13 +2340,13 @@ void fcn.00000114(undefined2 param_1, undefined2 param_2, char *param_3, undefin
             if (((*(char *)0x5073 != '\x01') && (*(char *)0x5093 != -1)) && (*(char *)0x5093 != -4)) {
                 uVar7 = CONCAT22(pcVar3 + 0x140, CONCAT11(pcVar5[2], (char)((uint16_t)arg3_00 >> 8)));
                 if ((int16_t)arg3_00 < 0) {
-                    uVar7 = fcn.00000807();
+                    uVar7 = physsub_func_4();
                 }
                 param_5 = (char *)0x651;
-                in_AL = fcn.00000684((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
+                in_AL = physsub_process_loop((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_00);
             }
         } else if (in_AL != pcVar6[7]) {
-            in_AL = fcn.00000128(in_BX);
+            in_AL = physsub_get_value_2(in_BX);
         }
         unaff_SI = pcVar4 + 4;
     }
@@ -2394,29 +2394,29 @@ undefined2 fcn.00000116(int16_t arg1)
         pcVar1 = (char *)0x5073;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000ed5(in_BX);
+        fill_buffer(in_BX);
         iVar5 = 0;
         pcVar7 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.000004db(0);
+            physsub_multiply_5(0);
         }
         do {
             pcVar4 = unaff_DI;
             pcVar8 = pcVar7;
             if (*pcVar8 != *pcVar4) {
-                fcn.00000128(iVar5);
+                physsub_get_value_2(iVar5);
             }
             iVar5 = iVar5 + 1;
             if (pcVar8[1] != pcVar4[1]) {
-                fcn.00000128(iVar5);
+                physsub_get_value_2(iVar5);
             }
             iVar5 = iVar5 + 1;
             if (pcVar8[2] != pcVar4[2]) {
-                fcn.00000128(iVar5);
+                physsub_get_value_2(iVar5);
             }
             iVar5 = iVar5 + 1;
             if (pcVar8[3] != pcVar4[3]) {
-                fcn.00000128(iVar5);
+                physsub_get_value_2(iVar5);
             }
             iVar5 = iVar5 + 1;
             pcVar7 = pcVar8 + 4;
@@ -2424,15 +2424,15 @@ undefined2 fcn.00000116(int16_t arg1)
         } while (in_stack_00000004 != (char *)0x1);
         if (pcVar8[4] != pcVar4[4]) {
             in_stack_00000004 = (char *)0xf4;
-            fcn.00000128(iVar5);
+            physsub_get_value_2(iVar5);
         }
         iVar5 = iVar5 + 1;
         if (pcVar8[5] != pcVar4[5]) {
-            fcn.00000128(iVar5);
+            physsub_get_value_2(iVar5);
         }
         iVar5 = iVar5 + 1;
         if (pcVar8[6] != pcVar4[6]) {
-            fcn.00000128(iVar5);
+            physsub_get_value_2(iVar5);
         }
         in_BX = iVar5 + 1;
         pcVar7 = pcVar8 + 8;
@@ -2451,8 +2451,8 @@ undefined2 fcn.00000116(int16_t arg1)
             *(char *)0x5093 = cVar2;
             cVar2 = pcVar8[7];
             pcVar8 = pcVar8 + 0x2c;
-            fcn.000015cf();
-            cVar2 = fcn.0000080e((int16_t)pcVar7, (int16_t)unaff_DI, iVar5, CONCAT11(extraout_AH, cVar2));
+            physsub_func_3();
+            cVar2 = physsub_multiply_2((int16_t)pcVar7, (int16_t)unaff_DI, iVar5, CONCAT11(extraout_AH, cVar2));
             pcVar6 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar4 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x506d);
             arg3 = pcVar6;
@@ -2461,9 +2461,9 @@ undefined2 fcn.00000116(int16_t arg1)
                 uVar9 = CONCAT22(pcVar4, CONCAT11(*pcVar8, cVar2));
                 pcVar8 = pcVar6;
                 if (cVar2 < '\0') {
-                    uVar9 = fcn.00000807();
+                    uVar9 = physsub_func_4();
                 }
-                fcn.00000684((int16_t)uVar9, (int16_t)((uint32_t)uVar9 >> 0x10), (int16_t)pcVar8);
+                physsub_process_loop((int16_t)uVar9, (int16_t)((uint32_t)uVar9 >> 0x10), (int16_t)pcVar8);
                 pcVar4 = pcVar6;
                 arg3 = in_stack_00000008;
                 pcVar8 = pcVar7;
@@ -2475,16 +2475,16 @@ undefined2 fcn.00000116(int16_t arg1)
             if (((*(char *)0x5073 != '\x01') && (*(char *)0x5093 != -1)) && (*(char *)0x5093 != -4)) {
                 uVar9 = CONCAT22(pcVar4 + 0x140, CONCAT11(pcVar8[2], (char)((uint16_t)arg3 >> 8)));
                 if ((int16_t)arg3 < 0) {
-                    uVar9 = fcn.00000807();
+                    uVar9 = physsub_func_4();
                 }
                 in_stack_00000008 = (char *)0x651;
-                fcn.00000684((int16_t)uVar9, (int16_t)((uint32_t)uVar9 >> 0x10), (int16_t)arg3);
+                physsub_process_loop((int16_t)uVar9, (int16_t)((uint32_t)uVar9 >> 0x10), (int16_t)arg3);
             }
         } else if (pcVar8[7] != pcVar4[7]) {
-            fcn.00000128(in_BX);
+            physsub_get_value_2(in_BX);
         }
         unaff_SI = pcVar7 + 4;
-        uVar3 = fcn.000015cf();
+        uVar3 = physsub_func_3();
     }
     return uVar3;
 }

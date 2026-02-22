@@ -16,13 +16,13 @@ static const char *STR_0x19f8 = "muwyo+&)&"; // [ascii]
 static const char *STR_0x1a15 = "vxz{12/-367<"; // [ascii]
 
 /* ====================================================================== */
-/* 0x0: fcn.00000000 */
+/* 0x0: zr2_02 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000000(int16_t arg1)
+void zr2_02(int16_t arg1)
 {
     uint8_t *puVar1;
     char *pcVar2;
@@ -82,73 +82,73 @@ void fcn.00000000(int16_t arg1)
     *(char *)0x5078 = *(char *)0x5078 + '\x01';
     *(undefined2 *)0x5069 = 0x46c;
     iVar8 = *(int16_t *)0xff31;
-    fcn.000016b5(CONCAT22((int16_t)(uVar7 >> 0x10), iVar11));
+    sprite_func_1(CONCAT22((int16_t)(uVar7 >> 0x10), iVar11));
     iVar10 = 0;
     if ((*(uint8_t *)(iVar8 + -0x21) & 0x80) != 0) {
-        fcn.00000361(0);
+        vga_operation(0);
     }
     puVar5 = (uint8_t *)(iVar8 + -0x20);
     do {
         puVar12 = puVar5;
         if ((*puVar12 & 0x80) != 0) {
-            fcn.0000039e(iVar10);
+            sprite_func_12(iVar10);
         }
         iVar10 = iVar10 + 1;
         if ((puVar12[1] & 0x80) != 0) {
-            fcn.0000039e(iVar10);
+            sprite_func_12(iVar10);
         }
         iVar10 = iVar10 + 1;
         if ((puVar12[2] & 0x80) != 0) {
-            fcn.0000039e(iVar10);
+            sprite_func_12(iVar10);
         }
         iVar10 = iVar10 + 1;
         if ((puVar12[3] & 0x80) != 0) {
-            fcn.0000039e(iVar10);
+            sprite_func_12(iVar10);
         }
         iVar10 = iVar10 + 1;
         puVar5 = puVar12 + 4;
     } while (iVar11 != 1);
     if ((puVar12[4] & 0x80) != 0) {
-        fcn.0000039e(iVar10);
+        sprite_func_12(iVar10);
     }
     iVar10 = iVar10 + 1;
     if ((puVar12[5] & 0x80) != 0) {
-        fcn.0000039e(iVar10);
+        sprite_func_12(iVar10);
     }
     iVar10 = iVar10 + 1;
     if ((puVar12[6] & 0x80) != 0) {
-        fcn.0000039e(iVar10);
+        sprite_func_12(iVar10);
     }
     if ((puVar12[7] & 0x80) != 0) {
-        fcn.000003e2();
+        sprite_func_14();
     }
     pcVar13 = *(char **)0xff31;
     pcVar16 = (char *)0xe900;
     *(undefined *)0x506d = 0x12;
     do {
-        fcn.00000e7a(iVar10);
+        sprite_get_value(iVar10);
         iVar10 = 0;
         pcVar4 = pcVar13 + 4;
         if (pcVar13[3] < '\0') {
-            fcn.0000041a(0);
+            vga_operation1(0);
         }
         do {
             pcVar9 = pcVar16;
             pcVar14 = pcVar4;
             if (*pcVar14 != *pcVar9) {
-                fcn.00000128(iVar10);
+                vga_operation_3(iVar10);
             }
             iVar10 = iVar10 + 1;
             if (pcVar14[1] != pcVar9[1]) {
-                fcn.00000128(iVar10);
+                vga_operation_3(iVar10);
             }
             iVar10 = iVar10 + 1;
             if (pcVar14[2] != pcVar9[2]) {
-                fcn.00000128(iVar10);
+                vga_operation_3(iVar10);
             }
             iVar10 = iVar10 + 1;
             if (pcVar14[3] != pcVar9[3]) {
-                fcn.00000128(iVar10);
+                vga_operation_3(iVar10);
             }
             iVar10 = iVar10 + 1;
             pcVar4 = pcVar14 + 4;
@@ -156,15 +156,15 @@ void fcn.00000000(int16_t arg1)
         } while (in_stack_00000006 != (char *)0x1);
         if (pcVar14[4] != pcVar9[4]) {
             in_stack_00000006 = (char *)0xf4;
-            fcn.00000128(iVar10);
+            vga_operation_3(iVar10);
         }
         iVar10 = iVar10 + 1;
         if (pcVar14[5] != pcVar9[5]) {
-            fcn.00000128(iVar10);
+            vga_operation_3(iVar10);
         }
         iVar10 = iVar10 + 1;
         if (pcVar14[6] != pcVar9[6]) {
-            fcn.00000128(iVar10);
+            vga_operation_3(iVar10);
         }
         iVar10 = iVar10 + 1;
         pcVar13 = pcVar14 + 8;
@@ -183,8 +183,8 @@ void fcn.00000000(int16_t arg1)
             *(char *)0x508b = cVar6;
             cVar6 = pcVar14[7];
             pcVar14 = pcVar14 + 0x2c;
-            fcn.000016a9();
-            cVar6 = fcn.000007a0((int16_t)pcVar13, (int16_t)pcVar16, iVar11, CONCAT11(extraout_AH, cVar6));
+            sprite_func_3();
+            cVar6 = sprite_multiply((int16_t)pcVar13, (int16_t)pcVar16, iVar11, CONCAT11(extraout_AH, cVar6));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar6);
             pcVar9 = (char *)((int16_t)pcVar16 * 2 + *(int16_t *)0x5069);
             arg3 = pcVar4;
@@ -193,9 +193,9 @@ void fcn.00000000(int16_t arg1)
                 uVar17 = CONCAT22(pcVar9, CONCAT11(*pcVar14, cVar6));
                 pcVar16 = pcVar4;
                 if (cVar6 < '\0') {
-                    uVar17 = fcn.00000799();
+                    uVar17 = sprite_func_4();
                 }
-                fcn.000005c3((int16_t)uVar17, (int16_t)((uint32_t)uVar17 >> 0x10), (int16_t)pcVar16);
+                sprite_func_11((int16_t)uVar17, (int16_t)((uint32_t)uVar17 >> 0x10), (int16_t)pcVar16);
                 pcVar9 = pcVar4;
                 arg3 = in_stack_0000000a;
                 pcVar14 = pcVar13;
@@ -207,16 +207,16 @@ void fcn.00000000(int16_t arg1)
             if (((*(char *)0x506d != '\x01') && (*(char *)0x508b != -1)) && (*(char *)0x508b != -4)) {
                 uVar17 = CONCAT22(pcVar9 + 0x280, CONCAT11(pcVar14[2], (char)((uint16_t)arg3 >> 8)));
                 if ((int16_t)arg3 < 0) {
-                    uVar17 = fcn.00000799();
+                    uVar17 = sprite_func_4();
                 }
                 in_stack_0000000a = (char *)0x590;
-                fcn.000005c3((int16_t)uVar17, (int16_t)((uint32_t)uVar17 >> 0x10), (int16_t)arg3);
+                sprite_func_11((int16_t)uVar17, (int16_t)((uint32_t)uVar17 >> 0x10), (int16_t)arg3);
             }
         } else if (pcVar14[7] != pcVar9[7]) {
-            fcn.00000128(iVar10);
+            vga_operation_3(iVar10);
         }
         pcVar13 = pcVar13 + 4;
-        fcn.000016a9();
+        sprite_func_3();
         *(int16_t *)0x5069 = *(int16_t *)0x5069 + 0x280;
         pcVar2 = (char *)0x506d;
         *pcVar2 = *pcVar2 + -1;
@@ -225,11 +225,11 @@ void fcn.00000000(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x16b5: fcn.000016b5 */
+/* 0x16b5: sprite_func_1 */
 /* ====================================================================== */
 
 
-void fcn.000016b5(void)
+void sprite_func_1(void)
 {
     uint16_t unaff_SI;
     
@@ -240,13 +240,13 @@ void fcn.000016b5(void)
 }
 
 /* ====================================================================== */
-/* 0x361: fcn.00000361 */
+/* 0x361: vga_operation */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000361(int16_t arg3)
+void vga_operation(int16_t arg3)
 {
     undefined extraout_AH;
     undefined uVar1;
@@ -264,23 +264,23 @@ void fcn.00000361(int16_t arg3)
     }
     *(undefined *)0xe900 = 0xff;
     uVar2 = *unaff_SI;
-    fcn.000016a9(arg3);
+    sprite_func_3(arg3);
     uVar1 = extraout_AH;
     if ((char)unaff_SI[0x25] < '\0') {
         uVar1 = 0;
-        fcn.00000799();
+        sprite_func_4();
     }
-    fcn.000007a0(in_stack_00000002, in_stack_00000000, arg3, CONCAT11(uVar1, uVar2));
-    fcn.000005c3(CONCAT11(unaff_SI[0x28], (char)in_stack_00000000), 0x46c, arg3);
+    sprite_multiply(in_stack_00000002, in_stack_00000000, arg3, CONCAT11(uVar1, uVar2));
+    sprite_func_11(CONCAT11(unaff_SI[0x28], (char)in_stack_00000000), 0x46c, arg3);
     return;
 }
 
 /* ====================================================================== */
-/* 0x16a9: fcn.000016a9 */
+/* 0x16a9: sprite_func_3 */
 /* ====================================================================== */
 
 
-void fcn.000016a9(void)
+void sprite_func_3(void)
 {
     uint16_t unaff_SI;
     
@@ -291,11 +291,11 @@ void fcn.000016a9(void)
 }
 
 /* ====================================================================== */
-/* 0x799: fcn.00000799 */
+/* 0x799: sprite_func_4 */
 /* ====================================================================== */
 
 
-undefined fcn.00000799(void)
+undefined sprite_func_4(void)
 {
     uint8_t in_AL;
     
@@ -303,13 +303,13 @@ undefined fcn.00000799(void)
 }
 
 /* ====================================================================== */
-/* 0x7a0: fcn.000007a0 */
+/* 0x7a0: sprite_multiply */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-undefined2 fcn.000007a0(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t arg1)
+undefined2 sprite_multiply(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t arg1)
 {
     undefined uVar1;
     uint8_t uVar2;
@@ -337,12 +337,12 @@ undefined2 fcn.000007a0(int16_t arg_6h, int16_t arg_4h, int16_t arg3, int16_t ar
 }
 
 /* ====================================================================== */
-/* 0x5c3: fcn.000005c3 */
+/* 0x5c3: sprite_func_11 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000005c3(int16_t arg1, int16_t arg2, int16_t arg3)
+void sprite_func_11(int16_t arg1, int16_t arg2, int16_t arg3)
 {
     char cVar1;
     uint8_t uVar2;
@@ -355,23 +355,23 @@ void fcn.000005c3(int16_t arg1, int16_t arg2, int16_t arg3)
     }
     *(undefined2 *)0x5067 = *(undefined2 *)((uint16_t)(uVar2 & 0x7f) * 2 + 0x505a);
     if (-1 < (char)uVar2) {
-        fcn.000006cb(arg2);
-        fcn.00000730();
+        sprite_process_loop_2(arg2);
+        vga_operation0();
         return;
     }
-    fcn.0000062f(CONCAT11((char)((uint16_t)*(undefined2 *)0x5067 >> 8), cVar1));
-    fcn.00000730();
+    vga_operation_4(CONCAT11((char)((uint16_t)*(undefined2 *)0x5067 >> 8), cVar1));
+    vga_operation0();
     return;
 }
 
 /* ====================================================================== */
-/* 0x39e: fcn.0000039e */
+/* 0x39e: sprite_func_12 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.0000039e(int16_t arg3)
+void sprite_func_12(int16_t arg3)
 {
     undefined2 uVar1;
     undefined uVar2;
@@ -388,20 +388,20 @@ void fcn.0000039e(int16_t arg3)
     *(undefined *)0x508b = 0;
     *(undefined *)(arg3 + -0x16ff) = 0xff;
     uVar2 = *unaff_SI;
-    fcn.000016a9(arg3);
+    sprite_func_3(arg3);
     uVar1 = *(undefined2 *)(unaff_SI + 0x24);
     *(undefined2 *)0x508e = uVar1;
-    fcn.000007a0(in_stack_00000002, in_stack_00000000, 0x508e, CONCAT11((char)((uint16_t)uVar1 >> 8), uVar2));
-    fcn.00000596();
+    sprite_multiply(in_stack_00000002, in_stack_00000000, 0x508e, CONCAT11((char)((uint16_t)uVar1 >> 8), uVar2));
+    sprite_process_loop();
     return;
 }
 
 /* ====================================================================== */
-/* 0x596: fcn.00000596 */
+/* 0x596: sprite_process_loop */
 /* ====================================================================== */
 
 
-void fcn.00000596(void)
+void sprite_process_loop(void)
 {
     int16_t arg1;
     int16_t in_DX;
@@ -415,22 +415,22 @@ void fcn.00000596(void)
     if ((*unaff_BP != -1) && (*unaff_BP != -4)) {
         arg1 = CONCAT11(*unaff_SI, *unaff_DI);
         if (*unaff_DI < '\0') {
-            uVar1 = fcn.00000799(0x599);
+            uVar1 = sprite_func_4(0x599);
             in_DX = (int16_t)((uint32_t)uVar1 >> 0x10);
             arg1 = (int16_t)uVar1;
         }
-        fcn.000005c3(arg1, in_DX, in_BX);
+        sprite_func_11(arg1, in_DX, in_BX);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x3e2: fcn.000003e2 */
+/* 0x3e2: sprite_func_14 */
 /* ====================================================================== */
 
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.000003e2(undefined2 param_1, int16_t param_2, int16_t param_3)
+void sprite_func_14(undefined2 param_1, int16_t param_2, int16_t param_3)
 {
     char cVar1;
     undefined extraout_AH;
@@ -449,13 +449,13 @@ void fcn.000003e2(undefined2 param_1, int16_t param_2, int16_t param_3)
     }
     *(undefined *)0xe91b = 0xff;
     uVar3 = *unaff_SI;
-    fcn.000016a9();
+    sprite_func_3();
     uVar2 = extraout_AH;
     if ((char)unaff_SI[0x24] < '\0') {
         uVar2 = 0;
-        fcn.00000799();
+        sprite_func_4();
     }
-    fcn.000007a0(param_3, param_2, in_BX, CONCAT11(uVar2, uVar3));
+    sprite_multiply(param_3, param_2, in_BX, CONCAT11(uVar2, uVar3));
     cVar1 = (char)param_2;
     uVar4 = *(uint8_t *)0x5070;
     if ((cVar1 != '\0') && (-1 < cVar1)) {
@@ -463,23 +463,23 @@ void fcn.000003e2(undefined2 param_1, int16_t param_2, int16_t param_3)
     }
     *(undefined2 *)0x5067 = *(undefined2 *)((uint16_t)(uVar4 & 0x7f) * 2 + 0x505a);
     if (-1 < (char)uVar4) {
-        fcn.000006cb();
-        fcn.00000730();
+        sprite_process_loop_2();
+        vga_operation0();
         return;
     }
-    fcn.0000062f(CONCAT11((char)((uint16_t)*(undefined2 *)0x5067 >> 8), cVar1));
-    fcn.00000730();
+    vga_operation_4(CONCAT11((char)((uint16_t)*(undefined2 *)0x5067 >> 8), cVar1));
+    vga_operation0();
     return;
 }
 
 /* ====================================================================== */
-/* 0xe7a: fcn.00000e7a */
+/* 0xe7a: sprite_get_value */
 /* ====================================================================== */
 
 // WARNING: Possible PIC construction at 0x00000e93: Changing call to branch
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-int16_t fcn.00000e7a(int16_t arg3)
+int16_t sprite_get_value(int16_t arg3)
 {
     uint8_t *puVar1;
     undefined2 uVar2;
@@ -519,8 +519,8 @@ int16_t fcn.00000e7a(int16_t arg3)
             }
             if (*(char *)0xff43 != '\0') {
                 *(undefined *)0xff44 = 0xff;
-                fcn.00001023(iVar6, CONCAT11((char)((uint16_t)in_CX >> 8), uVar4));
-                fcn.00000fbf();
+                vga_operation_2(iVar6, CONCAT11((char)((uint16_t)in_CX >> 8), uVar4));
+                sprite_func_19();
                 uVar3 = *(undefined2 *)0xff2c;
                 *(undefined *)0x5071 = *(undefined *)((uint8_t)(*(char *)0x92 - 1) + 0x4199);
                 out(0x3c4, 0x702);
@@ -625,7 +625,7 @@ int16_t fcn.00000e7a(int16_t arg3)
             }
             return iVar6;
         }
-        iVar6 = fcn.00000fa4(arg3);
+        iVar6 = sprite_multiply_2(arg3);
     }
     if (*(char *)0xff37 == '\0') {
         *(undefined *)0xff37 = 0xff;
@@ -635,7 +635,7 @@ int16_t fcn.00000e7a(int16_t arg3)
             iVar10 = 3;
             do {
                 iVar14 = iVar10;
-                iVar7 = fcn.00000730(iVar6, iVar10, iVar9, arg3);
+                iVar7 = vga_operation0(iVar6, iVar10, iVar9, arg3);
                 iVar6 = iVar14 + 2;
                 iVar10 = iVar9 + -1;
             } while (iVar10 != 0);
@@ -648,12 +648,12 @@ int16_t fcn.00000e7a(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0xfa4: fcn.00000fa4 */
+/* 0xfa4: sprite_multiply_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000fa4(int16_t arg3)
+void sprite_multiply_2(int16_t arg3)
 {
     undefined2 unaff_ES;
     undefined2 unaff_DS;
@@ -661,17 +661,17 @@ void fcn.00000fa4(int16_t arg3)
     if (*(char *)0xff44 == '\0') {
         return;
     }
-    fcn.00000ff1(arg3);
+    sprite_check_state(arg3);
     *(undefined *)0xff44 = 0;
     return;
 }
 
 /* ====================================================================== */
-/* 0xff1: fcn.00000ff1 */
+/* 0xff1: sprite_check_state */
 /* ====================================================================== */
 
 
-undefined4 fcn.00000ff1(void)
+undefined4 sprite_check_state(void)
 {
     undefined *puVar1;
     int16_t iVar2;
@@ -702,12 +702,12 @@ undefined4 fcn.00000ff1(void)
 }
 
 /* ====================================================================== */
-/* 0x1023: fcn.00001023 */
+/* 0x1023: vga_operation_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00001023(int16_t arg1, int16_t arg4)
+void vga_operation_2(int16_t arg1, int16_t arg4)
 {
     int16_t iVar1;
     uint8_t *puVar2;
@@ -718,7 +718,7 @@ void fcn.00001023(int16_t arg1, int16_t arg4)
     puVar2 = (uint8_t *)
              ((uint16_t)(*(char *)0x84 + *(char *)0x5076 & 0x3f) * 0x24 +
               (uint16_t)(uint8_t)(*(char *)0x83 + *(char *)0x5077 + 4) + *(int16_t *)0xff31);
-    fcn.000016a9();
+    sprite_func_3();
     do {
         iVar1 = 4;
         do {
@@ -728,17 +728,17 @@ void fcn.00001023(int16_t arg1, int16_t arg4)
             puVar2 = puVar3 + 1;
         } while (iVar1 != 0);
         puVar2 = puVar3 + 0x21;
-        fcn.000016a9();
+        sprite_func_3();
     } while (in_stack_00000002 != 1);
     return;
 }
 
 /* ====================================================================== */
-/* 0xfbf: fcn.00000fbf */
+/* 0xfbf: sprite_func_19 */
 /* ====================================================================== */
 
 
-undefined4 fcn.00000fbf(void)
+undefined4 sprite_func_19(void)
 {
     undefined *puVar1;
     int16_t iVar2;
@@ -769,11 +769,11 @@ undefined4 fcn.00000fbf(void)
 }
 
 /* ====================================================================== */
-/* 0x730: fcn.00000730 */
+/* 0x730: vga_operation0 */
 /* ====================================================================== */
 
 
-undefined4 fcn.00000730(void)
+undefined4 vga_operation0(void)
 {
     undefined *unaff_SI;
     undefined *unaff_DI;
@@ -803,13 +803,13 @@ undefined4 fcn.00000730(void)
 }
 
 /* ====================================================================== */
-/* 0x41a: fcn.0000041a */
+/* 0x41a: vga_operation1 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.0000041a(int16_t arg3)
+void vga_operation1(int16_t arg3)
 {
     undefined extraout_AH;
     undefined uVar1;
@@ -838,8 +838,8 @@ void fcn.0000041a(int16_t arg3)
     *(undefined *)0x508b = uVar1;
     uVar1 = unaff_SI[-1];
     arg_6h = unaff_SI;
-    fcn.000016a9(arg3, arg3);
-    fcn.000007a0((int16_t)arg_6h, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, uVar1));
+    sprite_func_3(arg3, arg3);
+    sprite_multiply((int16_t)arg_6h, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, uVar1));
     puVar4 = unaff_SI + 0x25;
     iVar2 = (int16_t)unaff_DI * 2 + *(int16_t *)0x5069;
     iVar3 = extraout_DX;
@@ -849,31 +849,31 @@ void fcn.0000041a(int16_t arg3)
         iVar6 = extraout_DX;
         if ((char)extraout_DX < '\0') {
             iVar6 = extraout_DX;
-            uVar5 = fcn.00000799(iVar2, puVar4);
+            uVar5 = sprite_func_4(iVar2, puVar4);
         }
         puVar4 = arg_6h;
         iVar2 = iVar6;
-        fcn.000005c3((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
+        sprite_func_11((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
         iVar3 = in_stack_00000000;
     }
     if (((*(char *)0x506d != '\x01') && (*(char *)0x508b != -1)) && (*(char *)0x508b != -4)) {
         uVar5 = CONCAT22(iVar2 + 0x280, CONCAT11(puVar4[2], (char)((uint16_t)iVar3 >> 8)));
         if (iVar3 < 0) {
-            uVar5 = fcn.00000799();
+            uVar5 = sprite_func_4();
         }
-        fcn.000005c3((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
+        sprite_func_11((int16_t)uVar5, (int16_t)((uint32_t)uVar5 >> 0x10), iVar3);
     }
     return;
 }
 
 /* ====================================================================== */
-/* 0x128: fcn.00000128 */
+/* 0x128: vga_operation_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 // WARNING: [rz-ghidra] Detected overlap for variable arg_5h
 
-void fcn.00000128(int16_t arg3)
+void vga_operation_3(int16_t arg3)
 {
     char *pcVar1;
     undefined2 uVar2;
@@ -906,19 +906,19 @@ void fcn.00000128(int16_t arg3)
         arg3_00 = 0x508e;
         *(undefined *)0x508f = *unaff_SI;
         arg_4h = unaff_SI;
-        fcn.000016a9(arg3);
+        sprite_func_3(arg3);
         uVar2 = *(undefined2 *)(unaff_SI + 0x23);
         *(undefined2 *)(arg3_00 + 2) = uVar2;
         *(undefined *)0x506e = (char)arg3;
         *(char *)0x506f = '\x12' - *(char *)0x506d;
-        uVar6 = fcn.000007a0(in_stack_00000000, (int16_t)arg_4h, arg3_00, CONCAT11((char)((uint16_t)uVar2 >> 8), uVar6))
+        uVar6 = sprite_multiply(in_stack_00000000, (int16_t)arg_4h, arg3_00, CONCAT11((char)((uint16_t)uVar2 >> 8), uVar6))
         ;
         *(undefined *)0x508e = uVar6;
-        fcn.00000596();
+        sprite_process_loop();
         if (*(char *)0x506d != '\x01') {
-            fcn.00000596();
+            sprite_process_loop();
             if ((*(char *)0xff34 != '\0') && (*(char *)0xff2f != '\0')) {
-                fcn.000007f1();
+                vga_operation9();
             }
         }
         return;
@@ -932,7 +932,7 @@ void fcn.00000128(int16_t arg3)
         *(undefined *)(unaff_DI + -1) = 0xfe;
         if (cVar3 != '\0') {
             *(char *)(unaff_DI + -1) = cVar4;
-            fcn.00000270(arg3, arg3 * 2 + *(int16_t *)0x5069, CONCAT11((char)((uint16_t)in_AX >> 8), cVar4));
+            vga_operation7(arg3, arg3 * 2 + *(int16_t *)0x5069, CONCAT11((char)((uint16_t)in_AX >> 8), cVar4));
         }
     }
     uVar5 = *(uint8_t *)0xc012 - 5;
@@ -947,12 +947,12 @@ void fcn.00000128(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x270: fcn.00000270 */
+/* 0x270: vga_operation7 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00000270(int16_t arg3, int16_t arg2, int16_t arg1)
+undefined4 vga_operation7(int16_t arg3, int16_t arg2, int16_t arg1)
 {
     undefined2 *puVar1;
     undefined2 uVar2;
@@ -1026,11 +1026,11 @@ undefined4 fcn.00000270(int16_t arg3, int16_t arg2, int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x7f1: fcn.000007f1 */
+/* 0x7f1: vga_operation9 */
 /* ====================================================================== */
 
 
-void fcn.000007f1(void)
+void vga_operation9(void)
 {
     uint8_t uVar1;
     uint8_t *puVar2;
@@ -1078,7 +1078,7 @@ void fcn.000007f1(void)
 }
 
 /* ====================================================================== */
-/* 0x11a: fcn.0000011a */
+/* 0x11a: sprite_func_30 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
@@ -1108,34 +1108,34 @@ void fcn.00000118(int16_t arg3)
     char *in_stack_00000010;
     
     while( true ) {
-        fcn.000016a9();
+        sprite_func_3();
         *(int16_t *)0x5069 = *(int16_t *)0x5069 + 0x280;
         pcVar1 = (char *)0x506d;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000e7a(arg3);
+        sprite_get_value(arg3);
         arg3 = 0;
         pcVar5 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.0000041a(0);
+            vga_operation1(0);
         }
         do {
             pcVar3 = unaff_DI;
             pcVar6 = pcVar5;
             if (*pcVar6 != *pcVar3) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[1] != pcVar3[1]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[2] != pcVar3[2]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[3] != pcVar3[3]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             pcVar5 = pcVar6 + 4;
@@ -1143,15 +1143,15 @@ void fcn.00000118(int16_t arg3)
         } while (in_stack_00000006 != (char *)0x1);
         if (pcVar6[4] != pcVar3[4]) {
             in_stack_00000006 = (char *)0xf4;
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[5] != pcVar3[5]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[6] != pcVar3[6]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         pcVar5 = pcVar6 + 8;
@@ -1170,8 +1170,8 @@ void fcn.00000118(int16_t arg3)
             *(char *)0x508b = cVar2;
             cVar2 = pcVar6[7];
             pcVar6 = pcVar6 + 0x2c;
-            fcn.000016a9();
-            cVar2 = fcn.000007a0((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
+            sprite_func_3();
+            cVar2 = sprite_multiply((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar3 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x5069);
             arg3_01 = pcVar4;
@@ -1180,9 +1180,9 @@ void fcn.00000118(int16_t arg3)
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar6, cVar2));
                 pcVar6 = pcVar4;
                 if (cVar2 < '\0') {
-                    uVar7 = fcn.00000799();
+                    uVar7 = sprite_func_4();
                 }
-                fcn.000005c3((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
+                sprite_func_11((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
                 pcVar3 = pcVar4;
                 arg3_01 = in_stack_0000000a;
                 pcVar6 = pcVar5;
@@ -1194,13 +1194,13 @@ void fcn.00000118(int16_t arg3)
             if (((*(char *)0x506d != '\x01') && (*(char *)0x508b != -1)) && (*(char *)0x508b != -4)) {
                 uVar7 = CONCAT22(pcVar3 + 0x280, CONCAT11(pcVar6[2], (char)((uint16_t)arg3_01 >> 8)));
                 if ((int16_t)arg3_01 < 0) {
-                    uVar7 = fcn.00000799();
+                    uVar7 = sprite_func_4();
                 }
                 in_stack_0000000a = (char *)0x590;
-                fcn.000005c3((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
+                sprite_func_11((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
             }
         } else if (pcVar6[7] != pcVar3[7]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         unaff_SI = pcVar5 + 4;
     }
@@ -1208,11 +1208,11 @@ void fcn.00000118(int16_t arg3)
 }
 
 /* ====================================================================== */
-/* 0x6cb: fcn.000006cb */
+/* 0x6cb: sprite_process_loop_2 */
 /* ====================================================================== */
 
 
-undefined4 fcn.000006cb(void)
+undefined4 sprite_process_loop_2(void)
 {
     undefined2 *puVar1;
     undefined2 uVar2;
@@ -1266,12 +1266,12 @@ undefined4 fcn.000006cb(void)
 }
 
 /* ====================================================================== */
-/* 0x62f: fcn.0000062f */
+/* 0x62f: vga_operation_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.0000062f(int16_t arg1)
+undefined4 vga_operation_4(int16_t arg1)
 {
     undefined2 *puVar1;
     undefined uVar2;
@@ -1286,7 +1286,7 @@ undefined4 fcn.0000062f(int16_t arg1)
     undefined2 unaff_DS;
     undefined2 *in_stack_00000000;
     
-    fcn.00000768((in_CX & 0xff) * 0x30 + -0x8000);
+    sprite_extract_bits((in_CX & 0xff) * 0x30 + -0x8000);
     out(0x3c4, 0x702);
     out(0x3ce, 0x205);
     iVar7 = 8;
@@ -1337,12 +1337,12 @@ undefined4 fcn.0000062f(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0x768: fcn.00000768 */
+/* 0x768: sprite_extract_bits */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-undefined4 fcn.00000768(int16_t arg1)
+undefined4 sprite_extract_bits(int16_t arg1)
 {
     undefined2 *puVar1;
     undefined2 uVar2;
@@ -1371,12 +1371,12 @@ undefined4 fcn.00000768(int16_t arg1)
 }
 
 /* ====================================================================== */
-/* 0xe4b: fcn.00000e4b */
+/* 0xe4b: sprite_extract_bits_2 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000e4b(int16_t arg1, int16_t arg4)
+void sprite_extract_bits_2(int16_t arg1, int16_t arg4)
 {
     undefined2 *puVar1;
     undefined2 *puVar2;
@@ -1387,7 +1387,7 @@ void fcn.00000e4b(int16_t arg1, int16_t arg4)
     
     puVar2 = (undefined2 *)
              ((uint16_t)*(uint8_t *)0x84 * 0x24 + (uint16_t)(uint8_t)(*(char *)0x83 + 4) + *(int16_t *)0xff31);
-    fcn.000016a9();
+    sprite_func_3();
     puVar4 = (undefined2 *)0x508e;
     iVar3 = 3;
     do {
@@ -1396,18 +1396,18 @@ void fcn.00000e4b(int16_t arg1, int16_t arg4)
         puVar4 = (undefined2 *)((int16_t)puVar4 + 3);
         *(undefined *)puVar1 = *(undefined *)(puVar2 + 1);
         puVar2 = puVar2 + 0x12;
-        fcn.000016a9();
+        sprite_func_3();
         iVar3 = iVar3 + -1;
     } while (iVar3 != 0);
     return;
 }
 
 /* ====================================================================== */
-/* 0xda8: fcn.00000da8 */
+/* 0xda8: sprite_multiply_3 */
 /* ====================================================================== */
 
 
-uint8_t fcn.00000da8(void)
+uint8_t sprite_multiply_3(void)
 {
     uint8_t uVar1;
     undefined2 unaff_DS;
@@ -1423,12 +1423,12 @@ uint8_t fcn.00000da8(void)
 }
 
 /* ====================================================================== */
-/* 0xd6a: fcn.00000d6a */
+/* 0xd6a: sprite_multiply_4 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.00000d6a(int16_t arg4, int16_t arg1, int16_t arg2)
+void sprite_multiply_4(int16_t arg4, int16_t arg1, int16_t arg2)
 {
     char *unaff_SI;
     char *pcVar1;
@@ -1442,7 +1442,7 @@ void fcn.00000d6a(int16_t arg4, int16_t arg1, int16_t arg2)
         pcVar1 = unaff_SI;
         pcVar2 = unaff_ES;
         if (*unaff_SI != '\0') {
-            fcn.00000641(unaff_DI);
+            sprite_func_37(unaff_DI);
             pcVar1 = unaff_DS;
             unaff_DI = unaff_SI;
             pcVar2 = (char *)arg4;
@@ -1457,11 +1457,11 @@ void fcn.00000d6a(int16_t arg4, int16_t arg1, int16_t arg2)
 }
 
 /* ====================================================================== */
-/* 0x641: fcn.00000641 */
+/* 0x641: sprite_func_37 */
 /* ====================================================================== */
 
 
-undefined4 fcn.00000641(void)
+undefined4 sprite_func_37(void)
 {
     undefined2 *puVar1;
     undefined uVar2;
@@ -1525,11 +1525,11 @@ undefined4 fcn.00000641(void)
 }
 
 /* ====================================================================== */
-/* 0x787: fcn.00000787 */
+/* 0x787: copy_vga_buffer */
 /* ====================================================================== */
 
 
-void fcn.00000787(void)
+void copy_vga_buffer(void)
 {
     undefined2 *unaff_DI;
     undefined2 unaff_ES;
@@ -1547,12 +1547,12 @@ void fcn.00000787(void)
 }
 
 /* ====================================================================== */
-/* 0x12ea: fcn.000012ea */
+/* 0x12ea: sprite_process_loop_3 */
 /* ====================================================================== */
 
 // WARNING: Unknown calling convention -- yet parameter storage is locked
 
-void fcn.000012ea(int16_t arg3, int16_t arg1)
+void sprite_process_loop_3(int16_t arg3, int16_t arg1)
 {
     int16_t iVar1;
     uint16_t uVar2;
@@ -1985,39 +1985,39 @@ void fcn.00000110(int16_t arg1)
     pcStack_6 = in_BX;
     do {
         if (!(bool)in_ZF) {
-            fcn.00000128((int16_t)pcStack_6);
+            vga_operation_3((int16_t)pcStack_6);
         }
         while( true ) {
-            fcn.000016a9();
+            sprite_func_3();
             *(int16_t *)0x5069 = *(int16_t *)0x5069 + 0x280;
             pcVar1 = (char *)0x506d;
             *pcVar1 = *pcVar1 + -1;
             if (*pcVar1 == '\0') {
                 return;
             }
-            fcn.00000e7a((int16_t)pcStack_6);
+            sprite_get_value((int16_t)pcStack_6);
             iVar3 = 0;
             pcVar5 = unaff_SI + 8;
             if (unaff_SI[7] < '\0') {
-                fcn.0000041a(0);
+                vga_operation1(0);
             }
             do {
                 pcVar7 = unaff_DI;
                 pcVar4 = pcVar5;
                 if (*pcVar4 != *pcVar7) {
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[1] != pcVar7[1]) {
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[2] != pcVar7[2]) {
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar4[3] != pcVar7[3]) {
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 pcVar5 = pcVar4 + 4;
@@ -2025,15 +2025,15 @@ void fcn.00000110(int16_t arg1)
             } while (in_stack_00000006 != 1);
             if (pcVar4[4] != pcVar7[4]) {
                 in_stack_00000006 = 0xf4;
-                fcn.00000128(iVar3);
+                vga_operation_3(iVar3);
             }
             iVar3 = iVar3 + 1;
             if (pcVar4[5] != pcVar7[5]) {
-                fcn.00000128(iVar3);
+                vga_operation_3(iVar3);
             }
             iVar3 = iVar3 + 1;
             if (pcVar4[6] != pcVar7[6]) {
-                fcn.00000128(iVar3);
+                vga_operation_3(iVar3);
             }
             pcStack_6 = (char *)(iVar3 + 1);
             unaff_SI = pcVar4 + 8;
@@ -2053,9 +2053,9 @@ void fcn.00000110(int16_t arg1)
             cVar2 = pcVar4[7];
             pcVar4 = pcVar4 + 0x2c;
             pcStackY_a = (char *)0x531;
-            fcn.000016a9(pcStack_6);
+            sprite_func_3(pcStack_6);
             pcVar7 = (char *)0x539;
-            cVar2 = fcn.000007a0((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
+            cVar2 = sprite_multiply((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
             arg3 = (char *)CONCAT11(extraout_DL, cVar2);
             iVar3 = (int16_t)unaff_DI * 2 + *(int16_t *)0x5069;
             pcVar5 = pcVar4;
@@ -2064,9 +2064,9 @@ void fcn.00000110(int16_t arg1)
                 unaff_DI = arg3;
                 if (cVar2 < '\0') {
                     pcStackY_a = (char *)0x560;
-                    uVar6 = fcn.00000799();
+                    uVar6 = sprite_func_4();
                 }
-                fcn.000005c3((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
+                sprite_func_11((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
                 arg3 = pcVar7;
                 iVar3 = iStackY_c;
                 pcVar5 = pcStackY_a;
@@ -2075,9 +2075,9 @@ void fcn.00000110(int16_t arg1)
             if (((*(char *)0x506d != '\x01') && (*(char *)0x508b != -1)) && (*(char *)0x508b != -4)) {
                 uVar6 = CONCAT22(iVar3 + 0x280, CONCAT11(pcVar5[2], (char)((uint16_t)arg3 >> 8)));
                 if ((int16_t)arg3 < 0) {
-                    uVar6 = fcn.00000799();
+                    uVar6 = sprite_func_4();
                 }
-                fcn.000005c3((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
+                sprite_func_11((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)arg3);
             }
         }
         in_ZF = pcVar4[7] == pcVar7[7];
@@ -2113,40 +2113,40 @@ void fcn.00000112(int16_t arg1)
     char *pcVar9;
     
     do {
-        fcn.00000128((int16_t)in_BX);
+        vga_operation_3((int16_t)in_BX);
         do {
             while( true ) {
                 pcVar7 = (char *)0x11b;
-                fcn.000016a9();
+                sprite_func_3();
                 *(int16_t *)0x5069 = *(int16_t *)0x5069 + 0x280;
                 pcVar1 = (char *)0x506d;
                 *pcVar1 = *pcVar1 + -1;
                 if (*pcVar1 == '\0') {
                     return;
                 }
-                fcn.00000e7a((int16_t)in_BX);
+                sprite_get_value((int16_t)in_BX);
                 iVar3 = 0;
                 pcVar8 = unaff_SI + 8;
                 if (unaff_SI[7] < '\0') {
-                    fcn.0000041a(0);
+                    vga_operation1(0);
                 }
                 do {
                     pcVar4 = unaff_DI;
                     pcVar5 = pcVar8;
                     if (*pcVar5 != *pcVar4) {
-                        fcn.00000128(iVar3);
+                        vga_operation_3(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[1] != pcVar4[1]) {
-                        fcn.00000128(iVar3);
+                        vga_operation_3(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[2] != pcVar4[2]) {
-                        fcn.00000128(iVar3);
+                        vga_operation_3(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[3] != pcVar4[3]) {
-                        fcn.00000128(iVar3);
+                        vga_operation_3(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     pcVar8 = pcVar5 + 4;
@@ -2154,15 +2154,15 @@ void fcn.00000112(int16_t arg1)
                 } while (in_stack_00000008 != 1);
                 if (pcVar5[4] != pcVar4[4]) {
                     in_stack_00000008 = 0xf4;
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar5[5] != pcVar4[5]) {
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar5[6] != pcVar4[6]) {
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 in_BX = (char *)(iVar3 + 1);
                 unaff_SI = pcVar5 + 8;
@@ -2182,9 +2182,9 @@ void fcn.00000112(int16_t arg1)
                 cVar2 = pcVar5[7];
                 pcVar5 = pcVar5 + 0x2c;
                 iStackY_a = 0x531;
-                fcn.000016a9(in_BX, in_BX);
+                sprite_func_3(in_BX, in_BX);
                 pcVar8 = (char *)0x539;
-                cVar2 = fcn.000007a0((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
+                cVar2 = sprite_multiply((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
                 pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
                 iVar3 = (int16_t)unaff_DI * 2 + *(int16_t *)0x5069;
                 in_BX = unaff_DI;
@@ -2194,11 +2194,11 @@ void fcn.00000112(int16_t arg1)
                     in_BX = pcVar4;
                     if (cVar2 < '\0') {
                         iStackY_a = 0x560;
-                        uVar6 = fcn.00000799();
+                        uVar6 = sprite_func_4();
                         pcVar9 = pcVar5;
                     }
                     pcVar5 = pcVar8;
-                    fcn.000005c3((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    sprite_func_11((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                     pcVar4 = pcVar9;
                     iVar3 = iStackY_a;
                 }
@@ -2207,9 +2207,9 @@ void fcn.00000112(int16_t arg1)
                 if (((*(char *)0x506d != '\x01') && (*(char *)0x508b != -1)) && (*(char *)0x508b != -4)) {
                     uVar6 = CONCAT22(iVar3 + 0x280, CONCAT11(pcVar5[2], (char)((uint16_t)pcVar4 >> 8)));
                     if ((int16_t)pcVar4 < 0) {
-                        uVar6 = fcn.00000799();
+                        uVar6 = sprite_func_4();
                     }
-                    fcn.000005c3((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    sprite_func_11((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                 }
             }
         } while (pcVar5[7] == pcVar4[7]);
@@ -2245,40 +2245,40 @@ void fcn.00000112(int16_t arg1)
     char *pcVar9;
     
     do {
-        fcn.00000128((int16_t)in_BX);
+        vga_operation_3((int16_t)in_BX);
         do {
             while( true ) {
                 pcVar7 = (char *)0x11b;
-                fcn.000016a9();
+                sprite_func_3();
                 *(int16_t *)0x5069 = *(int16_t *)0x5069 + 0x280;
                 pcVar1 = (char *)0x506d;
                 *pcVar1 = *pcVar1 + -1;
                 if (*pcVar1 == '\0') {
                     return;
                 }
-                fcn.00000e7a((int16_t)in_BX);
+                sprite_get_value((int16_t)in_BX);
                 iVar3 = 0;
                 pcVar8 = unaff_SI + 8;
                 if (unaff_SI[7] < '\0') {
-                    fcn.0000041a(0);
+                    vga_operation1(0);
                 }
                 do {
                     pcVar4 = unaff_DI;
                     pcVar5 = pcVar8;
                     if (*pcVar5 != *pcVar4) {
-                        fcn.00000128(iVar3);
+                        vga_operation_3(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[1] != pcVar4[1]) {
-                        fcn.00000128(iVar3);
+                        vga_operation_3(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[2] != pcVar4[2]) {
-                        fcn.00000128(iVar3);
+                        vga_operation_3(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     if (pcVar5[3] != pcVar4[3]) {
-                        fcn.00000128(iVar3);
+                        vga_operation_3(iVar3);
                     }
                     iVar3 = iVar3 + 1;
                     pcVar8 = pcVar5 + 4;
@@ -2286,15 +2286,15 @@ void fcn.00000112(int16_t arg1)
                 } while (in_stack_00000008 != 1);
                 if (pcVar5[4] != pcVar4[4]) {
                     in_stack_00000008 = 0xf4;
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar5[5] != pcVar4[5]) {
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 iVar3 = iVar3 + 1;
                 if (pcVar5[6] != pcVar4[6]) {
-                    fcn.00000128(iVar3);
+                    vga_operation_3(iVar3);
                 }
                 in_BX = (char *)(iVar3 + 1);
                 unaff_SI = pcVar5 + 8;
@@ -2314,9 +2314,9 @@ void fcn.00000112(int16_t arg1)
                 cVar2 = pcVar5[7];
                 pcVar5 = pcVar5 + 0x2c;
                 iStackY_a = 0x531;
-                fcn.000016a9(in_BX, in_BX);
+                sprite_func_3(in_BX, in_BX);
                 pcVar8 = (char *)0x539;
-                cVar2 = fcn.000007a0((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
+                cVar2 = sprite_multiply((int16_t)unaff_SI, (int16_t)unaff_DI, iVar3, CONCAT11(extraout_AH, cVar2));
                 pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
                 iVar3 = (int16_t)unaff_DI * 2 + *(int16_t *)0x5069;
                 in_BX = unaff_DI;
@@ -2326,11 +2326,11 @@ void fcn.00000112(int16_t arg1)
                     in_BX = pcVar4;
                     if (cVar2 < '\0') {
                         iStackY_a = 0x560;
-                        uVar6 = fcn.00000799();
+                        uVar6 = sprite_func_4();
                         pcVar9 = pcVar5;
                     }
                     pcVar5 = pcVar8;
-                    fcn.000005c3((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    sprite_func_11((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                     pcVar4 = pcVar9;
                     iVar3 = iStackY_a;
                 }
@@ -2339,9 +2339,9 @@ void fcn.00000112(int16_t arg1)
                 if (((*(char *)0x506d != '\x01') && (*(char *)0x508b != -1)) && (*(char *)0x508b != -4)) {
                     uVar6 = CONCAT22(iVar3 + 0x280, CONCAT11(pcVar5[2], (char)((uint16_t)pcVar4 >> 8)));
                     if ((int16_t)pcVar4 < 0) {
-                        uVar6 = fcn.00000799();
+                        uVar6 = sprite_func_4();
                     }
-                    fcn.000005c3((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
+                    sprite_func_11((int16_t)uVar6, (int16_t)((uint32_t)uVar6 >> 0x10), (int16_t)pcVar4);
                 }
             }
         } while (pcVar5[7] == pcVar4[7]);
@@ -2379,34 +2379,34 @@ void fcn.00000118(int16_t arg3)
     char *in_stack_00000010;
     
     while( true ) {
-        fcn.000016a9();
+        sprite_func_3();
         *(int16_t *)0x5069 = *(int16_t *)0x5069 + 0x280;
         pcVar1 = (char *)0x506d;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000e7a(arg3);
+        sprite_get_value(arg3);
         arg3 = 0;
         pcVar5 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.0000041a(0);
+            vga_operation1(0);
         }
         do {
             pcVar3 = unaff_DI;
             pcVar6 = pcVar5;
             if (*pcVar6 != *pcVar3) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[1] != pcVar3[1]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[2] != pcVar3[2]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[3] != pcVar3[3]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             pcVar5 = pcVar6 + 4;
@@ -2414,15 +2414,15 @@ void fcn.00000118(int16_t arg3)
         } while (in_stack_00000006 != (char *)0x1);
         if (pcVar6[4] != pcVar3[4]) {
             in_stack_00000006 = (char *)0xf4;
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[5] != pcVar3[5]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[6] != pcVar3[6]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         pcVar5 = pcVar6 + 8;
@@ -2441,8 +2441,8 @@ void fcn.00000118(int16_t arg3)
             *(char *)0x508b = cVar2;
             cVar2 = pcVar6[7];
             pcVar6 = pcVar6 + 0x2c;
-            fcn.000016a9();
-            cVar2 = fcn.000007a0((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
+            sprite_func_3();
+            cVar2 = sprite_multiply((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar3 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x5069);
             arg3_01 = pcVar4;
@@ -2451,9 +2451,9 @@ void fcn.00000118(int16_t arg3)
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar6, cVar2));
                 pcVar6 = pcVar4;
                 if (cVar2 < '\0') {
-                    uVar7 = fcn.00000799();
+                    uVar7 = sprite_func_4();
                 }
-                fcn.000005c3((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
+                sprite_func_11((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
                 pcVar3 = pcVar4;
                 arg3_01 = in_stack_0000000a;
                 pcVar6 = pcVar5;
@@ -2465,13 +2465,13 @@ void fcn.00000118(int16_t arg3)
             if (((*(char *)0x506d != '\x01') && (*(char *)0x508b != -1)) && (*(char *)0x508b != -4)) {
                 uVar7 = CONCAT22(pcVar3 + 0x280, CONCAT11(pcVar6[2], (char)((uint16_t)arg3_01 >> 8)));
                 if ((int16_t)arg3_01 < 0) {
-                    uVar7 = fcn.00000799();
+                    uVar7 = sprite_func_4();
                 }
                 in_stack_0000000a = (char *)0x590;
-                fcn.000005c3((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
+                sprite_func_11((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
             }
         } else if (pcVar6[7] != pcVar3[7]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         unaff_SI = pcVar5 + 4;
     }
@@ -2509,34 +2509,34 @@ void fcn.00000118(int16_t arg3)
     char *in_stack_00000010;
     
     while( true ) {
-        fcn.000016a9();
+        sprite_func_3();
         *(int16_t *)0x5069 = *(int16_t *)0x5069 + 0x280;
         pcVar1 = (char *)0x506d;
         *pcVar1 = *pcVar1 + -1;
         if (*pcVar1 == '\0') break;
-        fcn.00000e7a(arg3);
+        sprite_get_value(arg3);
         arg3 = 0;
         pcVar5 = unaff_SI + 4;
         if (unaff_SI[3] < '\0') {
-            fcn.0000041a(0);
+            vga_operation1(0);
         }
         do {
             pcVar3 = unaff_DI;
             pcVar6 = pcVar5;
             if (*pcVar6 != *pcVar3) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[1] != pcVar3[1]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[2] != pcVar3[2]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             if (pcVar6[3] != pcVar3[3]) {
-                fcn.00000128(arg3);
+                vga_operation_3(arg3);
             }
             arg3 = arg3 + 1;
             pcVar5 = pcVar6 + 4;
@@ -2544,15 +2544,15 @@ void fcn.00000118(int16_t arg3)
         } while (in_stack_00000006 != (char *)0x1);
         if (pcVar6[4] != pcVar3[4]) {
             in_stack_00000006 = (char *)0xf4;
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[5] != pcVar3[5]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         if (pcVar6[6] != pcVar3[6]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         arg3 = arg3 + 1;
         pcVar5 = pcVar6 + 8;
@@ -2571,8 +2571,8 @@ void fcn.00000118(int16_t arg3)
             *(char *)0x508b = cVar2;
             cVar2 = pcVar6[7];
             pcVar6 = pcVar6 + 0x2c;
-            fcn.000016a9();
-            cVar2 = fcn.000007a0((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
+            sprite_func_3();
+            cVar2 = sprite_multiply((int16_t)pcVar5, (int16_t)unaff_DI, arg3_00, CONCAT11(extraout_AH, cVar2));
             pcVar4 = (char *)CONCAT11(extraout_DL, cVar2);
             pcVar3 = (char *)((int16_t)unaff_DI * 2 + *(int16_t *)0x5069);
             arg3_01 = pcVar4;
@@ -2581,9 +2581,9 @@ void fcn.00000118(int16_t arg3)
                 uVar7 = CONCAT22(pcVar3, CONCAT11(*pcVar6, cVar2));
                 pcVar6 = pcVar4;
                 if (cVar2 < '\0') {
-                    uVar7 = fcn.00000799();
+                    uVar7 = sprite_func_4();
                 }
-                fcn.000005c3((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
+                sprite_func_11((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)pcVar6);
                 pcVar3 = pcVar4;
                 arg3_01 = in_stack_0000000a;
                 pcVar6 = pcVar5;
@@ -2595,13 +2595,13 @@ void fcn.00000118(int16_t arg3)
             if (((*(char *)0x506d != '\x01') && (*(char *)0x508b != -1)) && (*(char *)0x508b != -4)) {
                 uVar7 = CONCAT22(pcVar3 + 0x280, CONCAT11(pcVar6[2], (char)((uint16_t)arg3_01 >> 8)));
                 if ((int16_t)arg3_01 < 0) {
-                    uVar7 = fcn.00000799();
+                    uVar7 = sprite_func_4();
                 }
                 in_stack_0000000a = (char *)0x590;
-                fcn.000005c3((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
+                sprite_func_11((int16_t)uVar7, (int16_t)((uint32_t)uVar7 >> 0x10), (int16_t)arg3_01);
             }
         } else if (pcVar6[7] != pcVar3[7]) {
-            fcn.00000128(arg3);
+            vga_operation_3(arg3);
         }
         unaff_SI = pcVar5 + 4;
     }
