@@ -1,0 +1,12 @@
+*
+!docker/*.sh
+!scripts/
+!src/
+!build*.sh
+!rizin/*/
+rizin/.*/
+rizin/doc
+rizin/man
+!rizin/config-user.mk.acr
+!rizin/configure
+!rizin/Makefile
